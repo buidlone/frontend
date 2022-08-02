@@ -1,26 +1,22 @@
-import FundingBlock from "../src/components/fundingBlock";
-import ProjectHeader from "../src/components/projectHeader";
+import AboutSection from '../src/components/AboutSection';
+import { FeaturesSec } from '../src/components/featuredProjectsSection/styled';
+import FundingBlock from '../src/components/fundingBlock';
+import ProjectHeader from '../src/components/projectHeader';
+import { Container } from '../styles/Container';
 
 const Buidl1 = () => {
   return (
-    <div
-      style={{
-        maxWidth: "1400px",
-        display: "block",
-        marginLeft: "auto",
-        marginRight: "auto",
-      }}
-    >
+    <Container>
       <ProjectHeader
-        text={"Project 1 - BUIDL 1 - Self raising capital"}
-        stage={"STAGE 1"}
+        text={'Project 1 - BUIDL 1 - Self raising capital'}
+        stage={'STAGE 1'}
       />
-
-      <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+      <FeaturesSec>
         <FundingBlock />
         <FundingBlock />
-      </div>
-    </div>
+      </FeaturesSec>
+      <AboutSection></AboutSection>
+    </Container>
   );
 };
 
