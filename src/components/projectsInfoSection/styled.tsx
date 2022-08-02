@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 
-export const InfoSec = styled.div`
+export const InfoSec = styled.section`
   display: flex;
   align-items: start;
   justify-content: center;
