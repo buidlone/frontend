@@ -1,4 +1,4 @@
-import AboutSection from '../src/components/AboutSection';
+import AboutSection from '../src/components/aboutSection';
 import { FeaturesSec } from '../src/components/featuredProjectsSection/styled';
 import FundingBlock from '../src/components/fundingBlock';
 import ProjectHeader from '../src/components/projectHeader';
@@ -15,7 +15,7 @@ const Buidl1 = () => {
         <FundingBlock />
         <FundingBlock />
       </FeaturesSec>
-      <AboutSection></AboutSection>
+      <AboutSection />
     </Container>
   );
 };

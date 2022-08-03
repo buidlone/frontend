@@ -1,10 +1,11 @@
-import { Container } from '../styles/Container';
+import { BgImage, Container } from '../styles/Container';
 import ProjectsInfoSection from '../src/components/projectsInfoSection';
 import FeaturedProjectsSection from '../src/components/featuredProjectsSection';
 
 const Projects = () => {
   return (
     <Container>
+      <BgImage />
       <ProjectsInfoSection
         text={'Yep. Buidl1 also needs to be build'}
         mainText={
