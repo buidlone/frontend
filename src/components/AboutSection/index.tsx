@@ -7,7 +7,7 @@ import { AboutSec, ButtonsWrapper, AboutButton } from "./styled";
 
 const AboutSection = () => {
   const [active, setActive] = useState("details");
-
+  // comment
   return (
     <AboutSec>
       <ButtonsWrapper>
