@@ -31,3 +31,7 @@ id_rsa_hyfi.pub
 package-lock.json
 .gitlab-ci.yml
 build
+
+# next.js
+/.next/
+/out/
