@@ -1,7 +1,7 @@
-import { AboutTable } from './styled';
+import { AboutTable } from "./styled";
 
 const AboutBlock = () => {
-  return <AboutTable style={{ color: 'white' }}>About table</AboutTable>;
+  return <AboutTable style={{ color: "white" }}>About table</AboutTable>;
 };
 
 export default AboutBlock;
