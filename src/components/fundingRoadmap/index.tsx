@@ -4,9 +4,9 @@ import {
   TextAboveDashed,
   TextWhite,
   VerticalLine,
-} from "./styled";
-import lock from "../../../public/lock_closed.svg";
-import Image from "next/image";
+} from './styled';
+import lock from '../../../public/lock_closed.svg';
+import Image from 'next/image';
 
 interface IFundingBlock {
   seed: string;
@@ -35,10 +35,10 @@ export default function FundingRoadmap({
             <TextAboveDashed>Soft Cap</TextAboveDashed>
             <TextWhite>{softCap}</TextWhite>
           </VerticalLine>
-          <Image src={lock} alt="lock" height={"14px"} />
+          <Image src={lock} alt='lock' height={'14px'} />
         </RoadmapBubble>
         <RoadmapBubble>
-          <Image src={lock} alt="lock" height={"14px"} />
+          <Image src={lock} alt='lock' height={'14px'} />
           <VerticalLine>
             <TextAboveDashed>Hard Cap</TextAboveDashed>
             <TextWhite>{hardCap}</TextWhite>

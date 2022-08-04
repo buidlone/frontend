@@ -1,6 +1,6 @@
-import AboutBlock from '../AboutBlock';
-import HistoryBlock from '../HistoryBlock';
-import DetailsBlock from '../DetailsBlock';
+import AboutBlock from '../aboutBlock';
+import HistoryBlock from '../historyBlock';
+import DetailsBlock from '../detailsBlock';
 import { ButtonsWrapper, AboutButton, AboutSec } from './styled';
 import { useState } from 'react';
 
