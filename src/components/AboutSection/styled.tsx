@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 export const AboutButton = styled.button`
   border-color: transparent;
   background: none;
-  white-space: nowrap;
+  white-space: wrap;
   padding: 10px 20px;
   font-size: 18px;
   font-family: 'Barlow', sans-serif;
@@ -13,13 +13,12 @@ export const AboutButton = styled.button`
   cursor: pointer;
   overflow: hidden;
   position: relative;
-  
+
   &:focus,
   &:hover {
     color: #ffffff;
     border-bottom: 0.2px solid #ffffff;
   }
-
 `;
 
 export const ButtonsWrapper = styled.div`
@@ -33,7 +32,6 @@ export const ButtonsWrapper = styled.div`
 `;
 
 export const AboutSec = styled.section`
-
   display: flex;
   align-items: start;
   justify-content: center;

@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import React from 'react';
 
 export const StyledNavBar = styled.div`
   display: flex;
@@ -19,6 +18,7 @@ export const StyledNavBar = styled.div`
   position: relative;
   z-index: 4;
   opacity: 0.7;
+   
 
   a {
     cursor: pointer;
@@ -49,7 +49,6 @@ export const ConnetWalletBtn = styled.button`
   cursor: pointer;
   transition: 250ms ease-in;
   transform: translateX(0);
- 
 
   &:hover {
     color: white;

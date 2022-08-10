@@ -3,11 +3,12 @@ import styled, { css } from "styled-components";
 export const BlockWrapper = styled.div`
   background: #202337;
   border-radius: 20px;
-  height: 350px;
-  width: 560px;
+  height: 359px;
+  width: 600px;
   padding: 30px;
   position: relative;
 `;
+
 
 export const Title = styled.text`
   color: rgb(255 255 255 / 50%);
