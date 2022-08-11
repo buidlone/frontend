@@ -3,7 +3,6 @@ import { ConnetWalletBtn, StyledNavBar } from './styled';
 import logo from '../../../public/buidl1.svg';
 import Link from 'next/link';
 import Image from 'next/image';
-import Projects from '../../../pages/projects';
 
 const Navbar = () => {
   const router = useRouter();

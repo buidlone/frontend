@@ -1,4 +1,4 @@
-import { ProjectHeadWrapper, StageText } from "./styled";
+import { ProjectHeadWrapper, StageText } from './styled';
 
 interface Iheader {
   text?: string;
