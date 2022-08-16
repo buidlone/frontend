@@ -1,10 +1,12 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import Buidl1Section from '../src/components/buidl1Section';
+import { Container } from '../styles/Container';
 
 const Home = () => {
-  return <div className={styles.container}>hhhhh</div>;
+  return (
+    <Container>
+      <Buidl1Section />
+    </Container>
+  );
 };
 
 export default Home;
