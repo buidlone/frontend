@@ -8,12 +8,12 @@ const useCountdown = ( date?: string ) => {
     const [timerSeconds, setTimerseconds] = useState<number | string>('00');
     const [isExpired, setIsExpired] = useState<boolean>(false);
   
-    let interval = useRef<number | undefined>(undefined);
+    let interval = useRef<number | undefined | ReturnType<typeof setInterval>>(undefined);
   
     const startTimer = () => {
-      const countDownDate = new Date(date).getTime();
+      const countDownDate = new Date(<string>date).getTime();
       // Update the count down every 1 second
-      interval = setInterval(() => {
+      interval.current = setInterval(() => {
         // Get today's date and time
         const now = new Date().getTime();
         // Find the distance between now and the count down date
@@ -36,6 +36,7 @@ const useCountdown = ( date?: string ) => {
           setTimerseconds(seconds);
         }
       }, 1000);
+      
     };
   
     useEffect(() => {
