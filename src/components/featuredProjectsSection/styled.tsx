@@ -19,7 +19,7 @@ export const FeaturesSec = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 4rem;
+  gap: 3rem;
 
   @media screen and (max-width: 1378px) {
     justify-content: center;
@@ -32,6 +32,7 @@ export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
   padding: 50px;
   background: rgba(34, 34, 53, 1) 0% 0% no-repeat padding-box;
   opacity: 0.85;
+
 
   ${BlockWrapper};
 `;
