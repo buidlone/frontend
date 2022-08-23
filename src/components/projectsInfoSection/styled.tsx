@@ -16,13 +16,18 @@ export const TextWrapper = styled.div`
 `;
 
 export const ImgWrapper = styled.div`
-  margin-top: 10px;
+  margin-top: 20px;
   margin-left: -70px;
   flex-shrink: 0;
+  background: transparent
+    radial-gradient(closest-side at 50% 50%, #00c4ff 0%, #00c4ff00 100%) 0% 0%
+    no-repeat padding-box;
+  mix-blend-mode: overlay;
+  opacity: 0.2;
 `;
 
 export const Img = styled(Image)`
-  opacity: 0.2;
+  opacity: 0.3;
   filter: drop-shadow(0 -6mm 4mm #4dc9ef);
 `;
 

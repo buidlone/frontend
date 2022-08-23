@@ -1,5 +1,14 @@
 import { useRouter } from 'next/router';
-import { ConnetWalletBtn, StyledNavBar } from './styled';
+import {
+  Nav,
+  NavbarContainer,
+  NavLogo,
+  NavLink,
+  NavMenu,
+  NavItem,
+  ConnectWalletBtn,
+  ButtonWrapper,
+} from './styled';
 import logo from '../../../public/buidl1.svg';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -8,25 +17,40 @@ const Navbar = () => {
   const router = useRouter();
 
   return (
-    <StyledNavBar>
-      <Image src={logo} alt={''} width={'120'} />
-      <div>
-        <Link href='/projects' passHref>
-          <a className={router.pathname == '/projects' ? 'active' : ''}>
-            Projects
-          </a>
-        </Link>
-        <Link href='/buidl1' passHref>
-          <a className={router.pathname == '/buidl1' ? 'active' : ''}>Buidl1</a>
-        </Link>
-        <Link href='/assets' passHref>
-          <a className={router.pathname == '/assets' ? 'active' : ''}>
-            My assets
-          </a>
-        </Link>
-      </div>
-      <ConnetWalletBtn>Connect wallet</ConnetWalletBtn>
-    </StyledNavBar>
+    <Nav>
+      <NavbarContainer>
+        <NavLogo src={logo} />
+        <NavMenu>
+          <NavItem>
+            <Link href='/projects' passHref>
+              <NavLink
+                className={router.pathname == '/projects' ? 'active' : ''}
+              >
+                Projects
+              </NavLink>
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link href='/buidl1' passHref>
+              <NavLink className={router.pathname == '/buidl1' ? 'active' : ''}>
+                Buidl1
+              </NavLink>
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link href='/assets' passHref>
+              <NavLink className={router.pathname == '/assets' ? 'active' : ''}>
+                My assets
+              </NavLink>
+            </Link>
+          </NavItem>
+        </NavMenu>
+
+        <ButtonWrapper>
+          <ConnectWalletBtn>Connect wallet</ConnectWalletBtn>
+        </ButtonWrapper>
+      </NavbarContainer>
+    </Nav>
   );
 };
 

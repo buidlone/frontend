@@ -4,7 +4,7 @@ import { ProjectHeadWrapper } from '../projectHeader/styled';
 export const AssetsHeader = styled(ProjectHeadWrapper)`
   width: 100%;
   font-size: 31px;
-  ${ProjectHeadWrapper}
+  
 `;
 
 export const StateButton = styled.button`
