@@ -39,12 +39,17 @@ const ActiveBlock = () => {
       </FlexRow1>
       <FlexRow1 className='thirdRow'>
         <Data className='blue bigger'>Project ends in:</Data>
-        <Data className='blue bigger'>
+        <Data className='blue bigger' style={{ fontFamily: 'monospace' }}>
           {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S
         </Data>
         <Data colSpan={4}>
           <BottomButtonsWrapper>
-            <Image src={DiscordImg} height={'26px'} width={'26px'} />
+            <Image
+              src={DiscordImg}
+              alt='discord logo'
+              height={'26px'}
+              width={'26px'}
+            />
             <TableLink>Project discussion</TableLink>
             <TableButton className='invBtn'>Invest</TableButton>
             <TableButton className='insBtn'>Inspect</TableButton>

@@ -4,6 +4,7 @@ import { FeaturesSec } from '../src/components/featuredProjectsSection/styled';
 import FundingBlock from '../src/components/fundingBlock';
 import ProjectHeader from '../src/components/projectHeader';
 import { Container } from '../styles/Container';
+import TimelineBlock from '../src/components/timelineBlock';
 
 const Buidl1 = () => {
   return (
@@ -14,7 +15,7 @@ const Buidl1 = () => {
       />
       <FeaturesSec>
         <FundingBlock />
-        <FundingBlock />
+        <TimelineBlock />
       </FeaturesSec>
 
       <ProgressSection />
