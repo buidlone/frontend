@@ -8,7 +8,7 @@ import {
 } from './styled';
 import DiscordImg from '../../../public/DiscordSmall.png';
 import Image from 'next/image';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import ProjectContext from '../../context/projectContext';
 import useCountdown from '../../hooks/useCountdown';
 
@@ -28,9 +28,7 @@ const ActiveBlock = () => {
         <Data>State</Data>
       </FlexRow1>
       <FlexRow1 className='secondRow'>
-        <Data className='underlined blue bigger'>
-          {featuredProject?.project}
-        </Data>
+        <Data className='underlined blue bigger'>{featuredProject?.name}</Data>
         <Data className='green'>{featuredProject?.invested} ETH</Data>
         <Data>{featuredProject?.collected} DPP</Data>
         <Data className='bigger'>{featuredProject?.claimed} DPP</Data>
