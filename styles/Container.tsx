@@ -20,18 +20,19 @@ export const Container = styled.div`
 `;
 
 export const BgImage = styled.div<Props>`
+  pointer-events: none;
   ${(props) => {
     if (props.isFixed) {
       return `
-      position: absolute;
-      z-index: 2;
-      top: -35.75rem;
-      max-width: 1400px;
+      position: fixed;
+      top: -29rem;
       width: 100%;
-      height: 1028px;
-      background: transparent radial-gradient(closest-side at 50% 50%, #009DFF 0%, #0076FF00 100%) 0% 0% no-repeat padding-box;
+      height: 64.25rem;
+      background: transparent radial-gradient(closest-side at 50% 50%, #009DFF 0%, #0076FF00 100%)   no-repeat padding-box;
+      background-position: center center;
       mix-blend-mode: color;
-      opacity: 0.1;
+      opacity: 1;
+      z-index: 11;
       `;
     } else {
       return `
@@ -40,7 +41,7 @@ export const BgImage = styled.div<Props>`
       top: -23.75rem;
       max-width: 1400px;
       width: 100%;
-      height: 664px;
+      height: 41.5rem;
       background: transparent
       radial-gradient(closest-side at 50% 50%, #00c4ff 0%, #00c4ff00 100%) 0% 0%
       no-repeat padding-box;

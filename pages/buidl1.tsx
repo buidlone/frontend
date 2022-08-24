@@ -7,19 +7,21 @@ import { BgImage, Container } from '../styles/Container';
 
 const Buidl1 = () => {
   return (
-    <Container>
+    <>
       <BgImage isFixed />
-      <ProjectHeader
-        text={'Project 1 - BUIDL 1 - Self raising capital'}
-        stage={'STAGE 1'}
-      />
-      <FeaturesSec>
-        <FundingBlock />
-        <FundingBlock />
-      </FeaturesSec>
-      <ProgressSection />
-      <AboutSection />
-    </Container>
+      <Container>
+        <ProjectHeader
+          text={'Project 1 - BUIDL 1 - Self raising capital'}
+          stage={'STAGE 1'}
+        />
+        <FeaturesSec>
+          <FundingBlock />
+          <FundingBlock />
+        </FeaturesSec>
+        <ProgressSection />
+        <AboutSection />
+      </Container>
+    </>
   );
 };
 
