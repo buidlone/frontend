@@ -19,48 +19,50 @@ import ProjectContext from '../../context/projectContext';
 import useCountdown from '../../hooks/useCountdown';
 
 const ProgressRoadmap = () => {
-  const featuredProject = useContext(ProjectContext);
+  const project = useContext(ProjectContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
-    useCountdown('2022-09-01');
+    useCountdown(project?.stages?.find((stage) => stage.active)?.endDate);
 
   return (
     <ProgressRoadmapWrapper>
       <Title>Progress</Title>
       <ProgressBar>
         <Progress progress={35} />
-
-        <ProgressStep completed stage={'Stage 1'}>
-          <CheckMark />
-        </ProgressStep>
-        <ProgressStep active stage={'Stage 2'}>
-          <MilestonesTooltip />
-        </ProgressStep>
-        <ProgressStep stage={'Stage 3'}></ProgressStep>
-        <ProgressStep stage={'Stage 4'}></ProgressStep>
-        <ProgressStep stage={'Stage 5'}></ProgressStep>
+        {project &&
+          project?.stages?.map((stage) => (
+            <ProgressStep
+              key={stage.id}
+              stage={stage.name}
+              completed={stage.isCompleted}
+              active={stage.active}
+            >
+              {stage.isCompleted && <CheckMark />}
+              {stage.active && (
+                <MilestonesTooltip milestonesArray={stage?.milestones} />
+              )}
+            </ProgressStep>
+          ))}
       </ProgressBar>
 
       <LockBar>
-        <Lock unlocked>
-          <Image src={unlockedLock} height={15} />
-        </Lock>
-        <Lock unlocked active fundsReleased={2345}>
-          <Image src={unlockedLock} height={15} />
-          <Funds>
-            {featuredProject?.fundsReleased
-              ?.toLocaleString()
-              .replace(/,/g, ' ')}
-          </Funds>
-        </Lock>
-        <Lock>
-          <Image src={lockedLock} height={15} />
-        </Lock>
-        <Lock>
-          <Image src={lockedLock} height={15} />
-        </Lock>
-        <Lock>
-          <Image src={lockedLock} height={15} />
-        </Lock>
+        {project &&
+          project?.stages?.map((stage) => (
+            <Lock
+              unlocked={stage.isCompleted || stage.active}
+              active={stage.active}
+            >
+              {stage.isCompleted || stage.active ? (
+                <Image src={unlockedLock} alt='unlocked lock' height={15} />
+              ) : (
+                <Image src={lockedLock} alt='locked lock' height={15} />
+              )}
+              {stage.active && (
+                <Funds>
+                  {project.fundsReleased?.toLocaleString().replace(/,/g, ' ')}
+                </Funds>
+              )}
+            </Lock>
+          ))}
       </LockBar>
       <BottomWrapper>
         <text className='topText'>Next stage in</text>

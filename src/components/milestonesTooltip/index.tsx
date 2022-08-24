@@ -1,14 +1,29 @@
-import { Tooltip } from './styled';
+import { ListItem, Tooltip } from './styled';
 
-const MilestonesTooltip = () => {
+interface IMilestones {
+  milestonesArray?: {
+    id?: number;
+    description?: string;
+    isCompleted?: boolean;
+  }[];
+}
+
+const MilestonesTooltip = ({ milestonesArray }: IMilestones) => {
   return (
     <Tooltip>
       <ul>
-        <li>Milestone 1</li>
-        <li>Milestone 1</li>
-        <li>Milestone 1</li>
-        <li>Milestone 1</li>
-        <li>Milestone 1</li>
+        {milestonesArray &&
+          milestonesArray.map((milestone) =>
+            milestone.isCompleted ? (
+              <ListItem key={milestone.id} className='completed'>
+                {milestone.description}
+              </ListItem>
+            ) : (
+              <ListItem key={milestone.id} className='uncompleted'>
+                {milestone.description}
+              </ListItem>
+            )
+          )}
       </ul>
     </Tooltip>
   );

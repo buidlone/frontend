@@ -8,7 +8,6 @@ interface Props {
   active?: boolean;
   stage?: string;
   unlocked?: boolean;
-  fundsReleased?: number;
 }
 
 //Animations
