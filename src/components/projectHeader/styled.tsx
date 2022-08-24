@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 export const ProjectHeadWrapper = styled.div`
   text-align: center;
   font-size: 38px;
-  margin-top: 20px;
+  margin-top: 40px;
   padding-bottom: 15px;
   color: #00c4ff;
   width: 60%;
