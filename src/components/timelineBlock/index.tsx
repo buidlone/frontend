@@ -1,16 +1,16 @@
 import { BlockWrapper, Title } from '../fundingBlock/styled';
 import { Line } from '../projectsInfoSection/styled';
-import DiscordImg from '../../../public/DiscordSmall.png';
 
 import {
   BottomPartWrapper,
   BottomWrapper,
+  InfoIcon,
   InlineWrapper,
   TopWrapper,
   XButton,
 } from './styled';
-import Image from 'next/image';
 import TimelineGraph from '../timelineGraph';
+import Tooltip from '../tooltip';
 
 const TimelineBlock = () => {
   return (
@@ -29,12 +29,9 @@ const TimelineBlock = () => {
         <BottomPartWrapper>
           <InlineWrapper>
             <div className='period'>Soft cap reservation period</div>
-            <Image
-              src={DiscordImg}
-              alt='discord logo'
-              height={'14.44px'}
-              width={'14.33px'}
-            />
+            <Tooltip text={'Information about the soft cap reservation period'}>
+              <InfoIcon />
+            </Tooltip>
           </InlineWrapper>
           <div className='dateNum'>2022 01 - 2022 06</div>
         </BottomPartWrapper>
