@@ -1,4 +1,6 @@
 import {
+  FProgress,
+  FundsBar,
   HorizontalLine,
   RoadmapBubble,
   TextAboveDashed,
@@ -22,18 +24,19 @@ export default function FundingRoadmap({
 }: IFundingBlock) {
   return (
     <>
-      <HorizontalLine>
+      <FundsBar>
+        <FProgress progress={35} />
         <RoadmapBubble>
           <VerticalLine>
             <TextAboveDashed>Seed</TextAboveDashed>
-            <TextWhite>{seed}</TextWhite>
+            <TextWhite>{seed} USDT</TextWhite>
           </VerticalLine>
         </RoadmapBubble>
 
         <RoadmapBubble>
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
-            <TextWhite>{softCap}</TextWhite>
+            <TextWhite>{softCap} USDT</TextWhite>
           </VerticalLine>
           <Image src={lock} alt='lock' height={'14px'} />
         </RoadmapBubble>
@@ -41,10 +44,10 @@ export default function FundingRoadmap({
           <Image src={lock} alt='lock' height={'14px'} />
           <VerticalLine>
             <TextAboveDashed>Hard Cap</TextAboveDashed>
-            <TextWhite>{hardCap}</TextWhite>
+            <TextWhite>{hardCap} USDT</TextWhite>
           </VerticalLine>
         </RoadmapBubble>
-      </HorizontalLine>
+      </FundsBar>
     </>
   );
 }

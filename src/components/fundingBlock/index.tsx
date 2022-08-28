@@ -13,7 +13,7 @@ export default function FundingBlock() {
       <BlockWrapper>
         <Title>Funding</Title>
         <div
-          style={{ display: "block", marginTop: "25%", marginBottom: "auto" }}
+          style={{ display: "block", marginTop: "22%", marginBottom: "auto" }}
         >
           <FundingRoadmap
             seed={"34 000"}
