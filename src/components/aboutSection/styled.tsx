@@ -13,7 +13,6 @@ export const AboutButton = styled.button`
   cursor: pointer;
   overflow: hidden;
   position: relative;
-
   &:focus,
   &:hover {
     color: #ffffff;
