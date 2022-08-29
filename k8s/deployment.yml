@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buidl-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: buidl-frontend
+  template:
+    metadata:
+      labels:
+        app: buidl-frontend
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: buidl-frontend
+          image: superhow.azurecr.io/buidl-frontend:latest
+          resources:
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: buidl-frontend
+spec:
+  clusterIP: None
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: buidl-frontend
