@@ -1,22 +1,28 @@
 import styled, { css } from 'styled-components';
 import { RoadmapBubble } from '../fundingRoadmap/styled';
-import { ProgressBar, Progress } from '../progressRoadmap/styled';
+
 
 interface Props {
   stage?: string;
   current?: boolean;
   date?: string;
+  progress?: number;
 }
 
 export const TimelineContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-export const TProgress = styled(Progress)<Props>`
+
+export const TProgress = styled.div<Props>`
+
   background-color: #00ffc4 !important;
   left: 0;
   position: relative;
   max-width: 99.5%;
+  width: ${(props) => props.progress}% !important;
+  transition: 0.3s;
+  opacity: 1 !important;
 
   &:after {
     content: '${(props) => props.date}';
@@ -29,11 +35,13 @@ export const TProgress = styled(Progress)<Props>`
   }
 `;
 
-export const TimelineBar = styled(ProgressBar)`
+export const TimelineBar = styled.div`
   width: 100%;
   margin: 13.2rem 0rem 0rem 0rem;
   position: relative;
-
+  display: flex;
+  justify-content: space-between;
+ 
   &:before,
   & > ${TProgress} {
     content: '';
@@ -65,7 +73,7 @@ export const VerticalLine = styled.div<Props>`
     font-size: 0.625rem;
     font-family: 'Barlow', sans-serif;
     color: #e2e2e2;
-    top: 6.7rem;
+    top: 6.75rem;
     right: calc(100% - 1.2rem);
     white-space: nowrap;
   }
@@ -147,10 +155,12 @@ export const DateStep = styled.div<Props>`
   }
 `;
 
-export const DateBar = styled(ProgressBar)`
+export const DateBar = styled.div`
   width: 85%;
   margin: 0.644rem 0rem 1.7rem 0rem;
   position: relative;
+  display: flex;
+  justify-content: space-between;
 
   &:before {
     background: none;

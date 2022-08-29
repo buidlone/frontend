@@ -1,4 +1,51 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
+
+interface Props {
+  progress?: number;
+  funds?: number;
+}
+
+export const FProgress = styled.div<Props>`
+  background-color: #00ffc4 !important;
+  left: 0;
+  position: relative;
+  //max-width: 100%;
+  width: ${(props) => props.progress}% !important;
+  transition: 0.3s;
+  opacity: 1 !important;
+
+  &:after {
+    content: '${(props) => props.funds}';
+    position: absolute;
+    font-size: 0.625rem;
+    font-family: 'Barlow', sans-serif;
+    color: #e2e2e2;
+    top: 300%;
+    white-space: nowrap;
+  }
+`;
+export const FundsBar = styled.div`
+  width: 100%;
+  height: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+
+  &:before,
+  & > ${FProgress} {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 7px;
+    width: 100%;
+    background-color: #00c4ff8f;
+    opacity: 0.5;
+    //margin-left: 0.09rem;
+  }
+`;
 
 export const HorizontalLine = styled.div`
   width: 100%;
@@ -18,6 +65,7 @@ export const VerticalLine = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  z-index: -1;
 `;
 
 export const RoadmapBubble = styled.div`
@@ -30,6 +78,7 @@ export const RoadmapBubble = styled.div`
   justify-content: center;
   align-items: center;
   padding-bottom: 3px;
+  z-index: 2;
 `;
 
 export const TextAboveDashed = styled.text`

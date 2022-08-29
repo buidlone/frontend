@@ -21,10 +21,12 @@ const barGrow = keyframes`
 `;
 
 export const ProgressRoadmapWrapper = styled.div`
-  width: 690px;
-  height: 370px;
+  min-width: 20%;
+  min-height: 370px;
   margin: 28px;
   flex: 1;
+  padding-right: 35px;
+  position: relative;
 `;
 
 export const Title = styled.text`
@@ -33,7 +35,7 @@ export const Title = styled.text`
 `;
 
 export const ProgressStep = styled.div<Props>`
-  width: 1.563rem;
+  min-width: 1.563rem;
   height: 1.563rem;
   border-radius: 50%;
   display: flex;
@@ -72,6 +74,7 @@ export const ProgressStep = styled.div<Props>`
     color: #00c4ff;
     text-align: left;
     width: 3rem;
+    pointer-events: none;
   }
 
   &:hover {
@@ -92,8 +95,9 @@ export const ProgressBar = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
-  counter-reset: step;
-  margin: 6rem 2.5rem auto 2.5rem;
+  margin: 6rem 2.5rem auto 1rem;
+  gap: 6.438rem;
+  min-width: max-content;
 
   &:before,
   & > ${Progress} {
@@ -125,11 +129,12 @@ export const LockBar = styled.div`
   display: flex;
   justify-content: space-between;
   counter-reset: step;
-  margin: 8rem 2.5rem auto 2.5rem;
+  margin: 8rem 2.5rem auto 1rem;
+  gap: 6.438rem;
 `;
 
 export const Lock = styled.div<Props>`
-  width: 1.563rem;
+  min-width: 1.563rem;
   height: 1.563rem;
   background-color: #00ffc4;
   border-radius: 50%;
@@ -144,7 +149,7 @@ export const Lock = styled.div<Props>`
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 176px;
+    height: 11rem;
     margin: 2px;
     opacity: ${(props) => (props.unlocked ? 1 : 0.09)};
     transform: matrix(-1, 0, 0, -1, 0, 0);
