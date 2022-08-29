@@ -73,7 +73,7 @@ export const BottomPartWrapper = styled.div`
   font-family: 'Barlow', sans-serif;
   color: #dbdbdb;
   font-size: 12px;
-  
+
   .dateNum {
     color: #00ffc4;
   }
@@ -95,4 +95,27 @@ export const InlineWrapper = styled.div`
   color: #dbdbdb;
   font-size: 12px;
   gap: 0.5rem;
+`;
+
+export const InfoIcon = styled.div`
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2e436c 0% 0% no-repeat padding-box;
+  border: 1px solid #f7f7f7;
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.7px 1px 0 0;
+
+  &::after {
+    content: 'i';
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: #d9d9d9;
+    opacity: 1;
+  }
 `;

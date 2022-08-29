@@ -5,6 +5,7 @@ import {
   DetailsCard,
   DetailsInfoWrapper,
   GreyLine,
+  InfoIconKeys,
   KeysWrapper,
   OrangeButton,
 } from './styled';
@@ -15,6 +16,7 @@ import { TableLink } from '../activeBlock/styled';
 import { useContext } from 'react';
 import ProjectContext from '../../context/projectContext';
 import useCountdown from '../../hooks/useCountdown';
+import Tooltip from '../tooltip';
 
 const ProgressInfoBlock = () => {
   const featuredProject = useContext(ProjectContext);
@@ -59,14 +61,26 @@ const ProgressInfoBlock = () => {
       <BottomWrapper>
         <BottomPartWrapper>
           <KeysWrapper>
-            <Image src={OrangeLock} height={'26px'} width={'26px'} />
+            <Image
+              src={OrangeLock}
+              alt={'Locked lock'}
+              height={'26px'}
+              width={'26px'}
+            />
             <div>Keys activated</div>
             <div> 0 / 1223</div>
 
-            <Image src={DiscordImg} height={'17px'} width={'17px'} />
+            <Tooltip text={'Information about the keys'}>
+              <InfoIconKeys />
+            </Tooltip>
           </KeysWrapper>
           <KeysWrapper>
-            <Image src={DiscordImg} height={'26px'} width={'26px'}></Image>
+            <Image
+              src={DiscordImg}
+              alt={'Discord logo'}
+              height={'26px'}
+              width={'26px'}
+            />
             <TableLink>Project discussion</TableLink>
           </KeysWrapper>
         </BottomPartWrapper>

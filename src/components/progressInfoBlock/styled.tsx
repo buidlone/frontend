@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Property, Data, FlexItem1 } from '../detailsBlock/styled';
+import { InfoIcon } from '../timelineBlock/styled';
 
 export const DetailsCard = styled.div`
   display: block;
@@ -74,4 +75,14 @@ export const KeysWrapper = styled.div`
   color: #f68503;
   font-size: 13px;
   gap: 0.5rem;
+`;
+
+export const InfoIconKeys = styled(InfoIcon)`
+  width: 17px;
+  height: 17px;
+  padding: 0.7px 1px 0 0;
+
+  &::after {
+    font-size: 13px;
+  }
 `;
