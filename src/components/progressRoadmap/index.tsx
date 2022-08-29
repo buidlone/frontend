@@ -17,6 +17,8 @@ import MilestonesTooltip from '../milestonesTooltip';
 import { useContext } from 'react';
 import ProjectContext from '../../context/projectContext';
 import useCountdown from '../../hooks/useCountdown';
+import Tooltip from '../tooltip';
+
 import ScrollContainer from 'react-indiana-drag-scroll';
 
 const ProgressRoadmap = () => {
@@ -38,17 +40,16 @@ const ProgressRoadmap = () => {
             <Progress progress={2.7} />
             {project &&
               project?.stages?.map((stage) => (
-                <ProgressStep
-                  key={stage.id}
-                  stage={stage.name}
-                  completed={stage.isCompleted}
-                  active={stage.active}
-                >
-                  {stage.isCompleted && <CheckMark />}
-                  {stage.active && (
-                    <MilestonesTooltip milestonesArray={stage?.milestones} />
-                  )}
-                </ProgressStep>
+                <Tooltip milestonesArray={stage?.milestones}>
+                  <ProgressStep
+                    key={stage.id}
+                    stage={stage.name}
+                    completed={stage.isCompleted}
+                    active={stage.active}
+                  >
+                    {stage.isCompleted && <CheckMark />}
+                  </ProgressStep>
+                </Tooltip>
               ))}
           </ProgressBar>
 
