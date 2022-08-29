@@ -2,11 +2,22 @@ html,
 body {
   padding: 0;
   margin: 0;
-   font-family: 'Barlow', sans-serif;;
-    background: #13131D;
-    font-weight: 100;
-    
+  font-family: 'Barlow', sans-serif;;
+  background: #13131D;
+  font-weight: 100;
+  overflow: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
 }
+
+
+
+body::-webkit-scrollbar {
+  width: 0 !important;
+}
+
 
 a {
   color: inherit;
@@ -25,4 +36,9 @@ a {
     color: white;
     background: black;
   }
+}
+
+
+#portal {
+  z-index: 9999;
 }

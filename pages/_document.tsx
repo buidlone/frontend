@@ -47,12 +47,13 @@ export default class MyDocument extends Document {
             crossOrigin='true'
           />
           <link
-            href='https://fonts.googleapis.com/css2?family=Barlow&family=IBM+Plex+Sans:ital,wght@0,300;0,400;1,400&family=Roboto:wght@300&family=Space+Grotesk:wght@400;500&display=swap'
+            href='https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;1,400&family=Roboto:wght@300;500&family=Lato:wght@700&family=Space+Grotesk:wght@400;500;700&display=swap'
             rel='stylesheet'
           />
         </Head>
         <body>
           <Main />
+          <div id='portal'></div>
           <NextScript />
         </body>
       </Html>

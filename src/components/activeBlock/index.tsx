@@ -1,4 +1,3 @@
-import { GreenButton, StyledA } from '../fundingBlock/styled';
 import {
   ActiveTable,
   FlexRow1,
@@ -9,18 +8,15 @@ import {
 } from './styled';
 import DiscordImg from '../../../public/DiscordSmall.png';
 import Image from 'next/image';
-
-export const featuredProject = {
-  project: 'Buidl1',
-  invested: '1245 ETH',
-  collected: '125 DPP',
-  claimed: '65 DPP',
-  reserved: '6585 DPP',
-  state: 'Ongoing',
-  ends: '96D 32H 43M 21S',
-};
+import { useContext } from 'react';
+import ProjectContext from '../../context/projectContext';
+import useCountdown from '../../hooks/useCountdown';
 
 const ActiveBlock = () => {
+  const featuredProject = useContext(ProjectContext);
+  const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
+    useCountdown(featuredProject?.end);
+
   return (
     <ActiveTable>
       <FlexRow1 className='firstRow'>
@@ -32,19 +28,26 @@ const ActiveBlock = () => {
         <Data>State</Data>
       </FlexRow1>
       <FlexRow1 className='secondRow'>
-        <Data className='underlined blue bigger'>{featuredProject.project}</Data>
-        <Data className='green'>{featuredProject.invested}</Data>
-        <Data>{featuredProject.collected}</Data>
-        <Data className='bigger'>{featuredProject.claimed}</Data>
-        <Data className='bigger'>{featuredProject.reserved}</Data>
-        <Data className='green smaller'>{featuredProject.state}</Data>
+        <Data className='underlined blue bigger'>{featuredProject?.name}</Data>
+        <Data className='green'>{featuredProject?.invested} ETH</Data>
+        <Data>{featuredProject?.collected} DPP</Data>
+        <Data className='bigger'>{featuredProject?.claimed} DPP</Data>
+        <Data className='bigger'>{featuredProject?.reserved} DPP</Data>
+        <Data className='green smaller'>{featuredProject?.state} </Data>
       </FlexRow1>
-      <FlexRow1 className="thirdRow">
+      <FlexRow1 className='thirdRow'>
         <Data className='blue bigger'>Project ends in:</Data>
-        <Data className='blue bigger'>{featuredProject.ends}</Data>
+        <Data className='blue bigger' style={{ fontFamily: 'monospace' }}>
+          {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S
+        </Data>
         <Data colSpan={4}>
           <BottomButtonsWrapper>
-            <Image src={DiscordImg} height={'26px'} width={'26px'}></Image>
+            <Image
+              src={DiscordImg}
+              alt='discord logo'
+              height={'26px'}
+              width={'26px'}
+            />
             <TableLink>Project discussion</TableLink>
             <TableButton className='invBtn'>Invest</TableButton>
             <TableButton className='insBtn'>Inspect</TableButton>
