@@ -1,8 +1,9 @@
-import Image from 'next/image';
-import styled from 'styled-components';
+import Image from "next/image";
+import styled from "styled-components";
 
 interface Props {
   isFixed?: boolean;
+  isBottom?: boolean;
 }
 
 export const Container = styled.div`
@@ -28,11 +29,24 @@ export const BgImage = styled.div<Props>`
       top: -29rem;
       width: 100%;
       height: 64.25rem;
-      background: transparent radial-gradient(closest-side at 50% 50%, #009DFF 0%, #0076FF00 100%)   no-repeat padding-box;
+      background: transparent radial-gradient(closest-side at 50% 50%, #009DFF 0%, #0076FF00 100%)  no-repeat padding-box;
       background-position: center center;
       mix-blend-mode: color;
       opacity: 1;
       z-index: 11;
+      `;
+    } else if (props.isBottom) {
+      return `
+      position: absolute;
+      z-index: 2;
+      bottom: -35rem;
+      width: 1144px;
+      height: 1144px;
+      max-width: 1400px;
+      width: 100%;
+      background: transparent radial-gradient(closest-side at 50% 50%, #00FFC4 0%, #00FFC400 100%) 0% 0% no-repeat padding-box;
+      mix-blend-mode: overlay;
+      opacity: 1;
       `;
     } else {
       return `
