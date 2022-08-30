@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-import { Property, Data, FlexItem1 } from '../detailsBlock/styled';
-import { InfoIcon } from '../timelineBlock/styled';
+import styled, { css } from "styled-components";
+import { Property, Data, FlexItem1 } from "../detailsBlock/styled";
+import { InfoIcon } from "../timelineBlock/styled";
 
 export const DetailsCard = styled.div`
   display: block;
@@ -8,10 +8,12 @@ export const DetailsCard = styled.div`
   box-shadow: 0px 0px 10px #00000029;
   border-radius: 13px;
   opacity: 1;
-  width: 530px;
-  height: 352px;
+  width: 520px;
+  height: 368px;
   margin: 35px;
+  margin-left: 25px;
   padding: 15px 30px;
+  margin-top: 50px;
 `;
 
 export const BottomWrapper = styled.div`
@@ -32,7 +34,7 @@ export const DetailsInfoWrapper = styled(FlexItem1)`
     font-size: 14px;
     margin-top: 16px;
     margin-bottom: 17px;
-    font-family: 'barlow', sans-serif;
+    font-family: "barlow", sans-serif;
     opacity: 0.5;
   }
 `;
@@ -62,7 +64,7 @@ export const OrangeButton = styled.button`
   height: 40px;
   color: #f68503;
   font-size: 16px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   cursor: pointer;
 `;
 
@@ -71,7 +73,7 @@ export const KeysWrapper = styled.div`
   justify-content: start;
   align-items: center;
   opacity: 1;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   color: #f68503;
   font-size: 13px;
   gap: 0.5rem;

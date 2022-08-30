@@ -1,5 +1,6 @@
-import styled, { css } from 'styled-components';
-import { DetailsCard } from '../progressInfoBlock/styled';
+import styled, { css } from "styled-components";
+import { DetailsCard } from "../progressInfoBlock/styled";
+import { ProgressRoadmapWrapper } from "../progressRoadmap/styled";
 
 export const ProgressBlockWrapper = styled.div`
   background: #1f233c 0% 0% no-repeat padding-box;
@@ -27,6 +28,9 @@ export const ProgressContentWrapper = styled.div`
       max-width: 100%;
       flex-basis: 100%;
       justify-content: center;
+    }
+    & > ${ProgressRoadmapWrapper} {
+      margin-top: 15px;
     }
   } ;
 `;
