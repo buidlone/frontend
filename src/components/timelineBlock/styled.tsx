@@ -1,4 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
+import { BlockWrapper } from "../fundingBlock/styled";
+
+
 
 export const TopWrapper = styled.div`
   width: 100%;
@@ -32,12 +35,12 @@ export const XButton = styled.button`
   height: 25.57px;
   border: none;
   border-radius: 50%;
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.5);
   opacity: 1;
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
 
   &:focus,
@@ -53,9 +56,11 @@ export const BottomWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: flex-start;
-  gap: 5rem;
+  gap: 8rem;
+  position: absolute;
+  bottom: 7%;
 
   .centerItems {
     align-items: end;
@@ -68,9 +73,7 @@ export const BottomPartWrapper = styled.div`
   height: 50%;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 7px;
-  margin-left: 10px;
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   color: #dbdbdb;
   font-size: 12px;
 
@@ -91,7 +94,7 @@ export const InlineWrapper = styled.div`
   justify-content: start;
   align-items: center;
   opacity: 1;
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   color: #dbdbdb;
   font-size: 12px;
   gap: 0.5rem;
@@ -110,9 +113,9 @@ export const InfoIcon = styled.div`
   padding: 0.7px 1px 0 0;
 
   &::after {
-    content: 'i';
+    content: "i";
     text-align: left;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-size: 10px;
     font-weight: 700;
     color: #d9d9d9;
