@@ -1,44 +1,85 @@
+import React, { useContext, useEffect, useState } from "react";
+import ProjectContext from "../../context/projectContext";
 import {
   TimelineBar,
   TimelineStep,
   TProgress,
-  VerticalLine,
-  Bubble,
   DateStep,
   DateBar,
   TimelineContainer,
-} from './styled';
-import lock from '../../../public/lock_closed.svg';
-import Image from 'next/image';
+  TimelineScroll,
+} from "./styled";
 
-const TimelineGraph = () => {
+interface ITimeline {
+  scale: number;
+}
+
+const TimelineGraph = ({ scale }: ITimeline) => {
+  const project = useContext(ProjectContext);
+  const [active, setActive] = useState(false);
+
+  const containerRef = React.createRef<HTMLElement>();
+  const activeStageRef = React.createRef<HTMLElement>();
+
+  useEffect(() => {
+    if (
+      containerRef &&
+      containerRef.current &&
+      activeStageRef &&
+      activeStageRef.current
+    ) {
+      containerRef.current.scrollTo({
+        left:
+          activeStageRef.current.offsetLeft -
+          containerRef.current.offsetWidth / 2.6,
+
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
+  const handleMouseOver = () => {
+    setActive(true);
+  };
+  const handleMouseOut = () => {
+    setActive(false);
+  };
+
   return (
-    <TimelineContainer>
-      <TimelineBar>
-        <VerticalLine date='22/ 03' />
-        <TProgress progress={6} date='22/ 01'/>
+    <TimelineContainer
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+    >
+      <TimelineScroll
+        innerRef={containerRef}
+        hideScrollbars={active ? false : true}
+      >
+        <TimelineBar>
+          <TProgress progress={2} />
 
-        <TimelineStep stage={'Funding Soft Cap'} current>
-          <Bubble date='22/ 06'>
-            <Image src={lock} alt='locked lock' height={'14px'} />
-          </Bubble>
-        </TimelineStep>
+          {project &&
+            project?.stages?.map((stage) => {
+              const itemProps = stage.active ? { ref: activeStageRef } : {};
+              return (
+                <TimelineStep
+                  scale={scale}
+                  key={stage.id}
+                  stage={stage.name}
+                  completed={stage.isCompleted}
+                  current={stage.active}
+                  {...itemProps}
+                />
+              );
+            })}
+        </TimelineBar>
 
-        <TimelineStep stage={'Stage 1'} />
-        <TimelineStep stage={'Stage 2'} />
-        <TimelineStep stage={'Stage 3'} />
-        <TimelineStep stage={'Stage 4'} />
-        <TimelineStep stage={'Stage 5'} />
-        <TimelineStep stage={'Stage 6'} />
-      </TimelineBar>
-      <DateBar>
-        <DateStep date='2 mo' />
-        <DateStep date='3 mo' />
-        <DateStep date='3 mo' />
-        <DateStep date='4 mo' />
-        <DateStep date='3 mo' />
-        <DateStep date='3 mo' />
-      </DateBar>
+        <DateBar>
+          {project &&
+            project?.stages?.map((stage) => (
+              <DateStep scale={scale} date={stage.duration} />
+            ))}
+        </DateBar>
+      </TimelineScroll>
     </TimelineContainer>
   );
 };

@@ -11,7 +11,8 @@ export const BlockWrapper = styled.div`
 
 export const Title = styled.text`
   color: rgb(255 255 255 / 50%);
-  font-size: 16px;
+  font-size: 12px;
+  font-family: "IBM Plex" sans-serif;
 `;
 
 export const StyledA = styled.a`
