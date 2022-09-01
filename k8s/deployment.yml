@@ -18,6 +18,12 @@ spec:
         - name: buidl-frontend
           image: superhow.azurecr.io/buidl-frontend:latest
           resources:
+            requests:
+              memory: "64Mi"
+              cpu: "128m"
+            limits:
+              memory: "256Mi"
+              cpu: "248m"
           imagePullPolicy: Always
 ---
 apiVersion: v1
