@@ -41,6 +41,7 @@ interface Project {
         endDate: string;
         isCompleted: boolean;
         active: boolean;
+        duration?: string;
       }[];
   }
   
@@ -67,16 +68,17 @@ interface Project {
     },softCap: {
       amount: 34000,
       reservedUntil: '2022-06-01',
-      isReached: false,
+      isReached: true,
     },
     hardCap: 34000,
     stages: [
       {
         id: 1,
-        name: 'Stage 1',
+        name: 'Phase 1',
         endDate: '2022-08-14',
-        isCompleted: false,
+        isCompleted: true,
         active: false,
+        duration: '3 months',
         milestones: [
           {
             id: 1,
@@ -98,11 +100,12 @@ interface Project {
             description: 'Milestone1',
             isCompleted: true,
           },
+          
         ],
       },
       {
         id: 2,
-        name: 'Stage 2',
+        name: 'Phase 2',
         milestones: [
           {
             id: 5,
@@ -127,11 +130,12 @@ interface Project {
         ],
         endDate: '2022-09-14',
         isCompleted: false,
-        active: false,
+        active: true,
+        duration: '7 months',
       },
       {
         id: 3,
-        name: 'Stage 3',
+        name: 'Phase 3',
         milestones: [
           {
             id: 9,
@@ -157,10 +161,11 @@ interface Project {
         endDate: '2022-10-14',
         isCompleted: false,
         active: false,
+        duration: '3 months',
       },
       {
         id: 4,
-        name: 'Stage 4',
+        name: 'Phase 4',
         milestones: [
           {
             id: 13,
@@ -186,10 +191,11 @@ interface Project {
         endDate: '2022-11-14',
         isCompleted: false,
         active: false,
+        duration: '3 months',
       },
       {
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -215,10 +221,11 @@ interface Project {
         endDate: '2022-12-14',
         isCompleted: false,
         active: false,
+        duration: '3 months',
       },
       {
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -244,9 +251,10 @@ interface Project {
         endDate: '2022-12-14',
         isCompleted: false,
         active: false,
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -267,14 +275,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -295,14 +306,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -323,14 +337,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -351,14 +368,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -379,14 +399,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -407,14 +430,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -435,14 +461,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -463,14 +492,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -491,14 +523,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -519,14 +554,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -547,14 +585,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -575,14 +616,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -603,14 +647,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -631,14 +678,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -659,14 +709,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -687,14 +740,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -715,14 +771,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -743,14 +802,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -771,14 +833,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -799,14 +864,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -827,14 +895,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -855,14 +926,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -883,14 +957,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -911,14 +988,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -939,14 +1019,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -967,14 +1050,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -995,14 +1081,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1023,14 +1112,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1051,14 +1143,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1079,14 +1174,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1107,14 +1205,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1135,14 +1236,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1163,14 +1267,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1191,14 +1298,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1219,14 +1329,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1247,14 +1360,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1275,14 +1391,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1303,14 +1422,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1331,14 +1453,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1359,14 +1484,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1387,14 +1515,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1415,14 +1546,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1443,14 +1577,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1471,14 +1608,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1499,14 +1639,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1527,14 +1670,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1555,14 +1701,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1583,14 +1732,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1611,14 +1763,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1639,14 +1794,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1667,14 +1825,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1695,14 +1856,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1723,14 +1887,17 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
+        active: false, 
+        duration: '3 months',
       },{
         id: 5,
-        name: 'Stage 5',
+        name: 'Phase 5',
         milestones: [
           {
             id: 18,
@@ -1751,14 +1918,15 @@ interface Project {
             id: 21,
             description: 'Milestone1',
             isCompleted: false,
+            
           },
+         
         ],
         endDate: '2022-12-14',
         isCompleted: false,
-        active: false,
-      },
-    ],
+        active: false, 
+        duration: '3 months',
+      }]
   };
   
   export default project;
-  

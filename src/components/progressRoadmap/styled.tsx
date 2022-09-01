@@ -9,16 +9,35 @@ interface Props {
   active?: boolean;
   stage?: string;
   unlocked?: boolean;
+  ref?: any;
 }
 
 //Animations
 const barGrow = keyframes`
-  0%  {height:20px;}
+  /* 0%  {height:20px;}
   20%  {height:70.4px;}
   40%  {height:176px;}
   60%  {height:176px;}
   80%  {height:70.4px;}
-  100% {height:20px;}
+  100% {height:20px;} */
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const rotateCircle = keyframes`
+  0% {
+    trasform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 `;
 
 export const ScrollableContainer = styled(ScrollContainer)`
@@ -55,25 +74,24 @@ export const ProgressStep = styled.div<Props>`
   align-items: center;
   z-index: 1;
   flex-wrap: wrap;
-  cursor: pointer;
   position: relative;
 
   ${(props) => {
     if (props.completed) {
       return `
       
-        // background-color: #00C4FF;
-        // border: 1px solid #ffffff;
+        //background-color: #00C4FF;
+        //border: 1px solid #ffffff;
 
         background: #00C4FF;
         
       `;
     } else if (props.active) {
       return `
-        // background-color: #2e436c;
-        // border: 1px solid #00c4ff;
+         //background-color: #2e436c;
+         //border: 1px solid #00c4ff;
         
-        background: #00C4FF 0% 0% no-repeat padding-box;
+        background-color: #00C4FF;
       `;
     } else {
       return `
@@ -142,7 +160,7 @@ export const CheckMark = styled.div`
   transform-origin: center center;
 `;
 
-export const DashedRound = styled.div`
+export const DashedCircle = styled.div`
   width: 17px;
   height: 17px;
   transform: matrix(-1, 0.07, -0.07, -1, 0, 0);
@@ -150,6 +168,7 @@ export const DashedRound = styled.div`
   opacity: 1;
   position: absolute;
   border-radius: 50%;
+  animation: ${rotateCircle} 3s linear infinite;
 `;
 
 export const LockBar = styled.div`
@@ -181,15 +200,7 @@ export const Lock = styled.div<Props>`
     margin: 2px;
     opacity: ${(props) => (props.unlocked ? 1 : 0.09)};
     transform: matrix(-1, 0, 0, -1, 0, 0);
-    /* background: transparent
-      linear-gradient(
-        180deg,
-        #00ffc4 0%,
-        #00ffc4 10%,
-        #00c4ff 86%,
-        #00c4ff 100%
-      )
-      0% 0% no-repeat padding-box; */
+    pointer-events: none;
 
     background: transparent
       linear-gradient(
