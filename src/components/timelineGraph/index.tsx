@@ -1,11 +1,9 @@
-import { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import {
   TimelineBar,
   TimelineStep,
   TProgress,
-  VerticalLine,
-  Bubble,
   DateStep,
   DateBar,
   TimelineContainer,
@@ -20,6 +18,26 @@ const TimelineGraph = ({ scale }: ITimeline) => {
   const project = useContext(ProjectContext);
   const [active, setActive] = useState(false);
 
+  const containerRef = React.createRef<HTMLElement>();
+  const activeStageRef = React.createRef<HTMLElement>();
+
+  useEffect(() => {
+    if (
+      containerRef &&
+      containerRef.current &&
+      activeStageRef &&
+      activeStageRef.current
+    ) {
+      containerRef.current.scrollTo({
+        left:
+          activeStageRef.current.offsetLeft -
+          containerRef.current.offsetWidth / 2.6,
+
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
   const handleMouseOver = () => {
     setActive(true);
   };
@@ -32,20 +50,27 @@ const TimelineGraph = ({ scale }: ITimeline) => {
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
-      <TimelineScroll hideScrollbars={active ? false : true}>
+      <TimelineScroll
+        innerRef={containerRef}
+        hideScrollbars={active ? false : true}
+      >
         <TimelineBar>
           <TProgress progress={2} />
 
           {project &&
-            project?.stages?.map((stage) => (
-              <TimelineStep
-                scale={scale}
-                key={stage.id}
-                stage={stage.name}
-                completed={stage.isCompleted}
-                current={stage.active}
-              ></TimelineStep>
-            ))}
+            project?.stages?.map((stage) => {
+              const itemProps = stage.active ? { ref: activeStageRef } : {};
+              return (
+                <TimelineStep
+                  scale={scale}
+                  key={stage.id}
+                  stage={stage.name}
+                  completed={stage.isCompleted}
+                  current={stage.active}
+                  {...itemProps}
+                />
+              );
+            })}
         </TimelineBar>
 
         <DateBar>
@@ -60,4 +85,3 @@ const TimelineGraph = ({ scale }: ITimeline) => {
 };
 
 export default TimelineGraph;
-

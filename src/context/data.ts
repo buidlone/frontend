@@ -9,7 +9,10 @@ interface Project {
   fundsReleased?: number;
   tokensReserved?: number;
 
-  seed?: number;
+  seed?: {
+    fundsRequired: number;
+    isCollected: boolean;
+  };
   hardCap?: number;
   softCap?: {
     amount?: number;
@@ -47,30 +50,27 @@ const project: Project = {
   name: 'Buidl1',
   startDate: '2022-01-01',
   end: '2024-01-01',
-
-  softCap: {
-    amount: 34000,
-    reservedUntil: '2022-06-01',
-    isReached: false,
-  },
-  
-  seed: 34000,
-  hardCap: 34000,
-
   raised: 1245,
   participants: 234,
   funds: 324234,
   fundsReleased: 23452,
   tokensReserved: 4000000,
-
   milestones: 32, //will be calculated from the number of milestones in each stage, not hard-coded
   milestonesCompleted: 12, //will be calculated from the number of completed milestones in each stage, not hard-coded
-
   invested: 1245, //will be in the investor's data model
   collected: 125, //will be in the investor's data model
   claimed: 65, //will be in the investor's data model
   reserved: 6585, //will be in the investor's data model
   state: 'Ongoing', //will be derived, not hard-coded
+  seed: {
+    fundsRequired: 34000,
+    isCollected: true,
+  },softCap: {
+    amount: 34000,
+    reservedUntil: '2022-06-01',
+    isReached: true,
+  },
+  hardCap: 34000,
   stages: [
     {
       id: 1,

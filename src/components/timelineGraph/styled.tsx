@@ -9,6 +9,7 @@ interface Props {
   progress?: number;
   scale?: number;
   completed?: boolean;
+  ref?: any;
 }
 
 const pulse = keyframes`
