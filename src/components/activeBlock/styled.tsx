@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const ActiveTable = styled.table`
   opacity: 0.7;
@@ -51,7 +51,7 @@ export const ActiveTable = styled.table`
       0% no-repeat padding-box;
     border: 1px solid #00ffc4;
     border-radius: 12px;
-    font-family: 'Barlow', sans-serif;
+    font-family: "Barlow", sans-serif;
     color: #ffffff;
 
     &:hover {
@@ -65,24 +65,35 @@ export const ActiveTable = styled.table`
     border: 1px solid #00c4ff;
     border-radius: 10px;
     color: #00c4ff;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
   }
 `;
 
 export const FlexRow1 = styled.tr``;
 
+export const TableLink = styled.a`
+  color: #d6d6d6;
+  font-size: 11px;
+  text-decoration: underline;
+  text-align: left;
+  font-family: "IBM Plex", sans-serif;
+  opacity: 1;
+`;
+
 export const BottomButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 100%;
   height: 100%;
-  gap: 1.5rem;
+  gap: 1rem;
+  padding-right: 2rem;
+  
 `;
 
 export const Data = styled.td`
   color: #ffffff;
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   font-size: 20px;
   text-align: left;
   opacity: 1;
@@ -100,14 +111,4 @@ export const TableButton = styled.button`
   transition: 9s ease-in;
   transform: translateX(0);
   cursor: pointer;
-  
-`;
-
-export const TableLink = styled.a`
-  color: #d6d6d6;
-  font-size: 11px;
-  text-decoration: underline;
-  text-align: left;
-  font-family: 'IBM Plex', sans-serif;
-  opacity: 1;
 `;

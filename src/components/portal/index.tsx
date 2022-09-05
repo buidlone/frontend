@@ -3,11 +3,14 @@ import {
   ReactElement,
   useEffect,
   useState,
-} from 'react';
-import { createPortal } from 'react-dom';
+} from "react";
+import { createPortal } from "react-dom";
 
 interface IPortal {
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  children:
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | JSX.Element
+    | null;
   selector: string;
 }
 

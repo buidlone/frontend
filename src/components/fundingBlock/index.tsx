@@ -1,4 +1,7 @@
+import { useState } from "react";
 import FundingRoadmap from "../fundingRoadmap";
+import InvestModal from "../investModal";
+import Modal from "../modal";
 import {
   BlockWrapper,
   BottomWrapper,
@@ -8,6 +11,7 @@ import {
 } from "./styled";
 
 export default function FundingBlock() {
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
       <BlockWrapper>
@@ -22,7 +26,11 @@ export default function FundingBlock() {
           />
         </div>
         <BottomWrapper>
-          <GreenButton>Invest</GreenButton> <br />
+          <GreenButton onClick={() => setShowModal(true)}>Invest</GreenButton>{" "}
+          <br />
+          <Modal show={showModal} >
+            <InvestModal onClose={() => setShowModal(false)}/>
+          </Modal>
           <StyledA>Learn about ROI and how it works</StyledA>
         </BottomWrapper>
       </BlockWrapper>
