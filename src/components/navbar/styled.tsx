@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import styled, { css } from 'styled-components';
+import Image from "next/image";
+import styled, { css } from "styled-components";
 
 export const Nav = styled.nav`
   height: 70px;
@@ -47,11 +47,15 @@ export const NavMenu = styled.ul`
   text-align: center;
   margin-right: -70px;
   gap: 3.75rem;
-  
+
   @media screen and (max-width: 800px) {
     margin-right: 0px;
     gap: 2.5rem;
   }
+
+  /* @media screen and (max-width: 768px) {
+    display: none;
+  } */
 `;
 
 export const NavItem = styled.li`
@@ -104,8 +108,10 @@ export const ConnectWalletBtn = styled.button`
   @media screen and (max-width: 800px) {
     width: 100%;
   }
+  /* @media screen and (max-width: 768px) {
+    display: none;
+  } */
 `;
-
 
 export const ProjectHeader = styled.button`
   width: 200px;
@@ -125,3 +131,22 @@ export const ProjectHeader = styled.button`
     border: 1px solid white;
   }
 `;
+
+// export const MobileIcon = styled.div`
+//   display: none;
+
+//   @media screen and (max-width: 768px) {
+//     display: block;
+//     position: absolute;
+//     top: calc(100% - 130%);
+//     right: calc(100% - 104%);
+//     transform: translate(-100%, 60%);
+
+//     cursor: pointer;
+
+//     span {
+//       color: #fff;
+//       font-size: 3rem;
+//     }
+//   }
+// `;

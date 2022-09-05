@@ -21,7 +21,7 @@ export const FeaturesSec = styled.div`
   flex-wrap: wrap;
   gap: 3rem;
 
-  @media screen and (max-width: 1378px) {
+  @media screen and (max-width: 1394px) {
     justify-content: center;
   }
 `;
