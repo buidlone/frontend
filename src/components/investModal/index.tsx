@@ -68,7 +68,7 @@ const InvestModal = ({ onClose }: IInvest) => {
               classNamePrefix="react-select"
               defaultValue={options[0]}
               isSearchable={false}
-            ></SelectField>
+            />
           </IModalFieldWrapper>
 
           <IModalFieldWrapper>
