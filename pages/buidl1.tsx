@@ -6,12 +6,19 @@ import ProjectHeader from "../src/components/projectHeader";
 import { BgImage, Container } from "../styles/Container";
 import TimelineBlock from "../src/components/timelineBlock";
 import FooterSection from "../src/components/footerSection";
+import Image from "next/image";
+import BuidlLogo from "../public/BuidlLogo2x.png";
+import { LogoWrapper } from "../src/components/projectHeader/styled";
+
 
 const Buidl1 = () => {
   return (
     <>
       <BgImage isFixed />
       <Container>
+        <LogoWrapper>
+          <Image src={BuidlLogo}  />
+        </LogoWrapper>
         <ProjectHeader
           text={"Project 1 - BUIDL 1 - Self raising capital"}
           stage={"STAGE 1"}

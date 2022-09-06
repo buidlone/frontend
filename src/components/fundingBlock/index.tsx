@@ -5,6 +5,7 @@ import Modal from "../modal";
 import {
   BlockWrapper,
   BottomWrapper,
+  FContainer,
   GreenButton,
   StyledA,
   Title,
@@ -16,23 +17,21 @@ export default function FundingBlock() {
     <>
       <BlockWrapper>
         <Title>Funding</Title>
-        <div
-          style={{ display: "block", marginTop: "22%", marginBottom: "auto" }}
-        >
+        <FContainer>
           <FundingRoadmap
             seed={"34 000"}
             softCap={"34 000"}
             hardCap={"34 000"}
           />
-        </div>
-        <BottomWrapper>
-          <GreenButton onClick={() => setShowModal(true)}>Invest</GreenButton>{" "}
-          <br />
-          <Modal show={showModal} >
-            <InvestModal onClose={() => setShowModal(false)}/>
-          </Modal>
-          <StyledA>Learn about ROI and how it works</StyledA>
-        </BottomWrapper>
+          <BottomWrapper>
+            <GreenButton onClick={() => setShowModal(true)}>Invest</GreenButton>{" "}
+            <br />
+            <Modal show={showModal}>
+              <InvestModal onClose={() => setShowModal(false)} />
+            </Modal>
+            <StyledA>Learn about ROI and how it works</StyledA>
+          </BottomWrapper>
+        </FContainer>
       </BlockWrapper>
     </>
   );

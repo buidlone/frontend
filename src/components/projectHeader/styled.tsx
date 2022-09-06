@@ -1,12 +1,12 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const ProjectHeadWrapper = styled.div`
   text-align: center;
   font-size: 38px;
-  margin-top: 40px;
+  //margin-top: 40px;
   padding-bottom: 15px;
   color: #00c4ff;
-  width: 60%;
+  width: 100%;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -23,4 +23,10 @@ export const StageText = styled.text`
   margin-right: auto;
   color: #00c4ff;
   margin-bottom: 50px;
+`;
+
+export const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 2.5rem;
 `;

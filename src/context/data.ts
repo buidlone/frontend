@@ -13,7 +13,10 @@ interface Project {
     fundsRequired: number;
     isCollected: boolean;
   };
-  hardCap?: number;
+  hardCap?: {
+  amount?: number;
+  isReached?: boolean;
+};
   softCap?: {
     amount?: number;
     reservedUntil?: string;
@@ -63,14 +66,17 @@ const project: Project = {
   reserved: 6585, //will be in the investor's data model
   state: 'Ongoing', //will be derived, not hard-coded
   seed: {
-    fundsRequired: 34000,
+    fundsRequired: 14000,
     isCollected: true,
   },softCap: {
     amount: 34000,
     reservedUntil: '2022-06-01',
     isReached: true,
   },
-  hardCap: 34000,
+  hardCap: {
+    amount: 54000,
+    isReached: false,
+  },
   stages: [
     {
       id: 1,
