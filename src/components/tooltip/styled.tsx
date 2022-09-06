@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { position } from '.';
+import styled from "styled-components";
+import { position } from ".";
 
 interface Props {
   show?: number;
@@ -22,14 +22,15 @@ export const StyledTooltip = styled.span<Props>`
 
   background-color: #2e436c;
   box-shadow: 0px 0px 10px #00000029;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 10px;
+  text-align: left;
+  border-radius: 13px;
+  padding: 13px 13px;
 
-  font-size: 14px;
+  font-size: 18px;
   color: rgba(255, 255, 255, 0.5);
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   max-width: 310px;
+  font-weight: 300;
 
   transition-property: transform, opacity !important;
   transition-duration: 0.06s !important;
@@ -39,7 +40,7 @@ export const StyledTooltip = styled.span<Props>`
   transform: scale(${(props) => (props.show ? 1 : 0.7)});
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     top: 100%;
     left: 50%;
