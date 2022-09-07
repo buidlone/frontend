@@ -37,7 +37,11 @@ const TimelineBlock = () => {
         <BottomPartWrapper>
           <InlineWrapper>
             <div className="period">Soft cap reservation period</div>
-            <Tooltip text={"Information about the soft cap reservation period"}>
+            <Tooltip
+              text={
+                "You will be able to claim back your cash if Soft Cap is not reached during expected period"
+              }
+            >
               <InfoIcon />
             </Tooltip>
           </InlineWrapper>

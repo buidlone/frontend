@@ -220,22 +220,17 @@ export const SelectField = styled(Select)`
   }
 `;
 
-export const IModalFormConfirmSection = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  gap: 9%;
-  padding-bottom: 1rem;
-`;
-
 export const ProceedButton = styled.button`
-  width: 311.33px;
+  max-width: 20rem;
+  width: 100%;
+  min-width: 14rem;
+  flex: 1;
   height: 40px;
   background: transparent linear-gradient(165deg, #00ffc4 0%, #3a8372 100%) 0%
     0% no-repeat padding-box;
   border: 1px solid #00ffc4;
   border-radius: 12px;
   opacity: 1;
-
   color: white;
   text-align: center;
   font-size: 20px;
@@ -274,7 +269,7 @@ export const CheckboxLabel = styled.label`
 
   &::before {
     content: "";
-    width: 1.25rem;
+    min-width: 1.25rem;
     height: 1.25rem;
     border-radius: 4px;
     margin-right: 0.688rem;
@@ -291,6 +286,7 @@ export const Checkbox = styled.input`
 export const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
 
   & > ${CheckboxLabel}::before, ${Checkbox}:hover + ${CheckboxLabel}::before {
     background-color: #0e0f1a;
@@ -301,13 +297,51 @@ export const CheckboxContainer = styled.div`
   }
 
   ${Checkbox}:checked + ${CheckboxLabel}::before {
-    background-color: #0e0f1a;
+    background-color: #00ffc4;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    font-weight: bold;
     content: "✓   ";
-    color: white;
+    color: black;
+  }
+`;
+
+export const BottomPartWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-family: "Barlow", sans-serif;
+  color: #dbdbdb;
+  font-size: 12px;
+
+  .dateNum {
+    color: #00ffc4;
+  }
+
+  .dateWords {
+    color: #00c4ff;
+  }
+  .period {
+    color: #c7c7c7;
+  }
+`;
+
+export const ItemWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
+export const IModalFormConfirmSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0rem 0rem 0.6rem 0rem;
+  gap: 4rem;
+
+  & > ${ItemWrapper} {
+    max-width: 23rem;
+    width: 100%;
   }
 `;
 
@@ -318,8 +352,8 @@ export const IModalWrapper = styled.div`
   background-color: rgba(31, 35, 60, 0.58);
   box-shadow: 0px 0px 12px #00000093;
   flex-wrap: wrap;
-  max-width: 100%;
-  width: 77.063rem;
+  max-width: 77.063rem;
+  width: 100%;
   min-height: 23.75rem;
   border-radius: 28px;
   z-index: 9999;
@@ -348,4 +382,13 @@ export const IModalWrapper = styled.div`
       margin-left: 0;
     }
   }
+`;
+
+export const ErrorMsg = styled.span`
+  color: rgba(255, 0, 0, 1);
+  position: absolute;
+  bottom: 140%;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Barlow", sans-serif;
 `;

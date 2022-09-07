@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 import { BlockWrapper } from "../fundingBlock/styled";
 
-
-
 export const TopWrapper = styled.div`
   width: 100%;
   height: 6%;
