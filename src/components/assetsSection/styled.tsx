@@ -5,11 +5,13 @@ export const AssetsHeader = styled(ProjectHeadWrapper)`
   width: 100%;
   font-size: 31px;
   padding-top: 2.5rem;
+  margin-bottom: 2rem;
 `;
 
 export const StateButton = styled.button`
-  width: 146px;
-  height: 32px;
+  max-width: 9.125rem;
+  width: 100%;
+  height: 2rem;
   border-radius: 16px;
   background: #2e314d;
   color: #ffffff;
@@ -25,13 +27,15 @@ export const StateButton = styled.button`
 
   &:hover,
   &:focus {
+    outline-style: none;
+    box-shadow: none;
     background-color: #00c4ff;
     color: white;
   }
 `;
 
 export const ButtonsWrapper = styled.div`
-  margin: 30px 0 30px 0;
+  margin: 1.875rem 0 7rem 0;
   width: 100%;
   display: flex;
   align-items: start;
@@ -45,4 +49,5 @@ export const AboutSec = styled.section`
   justify-content: center;
   padding-bottom: 100px;
   flex-wrap: wrap;
+  width: 100%;
 `;

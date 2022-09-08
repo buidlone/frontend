@@ -9,6 +9,7 @@ export const AccordionContainer = styled.div`
   overflow: hidden;
   width: 100%;
   background-color: inherit;
+  border-radius: inherit;
 `;
 
 export const AccordionButton = styled.div`

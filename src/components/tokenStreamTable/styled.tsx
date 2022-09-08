@@ -1,13 +1,17 @@
 import styled, { css, keyframes } from "styled-components";
 
-export const Table = styled.table`
+interface Props {
+  assets?: boolean;
+}
+
+export const Table = styled.table<Props>`
   width: 100%;
   border-collapse: collapse;
   position: relative;
 
   td,
   th {
-    padding: 26px 0px;
+    padding: ${(props) => (props.assets ? "1.768rem 2.516rem" : "26px 0px")};
     border: none;
     text-align: center;
     font-family: "Barlow", sans-serif;
@@ -33,44 +37,47 @@ export const Table = styled.table`
     font-size: 16px;
   }
 
-  /*Responsive*/
-  @media screen and (max-width: 1210px) {
-    thead {
-      display: none;
-    }
+  ${(props) =>
+    !props.assets &&
+    css`
+      @media screen and (max-width: 1210px) {
+        thead {
+          display: none;
+        }
 
-    &,
-    tbody,
-    tr,
-    td {
-      display: block;
-      width: 100%;
-    }
+        &,
+        tbody,
+        tr,
+        td {
+          display: block;
+          width: 100%;
+        }
 
-    tr {
-      margin-bottom: 15px;
-    }
+        tr {
+          margin-bottom: 15px;
+        }
 
-    td {
-      text-align: right;
-      padding-left: 50%;
-      position: relative;
+        td {
+          text-align: right;
+          padding-left: 50%;
+          position: relative;
 
-      &::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 50%;
-        font-family: "Barlow", sans-serif;
-        font-weight: 300;
-        color: rgba(0, 196, 255, 0.5);
-        font-family: "Barlow", sans-serif;
-        font-weight: 300;
-        font-size: 14px;
-        text-align: left;
+          &::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0;
+            width: 50%;
+            font-family: "Barlow", sans-serif;
+            font-weight: 300;
+            color: rgba(0, 196, 255, 0.5);
+            font-family: "Barlow", sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+            text-align: left;
+          }
+        }
       }
-    }
-  }
+    `}
 `;
 
 export const Footer = styled.div`
@@ -86,5 +93,33 @@ export const Footer = styled.div`
     font-weight: 300;
     color: rgba(133, 142, 199, 1);
     text-align: center;
+  }
+`;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 2.688rem;
+  padding: 1.768rem 2.516rem;
+`;
+
+export const InvButton = styled.button`
+  border-color: transparent;
+  background: none;
+  white-space: wrap;
+
+  font-size: 16px;
+  font-family: "Barlow", sans-serif;
+  font-weight: 300;
+  color: rgba(0, 255, 196, 1);
+  outline: none;
+  text-decoration: underline;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:focus,
+  &:hover {
+    /* color: #ffffff;
+    border-bottom: 0.2px solid #ffffff; */
   }
 `;

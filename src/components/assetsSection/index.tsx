@@ -10,7 +10,7 @@ const AssetsSection = () => {
   return (
     <AboutSec>
       <ButtonsWrapper>
-        <StateButton onClick={() => setActive('active')}>Active</StateButton>
+        <StateButton autoFocus onClick={() => setActive('active')}>Active</StateButton>
         <StateButton onClick={() => setActive('claimed')}>Claimed</StateButton>
         <StateButton onClick={() => setActive('cancelled')}>
           Cancelled

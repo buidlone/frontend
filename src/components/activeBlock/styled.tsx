@@ -1,25 +1,39 @@
 import styled, { css } from "styled-components";
+import { InlineWrapper } from "../timelineBlock/styled";
 
-export const ActiveTable = styled.table`
-  opacity: 0.7;
-  border-collapse: collapse;
-  border: transparent 1px solid;
+export const TableLink = styled.a`
+  color: rgba(214, 214, 214, 1);
+  font-size: 11px;
+  text-decoration: underline;
+  text-align: left;
+  font-family: "IBM Plex", sans-serif;
+`;
+
+export const TableButton = styled.button`
+  max-width: 11.408rem;
   width: 100%;
-  border-radius: 23px;
-  height: 100%;
+  height: 2.5rem;
+  opacity: 1;
+  font-size: 18px;
+  text-align: center;
+  font-size: 16px;
+  transition: 9s ease-in;
+  transform: translateX(0);
+  cursor: pointer;
+  font-family: "Space Grotesk", sans-serif;
+  border-radius: 10px;
   background: #2e314d 0% 0% no-repeat padding-box;
-  cursor: default;
+`;
 
-  .firstRow {
-    border-bottom: 1px solid #ffffff;
-  }
-
-  .secondRow {
-    background: #373b5f 0% 0% no-repeat padding-box;
-  }
-  .thirdRow {
-    height: 117px;
-  }
+export const ActiveBlockWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 16.75rem;
+  background-color: rgba(46, 49, 77, 0.5);
+  border-radius: 23px;
+  z-index: 9999;
+  position: relative;
 
   .bigger {
     font-size: 21px;
@@ -33,13 +47,20 @@ export const ActiveTable = styled.table`
     font-size: 18px;
   }
 
+  .white {
+    color: rgba(255, 255, 255, 1);
+  }
+
   .blue {
-    color: #00c4ff;
-    opacity: 1;
+    color: rgba(0, 196, 255, 1);
   }
 
   .green {
-    color: #00ffc4;
+    color: rgba(0, 255, 196, 1);
+  }
+
+  .orange {
+    color: rgba(255, 137, 0, 1);
   }
 
   .underlined {
@@ -51,8 +72,9 @@ export const ActiveTable = styled.table`
       0% no-repeat padding-box;
     border: 1px solid #00ffc4;
     border-radius: 12px;
+    font-size: 18px;
     font-family: "Barlow", sans-serif;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 1);
 
     &:hover {
       background: transparent linear-gradient(168deg, #3a8372 0%, #00ffc4 100%)
@@ -60,55 +82,110 @@ export const ActiveTable = styled.table`
     }
   }
 
-  .insBtn {
-    background: #2e314d 0% 0% no-repeat padding-box;
-    border: 1px solid #00c4ff;
-    border-radius: 10px;
-    color: #00c4ff;
-    font-family: "Space Grotesk", sans-serif;
+  .claimBtn {
+    border: 1px solid rgba(0, 196, 255, 1);
+    color: rgba(0, 196, 255, 1);
+  }
+
+  .stopBtn {
+    border: 1px solid rgba(255, 137, 0, 1);
+    color: rgba(255, 137, 0, 1);
   }
 `;
 
-export const FlexRow1 = styled.tr``;
+export const Table = styled.table`
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  position: relative;
 
-export const TableLink = styled.a`
-  color: #d6d6d6;
-  font-size: 11px;
-  text-decoration: underline;
-  text-align: left;
-  font-family: "IBM Plex", sans-serif;
-  opacity: 1;
+  td,
+  th {
+    padding: 1.625rem 2.516rem 1.1rem 2.516rem;
+    border: none;
+    text-align: left;
+    font-family: "Barlow", sans-serif;
+    font-weight: 300;
+    position: relative;
+    color: #ffffff;
+    font-size: 20px;
+
+    .tokenSpan {
+      right: -3%;
+    }
+  }
+  th {
+    border-bottom: 1px solid rgba(230, 230, 230, 0.3);
+    padding-bottom: 1.1rem;
+  }
+  tr {
+    background-color: rgba(46, 49, 77, 0.5);
+  }
+
+  tr:nth-child(1) td {
+    padding: 1.625rem 2.516rem 0rem 2.516rem;
+    white-space: nowrap;
+  }
+
+  tr:nth-child(2) td {
+    padding: 0rem 2.516rem 0.5rem 2.516rem;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+  }
 `;
 
-export const BottomButtonsWrapper = styled.div`
+export const ButtonsWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  gap: 1rem;
-  padding-right: 2rem;
-  
+  gap: 4.5rem;
+
+  padding: 26px 2.516rem;
+  position: relative;
+  flex-shrink: 1;
+
+  ${InlineWrapper} {
+    position: absolute;
+    left: 3%;
+
+    @media screen and (max-width: 1100px) {
+      top: 85%;
+      left: 0%;
+      padding: inherit;
+    }
+  }
 `;
 
-export const Data = styled.td`
-  color: #ffffff;
-  font-family: "Barlow", sans-serif;
-  font-size: 20px;
-  text-align: left;
-  opacity: 1;
-  text-align: left;
-  padding: 25px;
+export const Footer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
-export const TableButton = styled.button`
-  width: 199px;
-  height: 40px;
-  opacity: 1;
-  font-size: 18px;
-  text-align: center;
-  font-size: 20px;
-  transition: 9s ease-in;
-  transform: translateX(0);
-  cursor: pointer;
+export const Card = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+  background: inherit;
+
+  .thefront {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: inherit;
+  }
+
+  .theback {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: inherit;
+    transform: rotateY(180deg);
+  }
 `;
