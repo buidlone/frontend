@@ -1,24 +1,47 @@
-import AboutBlock from '../aboutBlock';
-import HistoryBlock from '../historyBlock';
-import { ButtonsWrapper, StateButton, AboutSec } from './styled';
-import { useState } from 'react';
-import ActiveBlock from '../activeBlock';
+import AboutBlock from "../aboutBlock";
+import HistoryBlock from "../historyBlock";
+import { ButtonsWrapper, StateButton, AboutSec } from "./styled";
+import { useState } from "react";
+import ActiveBlock from "../activeBlock";
 
 const AssetsSection = () => {
-  const [active, setActive] = useState('active');
+  const [active, setActive] = useState("active");
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLElement>,
+    active: string
+  ) => {
+    const buttons = document.querySelectorAll("StateButton");
+    event.currentTarget.classList.add("selected");
+    setActive(active);
+    console.log(event);
+  };
 
   return (
     <AboutSec>
       <ButtonsWrapper>
-        <StateButton autoFocus onClick={() => setActive('active')}>Active</StateButton>
-        <StateButton onClick={() => setActive('claimed')}>Claimed</StateButton>
-        <StateButton onClick={() => setActive('cancelled')}>
+        <StateButton
+          className={active == "active" ? "selected" : ""}
+          onClick={(e) => handleClick(e, "active")}
+        >
+          Active
+        </StateButton>
+        <StateButton
+          className={active == "claimed" ? "selected" : ""}
+          onClick={(e) => handleClick(e, "claimed")}
+        >
+          Claimed
+        </StateButton>
+        <StateButton
+          className={active == "cancelled" ? "selected" : ""}
+          onClick={(e) => handleClick(e, "cancelled")}
+        >
           Cancelled
         </StateButton>
       </ButtonsWrapper>
-      {active === 'active' && <ActiveBlock/>}
-      {active === 'claimed' && <AboutBlock />}
-      {active === 'cancelled' && <HistoryBlock />}
+      {active === "active" && <ActiveBlock />}
+      {active === "claimed" && <AboutBlock />}
+      {active === "cancelled" && <HistoryBlock />}
     </AboutSec>
   );
 };

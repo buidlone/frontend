@@ -10,13 +10,25 @@ const AboutSection = () => {
   return (
     <AboutSec>
       <ButtonsWrapper>
-        <AboutButton onClick={() => setActive("details")}>
+        <AboutButton
+          autoFocus
+          className={active == "details" ? "selected" : ""}
+          onClick={() => setActive("details")}
+        >
           IDO Details
         </AboutButton>
-        <AboutButton onClick={() => setActive("about")}>
+        <AboutButton
+          className={active == "about" ? "selected" : ""}
+          onClick={() => setActive("about")}
+        >
           About the project
         </AboutButton>
-        <AboutButton onClick={() => setActive("history")}>History</AboutButton>
+        <AboutButton
+          className={active == "history" ? "selected" : ""}
+          onClick={() => setActive("history")}
+        >
+          History
+        </AboutButton>
       </ButtonsWrapper>
       {active === "details" && <DetailsBlock />}
       {active === "about" && <Buidl1Section />}

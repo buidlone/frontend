@@ -25,16 +25,20 @@ const items = [
 
 const ActiveBlock = () => {
   const featuredProject = useContext(ProjectContext);
-  const [showValue, setShowValue] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [flip1, setFlip1] = useState(true);
+  const [flip2, setFlip2] = useState(true);
+  const [flip3, setFlip3] = useState(true);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setShowValue(!showValue);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [showValue]);
+  const showFunds = () => {
+    setFlip1(!flip1);
+  };
+  const showTokens = () => {
+    setFlip2(!flip2);
+  };
+  const showVoting = () => {
+    setFlip3(!flip3);
+  };
 
   return (
     <ActiveBlockWrapper>
@@ -51,39 +55,34 @@ const ActiveBlock = () => {
           <tr>
             <td className="underlined blue bigger">Buidl1</td>
             <td className="white bigger">1/60</td>
-            {showValue ? (
-              <>
-                <td className="green">1245ETH</td>{" "}
-                <td className="blue">125/5000 DPP</td>
-                <td className="orange bigger">5%</td>
-              </>
-            ) : (
-              <>
-                <td className="green">12ETH</td>{" "}
-                <td className="blue">125 DPP</td>
-                <td className="orange bigger">5</td>
-              </>
-            )}
-
+            <td
+              onMouseOver={showFunds}
+              onMouseOut={showFunds}
+              className="green"
+            >
+              {flip1 ? "1245ETH" : "12ETH"}{" "}
+            </td>
+            <td
+              onMouseOver={showTokens}
+              onMouseOut={showTokens}
+              className="blue"
+            >
+              {flip2 ? "125/5000 DPP" : "125 DPP"}
+            </td>
+            <td
+              onMouseOver={showVoting}
+              onMouseOut={showVoting}
+              className="orange bigger"
+            >
+              {flip3 ? "5%" : "500 tickets"}
+            </td>
             <td className="green smaller">Ongoing</td>
           </tr>
           <tr>
             <td />
             <td />
-            {showValue ? (
-              <>
-                {" "}
-                <td>Invested</td>
-                <td>Tokens collected</td>{" "}
-              </>
-            ) : (
-              <>
-                <td>In use</td>
-                <td>Tokens claimed</td>
-              </>
-            )}
-
-            <td />
+            <td>{flip1 ? "Invested" : "In use"}</td>
+            <td>{flip2 ? "Tokens collected" : "Tokens claimed"}</td> <td />
             <td />
           </tr>
         </tbody>

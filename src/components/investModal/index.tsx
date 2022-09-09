@@ -28,7 +28,8 @@ import Accordion from "../accordion";
 import TokenStreamTable from "../tokenStreamTable";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
-import React, { ChangeEvent, FormEvent, KeyboardEvent, useState } from "react";
+import React, { KeyboardEvent, useState } from "react";
+import useClickOutside from "../../hooks/useClickOutside";
 
 const items = [
   {
@@ -83,7 +84,6 @@ const InvestModal = ({ onClose }: IInvest) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-
       setReceivedBDL1(24000);
       setReceivedDAO(300);
       setVotingPower(15);
@@ -94,8 +94,12 @@ const InvestModal = ({ onClose }: IInvest) => {
     console.log(data);
   };
 
+  let domNode: any = useClickOutside(() => {
+    onClose();
+  });
+
   return (
-    <IModalWrapper>
+    <IModalWrapper ref={domNode}>
       <IModalHeader>
         <LogoWrapper>
           <Image className="logo" src={BuidlLogo} />

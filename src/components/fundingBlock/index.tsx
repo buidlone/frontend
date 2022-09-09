@@ -13,6 +13,7 @@ import {
 
 export default function FundingBlock() {
   const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <BlockWrapper>

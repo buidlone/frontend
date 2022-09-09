@@ -26,7 +26,8 @@ export const StateButton = styled.button`
   z-index: 4;
 
   &:hover,
-  &:focus {
+  &:focus,
+  &.selected {
     outline-style: none;
     box-shadow: none;
     background-color: #00c4ff;
