@@ -1,60 +1,116 @@
 import {
-  ActiveTable,
-  FlexRow1,
-  Data,
-  BottomButtonsWrapper,
   TableButton,
   TableLink,
-} from './styled';
-import DiscordImg from '../../../public/DiscordSmall.png';
-import Image from 'next/image';
-import { useContext } from 'react';
-import ProjectContext from '../../context/projectContext';
-import useCountdown from '../../hooks/useCountdown';
+  ActiveBlockWrapper,
+  Table,
+  Footer,
+  ButtonsWrapper,
+} from "./styled";
+import DiscordImg from "../../../public/DiscordSmall.png";
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
+import ProjectContext from "../../context/projectContext";
+import TokenStreamTable from "../tokenStreamTable";
+import Accordion from "../accordion";
+import { InlineWrapper } from "../timelineBlock/styled";
+import InvestModal from "../investModal";
+import Modal from "../modal";
+
+const items = [
+  {
+    name: "Your detailed project token stream",
+    content: <TokenStreamTable assets />,
+  },
+];
 
 const ActiveBlock = () => {
   const featuredProject = useContext(ProjectContext);
-  const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
-    useCountdown(featuredProject?.end);
+  const [showModal, setShowModal] = useState(false);
+  const [flip1, setFlip1] = useState(true);
+  const [flip2, setFlip2] = useState(true);
+  const [flip3, setFlip3] = useState(true);
+
+  const showFunds = () => {
+    setFlip1(!flip1);
+  };
+  const showTokens = () => {
+    setFlip2(!flip2);
+  };
+  const showVoting = () => {
+    setFlip3(!flip3);
+  };
 
   return (
-    <ActiveTable>
-      <FlexRow1 className='firstRow'>
-        <Data className='bigger'>Project</Data>
-        <Data>Invested</Data>
-        <Data>Tokens collected</Data>
-        <Data>Claimed</Data>
-        <Data>Reserved</Data>
-        <Data>State</Data>
-      </FlexRow1>
-      <FlexRow1 className='secondRow'>
-        <Data className='underlined blue bigger'>{featuredProject?.name}</Data>
-        <Data className='green'>{featuredProject?.invested} ETH</Data>
-        <Data>{featuredProject?.collected} DPP</Data>
-        <Data className='bigger'>{featuredProject?.claimed} DPP</Data>
-        <Data className='bigger'>{featuredProject?.reserved} DPP</Data>
-        <Data className='green smaller'>{featuredProject?.state} </Data>
-      </FlexRow1>
-      <FlexRow1 className='thirdRow'>
-        <Data className='blue bigger'>Project ends in:</Data>
-        <Data className='blue bigger' style={{ fontFamily: 'monospace' }}>
-          {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S
-        </Data>
-        <Data colSpan={4}>
-          <BottomButtonsWrapper>
+    <ActiveBlockWrapper>
+      <Table>
+        <thead>
+          <th className="bigger">Project</th>
+          <th>Stage</th>
+          <th>Funds</th>
+          <th>Project tokens</th>
+          <th>Voting</th>
+          <th>State</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="underlined blue bigger">Buidl1</td>
+            <td className="white bigger">1/60</td>
+            <td
+              onMouseOver={showFunds}
+              onMouseOut={showFunds}
+              className="green"
+            >
+              {flip1 ? "1245ETH" : "12ETH"}{" "}
+            </td>
+            <td
+              onMouseOver={showTokens}
+              onMouseOut={showTokens}
+              className="blue"
+            >
+              {flip2 ? "125/5000 DPP" : "125 DPP"}
+            </td>
+            <td
+              onMouseOver={showVoting}
+              onMouseOut={showVoting}
+              className="orange bigger"
+            >
+              {flip3 ? "5%" : "500 tickets"}
+            </td>
+            <td className="green smaller">Ongoing</td>
+          </tr>
+          <tr>
+            <td />
+            <td />
+            <td>{flip1 ? "Invested" : "In use"}</td>
+            <td>{flip2 ? "Tokens collected" : "Tokens claimed"}</td> <td />
+            <td />
+          </tr>
+        </tbody>
+      </Table>
+      <Footer>
+        <ButtonsWrapper>
+          <InlineWrapper>
             <Image
               src={DiscordImg}
-              alt='discord logo'
-              height={'26px'}
-              width={'26px'}
+              alt="discord logo"
+              height={"26px"}
+              width={"26px"}
             />
             <TableLink>Project discussion</TableLink>
-            <TableButton className='invBtn'>Invest</TableButton>
-            <TableButton className='insBtn'>Inspect</TableButton>
-          </BottomButtonsWrapper>
-        </Data>
-      </FlexRow1>
-    </ActiveTable>
+          </InlineWrapper>
+
+          <TableButton className="stopBtn">STOP</TableButton>
+          <TableButton className="claimBtn">Claim tokens</TableButton>
+          <TableButton className="invBtn" onClick={() => setShowModal(true)}>
+            Invest
+          </TableButton>
+          <Modal show={showModal}>
+            <InvestModal onClose={() => setShowModal(false)} />
+          </Modal>
+        </ButtonsWrapper>
+        <Accordion items={items} />
+      </Footer>
+    </ActiveBlockWrapper>
   );
 };
 

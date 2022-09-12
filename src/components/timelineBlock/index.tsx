@@ -1,5 +1,4 @@
 import { BlockWrapper, Title } from "../fundingBlock/styled";
-import { Line } from "../projectsInfoSection/styled";
 
 import {
   BottomPartWrapper,
@@ -21,11 +20,24 @@ const TimelineBlock = () => {
       <TopWrapper>
         <Title>Timeline</Title>
         <InlineWrapper className="buttons">
-          <XButton onClick={() => setActive(1)}>x1</XButton>
-          <XButton autoFocus onClick={() => setActive(2)}>
+          <XButton
+            className={active == 1 ? "selected" : ""}
+            onClick={() => setActive(1)}
+          >
+            x1
+          </XButton>
+          <XButton
+            className={active == 2 ? "selected" : ""}
+            onClick={() => setActive(2)}
+          >
             x2
           </XButton>
-          <XButton onClick={() => setActive(3)}>x3</XButton>
+          <XButton
+            className={active == 3 ? "selected" : ""}
+            onClick={() => setActive(3)}
+          >
+            x3
+          </XButton>
         </InlineWrapper>
       </TopWrapper>
 

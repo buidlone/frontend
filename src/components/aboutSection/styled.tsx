@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const AboutButton = styled.button`
   border-color: transparent;
@@ -6,7 +6,7 @@ export const AboutButton = styled.button`
   white-space: wrap;
   padding: 10px 20px;
   font-size: 18px;
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   font-weight: 400;
   color: #c1c1c1;
   outline: none;
@@ -14,7 +14,8 @@ export const AboutButton = styled.button`
   overflow: hidden;
   position: relative;
   &:focus,
-  &:hover {
+  &:hover,
+  &.selected {
     color: #ffffff;
     border-bottom: 0.2px solid #ffffff;
   }
@@ -22,7 +23,6 @@ export const AboutButton = styled.button`
 
 export const ButtonsWrapper = styled.div`
   margin: 90px 0 30px 0;
-
   width: 100%;
   display: flex;
   justify-content: center;

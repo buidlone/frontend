@@ -1,4 +1,4 @@
-import { Footer, Table} from "./styled";
+import { Footer, Table, Header, InvButton } from "./styled";
 
 const tokenStreamData = [
   {
@@ -38,12 +38,23 @@ const tokenStreamData = [
   },
 ];
 
-const TokenStreamTable = () => {
+interface ITokenStreamTable {
+  assets?: boolean;
+}
+
+const TokenStreamTable = ({ assets }: ITokenStreamTable) => {
   return (
     <>
-      <Table>
+      {assets && (
+        <Header>
+          <InvButton>1st investment</InvButton>
+          <InvButton>2nd investment</InvButton>
+          <InvButton>3rd investment</InvButton>
+        </Header>
+      )}
+      <Table assets={assets}>
         <thead>
-          <th></th>
+          <th />
           <th>Instant fund release (USDT)</th>
           <th>Fund stream(USDT)</th>
           <th>Token release(BDL1)</th>
@@ -70,10 +81,13 @@ const TokenStreamTable = () => {
             ))}
         </tbody>
       </Table>
+
       <Footer>
-        <a href="">
-          Still considering? Learn more about the project and its team
-        </a>
+        {!assets && (
+          <a href="">
+            Still considering? Learn more about the project and its team
+          </a>
+        )}
       </Footer>
     </>
   );

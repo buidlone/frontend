@@ -42,7 +42,8 @@ export const XButton = styled.button`
   cursor: pointer;
 
   &:focus,
-  &:hover {
+  &:hover,
+  &.selected {
     outline-style: none;
     box-shadow: none;
     border-color: transparent;
