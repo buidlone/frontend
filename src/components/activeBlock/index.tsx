@@ -58,21 +58,21 @@ const ActiveBlock = () => {
             <td
               onMouseOver={showFunds}
               onMouseOut={showFunds}
-              className="green"
+              className="green flippable"
             >
               {flip1 ? "1245ETH" : "12ETH"}{" "}
             </td>
             <td
               onMouseOver={showTokens}
               onMouseOut={showTokens}
-              className="blue"
+              className="blue flippable"
             >
               {flip2 ? "125/5000 DPP" : "125 DPP"}
             </td>
             <td
               onMouseOver={showVoting}
               onMouseOut={showVoting}
-              className="orange bigger"
+              className="orange bigger flippable"
             >
               {flip3 ? "5%" : "500 tickets"}
             </td>

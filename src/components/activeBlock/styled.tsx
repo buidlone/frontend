@@ -134,6 +134,12 @@ export const Table = styled.table`
     color: rgba(255, 255, 255, 0.5);
     white-space: nowrap;
   }
+
+  td {
+    &.flippable:hover {
+      transition-delay: 10s;
+    }
+  }
 `;
 
 export const ButtonsWrapper = styled.div`
