@@ -9,7 +9,8 @@ import FooterSection from "../src/components/footerSection";
 import Image from "next/image";
 import BuidlLogo from "../public/BuidlLogo2x.png";
 import { LogoWrapper } from "../src/components/projectHeader/styled";
-
+import Calculator from "../src/components/calculator";
+import InvestorsBarChart from "../src/components/investorsBarChart";
 
 const Buidl1 = () => {
   return (
@@ -17,7 +18,7 @@ const Buidl1 = () => {
       <BgImage isFixed />
       <Container>
         <LogoWrapper>
-          <Image src={BuidlLogo}  />
+          <Image src={BuidlLogo} />
         </LogoWrapper>
         <ProjectHeader
           text={"Project 1 - BUIDL 1 - Self raising capital"}
@@ -28,6 +29,10 @@ const Buidl1 = () => {
           <TimelineBlock />
         </FeaturesSec>
         <ProgressSection />
+        <FeaturesSec>
+          <Calculator />
+          <InvestorsBarChart />
+        </FeaturesSec>
         <AboutSection />
       </Container>
 

@@ -32,6 +32,11 @@ interface Project {
   claimed?: number;
   reserved?: number;
   state?: string;
+  investors?: 
+  {
+    id: number;
+    invested: number;
+  }[];
   stages?: 
     {
       id?: number;
@@ -47,6 +52,9 @@ interface Project {
       duration?: string;
     }[];
 }
+
+
+
 
 const project: Project = {
   id: 1,
@@ -77,6 +85,233 @@ const project: Project = {
     amount: 54000,
     isReached: false,
   },
+  investors: [
+    {
+      id: 1,
+      invested: 1
+    },
+    {
+      id: 2,
+      invested: 2765
+    },
+    {
+      id: 3,
+      invested: 58
+    },
+    {
+      id: 4,
+      invested: 9875
+    },
+    {
+      id: 5,
+      invested: 23223
+    },
+    {
+      id: 6,
+      invested: 987
+    },
+    {
+      id: 7,
+      invested: 12
+    },
+    {
+      id: 8,
+      invested: 1999
+    },
+    {
+      id: 9,
+      invested: 1445
+    },
+    {
+      id: 10,
+      invested: 178
+    },{
+      id: 11,
+      invested: 1987
+    },{
+      id: 12,
+      invested: 134
+    },{
+      id: 13,
+      invested: 1
+    },{
+      id: 14,
+      invested: 1234
+    },{
+      id: 15,
+      invested: 165
+    },{
+      id: 16,
+      invested: 13444
+    },{
+      id: 17,
+      invested: 1564
+    },{
+      id: 18,
+      invested: 1324
+    },{
+      id: 19,
+      invested: 9
+    },{
+      id: 20,
+      invested: 1
+    },{
+      id: 21,
+      invested: 13333
+    },{
+      id: 22,
+      invested: 1654
+    },
+    {
+      id: 23,
+      invested: 1245
+    },
+    {
+      id: 24,
+      invested: 133
+    },{
+      id: 25,
+      invested: 18766
+    },{
+      id: 26,
+      invested: 1435
+    },{
+      id: 27,
+      invested: 18654
+    },{
+      id: 28,
+      invested: 1400
+    },
+    {
+      id: 29,
+      invested: 12
+    },{
+      id: 30,
+      invested: 1
+    },
+    {
+      id: 31,
+      invested: 1567
+    },
+    {
+      id: 32,
+      invested: 2876
+    },
+    {
+      id: 1,
+      invested: 1
+    },
+    {
+      id: 2,
+      invested: 2765
+    },
+    {
+      id: 3,
+      invested: 58
+    },
+    {
+      id: 4,
+      invested: 9875
+    },
+    {
+      id: 5,
+      invested: 23223
+    },
+    {
+      id: 6,
+      invested: 987
+    },
+    {
+      id: 7,
+      invested: 12
+    },
+    {
+      id: 8,
+      invested: 1999
+    },
+    {
+      id: 9,
+      invested: 1445
+    },
+    {
+      id: 10,
+      invested: 178
+    },{
+      id: 11,
+      invested: 1987
+    },{
+      id: 12,
+      invested: 134
+    },{
+      id: 13,
+      invested: 1
+    },{
+      id: 14,
+      invested: 1234
+    },{
+      id: 15,
+      invested: 165
+    },{
+      id: 16,
+      invested: 13444
+    },{
+      id: 17,
+      invested: 1564
+    },{
+      id: 18,
+      invested: 1324
+    },{
+      id: 19,
+      invested: 9
+    },{
+      id: 20,
+      invested: 1
+    },{
+      id: 21,
+      invested: 13333
+    },{
+      id: 22,
+      invested: 1654
+    },
+    {
+      id: 23,
+      invested: 1245
+    },
+    {
+      id: 24,
+      invested: 133
+    },{
+      id: 25,
+      invested: 18766
+    },{
+      id: 26,
+      invested: 1435
+    },{
+      id: 27,
+      invested: 18654
+    },{
+      id: 28,
+      invested: 1400
+    },
+    {
+      id: 29,
+      invested: 12
+    },{
+      id: 30,
+      invested: 1
+    },
+    {
+      id: 31,
+      invested: 1567
+    },
+    {
+      id: 32,
+      invested: 2876
+    },
+   
+   
+    
+  ],
   stages: [
     {
       id: 1,
