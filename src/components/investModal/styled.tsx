@@ -101,14 +101,14 @@ export const OutputField = styled.div`
   .voting1,
   .voting2 {
     text-align: left;
-    font-family: "IBM Plex", sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600;
     font-size: 14px;
     padding-left: 2px;
   }
 `;
 export const InputField = styled.input`
-  height: 40px;
+  height: 2.5rem;
   background: #0e0f1a 0% 0% no-repeat padding-box;
   box-shadow: inset 0px 3px 6px #0000009f;
   border: none;
@@ -116,7 +116,7 @@ export const InputField = styled.input`
   opacity: 1;
   outline: none;
   position: relative;
-  padding-left: 16px;
+  padding-left: 1rem;
 
   &,
   &::placeholder {

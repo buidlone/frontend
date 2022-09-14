@@ -33,7 +33,7 @@ export const FundsIndicator = styled.div<Props>`
     content: "${(props) => props?.funds} USDT";
     position: absolute;
     font-size: 0.625rem;
-    font-family: "IBM Plex", sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     color: #00ffc4;
     bottom: -40%;
     left: -2.2rem;

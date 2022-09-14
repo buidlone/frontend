@@ -15,7 +15,7 @@ export const BarChartContainer = styled.div`
 `;
 
 export const BarChartBlock = styled(BlockWrapper)`
-  width: 10%;
+  width: 20%;
   min-width: 17.688rem;
   height: 18.688rem;
   background: #222235;
