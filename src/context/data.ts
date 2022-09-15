@@ -369,7 +369,7 @@ const project: Project = {
           isCompleted: false,
         },
       ],
-      endDate: '2022-09-14',
+      endDate: '2022-10-14',
       isCompleted: false,
       active: true,
       duration: '7 months',

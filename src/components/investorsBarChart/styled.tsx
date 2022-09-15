@@ -15,7 +15,7 @@ export const BarChartContainer = styled.div`
 `;
 
 export const BarChartBlock = styled(BlockWrapper)`
-  width: 10%;
+  width: 20%;
   min-width: 17.688rem;
   height: 18.688rem;
   background: #222235;
@@ -38,7 +38,7 @@ export const BarChartScroll = styled(ScrollContainer)`
     opacity: 1;
   }
 
-  &&::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background: #2e436c 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 4px;
