@@ -35,7 +35,7 @@ export const TimelineScroll = styled(ScrollContainer)`
     opacity: 1;
   }
 
-  &&::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background: #2e436c 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
     border-radius: 4px;

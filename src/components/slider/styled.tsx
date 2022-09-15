@@ -45,6 +45,10 @@ export const STooltip = styled.span`
     border-style: solid;
     border-color: #1eb5ff transparent transparent transparent;
   }
+
+  &.timeline {
+    right: -155%;
+  }
 `;
 
 export const StyledThumb = styled.div`

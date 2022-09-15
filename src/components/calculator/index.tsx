@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, useContext } from "react";
+import { useState, KeyboardEvent, useContext, useEffect } from "react";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -19,6 +19,7 @@ import {
 import Slider from "../slider";
 import Modal from "../modal";
 import InvestModal from "../investModal";
+import ProjectContext from "../../context/projectContext";
 
 const options = [
   {
@@ -34,7 +35,7 @@ const options = [
     value: "eth",
     label: (
       <div style={{ display: "flex", alignItems: "flex-start" }}>
-        <span className="material-icons">attach_money</span>
+        <span className="material-icons">lens</span>
         <span>ETH</span>
       </div>
     ),
@@ -43,7 +44,7 @@ const options = [
     value: "eth",
     label: (
       <div style={{ display: "flex", alignItems: "flex-start" }}>
-        <span className="material-icons">attach_money</span>
+        <span className="material-icons">radio_button_unchecked</span>
         <span>ETH</span>
       </div>
     ),
@@ -52,7 +53,7 @@ const options = [
     value: "eth",
     label: (
       <div style={{ display: "flex", alignItems: "flex-start" }}>
-        <span className="material-icons">attach_money</span>
+        <span className="material-icons">radio_button_checked</span>
         <span>ETH</span>
       </div>
     ),
@@ -61,7 +62,7 @@ const options = [
     value: "eth",
     label: (
       <div style={{ display: "flex", alignItems: "flex-start" }}>
-        <span className="material-icons">attach_money</span>
+        <span className="material-icons">panorama_vertical</span>
         <span>ETH</span>
       </div>
     ),
@@ -73,12 +74,28 @@ const maxSum = 3400;
 const maxTokens = 5000;
 
 const Calculator = () => {
-  
+  const project = useContext(ProjectContext);
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState<number | null>(null);
   const [sum, setSum] = useState<number | null>(null);
   const [tokens, setTokens] = useState<number | null>(null);
   const [voting, setVoting] = useState<number | null>(null);
+  const [maxMonths, setMaxMonths] = useState<number | null>();
+  const [currentMonth, setCurrentMonth] = useState<number | null>();
+
+  const getMonths = (start: string, end: string) => {
+    var startDate = new Date(start).getTime();
+    var now = new Date().getTime();
+    var endDate = new Date(end).getTime();
+
+    var diff = (endDate - startDate) / 1000;
+    diff /= 60 * 60 * 24 * 7 * 4;
+    setMaxMonths(Math.abs(Math.round(diff)));
+
+    var diffNow = (now - startDate) / 1000;
+    diffNow /= 60 * 60 * 24 * 7 * 4;
+    setCurrentMonth(Math.abs(Math.round(diffNow)));
+  };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
@@ -90,6 +107,12 @@ const Calculator = () => {
       }
     }
   };
+
+  useEffect(() => {
+    project.end &&
+      project.startDate &&
+      getMonths(project.startDate, project.end);
+  }, []);
 
   const handleSumChange = (value: number) => {
     console.log(value);
@@ -118,7 +141,7 @@ const Calculator = () => {
                 "The results of your calculations are estimates based on information you provide and may not reflect actual results"
               }
             >
-              <InfoIcon />
+              <InfoIcon style={{ paddingLeft: "1px" }} />
             </Tooltip>
           </InlineWrapper>
           <SelectWrapper>
@@ -162,10 +185,11 @@ const Calculator = () => {
             <div className="text">Timeline:</div>
 
             <Slider
-            //onChange={handleTokensChange}
-            // min={0}
-            //max={34000}
-            //value={sum}
+              //onChange={handleTokensChange}
+              min={0}
+              max={maxMonths}
+              value={currentMonth}
+              timeline
             />
           </SliderWrapper>
         </CalculationWrapper>

@@ -11,7 +11,6 @@ const AboutSection = () => {
     <AboutSec>
       <ButtonsWrapper>
         <AboutButton
-          autoFocus
           className={active == "details" ? "selected" : ""}
           onClick={() => setActive("details")}
         >

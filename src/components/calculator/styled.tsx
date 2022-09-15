@@ -1,10 +1,7 @@
 import Select from "react-select";
-import ReactSlider from "react-slider";
 import styled, { css, keyframes } from "styled-components";
 import { BlockWrapper, GreenButton } from "../fundingBlock/styled";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-
 import { InlineWrapper } from "../timelineBlock/styled";
 
 export const CalculatorBlock = styled(BlockWrapper)`
@@ -16,7 +13,7 @@ export const CalculatorBlock = styled(BlockWrapper)`
   border-radius: 12px;
   padding: 1.3rem 1rem 1.8rem 1.9rem;
   @media screen and (max-width: 1394px) {
-    width: 100%
+    width: 100%;
   }
 `;
 export const CalculatorContainer = styled.div`
@@ -108,6 +105,7 @@ export const SelectField = styled(Select)`
     z-index: 10;
     //border-color: #1a1d38;
     max-height: 7.625rem;
+    padding: 0 0.3rem;
   }
   .react-select__menu-list {
     border-radius: 8px;
@@ -117,6 +115,10 @@ export const SelectField = styled(Select)`
     max-height: 7.625rem;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+    padding-top: 0%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    //border-top: 1px solid rgba(255, 255, 255, 1);
 
     &::-webkit-scrollbar {
       width: 0 !important;
@@ -124,14 +126,17 @@ export const SelectField = styled(Select)`
   }
 
   .react-select__option {
-    color: rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 18px;
     background-color: #2b3453;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    //height: "100%";
 
     &:hover,
     &:active {
       background-color: #2b3453;
       color: rgba(255, 255, 255, 1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
     }
   }
   .react-select__single-value {
