@@ -40,9 +40,7 @@ const items = [
 
 const options = [
   { value: "usdt", label: "USDT" },
-  { value: "usdt", label: "USDT" },
-  { value: "usdt", label: "USDT" },
-  { value: "usdt", label: "USDT" },
+  { value: "usdc", label: "USDC" },
 ];
 
 const schema = yup.object().shape({
@@ -126,7 +124,6 @@ const InvestModal = ({ onClose }: IInvest) => {
             <SelectField
               options={options}
               classNamePrefix="react-select"
-              defaultValue={options[0]}
               isSearchable={false}
               // onChange={(e) => onCurrencyChange(e.target.value)}
             />
