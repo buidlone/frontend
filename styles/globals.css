@@ -12,7 +12,7 @@ body {
 
 }
 
-
+.web3modal-modal-lightbox { z-index: 9999 !important; }
 
 body::-webkit-scrollbar {
   width: 0 !important;

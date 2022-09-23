@@ -28,19 +28,23 @@ import Accordion from "../accordion";
 import TokenStreamTable from "../tokenStreamTable";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
-import React, { KeyboardEvent, useState } from "react";
+import React, { KeyboardEvent, useContext, useEffect, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
+import {
+  Currency,
+  goerliCurrencies,
+  mainnetCurrencies,
+} from "../../constants/currencies";
+import Web3Context from "../../context/web3Context";
+
+import { getTokenBalance } from "../../web3/getTokenBalance";
+import { toast } from "react-toastify";
 
 const items = [
   {
     name: "Detailed project token stream",
     content: <TokenStreamTable />,
   },
-];
-
-const options = [
-  { value: "usdt", label: "USDT" },
-  { value: "usdc", label: "USDC" },
 ];
 
 const schema = yup.object().shape({
@@ -66,13 +70,53 @@ const InvestModal = ({ onClose }: IInvest) => {
     resolver: yupResolver(schema),
   });
 
+  const [options, setOptions] = useState<Currency[]>();
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [receivedBDL1, setReceivedBDL1] = useState<number | undefined>(
     undefined
   );
   const [receivedDAO, setReceivedDAO] = useState<number | undefined>(undefined);
   const [votingPower, setVotingPower] = useState<number | undefined>(undefined);
-  const [selectedCurrency, setSelectedCurrency] = useState();
+  const [selectedCurrency, setSelectedCurrency] = useState({
+    label: undefined,
+    address: undefined,
+    decimals: undefined,
+  });
+
+  const { web3Provider, address } = useContext(Web3Context);
+  const [balance, setBalance] = useState<string>();
+
+  const handleCurrencyChange = (selectedOption: any) => {
+    setSelectedCurrency({
+      label: selectedOption.label,
+      address: selectedOption.address,
+      decimals: selectedOption.decimals,
+    });
+  };
+
+  useEffect(() => {
+    if (web3Provider?.network.chainId === 1) {
+      setOptions(mainnetCurrencies);
+    } else if (web3Provider?.network.chainId === 5) {
+      setOptions(goerliCurrencies);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedCurrency.address && selectedCurrency.decimals) {
+      getTokenBalance(
+        selectedCurrency.address,
+        web3Provider,
+        selectedCurrency.decimals
+        //,address                  //uncomment for the currently connected wallet to be checked
+      ).then((data) => {
+        setBalance(data);
+        toast.info(
+          `Your current balance of ${selectedCurrency.label} is: ${data}`
+        );
+      });
+    }
+  }, [selectedCurrency]);
 
   const handleClose = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -125,7 +169,7 @@ const InvestModal = ({ onClose }: IInvest) => {
               options={options}
               classNamePrefix="react-select"
               isSearchable={false}
-              // onChange={(e) => onCurrencyChange(e.target.value)}
+              onChange={handleCurrencyChange}
             />
           </IModalFieldWrapper>
 

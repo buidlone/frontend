@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import Web3Context from "../../context/web3Context";
 import FundingRoadmap from "../fundingRoadmap";
 import InvestModal from "../investModal";
 import Modal from "../modal";
@@ -13,6 +15,15 @@ import {
 
 export default function FundingBlock() {
   const [showModal, setShowModal] = useState(false);
+  const { web3Provider } = useContext(Web3Context);
+
+  const handleClick = () => {
+    web3Provider?.network.chainId === 1 || web3Provider?.network.chainId === 5
+      ? setShowModal(true)
+      : toast.error(
+          "Please connect to Your wallet and choose Ethereum Mainnet or Goerli Testnet network"
+        );
+  };
 
   return (
     <>
@@ -25,8 +36,7 @@ export default function FundingBlock() {
             hardCap={"34 000"}
           />
           <BottomWrapper>
-            <GreenButton onClick={() => setShowModal(true)}>Invest</GreenButton>{" "}
-            <br />
+            <GreenButton onClick={handleClick}>Invest</GreenButton> <br />
             <Modal show={showModal}>
               <InvestModal onClose={() => setShowModal(false)} />
             </Modal>
