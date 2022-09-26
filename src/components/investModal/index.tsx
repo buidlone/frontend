@@ -22,6 +22,9 @@ import {
   BottomPartWrapper,
   ItemWrapper,
   ErrorMsg,
+  CurrencyInline,
+  BalanceBtn,
+  MaxBalanceBtn,
 } from "./styled";
 import BuidlLogo from "../../../public/BuidlLogo.png";
 import Accordion from "../accordion";
@@ -61,6 +64,12 @@ interface IInvest {
   onClose(): void;
 }
 
+interface ICurrency {
+  label: string;
+  address: string;
+  decimals: number;
+}
+
 const InvestModal = ({ onClose }: IInvest) => {
   const {
     register,
@@ -70,21 +79,26 @@ const InvestModal = ({ onClose }: IInvest) => {
     resolver: yupResolver(schema),
   });
 
-  const [options, setOptions] = useState<Currency[]>();
+  const [options, setOptions] = useState<Currency[]>(mainnetCurrencies);
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [receivedBDL1, setReceivedBDL1] = useState<number | undefined>(
     undefined
   );
   const [receivedDAO, setReceivedDAO] = useState<number | undefined>(undefined);
   const [votingPower, setVotingPower] = useState<number | undefined>(undefined);
-  const [selectedCurrency, setSelectedCurrency] = useState({
-    label: undefined,
-    address: undefined,
-    decimals: undefined,
+  const [selectedCurrency, setSelectedCurrency] = useState<ICurrency>({
+    label: mainnetCurrencies[0].label,
+    address: mainnetCurrencies[0].address,
+    decimals: mainnetCurrencies[0].decimals,
   });
 
   const { web3Provider, address } = useContext(Web3Context);
-  const [balance, setBalance] = useState<string>();
+  const [balance, setBalance] = useState<number>(0);
+  const [network, setNetwork] = useState<string | undefined>(undefined);
+
+  const [networkError, setNetworkError] = useState<string | undefined>(
+    undefined
+  );
 
   const handleCurrencyChange = (selectedOption: any) => {
     setSelectedCurrency({
@@ -95,25 +109,47 @@ const InvestModal = ({ onClose }: IInvest) => {
   };
 
   useEffect(() => {
-    if (web3Provider?.network.chainId === 1) {
-      setOptions(mainnetCurrencies);
-    } else if (web3Provider?.network.chainId === 5) {
-      setOptions(goerliCurrencies);
+    if (web3Provider) {
+      if (web3Provider?.network.chainId === 1) {
+        console.log(web3Provider?.network);
+        setOptions(mainnetCurrencies);
+        setNetwork("Ethereum Mainnet");
+        setSelectedCurrency({
+          label: mainnetCurrencies[0].label,
+          address: mainnetCurrencies[0].address,
+          decimals: mainnetCurrencies[0].decimals,
+        });
+      } else if (web3Provider?.network.chainId === 5) {
+        console.log(web3Provider?.network);
+        setOptions(goerliCurrencies);
+        setNetwork("Goerli Testnet");
+        setSelectedCurrency({
+          label: goerliCurrencies[0].label,
+          address: goerliCurrencies[0].address,
+          decimals: goerliCurrencies[0].decimals,
+        });
+      } else {
+        setNetworkError("Please connect to Ethereum Mainnet or Goerli Tesnet");
+        toast.error(
+          `Please connect to Ethereum Mainnet or Goerli Testnet network`
+        );
+      }
     }
   }, []);
 
   useEffect(() => {
-    if (selectedCurrency.address && selectedCurrency.decimals) {
+    if (selectedCurrency?.address && selectedCurrency?.decimals) {
       getTokenBalance(
         selectedCurrency.address,
         web3Provider,
         selectedCurrency.decimals
         //,address                  //uncomment for the currently connected wallet to be checked
       ).then((data) => {
-        setBalance(data);
-        toast.info(
-          `Your current balance of ${selectedCurrency.label} is: ${data}`
-        );
+        if (data) {
+          setBalance(data);
+        } else {
+          setBalance(0);
+        }
       });
     }
   }, [selectedCurrency]);
@@ -154,7 +190,17 @@ const InvestModal = ({ onClose }: IInvest) => {
       <IModalForm>
         <IModalInputSectionWrapper>
           <IModalFieldWrapper>
-            <InputLabel>Your investment</InputLabel>
+            <CurrencyInline>
+              <InputLabel>Your investment</InputLabel>
+              {!networkError && (
+                <BalanceBtn className="bottomText">
+                  Balance: {balance}
+                  <MaxBalanceBtn onClick={() => setAmount(balance)}>
+                    Max
+                  </MaxBalanceBtn>
+                </BalanceBtn>
+              )}
+            </CurrencyInline>
             <InputField
               type="number"
               name="amount"
@@ -163,10 +209,17 @@ const InvestModal = ({ onClose }: IInvest) => {
               onChange={(e) => setAmount(e.target.valueAsNumber)}
               onKeyDown={handleKeyDown}
             />
+            <CurrencyInline>
+              {networkError ? (
+                <div className="error">{networkError} </div>
+              ) : (
+                <div className="bottomText">{network}</div>
+              )}
+            </CurrencyInline>
 
-            <div className="bottomText">Etherium network</div>
             <SelectField
               options={options}
+              value={selectedCurrency}
               classNamePrefix="react-select"
               isSearchable={false}
               onChange={handleCurrencyChange}

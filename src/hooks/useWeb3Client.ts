@@ -28,6 +28,7 @@ if (typeof window !== 'undefined') {
     //network: 'mainnet', // optional
     cacheProvider: true,
     providerOptions, 
+    
   })
 }
 
@@ -49,8 +50,8 @@ export const useWeb3 = () => {
         const signer = web3Provider.getSigner()
         const address = await signer.getAddress()
 
-        const network = await web3Provider.getNetwork()
-        
+        const network = await web3Provider.getNetwork() 
+       
         toast.success('Connected to Web3')
 
         dispatch({
@@ -60,11 +61,13 @@ export const useWeb3 = () => {
           address,
           network,
         } as Web3Action)
-                
+         
       } catch (e) {
+        toast.error('Connection error')
         console.log('connect error', e)
       }
     } else {
+      toast.error('No Web3Modal')
       console.error('No Web3Modal')
     }
   }, [])
@@ -80,6 +83,7 @@ export const useWeb3 = () => {
         type: 'RESET_WEB3_PROVIDER',
       } as Web3Action)
     } else {
+      toast.error('No Web3Modal')
       console.error('No Web3Modal')
     }
   }, [provider])
@@ -108,10 +112,12 @@ export const useWeb3 = () => {
       const handleChainChanged = (_hexChainId: string) => {
         if (typeof window !== 'undefined') {
           console.log('switched to chain...', _hexChainId)
-          toast.info('Web3 Network Changed')
           window.location.reload()
+          toast.info('Web3 Network Changed')
           
+
         } else {
+          toast.error('Error occured while changing the network')
           console.log('window is undefined')
         }
       }
