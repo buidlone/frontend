@@ -252,7 +252,7 @@ export const SelectField = styled(Select)`
   }
   .react-select__option {
     color: rgba(255, 255, 255, 0.5);
-    font-size: 20px;
+    font-size: 19px;
     background-color: #1a1d38;
 
     &:hover,
@@ -263,7 +263,7 @@ export const SelectField = styled(Select)`
   }
   .react-select__single-value {
     color: rgba(255, 255, 255, 0.5);
-    font-size: 20px;
+    font-size: 19px;
     background-color: #1a1d38;
   }
   .react-select__value-container {

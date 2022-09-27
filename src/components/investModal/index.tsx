@@ -142,8 +142,8 @@ const InvestModal = ({ onClose }: IInvest) => {
       getTokenBalance(
         selectedCurrency.address,
         web3Provider,
-        selectedCurrency.decimals
-        //,address                  //uncomment for the currently connected wallet to be checked
+        selectedCurrency.decimals,
+        address //comment for the test wallet to be checked and choose an address in the getTokenBalance.ts file
       ).then((data) => {
         if (data) {
           setBalance(data);
