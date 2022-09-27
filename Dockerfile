@@ -1,6 +1,7 @@
 FROM node:14-alpine AS deps
 
 WORKDIR /app
+RUN apk add --no-cache git
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile 
 
