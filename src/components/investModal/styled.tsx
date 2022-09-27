@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
 import Select from "react-select";
+import Image from "next/image";
 
 interface Props {
   isActive: boolean;
@@ -155,6 +156,56 @@ export const IModalInputSectionWrapper = styled.div`
   }
 `;
 
+export const CurrencyInline = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Barlow", sans-serif;
+  position: relative;
+
+  .error {
+    color: rgba(255, 0, 0, 1);
+  }
+`;
+
+export const BalanceBtn = styled.div`
+  white-space: nowrap;
+  cursor: default;
+  gap: 0.5rem;
+  display: flex;
+  text-align: left;
+  position: absolute;
+  right: 0%;
+  top: -5%;
+`;
+export const MaxBalanceBtn = styled.button`
+  max-width: 2rem;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 300;
+  font-family: "Barlow", sans-serif;
+  flex: 1;
+  height: 20px;
+  background: transparent;
+  border: 1px solid rgba(0, 255, 196, 0.8);
+  border-radius: 12px;
+  opacity: 1;
+  padding-left: 3.5px;
+  text-align: center;
+  transform: translateX(0);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    color: #00ffc4;
+  }
+`;
+
 export const InputLabel = styled.label`
   text-align: left;
   font-size: 14px;
@@ -201,7 +252,7 @@ export const SelectField = styled(Select)`
   }
   .react-select__option {
     color: rgba(255, 255, 255, 0.5);
-    font-size: 20px;
+    font-size: 19px;
     background-color: #1a1d38;
 
     &:hover,
@@ -212,7 +263,7 @@ export const SelectField = styled(Select)`
   }
   .react-select__single-value {
     color: rgba(255, 255, 255, 0.5);
-    font-size: 20px;
+    font-size: 19px;
     background-color: #1a1d38;
   }
   .react-select__value-container {

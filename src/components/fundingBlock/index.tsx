@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import Web3Context from "../../context/web3Context";
 import FundingRoadmap from "../fundingRoadmap";
 import InvestModal from "../investModal";
 import Modal from "../modal";
@@ -13,6 +15,18 @@ import {
 
 export default function FundingBlock() {
   const [showModal, setShowModal] = useState(false);
+  const { web3Provider, connect } = useContext(Web3Context);
+
+  const handleClick = () => {
+    web3Provider && setShowModal(true);
+  };
+
+  const handleConnectClick = async () => {
+    if (connect) {
+      const isConnected = await connect();
+      isConnected !== null && setShowModal(true);
+    }
+  };
 
   return (
     <>
@@ -25,8 +39,17 @@ export default function FundingBlock() {
             hardCap={"34 000"}
           />
           <BottomWrapper>
-            <GreenButton onClick={() => setShowModal(true)}>Invest</GreenButton>{" "}
-            <br />
+            {web3Provider ? (
+              <>
+                <GreenButton onClick={handleClick}>Invest</GreenButton> <br />
+              </>
+            ) : (
+              <>
+                <GreenButton onClick={handleConnectClick}>Invest</GreenButton>{" "}
+                <br />
+              </>
+            )}
+
             <Modal show={showModal}>
               <InvestModal onClose={() => setShowModal(false)} />
             </Modal>
