@@ -81,7 +81,7 @@ const InvestModal = ({ onClose }: IInvest) => {
 
   const [options, setOptions] = useState<Currency[]>(mainnetCurrencies);
   const [amount, setAmount] = useState<number | undefined>(undefined);
-  const [receivedBDL1, setReceivedBDL1] = useState<number | undefined>(
+  const [receivedTokens, setReceivedTokens] = useState<number | undefined>(
     undefined
   );
   const [receivedDAO, setReceivedDAO] = useState<number | undefined>(undefined);
@@ -162,7 +162,7 @@ const InvestModal = ({ onClose }: IInvest) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      setReceivedBDL1(24000);
+      setReceivedTokens(24000);
       setReceivedDAO(300);
       setVotingPower(15);
     }
@@ -229,7 +229,7 @@ const InvestModal = ({ onClose }: IInvest) => {
           <IModalFieldWrapper>
             <InputLabel>You will receive (overall thru project)</InputLabel>
             <OutputField>
-              <div>{receivedBDL1?.toLocaleString().replace(/,/g, " ")}</div>
+              <div>{receivedTokens?.toLocaleString().replace(/,/g, " ")}</div>
               <div className="BDL1">BDL1</div>
             </OutputField>
             <div className="bottomText">Project token</div>

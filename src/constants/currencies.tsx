@@ -22,21 +22,6 @@ export const mainnetCurrencies: Currency[] = [
   },
 ];
 
-// export const goerliCurrencies: Currency[] = [
-//   {
-//     value: "USDT",
-//     label: "USDT",
-//     address: "0x509Ee0d083DdF8AC028f2a56731412edD63223B9",
-//     decimals: 6,
-//   },
-//   {
-//     value: "USDC",
-//     label: "USDC",
-//     address: "0x2f3A40A3db8a7e3D09B0adfEfbCe4f6F81927557",
-//     decimals: 6,
-//   },
-// ];
-
 export const goerliCurrencies: Currency[] = [
   {
     value: "fDAI",
