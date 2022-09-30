@@ -1,22 +1,40 @@
-import { STooltip, StyledSlider, StyledThumb, StyledTrack } from "./styled";
+import React, { useContext } from "react";
+import ProjectContext from "../../context/projectContext";
+import {
+  HardCapIndicator,
+  SoftCapIndicator,
+  STooltip,
+  StyledSlider,
+  StyledThumb,
+  StyledTrack,
+} from "./styled";
 
-const Thumb = (props: any, state: any) => (
-  <StyledThumb {...props}>
-    <STooltip>{state.valueNow}</STooltip>
-  </StyledThumb>
-);
+const Thumb = (props: any, state: any) => <StyledThumb {...props} />;
 
 //Timeline Slider is still in progress
 const TimelineThumb = (props: any, state: any) => (
   <StyledThumb {...props}>
-    {/* <STooltip>{state.valueNow}</STooltip> */}
     <STooltip className="timeline">2022/09</STooltip>
   </StyledThumb>
 );
 
 const Track = (props: any, state: any) => (
-  <StyledTrack {...props} index={state.index} />
+  <StyledTrack {...props} index={props.index} />
 );
+
+const SumTrack = (props: any, state: any) => {
+  console.log(state.value);
+
+  return (
+    <>
+      <SoftCapIndicator funds={props.prop.softCap} />
+
+      <HardCapIndicator funds={props.prop.hardCap} />
+
+      <StyledTrack {...props} index={props.index}></StyledTrack>
+    </>
+  );
+};
 
 interface ISlider {
   onChange?: any;
@@ -37,11 +55,23 @@ const Slider = ({
   blue,
   timeline,
 }: ISlider) => {
+  const project = useContext(ProjectContext);
+  const prop = {
+    softCap: project.softCap?.amount,
+    hardCap: project.hardCap?.amount,
+  };
+
   return (
     <StyledSlider
       defaultValue={defaultValue}
       value={value ? value : 0}
-      renderTrack={Track}
+      renderTrack={
+        timeline
+          ? (props, state) => <Track {...props} index={state.index} />
+          : (props, state) => (
+              <SumTrack {...props} prop={prop} index={state.index} />
+            )
+      }
       renderThumb={timeline ? TimelineThumb : Thumb}
       min={min}
       max={max}

@@ -7,19 +7,21 @@ interface Props {
 }
 
 export const BarChartContainer = styled.div`
+
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   position: relative;
+  
 `;
 
 export const BarChartBlock = styled(BlockWrapper)`
-  width: 20%;
+  width: 24%;
   min-width: 17.688rem;
-  height: 18.688rem;
-  background: #222235;
-  border-radius: 27px;
+  height: 23.938rem;
+  background: #1F233C 0% 0% no-repeat padding-box;
+  border-radius: 12px;
   padding: 1rem 1.845rem;
 `;
 
@@ -49,7 +51,7 @@ export const BarChartScroll = styled(ScrollContainer)`
 
 export const BarChartColumn = styled.div<Props>`
   min-width: 0.313rem;
-  height: 11.5rem;
+  height: 14.341rem;
   display: flex;
   justify-content: space-evenly;
   position: relative;
@@ -83,7 +85,9 @@ export const InvHeader = styled.div`
   font-weight: 300;
   color: rgba(0, 196, 255, 1);
   margin: 0 auto;
-  margin-bottom: 1.528rem;
+  margin-bottom: 2.085rem;
+  margin-top: 1rem;
+  
 `;
 
 export const InvFooter = styled.div`

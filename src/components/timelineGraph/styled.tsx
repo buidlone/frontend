@@ -25,6 +25,8 @@ const pulse = keyframes`
 `;
 
 export const TimelineScroll = styled(ScrollContainer)`
+  cursor: grab;
+
   &::-webkit-scrollbar {
     height: 0.625rem;
   }
