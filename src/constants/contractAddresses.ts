@@ -1,4 +1,4 @@
-export const GovernancePoolAddress = "0xc6099C028D61CA28896A54dFe8418a1A300A2d69";
-export const InvestmentPoolAddress = "0xFa0bC6ebc4224d631E3029563f38e6a173a2ff20";
-export const InvestmentPoolFactoryAddress = "0xA11a48249C953F9F6982fdD0D2C156Ec7cad8192";
-export const VotingTokenAddress = "0x9e6F0adf5A2663d39f15f90d2A9c33fC389A5c85";
+export const GovernancePoolAddress = "0x096fe1Ed860A28c56CFecfbdcc330Bd9BE0E1072";
+export const InvestmentPoolAddress = "0xB93D3825b142eF935e8047057855a1cC6d64F769";
+export const InvestmentPoolFactoryAddress = "0x47ef9A3C419d345C13049f8F809A046aa4c39E4D";
+export const VotingTokenAddress = "0xaA1bA737eb26d4b2B93F63fdbD0f7031e353EBBB";
