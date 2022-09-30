@@ -17,9 +17,10 @@ import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
-import Web3Context from "../../context/web3Context";
 import { Web3Provider } from "@ethersproject/providers";
 import { getTotalInvested } from "../../web3/getTotalInvested";
+import { getVotingTokens } from "../../web3/getVotingTokens";
+import Web3Context from "../../context/web3Context";
 
 const ProgressInfoBlock = () => {
   const featuredProject = useContext(ProjectContext);
@@ -27,11 +28,22 @@ const ProgressInfoBlock = () => {
     useCountdown(featuredProject?.end);
   const { web3Provider, address } = useContext(Web3Context);
   const [totalRaised, setTotalRaised] = useState<String | undefined>(undefined);
+  const [votingTokensSupply, setVotingTokensSupply] = useState<
+    String | undefined
+  >(undefined);
+  const [votingTokenBalance, setVotingTokenBalance] = useState<
+    String | undefined
+  >(undefined);
 
   useEffect(() => {
     if (Web3Provider) {
       getTotalInvested(web3Provider, address).then((data) => {
         setTotalRaised(data?.totalInvested);
+      });
+
+      getVotingTokens(web3Provider, address).then((data) => {
+        setVotingTokensSupply(data?.votingTokensSupply);
+        setVotingTokenBalance(data?.votingTokenBalance);
       });
     }
   }, [web3Provider]);
@@ -80,12 +92,21 @@ const ProgressInfoBlock = () => {
               height={"26px"}
               width={"26px"}
             />
-            <div>Keys activated</div>
-            <div> 0 / 1223</div>
 
-            <Tooltip text={"Information about the keys"}>
-              <InfoIconKeys />
-            </Tooltip>
+            {web3Provider && votingTokenBalance && votingTokensSupply ? (
+              <>
+                <div>Keys activated</div>
+                <div>
+                  {" "}
+                  {votingTokenBalance} / {votingTokensSupply}
+                </div>
+                <Tooltip text={"Information about the keys"}>
+                  <InfoIconKeys />
+                </Tooltip>
+              </>
+            ) : (
+              <div>Connect Your wallet to view the keys</div>
+            )}
           </KeysWrapper>
           <KeysWrapper>
             <Image

@@ -5,13 +5,14 @@ import "react-circular-progressbar/dist/styles.css";
 import { InlineWrapper } from "../timelineBlock/styled";
 
 export const CalculatorBlock = styled(BlockWrapper)`
-  width: 71%;
+  width: 72%;
+  min-width: 39.063rem;
   min-width: 17.688rem;
-  max-width: 916px;
-  height: 28.375rem;
+  max-width: 60.063rem;
+  height: 23.938rem;
   background: #1f233c;
   border-radius: 12px;
-  padding: 1.3rem 1rem 1.8rem 1.9rem;
+  padding: 0;
   @media screen and (max-width: 1394px) {
     width: 100%;
   }
@@ -20,7 +21,7 @@ export const CalculatorContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 2.5rem;
+  //gap: 1rem;
   width: 100%;
   height: 100%;
   position: relative;
@@ -32,7 +33,7 @@ export const CalculatorContainer = styled.div`
     color: rgba(255, 255, 255, 0.5);
   }
 
-  .text {
+  .blueText {
     font-size: 16px;
     font-weight: 500;
     font-family: "IBM Plex Sans", sans-serif;
@@ -44,167 +45,108 @@ export const CalculationWrapper = styled.div`
   width: 65%;
   display: flex;
   flex-direction: column;
-  gap: 0.688rem;
+  justify-content: flex-start;
+  gap: 2.156rem;
+  padding: 1.25rem 1.875rem;
 
-  ${InlineWrapper} {
-    margin-bottom: 2rem;
-  }
 `;
 
 export const SelectWrapper = styled.div`
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
+  position: relative;
+  gap: 1.219rem;
+
+  &::before {
+    content: "$";
+    position: absolute;
+    top: 63%;
+    left: 3%;
+    z-index: 1;
+    color: #00ffc4;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+  }
+
 `;
 
-export const SelectField = styled(Select)`
-  max-width: 6.25rem;
-  width: 100%;
-  height: 2.5rem;
-  position: absolute;
-  right: 15%;
-  bottom: 0%;
-  font-family: "Space Grotesk", sans-serif;
-
-  .react-select__control {
-    background: #2b3453;
-    box-shadow: 0px 3px 6px #00000029;
-    border-radius: 8px;
-    border-color: #2b3453;
-    opacity: 1;
-    width: 100%;
-    height: 100%;
-
-    &:hover {
-      border-color: #2b3453;
-    }
-
-    &:focus {
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-  }
-
-  .react-select__indicator-separator {
-    background-color: #2b3453;
-  }
-
-  .react-select__indicator {
-    padding-left: 0;
-    color: rgba(255, 255, 255, 1);
-    opacity: 1;
-  }
-  .react-select__menu {
-    background: #2b3453;
-    //box-shadow: 0px 3px 6px #000000a3;
-    border-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    margin-top: 1px;
-    z-index: 10;
-    //border-color: #1a1d38;
-    max-height: 7.625rem;
-    padding: 0 0.3rem;
-  }
-  .react-select__menu-list {
-    border-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    overflow-y: scroll;
-    max-height: 7.625rem;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-    padding-top: 0%;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    //border-top: 1px solid rgba(255, 255, 255, 1);
-
-    &::-webkit-scrollbar {
-      width: 0 !important;
-    }
-  }
-
-  .react-select__option {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 18px;
-    background-color: #2b3453;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    //height: "100%";
-
-    &:hover,
-    &:active {
-      background-color: #2b3453;
-      color: rgba(255, 255, 255, 1);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-    }
-  }
-  .react-select__single-value {
-    color: rgba(255, 255, 255, 1);
-    font-size: 18px;
-    background-color: #2b3453;
-  }
-  .react-select__value-container {
-    padding-right: 0;
-  }
-`;
 export const InputField = styled.input`
-  width: 65%;
+  width: 50%;
   height: 2.5rem;
   background: #1d2031;
   box-shadow: inset 0px 0px 5px #141620;
   border-radius: 8px;
   opacity: 1;
-  padding-left: 1rem;
+  padding-left: 5%;
   border: none;
-
-  outline: none;
   position: relative;
+  outline: none;
+
   &,
   &::placeholder {
     text-align: left;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 400;
     font-size: 15px;
-    color: #ffffff;
+    color: #00ffc4;
     opacity: 1;
+  }
+
+  @media screen and (max-width: 800px) {
+    padding-left: 6.3%;
   }
 `;
 
-export const SliderWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  height: 30%;
-  width: 100%;
-  gap: 2.5rem;
-`;
 export const VotingWrapper = styled.div`
-  display: flex;
-  width: 30%;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 0.688rem;
-  padding-bottom: 1.1rem;
+  width: 33%;
+
+  font-size: 30px;
+  font-weight: 500;
+  font-family: "Space Grotesk", sans-serif;
+
+  ${InlineWrapper} {
+    margin-bottom: 2rem;
+  }
+
+  .votingPercentage {
+    color: #ffb100;
+    text-shadow: 0px 0px 6px #ffb1008c;
+    opacity: 1;
+  }
+
+  .votingNumbers {
+    color: #1eb5ff;
+    text-shadow: 0px 0px 6px #1eb5ff8c;
+    opacity: 1;
+  }
+
+  .smallBlue {
+    font-size: 11px;
+    margin-top: -9px;
+  }
 `;
 
 export const PBContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 13.25rem;
-  box-shadow: inset 1px 1px 6px #00000082;
-  border: 1px solid #1eb5ff;
+  height: 100%;
   border-radius: 13px;
+  box-shadow: inset 0px 0px 20px #404a8c;
   opacity: 1;
   position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.4rem;
+  padding: 2rem 1.5rem;
 `;
 
 export const PBWrapper = styled.div`
-  width: 10rem;
-  height: 10rem;
+  width: 11.548rem;
+  height: 13.433rem;
 `;
 
 export const IButton = styled(GreenButton)`
@@ -212,4 +154,40 @@ export const IButton = styled(GreenButton)`
   margin-top: 1rem;
   font-family: "Space Grotesk", sans-serif;
   font-weight: 500;
+  background: transparent linear-gradient(167deg, #00ffeb 0%, #469898 100%) 0%
+    0% no-repeat padding-box;
+  border: 1px solid #00ffc4;
+  border-radius: 12px;
+  opacity: 1;
+`;
+
+export const VotingRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 3%;
+`;
+
+export const VotingItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 500;
+
+  .text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .tokens {
+    font-size: 14px;
+    color: #1eb5ff;
+  }
+
+  .tickets {
+    font-size: 16px;
+    color: #ffb100;
+  }
 `;
