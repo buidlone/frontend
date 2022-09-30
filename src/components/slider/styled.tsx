@@ -3,6 +3,8 @@ import styled, { css, keyframes } from "styled-components";
 
 interface Props {
   index?: number;
+  progress?: number;
+  funds?: string;
 }
 
 export const StyledTrack = styled.div<Props>`
@@ -12,6 +14,71 @@ export const StyledTrack = styled.div<Props>`
   border-radius: 12px;
   &.blue {
     background: ${(props) => (props.index ? "#2b3453" : "#1EB5FF")};
+  }
+  position: relative;
+
+`;
+
+export const SoftCapIndicator = styled.div<Props>`
+  height: 1.7rem;
+  width: 0px;
+  border-left: 2px dashed rgb(255 255 255 / 50%);
+  position: absolute;
+  bottom: 15%;
+  left: 80%;
+  z-index: 99999;
+
+  &:after {
+    content: "${(props) => props?.funds} ETH";
+    position: absolute;
+    font-size: 14px;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: #ffffff;
+    bottom: 100%;
+    left: -37px;
+    white-space: nowrap;
+  }
+
+  &:before {
+    content: "Soft Cap";
+    position: absolute;
+    font-size: 14px;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: rgba(255, 255, 255, 0.42);
+    left: -25px;
+    bottom: 160%;
+    white-space: nowrap;
+  }
+`;
+
+export const HardCapIndicator = styled.div<Props>`
+  height: 1.728rem;
+  width: 0px;
+  border-left: 2px dashed rgb(255 255 255 / 50%);
+  position: absolute;
+  bottom: 15%;
+  right: 1.1%;
+  z-index: 99999;
+  &:after {
+    content: "${(props) => props?.funds} ETH";
+    position: absolute;
+    font-size: 14px;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: #ffffff;
+    bottom: 100%;
+    left: -37px;
+    white-space: nowrap;
+  }
+
+  &:before {
+    content: "Hard Cap";
+    position: absolute;
+    font-size: 14px;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: rgba(255, 255, 255, 0.42);
+    left: -25px;
+    bottom: 160%;
+    white-space: nowrap;
   }
 `;
 

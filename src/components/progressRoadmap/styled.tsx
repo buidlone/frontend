@@ -41,6 +41,7 @@ const rotateCircle = keyframes`
 `;
 
 export const ScrollableContainer = styled(ScrollContainer)`
+cursor: grab;
   min-height: 295px;
   background: #1d2031 0% 0% no-repeat padding-box;
   box-shadow: inset 0px -20px 20px #1c192769;
@@ -75,6 +76,7 @@ export const ProgressStep = styled.div<Props>`
   z-index: 1;
   flex-wrap: wrap;
   position: relative;
+  cursor: default;
 
   ${(props) => {
     if (props.completed) {
@@ -190,6 +192,7 @@ export const Lock = styled.div<Props>`
   align-items: center;
   flex-wrap: wrap;
   position: relative;
+  cursor: default;
 
   &:before {
     content: "";
