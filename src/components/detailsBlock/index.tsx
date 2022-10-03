@@ -1,6 +1,9 @@
-import { useContext } from "react";
+import { Web3Provider } from "@ethersproject/providers";
+import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
+import Web3Context from "../../context/web3Context";
 import useCountdown from "../../hooks/useCountdown";
+import { getTotalInvested } from "../../web3/getTotalInvested";
 import {
   FlexItem,
   Property,
@@ -23,6 +26,16 @@ const DetailsBlock = () => {
   const featuredProject = useContext(ProjectContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(featuredProject?.end);
+  const { web3Provider, address } = useContext(Web3Context);
+  const [totalRaised, setTotalRaised] = useState<String | undefined>(undefined);
+
+  useEffect(() => {
+    if (Web3Provider) {
+      getTotalInvested(web3Provider, address).then((data) => {
+        setTotalRaised(data?.totalInvested);
+      });
+    }
+  }, [web3Provider]);
 
   return (
     <DetailsBlockWrapper>
@@ -37,7 +50,7 @@ const DetailsBlock = () => {
             <Property>Project ends in</Property>
           </FlexItem1>
           <FlexItem1>
-            <Data>{featuredProject?.raised} ETH</Data>
+            <Data>{totalRaised} ETH</Data>
 
             <Data>
               {featuredProject?.milestonesCompleted}/
@@ -77,7 +90,7 @@ const DetailsBlock = () => {
             <Property>Project ends in</Property>
           </FlexItem1>
           <FlexItem1>
-            <Data>{featuredProject?.raised} ETH</Data>
+            <Data>{totalRaised} ETH</Data>
 
             <Data>
               {featuredProject?.milestonesCompleted}/

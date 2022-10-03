@@ -18,6 +18,7 @@ import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
 import { Web3Provider } from "@ethersproject/providers";
+import { getTotalInvested } from "../../web3/getTotalInvested";
 import { getVotingTokens } from "../../web3/getVotingTokens";
 import Web3Context from "../../context/web3Context";
 
@@ -25,8 +26,8 @@ const ProgressInfoBlock = () => {
   const featuredProject = useContext(ProjectContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(featuredProject?.end);
-
   const { web3Provider, address } = useContext(Web3Context);
+  const [totalRaised, setTotalRaised] = useState<String | undefined>(undefined);
   const [votingTokensSupply, setVotingTokensSupply] = useState<
     String | undefined
   >(undefined);
@@ -36,6 +37,10 @@ const ProgressInfoBlock = () => {
 
   useEffect(() => {
     if (Web3Provider) {
+      getTotalInvested(web3Provider, address).then((data) => {
+        setTotalRaised(data?.totalInvested);
+      });
+
       getVotingTokens(web3Provider, address).then((data) => {
         setVotingTokensSupply(data?.votingTokensSupply);
         setVotingTokenBalance(data?.votingTokenBalance);
@@ -55,7 +60,7 @@ const ProgressInfoBlock = () => {
       </DetailsInfoWrapper>
 
       <DetailsInfoWrapper>
-        <Data>{featuredProject?.raised} ETH</Data>
+        <Data>{totalRaised} ETH</Data>
 
         <Data>
           {featuredProject?.milestonesCompleted}/{featuredProject?.milestones}
