@@ -24,7 +24,8 @@ export default function FundingBlock() {
   const handleConnectClick = async () => {
     if (connect) {
       const isConnected = await connect();
-      isConnected !== null && setShowModal(true);
+      console.log(isConnected);
+      typeof isConnected !== "boolean" && setShowModal(true);
     }
   };
 

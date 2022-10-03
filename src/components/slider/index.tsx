@@ -23,8 +23,6 @@ const Track = (props: any, state: any) => (
 );
 
 const SumTrack = (props: any, state: any) => {
-  console.log(state.value);
-
   return (
     <>
       <SoftCapIndicator funds={props.prop.softCap} />
