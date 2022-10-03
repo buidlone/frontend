@@ -45,7 +45,7 @@ const Calculator = () => {
   const handleConnectClick = async () => {
     if (connect) {
       const isConnected = await connect();
-      isConnected !== null && setShowModal(true);
+      typeof isConnected !== "boolean" && setShowModal(true);
     }
   };
 

@@ -65,10 +65,12 @@ export const useWeb3 = () => {
       } catch (e) {
         toast.error('Connection error')
         console.log('connect error', e)
+        return false
       }
     } else {
       toast.error('No Web3Modal')
       console.error('No Web3Modal')
+      return false
     }
   }, [])
 
