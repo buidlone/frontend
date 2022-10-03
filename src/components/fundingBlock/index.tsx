@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useContext, useState } from "react";
 import Web3Context from "../../context/web3Context";
 import FundingRoadmap from "../fundingRoadmap";
 import InvestModal from "../investModal";
@@ -34,11 +33,7 @@ export default function FundingBlock() {
       <BlockWrapper>
         <Title>Funding</Title>
         <FContainer>
-          <FundingRoadmap
-            seed={"34 000"}
-            softCap={"34 000"}
-            hardCap={"34 000"}
-          />
+          <FundingRoadmap seed={"34 000"} hardCap={"34 000"} />
           <BottomWrapper>
             {web3Provider ? (
               <>

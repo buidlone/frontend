@@ -16,7 +16,6 @@ export const StyledTrack = styled.div<Props>`
     background: ${(props) => (props.index ? "#2b3453" : "#1EB5FF")};
   }
   position: relative;
-
 `;
 
 export const SoftCapIndicator = styled.div<Props>`

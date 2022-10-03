@@ -9,9 +9,9 @@ import {
   web3Reducer,
 } from '../reducers'
 import { toast } from 'react-toastify'
+import { NEXT_PUBLIC_INFURA_ID } from '../constants/contractAddresses'
 
-//should be in the .env.local
-const NEXT_PUBLIC_INFURA_ID = "124e8573221d41399c3157557e962d98"; 
+
 
 const providerOptions = {
   walletconnect: {

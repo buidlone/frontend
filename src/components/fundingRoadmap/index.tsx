@@ -13,20 +13,20 @@ import Image from "next/image";
 import unlockedLock from "../../../public/lock_open.svg";
 import { useContext } from "react";
 import ProjectContext from "../../context/projectContext";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 
 interface IFundingBlock {
   seed: string;
-  softCap: string;
   hardCap: string;
 }
 
 export default function FundingRoadmap({
   seed,
-  softCap,
   hardCap,
   ...props
 }: IFundingBlock) {
   const project = useContext(ProjectContext);
+  const { softCap } = useContext(LoadedValuesContext);
   return (
     <FProgressWrapper>
       <RoadmapBubble>
@@ -46,10 +46,7 @@ export default function FundingRoadmap({
         <RoadmapBubble>
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
-            <TextWhite>
-              {project.softCap?.amount?.toLocaleString().replace(/,/g, " ")}{" "}
-              USDT
-            </TextWhite>
+            <TextWhite>{softCap?.toLocaleString().replace(/,/g, " ")} USDT</TextWhite>
           </VerticalLine>
           {project.softCap?.isReached ? (
             <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
