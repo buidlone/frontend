@@ -12,8 +12,8 @@ export const getVotingTokens = async (provider: any, address: string | null | un
       const votingTokenBalance = await contract.getVotingTokenBalance(InvestmentPoolAddress, address)
       
       return {
-        votingTokensSupply: (Number(ethers.utils.formatUnits(votingTokensSupply, 18))),
-        votingTokenBalance: (Number(ethers.utils.formatUnits(votingTokenBalance, 18)))
+        votingTokensSupply: (Number(ethers.utils.formatEther(votingTokensSupply))),
+        votingTokenBalance: (Number(ethers.utils.formatEther(votingTokenBalance)))
       }
     } catch (error) {
       console.log(error);

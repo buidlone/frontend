@@ -26,8 +26,8 @@ export const useLoadValues = () => {
            const contract = new ethers.Contract(InvestmentPoolAddress, InvestmentPoolABI, provider);
            const totalInvested= await contract.totalInvestedAmount();
            const softCap = await contract.softCap()
-           setTotalInvested(Number(ethers.utils.formatUnits(totalInvested, 18)))
-           setSoftCap(Number(ethers.utils.formatUnits(softCap, 18)))
+           setTotalInvested(Number(ethers.utils.formatEther(totalInvested)))
+           setSoftCap(Number(ethers.utils.formatEther(softCap)))
 
          } catch (error) {
            console.log(error);
