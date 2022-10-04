@@ -23,7 +23,7 @@ import ProjectContext from "../../context/projectContext";
 import Web3Context from "../../context/web3Context";
 
 const min = 0;
-const maxSum = 3400;
+const maxSum = 5000;
 
 const Calculator = () => {
   const project = useContext(ProjectContext);

@@ -17,30 +17,25 @@ import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
-import { Web3Provider } from "@ethersproject/providers";
-import { getTotalInvested } from "../../web3/getTotalInvested";
 import { getVotingTokens } from "../../web3/getVotingTokens";
 import Web3Context from "../../context/web3Context";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const ProgressInfoBlock = () => {
   const featuredProject = useContext(ProjectContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(featuredProject?.end);
   const { web3Provider, address } = useContext(Web3Context);
-  const [totalRaised, setTotalRaised] = useState<String | undefined>(undefined);
   const [votingTokensSupply, setVotingTokensSupply] = useState<
-    String | undefined
+    number | undefined
   >(undefined);
   const [votingTokenBalance, setVotingTokenBalance] = useState<
-    String | undefined
+    number | undefined
   >(undefined);
+  const { totalInvested } = useContext(LoadedValuesContext);
 
   useEffect(() => {
-    if (Web3Provider) {
-      getTotalInvested(web3Provider, address).then((data) => {
-        setTotalRaised(data?.totalInvested);
-      });
-
+    if (web3Provider && web3Provider?.network.chainId === 5) {
       getVotingTokens(web3Provider, address).then((data) => {
         setVotingTokensSupply(data?.votingTokensSupply);
         setVotingTokenBalance(data?.votingTokenBalance);
@@ -60,7 +55,7 @@ const ProgressInfoBlock = () => {
       </DetailsInfoWrapper>
 
       <DetailsInfoWrapper>
-        <Data>{totalRaised} ETH</Data>
+        <Data>{totalInvested} ETH</Data>
 
         <Data>
           {featuredProject?.milestonesCompleted}/{featuredProject?.milestones}
@@ -93,7 +88,9 @@ const ProgressInfoBlock = () => {
               width={"26px"}
             />
 
-            {web3Provider && votingTokenBalance && votingTokensSupply ? (
+            {web3Provider &&
+            votingTokenBalance !== undefined &&
+            votingTokensSupply !== undefined ? (
               <>
                 <div>Keys activated</div>
                 <div>
@@ -105,7 +102,7 @@ const ProgressInfoBlock = () => {
                 </Tooltip>
               </>
             ) : (
-              <div>Connect Your wallet to view the keys</div>
+              <div>Connect to Goerli testnet to view the keys</div>
             )}
           </KeysWrapper>
           <KeysWrapper>

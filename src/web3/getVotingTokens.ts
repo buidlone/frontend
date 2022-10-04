@@ -10,10 +10,10 @@ export const getVotingTokens = async (provider: any, address: string | null | un
       const contract = new ethers.Contract(GovernancePoolAddress, GovernancePoolABI, provider);
       const votingTokensSupply = await contract.getVotingTokensSupply(InvestmentPoolAddress);
       const votingTokenBalance = await contract.getVotingTokenBalance(InvestmentPoolAddress, address)
-
+      
       return {
-        votingTokensSupply: votingTokensSupply.toString(),
-        votingTokenBalance: votingTokenBalance.toString()
+        votingTokensSupply: (Number(ethers.utils.formatEther(votingTokensSupply))),
+        votingTokenBalance: (Number(ethers.utils.formatEther(votingTokenBalance)))
       }
     } catch (error) {
       console.log(error);

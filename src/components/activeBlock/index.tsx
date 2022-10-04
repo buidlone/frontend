@@ -15,6 +15,7 @@ import Accordion from "../accordion";
 import { InlineWrapper } from "../timelineBlock/styled";
 import InvestModal from "../investModal";
 import Modal from "../modal";
+import Web3Context from "../../context/web3Context";
 
 const items = [
   {
@@ -25,10 +26,24 @@ const items = [
 
 const ActiveBlock = () => {
   const featuredProject = useContext(ProjectContext);
-  const [showModal, setShowModal] = useState(false);
+
   const [flip1, setFlip1] = useState(true);
   const [flip2, setFlip2] = useState(true);
   const [flip3, setFlip3] = useState(true);
+
+  const [showModal, setShowModal] = useState(false);
+  const { web3Provider, connect } = useContext(Web3Context);
+
+  const handleClick = () => {
+    web3Provider && setShowModal(true);
+  };
+
+  const handleConnectClick = async () => {
+    if (connect) {
+      const isConnected = await connect();
+      typeof isConnected !== "boolean" && setShowModal(true);
+    }
+  };
 
   const showFunds = () => {
     setFlip1(!flip1);
@@ -101,9 +116,20 @@ const ActiveBlock = () => {
 
           <TableButton className="stopBtn">STOP</TableButton>
           <TableButton className="claimBtn">Claim tokens</TableButton>
-          <TableButton className="invBtn" onClick={() => setShowModal(true)}>
-            Invest
-          </TableButton>
+          {web3Provider ? (
+            <>
+              <TableButton className="invBtn" onClick={handleClick}>
+                Invest
+              </TableButton>
+            </>
+          ) : (
+            <>
+              <TableButton className="invBtn" onClick={handleConnectClick}>
+                Invest
+              </TableButton>{" "}
+            </>
+          )}
+
           <Modal show={showModal}>
             <InvestModal onClose={() => setShowModal(false)} />
           </Modal>

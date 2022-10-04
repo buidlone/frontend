@@ -39,7 +39,6 @@ import {
   mainnetCurrencies,
 } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
-
 import { getTokenBalance } from "../../web3/getTokenBalance";
 import { toast } from "react-toastify";
 
@@ -111,7 +110,6 @@ const InvestModal = ({ onClose }: IInvest) => {
   useEffect(() => {
     if (web3Provider) {
       if (web3Provider?.network.chainId === 1) {
-        console.log(web3Provider?.network);
         setOptions(mainnetCurrencies);
         setNetwork("Ethereum Mainnet");
         setSelectedCurrency({
@@ -120,7 +118,6 @@ const InvestModal = ({ onClose }: IInvest) => {
           decimals: mainnetCurrencies[0].decimals,
         });
       } else if (web3Provider?.network.chainId === 5) {
-        console.log(web3Provider?.network);
         setOptions(goerliCurrencies);
         setNetwork("Goerli Testnet");
         setSelectedCurrency({

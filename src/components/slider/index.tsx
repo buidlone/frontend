@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 import ProjectContext from "../../context/projectContext";
 import {
   HardCapIndicator,
@@ -54,8 +55,9 @@ const Slider = ({
   timeline,
 }: ISlider) => {
   const project = useContext(ProjectContext);
+  const { softCap } = useContext(LoadedValuesContext);
   const prop = {
-    softCap: project.softCap?.amount,
+    softCap: softCap,
     hardCap: project.hardCap?.amount,
   };
 

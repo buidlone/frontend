@@ -82,7 +82,7 @@ const project: Project = {
     isReached: true,
   },
   hardCap: {
-    amount: 54000,
+    amount: 5000,
     isReached: false,
   },
   investors: [
