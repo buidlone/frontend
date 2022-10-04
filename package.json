@@ -12,6 +12,7 @@
     "@ethersproject/providers": "^5.7.1",
     "@hookform/resolvers": "^2.9.7",
     "@walletconnect/web3-provider": "^1.8.0",
+    "dayjs": "^1.11.5",
     "ethers": "^5.7.1",
     "next": "12.2.3",
     "react": "18.2.0",
