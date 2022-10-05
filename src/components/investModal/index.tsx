@@ -41,6 +41,7 @@ import {
 import Web3Context from "../../context/web3Context";
 import { getTokenBalance } from "../../web3/getTokenBalance";
 import { toast } from "react-toastify";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const items = [
   {
@@ -50,7 +51,6 @@ const items = [
 ];
 
 const schema = yup.object().shape({
-  //amount: yup.number().positive().required("First Name should be required please"),
   checkbox: yup.bool().oneOf([true], "This field is required"),
 });
 
@@ -70,6 +70,8 @@ interface ICurrency {
 }
 
 const InvestModal = ({ onClose }: IInvest) => {
+  const { fundraisingStartDate, fundraisingEndDate } =
+    useContext(LoadedValuesContext);
   const {
     register,
     handleSubmit,
@@ -276,7 +278,10 @@ const InvestModal = ({ onClose }: IInvest) => {
                   <InfoIcon />
                 </Tooltip>
               </InlineWrapper>
-              <div className="dateNum">2022 01 - 2022 06</div>
+              <div className="dateNum">
+                {fundraisingStartDate?.slice(0, 7)} -{" "}
+                {fundraisingEndDate?.slice(0, 7)}{" "}
+              </div>
             </BottomPartWrapper>
           </ItemWrapper>
         </IModalFormConfirmSection>

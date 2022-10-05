@@ -46,7 +46,9 @@ export default function FundingRoadmap({
         <RoadmapBubble>
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
-            <TextWhite>{softCap?.toLocaleString().replace(/,/g, " ")} USDT</TextWhite>
+            <TextWhite>
+              {softCap?.toLocaleString().replace(/,/g, " ")} USDT
+            </TextWhite>
           </VerticalLine>
           {project.softCap?.isReached ? (
             <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />

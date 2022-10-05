@@ -10,10 +10,13 @@ import {
 } from "./styled";
 import TimelineGraph from "../timelineGraph";
 import Tooltip from "../tooltip";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const TimelineBlock = () => {
   const [active, setActive] = useState(2);
+  const { fundraisingStartDate, fundraisingEndDate } =
+    useContext(LoadedValuesContext);
 
   return (
     <BlockWrapper>
@@ -57,7 +60,10 @@ const TimelineBlock = () => {
               <InfoIcon />
             </Tooltip>
           </InlineWrapper>
-          <div className="dateNum">2022 01 - 2022 06</div>
+          <div className="dateNum">
+            {fundraisingStartDate?.slice(0, 7)} -{" "}
+            {fundraisingEndDate?.slice(0, 7)}{" "}
+          </div>
         </BottomPartWrapper>
         <BottomPartWrapper>
           <div>Project period</div>

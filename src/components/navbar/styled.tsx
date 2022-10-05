@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const Nav = styled.nav`
   height: 70px;
@@ -52,10 +52,6 @@ export const NavMenu = styled.ul`
     margin-right: 0px;
     gap: 2.5rem;
   }
-
-  /* @media screen and (max-width: 768px) {
-    display: none;
-  } */
 `;
 
 export const NavItem = styled.li`
@@ -108,9 +104,6 @@ export const ConnectWalletBtn = styled.button`
   @media screen and (max-width: 800px) {
     width: 100%;
   }
-  /* @media screen and (max-width: 768px) {
-    display: none;
-  } */
 `;
 
 export const ProjectHeader = styled.button`
@@ -132,21 +125,28 @@ export const ProjectHeader = styled.button`
   }
 `;
 
-// export const MobileIcon = styled.div`
-//   display: none;
+const rotate360 = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
-//   @media screen and (max-width: 768px) {
-//     display: block;
-//     position: absolute;
-//     top: calc(100% - 130%);
-//     right: calc(100% - 104%);
-//     transform: translate(-100%, 60%);
+export const Spinner = styled.div`
+  animation: ${rotate360} 1s linear infinite;
+  transform: translateZ(0);
 
-//     cursor: pointer;
-
-//     span {
-//       color: #fff;
-//       font-size: 3rem;
-//     }
-//   }
-// `;
+  border-top: 2px solid #00c4ff;
+  border-right: 2px solid #00c4ff;
+  border-bottom: 2px solid #00c4ff;
+  border-left: 4px solid black;
+  background: transparent;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 48%; ;
+`;

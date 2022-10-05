@@ -14,7 +14,6 @@ const AssetsSection = () => {
     const buttons = document.querySelectorAll("StateButton");
     event.currentTarget.classList.add("selected");
     setActive(active);
-    console.log(event);
   };
 
   return (
