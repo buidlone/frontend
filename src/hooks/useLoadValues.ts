@@ -11,12 +11,14 @@ export type LoadedValuesState = {
     softCap: number | null;
     totalInvested: number | null;
     fundraisingStartDate: string | null;
+    fundraisingEndDate: string | null;
 }
 
 export const loadedValuesInitialState: LoadedValuesState = {
     softCap: null,
     totalInvested: null,
     fundraisingStartDate: null,
+    fundraisingEndDate: null,
 }
 
 
@@ -24,6 +26,7 @@ export const useLoadValues = () => {
     const [softCap, setSoftCap] = useState<number|null>(null)
     const [totalInvested, setTotalInvested] = useState<number|null>(null)
     const [fundraisingStartDate, setFundraisingStartDate] = useState<string | null>(null)
+    const [fundraisingEndDate, setFundraisingEndDate] = useState<string | null>(null)
 
     const getValuesFromInvestmentPool = async () => {
         if (provider) {
@@ -33,9 +36,12 @@ export const useLoadValues = () => {
            const softCap = await contract.softCap()
            const fundraisingStartAt = await contract.fundraiserStartAt()
            const fundraisingStartDate = formatTime(fundraisingStartAt)
+           const fundraisingEndAt = await contract.fundraiserEndAt()
+           const fundraisingEndDate = formatTime(fundraisingEndAt)
            setTotalInvested(Number(ethers.utils.formatEther(totalInvested)))
            setSoftCap(Number(ethers.utils.formatEther(softCap)))
            setFundraisingStartDate(fundraisingStartDate)
+           setFundraisingEndDate(fundraisingEndDate)
 
 
          } catch (error) {
@@ -50,5 +56,5 @@ export const useLoadValues = () => {
         getValuesFromInvestmentPool()
     }, [])
 
-    return {totalInvested, softCap, fundraisingStartDate}
+    return {totalInvested, softCap, fundraisingStartDate, fundraisingEndDate}
 }

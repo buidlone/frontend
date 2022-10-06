@@ -17,8 +17,8 @@ const year = date.getFullYear();
 const month = padTo2Digits(date.getMonth() + 1);
 const day = padTo2Digits(date.getDate());
 
-const dateTime = `${year}/${month}/${day} ${time}`;
-console.log(dateTime);
+const dateTime = `${year} ${month} ${day} ${time}`;
+
 
 return dateTime
 }
