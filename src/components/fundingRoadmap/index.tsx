@@ -11,7 +11,7 @@ import {
 import lockedLock from "../../../public/lock_closed.svg";
 import Image from "next/image";
 import unlockedLock from "../../../public/lock_open.svg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 
@@ -27,6 +27,11 @@ export default function FundingRoadmap({
 }: IFundingBlock) {
   const project = useContext(ProjectContext);
   const { softCap } = useContext(LoadedValuesContext);
+  const { totalInvested } = useContext(LoadedValuesContext);
+  const [progress] = useState<number>(
+    totalInvested !== null ? (totalInvested * 100) / project.hardCap.amount : 0
+  );
+
   return (
     <FProgressWrapper>
       <RoadmapBubble>
@@ -39,8 +44,10 @@ export default function FundingRoadmap({
         </VerticalLine>
       </RoadmapBubble>
       <FundsBar>
-        <FProgress progress={64.8}>
-          <FundsIndicator funds={35000?.toLocaleString().replace(/,/g, " ")} />
+        <FProgress progress={progress}>
+          <FundsIndicator
+            funds={totalInvested?.toLocaleString().replace(/,/g, " ")}
+          />
         </FProgress>
 
         <RoadmapBubble>

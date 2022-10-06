@@ -13,8 +13,8 @@ interface Project {
     fundsRequired: number;
     isCollected: boolean;
   };
-  hardCap?: {
-  amount?: number;
+  hardCap: {
+  amount: number;
   isReached?: boolean;
 };
   softCap?: {
