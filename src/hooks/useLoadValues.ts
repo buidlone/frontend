@@ -9,14 +9,14 @@ const provider = new ethers.providers.JsonRpcProvider(`https://goerli.infura.io/
 
 export type LoadedValuesState = {
     softCap: number | null;
-    totalInvested: number | null;
+    totalInvested: number;
     fundraisingStartDate: string | null;
     fundraisingEndDate: string | null;
 }
 
 export const loadedValuesInitialState: LoadedValuesState = {
     softCap: null,
-    totalInvested: null,
+    totalInvested: 0,
     fundraisingStartDate: null,
     fundraisingEndDate: null,
 }
@@ -24,7 +24,7 @@ export const loadedValuesInitialState: LoadedValuesState = {
 
 export const useLoadValues = () => {
     const [softCap, setSoftCap] = useState<number|null>(null)
-    const [totalInvested, setTotalInvested] = useState<number|null>(null)
+    const [totalInvested, setTotalInvested] = useState<number>(0)
     const [fundraisingStartDate, setFundraisingStartDate] = useState<string | null>(null)
     const [fundraisingEndDate, setFundraisingEndDate] = useState<string | null>(null)
 

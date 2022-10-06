@@ -29,7 +29,7 @@ export default function FundingRoadmap({
   const { softCap } = useContext(LoadedValuesContext);
   const { totalInvested } = useContext(LoadedValuesContext);
   const [progress] = useState<number>(
-    totalInvested !== null ? (totalInvested * 100) / project.hardCap.amount : 0
+    (totalInvested * 100) / project.hardCap.amount
   );
 
   return (
@@ -57,7 +57,7 @@ export default function FundingRoadmap({
               {softCap?.toLocaleString().replace(/,/g, " ")} USDT
             </TextWhite>
           </VerticalLine>
-          {project.softCap?.isReached ? (
+          {totalInvested >= project.softCap.amount ? ( // Gal butu praktiskiau naudoti palyginima su values ar pasieke nei atskira property tam sukurti? Nes kol kas nemaciau, kad kazkur setintum ta isReached pagal kazka true/false, tai nereiketu tiesiog atskiru skaiciavimu tam daryti, kad paskaiciuoti ar pareachino :D
             <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
           ) : (
             <Image src={lockedLock} alt="locked lock" height={"14px"} />
@@ -65,7 +65,7 @@ export default function FundingRoadmap({
         </RoadmapBubble>
       </FundsBar>
       <RoadmapBubble>
-        {project.hardCap?.isReached ? (
+        {totalInvested >= project.hardCap.amount ? (
           <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
         ) : (
           <Image src={lockedLock} alt="locked lock" height={"14px"} />

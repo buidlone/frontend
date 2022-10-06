@@ -17,8 +17,8 @@ interface Project {
   amount: number;
   isReached?: boolean;
 };
-  softCap?: {
-    amount?: number;
+  softCap: {
+    amount: number;
     reservedUntil?: string;
     isReached?: boolean;
   };
@@ -77,7 +77,7 @@ const project: Project = {
     fundsRequired: 14000,
     isCollected: true,
   },softCap: {
-    amount: 34000,
+    amount: 1500,
     reservedUntil: '2022-06-01',
     isReached: true,
   },
