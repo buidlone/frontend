@@ -8,7 +8,7 @@ import { formatTime } from '../utils/formatTime'
 const provider = new ethers.providers.JsonRpcProvider(`https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`)
 
 export type LoadedValuesState = {
-    softCap: number | null;
+    softCap: number;
     hardCap: number;
     totalInvested: number;
     fundraisingStartDate: string | null;
@@ -16,7 +16,7 @@ export type LoadedValuesState = {
 }
 
 export const loadedValuesInitialState: LoadedValuesState = {
-    softCap: null,
+    softCap: 0,
     hardCap: 0,
     totalInvested: 0,
     fundraisingStartDate: null,
@@ -25,7 +25,7 @@ export const loadedValuesInitialState: LoadedValuesState = {
 
 
 export const useLoadValues = () => {
-    const [softCap, setSoftCap] = useState<number|null>(null)
+    const [softCap, setSoftCap] = useState<number>(0)
     const [hardCap, setHardCap] = useState<number>(0)
     const [totalInvested, setTotalInvested] = useState<number>(0)
     const [fundraisingStartDate, setFundraisingStartDate] = useState<string | null>(null)

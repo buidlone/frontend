@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
 import FundingRoadmap from "../fundingRoadmap";
 import InvestModal from "../investModal";
@@ -15,6 +16,9 @@ import {
 export default function FundingBlock() {
   const [showModal, setShowModal] = useState(false);
   const { web3Provider, connect } = useContext(Web3Context);
+  const { hardCap } = useContext(LoadedValuesContext);
+  const { softCap } = useContext(LoadedValuesContext);
+  const { totalInvested } = useContext(LoadedValuesContext);
 
   const handleClick = () => {
     web3Provider && setShowModal(true);
@@ -32,7 +36,12 @@ export default function FundingBlock() {
       <BlockWrapper>
         <Title>Funding</Title>
         <FContainer>
-          <FundingRoadmap seed={"34 000"} hardCap={"34 000"} />
+          <FundingRoadmap
+            seed={"34 000"}
+            hardCap={hardCap}
+            softCap={softCap}
+            totalInvested={totalInvested}
+          />
           <BottomWrapper>
             {web3Provider ? (
               <>

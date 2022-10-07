@@ -13,24 +13,23 @@ import Image from "next/image";
 import unlockedLock from "../../../public/lock_open.svg";
 import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
-import LoadedValuesContext from "../../context/loadedValuesContext";
 
 interface IFundingBlock {
   seed: string;
+  hardCap: number;
+  softCap: number;
+  totalInvested: number;
 }
 
-export default function FundingRoadmap({}: IFundingBlock) {
+export default function FundingRoadmap({ ...props }: IFundingBlock) {
   const project = useContext(ProjectContext);
-  const { softCap } = useContext(LoadedValuesContext);
-  const { totalInvested } = useContext(LoadedValuesContext);
-  const { hardCap } = useContext(LoadedValuesContext);
   const [progress, setProgress] = useState<number>(
-    (totalInvested * 100) / project.hardCap.amount
+    (props.totalInvested * 100) / props.hardCap
   );
 
   useEffect(() => {
-    setProgress((totalInvested * 100) / hardCap);
-  }, [totalInvested]);
+    setProgress((props.totalInvested * 100) / props.hardCap);
+  }, [props.totalInvested]);
 
   return (
     <FProgressWrapper>
@@ -46,7 +45,7 @@ export default function FundingRoadmap({}: IFundingBlock) {
       <FundsBar>
         <FProgress progress={progress}>
           <FundsIndicator
-            funds={totalInvested?.toLocaleString().replace(/,/g, " ")}
+            funds={props.totalInvested.toLocaleString().replace(/,/g, " ")}
           />
         </FProgress>
 
@@ -54,7 +53,7 @@ export default function FundingRoadmap({}: IFundingBlock) {
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
             <TextWhite>
-              {softCap?.toLocaleString().replace(/,/g, " ")} USDT
+              {props.softCap.toLocaleString().replace(/,/g, " ")} USDT
             </TextWhite>
           </VerticalLine>
           {project.softCap.isReached ? (
@@ -73,7 +72,7 @@ export default function FundingRoadmap({}: IFundingBlock) {
         <VerticalLine>
           <TextAboveDashed>Hard Cap</TextAboveDashed>
           <TextWhite>
-            {hardCap.toLocaleString().replace(/,/g, " ")} USDT
+            {props.hardCap.toLocaleString().replace(/,/g, " ")} USDT
           </TextWhite>
         </VerticalLine>
       </RoadmapBubble>
