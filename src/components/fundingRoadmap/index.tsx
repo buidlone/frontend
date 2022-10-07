@@ -58,10 +58,10 @@ export default function FundingRoadmap({
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
             <TextWhite>
-              {softCap?.toLocaleString().replace(/,/g, " ")} USDT
+              {softCap?.amount?.toLocaleString().replace(/,/g, " ")} USDT
             </TextWhite>
           </VerticalLine>
-          {project.softCap.isReached ? (
+          {softCap?.isReached ? (
             <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
           ) : (
             <Image src={lockedLock} alt="locked lock" height={"14px"} />
