@@ -16,6 +16,7 @@ import { InlineWrapper } from "../timelineBlock/styled";
 import InvestModal from "../investModal";
 import Modal from "../modal";
 import Web3Context from "../../context/web3Context";
+import ProjectState from "../projectState";
 
 const items = [
   {
@@ -91,7 +92,9 @@ const ActiveBlock = () => {
             >
               {flip3 ? "5%" : "500 tickets"}
             </td>
-            <td className="green smaller">Ongoing</td>
+            <td>
+              <ProjectState />
+            </td>
           </tr>
           <tr>
             <td />
