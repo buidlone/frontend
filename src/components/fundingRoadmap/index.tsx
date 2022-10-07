@@ -11,7 +11,7 @@ import {
 import lockedLock from "../../../public/lock_closed.svg";
 import Image from "next/image";
 import unlockedLock from "../../../public/lock_open.svg";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 
@@ -28,9 +28,13 @@ export default function FundingRoadmap({
   const project = useContext(ProjectContext);
   const { softCap } = useContext(LoadedValuesContext);
   const { totalInvested } = useContext(LoadedValuesContext);
-  const [progress] = useState<number>(
+  const [progress, setProgress] = useState<number>(
     (totalInvested * 100) / project.hardCap.amount
   );
+
+  useEffect(() => {
+    setProgress((totalInvested * 100) / project.hardCap.amount);
+  }, [totalInvested]);
 
   return (
     <FProgressWrapper>
@@ -57,7 +61,7 @@ export default function FundingRoadmap({
               {softCap?.toLocaleString().replace(/,/g, " ")} USDT
             </TextWhite>
           </VerticalLine>
-          {totalInvested >= project.softCap.amount ? ( // Gal butu praktiskiau naudoti palyginima su values ar pasieke nei atskira property tam sukurti? Nes kol kas nemaciau, kad kazkur setintum ta isReached pagal kazka true/false, tai nereiketu tiesiog atskiru skaiciavimu tam daryti, kad paskaiciuoti ar pareachino :D
+          {project.softCap.isReached ? (
             <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
           ) : (
             <Image src={lockedLock} alt="locked lock" height={"14px"} />
@@ -65,7 +69,7 @@ export default function FundingRoadmap({
         </RoadmapBubble>
       </FundsBar>
       <RoadmapBubble>
-        {totalInvested >= project.hardCap.amount ? (
+        {project.hardCap.isReached ? (
           <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
         ) : (
           <Image src={lockedLock} alt="locked lock" height={"14px"} />

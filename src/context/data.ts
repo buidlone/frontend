@@ -15,7 +15,7 @@ interface Project {
   };
   hardCap: {
   amount: number;
-  isReached?: boolean;
+  isReached: boolean;
 };
   softCap: {
     amount: number;
