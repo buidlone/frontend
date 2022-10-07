@@ -16,9 +16,7 @@ import {
 export default function FundingBlock() {
   const [showModal, setShowModal] = useState(false);
   const { web3Provider, connect } = useContext(Web3Context);
-  const { hardCap } = useContext(LoadedValuesContext);
-  const { softCap } = useContext(LoadedValuesContext);
-  const { totalInvested } = useContext(LoadedValuesContext);
+  const { hardCap, softCap, totalInvested } = useContext(LoadedValuesContext);
 
   const handleClick = () => {
     web3Provider && setShowModal(true);
