@@ -16,6 +16,8 @@ import { InlineWrapper } from "../timelineBlock/styled";
 import InvestModal from "../investModal";
 import Modal from "../modal";
 import Web3Context from "../../context/web3Context";
+import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
+import { toast } from "react-toastify";
 
 const items = [
   {
@@ -34,14 +36,24 @@ const ActiveBlock = () => {
   const [showModal, setShowModal] = useState(false);
   const { web3Provider, connect } = useContext(Web3Context);
 
-  const handleClick = () => {
-    web3Provider && setShowModal(true);
+  const handleClick = async () => {
+    const isAllowed = await isInvestingAllowed();
+    if (isAllowed) {
+      web3Provider && setShowModal(true);
+    } else {
+      toast.info("Investing period is over");
+    }
   };
 
   const handleConnectClick = async () => {
-    if (connect) {
-      const isConnected = await connect();
-      typeof isConnected !== "boolean" && setShowModal(true);
+    const isAllowed = await isInvestingAllowed();
+    if (isAllowed) {
+      if (connect) {
+        const isConnected = await connect();
+        typeof isConnected !== "boolean" && setShowModal(true);
+      }
+    } else {
+      toast.info("Investing period is over");
     }
   };
 
