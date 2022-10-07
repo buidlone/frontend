@@ -11,7 +11,7 @@ import {
 import lockedLock from "../../../public/lock_closed.svg";
 import Image from "next/image";
 import unlockedLock from "../../../public/lock_open.svg";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 
@@ -27,6 +27,15 @@ export default function FundingRoadmap({
 }: IFundingBlock) {
   const project = useContext(ProjectContext);
   const { softCap } = useContext(LoadedValuesContext);
+  const { totalInvested } = useContext(LoadedValuesContext);
+  const [progress, setProgress] = useState<number>(
+    (totalInvested * 100) / project.hardCap.amount
+  );
+
+  useEffect(() => {
+    setProgress((totalInvested * 100) / project.hardCap.amount);
+  }, [totalInvested]);
+
   return (
     <FProgressWrapper>
       <RoadmapBubble>
@@ -39,8 +48,10 @@ export default function FundingRoadmap({
         </VerticalLine>
       </RoadmapBubble>
       <FundsBar>
-        <FProgress progress={64.8}>
-          <FundsIndicator funds={35000?.toLocaleString().replace(/,/g, " ")} />
+        <FProgress progress={progress}>
+          <FundsIndicator
+            funds={totalInvested?.toLocaleString().replace(/,/g, " ")}
+          />
         </FProgress>
 
         <RoadmapBubble>
@@ -50,7 +61,7 @@ export default function FundingRoadmap({
               {softCap?.toLocaleString().replace(/,/g, " ")} USDT
             </TextWhite>
           </VerticalLine>
-          {project.softCap?.isReached ? (
+          {project.softCap.isReached ? (
             <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
           ) : (
             <Image src={lockedLock} alt="locked lock" height={"14px"} />
@@ -58,7 +69,7 @@ export default function FundingRoadmap({
         </RoadmapBubble>
       </FundsBar>
       <RoadmapBubble>
-        {project.hardCap?.isReached ? (
+        {project.hardCap.isReached ? (
           <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
         ) : (
           <Image src={lockedLock} alt="locked lock" height={"14px"} />
