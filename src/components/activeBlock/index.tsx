@@ -16,6 +16,7 @@ import { InlineWrapper } from "../timelineBlock/styled";
 import InvestModal from "../investModal";
 import Modal from "../modal";
 import Web3Context from "../../context/web3Context";
+import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 
 const items = [
   {
@@ -32,7 +33,7 @@ const ActiveBlock = () => {
   const [flip3, setFlip3] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
-  const { web3Provider, connect } = useContext(Web3Context);
+  const { web3Provider, connect, address } = useContext(Web3Context);
 
   const handleClick = () => {
     web3Provider && setShowModal(true);
@@ -44,6 +45,14 @@ const ActiveBlock = () => {
       typeof isConnected !== "boolean" && setShowModal(true);
     }
   };
+
+  useEffect(() => {
+    if (web3Provider) {
+      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
+        console.log(data);
+      });
+    }
+  }, [web3Provider]);
 
   const showFunds = () => {
     setFlip1(!flip1);
@@ -75,7 +84,7 @@ const ActiveBlock = () => {
               onMouseOut={showFunds}
               className="green flippable"
             >
-              {flip1 ? "1245ETH" : "12ETH"}{" "}
+              {flip1 ? "124555ETH" : "12ETH"}{" "}
             </td>
             <td
               onMouseOver={showTokens}

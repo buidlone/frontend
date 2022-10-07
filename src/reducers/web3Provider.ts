@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 export type Web3ProviderState = {
   provider: any
   web3Provider: ethers.providers.Web3Provider | null | undefined
-  address: string | null | undefined
+  address: string | undefined
   network: ethers.providers.Network | null | undefined
   connect: (() => Promise<void>) | null
   disconnect: (() => Promise<void>) | null
@@ -12,7 +12,7 @@ export type Web3ProviderState = {
 export const web3InitialState: Web3ProviderState = {
   provider: null,
   web3Provider: null,
-  address: null,
+  address: undefined,
   network: null,
   connect: null,
   disconnect: null,
