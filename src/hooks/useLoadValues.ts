@@ -9,6 +9,7 @@ const provider = new ethers.providers.JsonRpcProvider(`https://goerli.infura.io/
 
 export type LoadedValuesState = {
     softCap: number | null;
+    hardCap: number;
     totalInvested: number;
     fundraisingStartDate: string | null;
     fundraisingEndDate: string | null;
@@ -16,6 +17,7 @@ export type LoadedValuesState = {
 
 export const loadedValuesInitialState: LoadedValuesState = {
     softCap: null,
+    hardCap: 0,
     totalInvested: 0,
     fundraisingStartDate: null,
     fundraisingEndDate: null,
@@ -24,6 +26,7 @@ export const loadedValuesInitialState: LoadedValuesState = {
 
 export const useLoadValues = () => {
     const [softCap, setSoftCap] = useState<number|null>(null)
+    const [hardCap, setHardCap] = useState<number>(0)
     const [totalInvested, setTotalInvested] = useState<number>(0)
     const [fundraisingStartDate, setFundraisingStartDate] = useState<string | null>(null)
     const [fundraisingEndDate, setFundraisingEndDate] = useState<string | null>(null)
@@ -33,13 +36,15 @@ export const useLoadValues = () => {
           try {
            const contract = new ethers.Contract(InvestmentPoolAddress, InvestmentPoolABI, provider);
            const totalInvested= await contract.totalInvestedAmount();
-           const softCap = await contract.softCap()
+           const softCap = await contract.softCap();
+           const hardCap = await contract.hardCap();
            const fundraisingStartAt = await contract.fundraiserStartAt()
            const fundraisingStartDate = formatTime(fundraisingStartAt)
            const fundraisingEndAt = await contract.fundraiserEndAt()
            const fundraisingEndDate = formatTime(fundraisingEndAt)
            setTotalInvested(Number(ethers.utils.formatEther(totalInvested)))
            setSoftCap(Number(ethers.utils.formatEther(softCap)))
+           setHardCap(Number(ethers.utils.formatEther(hardCap)))
            setFundraisingStartDate(fundraisingStartDate)
            setFundraisingEndDate(fundraisingEndDate)
 
@@ -56,5 +61,5 @@ export const useLoadValues = () => {
         getValuesFromInvestmentPool()
     }, [])
 
-    return {totalInvested, softCap, fundraisingStartDate, fundraisingEndDate}
+    return {totalInvested, softCap, hardCap, fundraisingStartDate, fundraisingEndDate}
 }

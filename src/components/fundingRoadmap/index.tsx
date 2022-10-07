@@ -17,23 +17,19 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 
 interface IFundingBlock {
   seed: string;
-  hardCap: string;
 }
 
-export default function FundingRoadmap({
-  seed,
-  hardCap,
-  ...props
-}: IFundingBlock) {
+export default function FundingRoadmap({}: IFundingBlock) {
   const project = useContext(ProjectContext);
   const { softCap } = useContext(LoadedValuesContext);
   const { totalInvested } = useContext(LoadedValuesContext);
+  const { hardCap } = useContext(LoadedValuesContext);
   const [progress, setProgress] = useState<number>(
     (totalInvested * 100) / project.hardCap.amount
   );
 
   useEffect(() => {
-    setProgress((totalInvested * 100) / project.hardCap.amount);
+    setProgress((totalInvested * 100) / hardCap);
   }, [totalInvested]);
 
   return (
@@ -77,7 +73,7 @@ export default function FundingRoadmap({
         <VerticalLine>
           <TextAboveDashed>Hard Cap</TextAboveDashed>
           <TextWhite>
-            {project.hardCap?.amount?.toLocaleString().replace(/,/g, " ")} USDT
+            {hardCap.toLocaleString().replace(/,/g, " ")} USDT
           </TextWhite>
         </VerticalLine>
       </RoadmapBubble>
