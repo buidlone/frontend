@@ -57,7 +57,7 @@ const Slider = ({
   const project = useContext(ProjectContext);
   const { softCap, hardCap } = useContext(LoadedValuesContext);
   const prop = {
-    softCap: softCap,
+    softCap: softCap?.amount,
     hardCap: hardCap,
   };
 
