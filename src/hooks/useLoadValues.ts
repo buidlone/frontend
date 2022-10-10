@@ -13,7 +13,6 @@ const provider = new ethers.providers.JsonRpcProvider(
   `https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`
 );
 
-
 export const loadedValuesInitialState: ILoadedValues = {
   softCap: {
     amount: null,
@@ -23,10 +22,13 @@ export const loadedValuesInitialState: ILoadedValues = {
   fundraisingStartDate: null,
   fundraisingEndDate: null,
   milestones: [],
+  hardCap: 0,
+  projectState: 0,
 };
 
 export const useLoadValues = () => {
   const [softCap, setSoftCap] = useState<SoftCap | null>(null);
+  const [hardCap, setHardCap] = useState<number>(0)
   const [totalInvested, setTotalInvested] = useState<number>(0);
   const [fundraisingStartDate, setFundraisingStartDate] = useState<
     string | null
@@ -35,6 +37,7 @@ export const useLoadValues = () => {
     null
   );
   const [milestones, setMilestones] = useState<Milestone[]>([]);
+  const [projectState, setProjectState] = useState<number>(0)
 
   const getValuesFromInvestmentPool = async () => {
     if (provider) {
@@ -46,11 +49,13 @@ export const useLoadValues = () => {
         );
         const totalInvested = await contract.totalInvestedAmount();
         const softCap = await contract.softCap();
+        const hardCap = await contract.hardCap();
         const isSoftCapReached = await contract.isSoftCapReached();
         const fundraisingStartAt = await contract.fundraiserStartAt();
         const fundraisingStartDate = formatTime(fundraisingStartAt);
         const fundraisingEndAt = await contract.fundraiserEndAt();
         const fundraisingEndDate = formatTime(fundraisingEndAt);
+        const projectState = await contract.getProjectStateByteValue();
         const milestoneCountHex = await contract.milestoneCount();
         const milestoneCount = milestoneCountHex.toNumber();
 
@@ -78,13 +83,16 @@ export const useLoadValues = () => {
           amount: Number(ethers.utils.formatEther(softCap)),
           isReached: isSoftCapReached,
         });
+        setHardCap(Number(ethers.utils.formatEther(hardCap)))
         setFundraisingStartDate(fundraisingStartDate);
         setFundraisingEndDate(fundraisingEndDate);
+        setProjectState(parseInt(projectState, 10))
       } catch (error) {
         console.log(error);
         toast.error("Error occurred while retrieving data from blockchain");
       }
     }
+
   };
 
   useEffect(() => {
@@ -94,8 +102,11 @@ export const useLoadValues = () => {
   return {
     totalInvested,
     softCap,
+    hardCap,
     fundraisingStartDate,
     fundraisingEndDate,
     milestones,
+    projectState
   };
 };
+

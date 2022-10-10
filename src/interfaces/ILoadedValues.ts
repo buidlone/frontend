@@ -16,8 +16,10 @@ export type SoftCap = {
 
 export interface ILoadedValues {
   softCap: SoftCap | null;
+  hardCap: number;
   totalInvested: number;
   fundraisingStartDate: string | null;
   fundraisingEndDate: string | null;
   milestones: Milestone[];
+  projectState: number;
 }

@@ -17,24 +17,21 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 
 interface IFundingBlock {
   seed: string;
-  hardCap: string;
+  hardCap: number;
+  softCap: number;
+  totalInvested: number;
 }
 
-export default function FundingRoadmap({
-  seed,
-  hardCap,
-  ...props
-}: IFundingBlock) {
+export default function FundingRoadmap({ ...props }: IFundingBlock) {
   const project = useContext(ProjectContext);
   const { softCap } = useContext(LoadedValuesContext);
-  const { totalInvested } = useContext(LoadedValuesContext);
   const [progress, setProgress] = useState<number>(
-    (totalInvested * 100) / project.hardCap.amount
+    (props.totalInvested * 100) / props.hardCap
   );
 
   useEffect(() => {
-    setProgress((totalInvested * 100) / project.hardCap.amount);
-  }, [totalInvested]);
+    setProgress((props.totalInvested * 100) / props.hardCap);
+  }, [props.totalInvested]);
 
   return (
     <FProgressWrapper>
@@ -50,7 +47,7 @@ export default function FundingRoadmap({
       <FundsBar>
         <FProgress progress={progress}>
           <FundsIndicator
-            funds={totalInvested?.toLocaleString().replace(/,/g, " ")}
+            funds={props.totalInvested.toLocaleString().replace(/,/g, " ")}
           />
         </FProgress>
 
@@ -77,7 +74,7 @@ export default function FundingRoadmap({
         <VerticalLine>
           <TextAboveDashed>Hard Cap</TextAboveDashed>
           <TextWhite>
-            {project.hardCap?.amount?.toLocaleString().replace(/,/g, " ")} USDT
+            {props.hardCap.toLocaleString().replace(/,/g, " ")} USDT
           </TextWhite>
         </VerticalLine>
       </RoadmapBubble>
