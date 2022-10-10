@@ -34,12 +34,7 @@ export default function FundingBlock() {
       <BlockWrapper>
         <Title>Funding</Title>
         <FContainer>
-          <FundingRoadmap
-            seed={"34 000"}
-            hardCap={hardCap}
-            softCap={softCap}
-            totalInvested={totalInvested}
-          />
+          <FundingRoadmap/>
           <BottomWrapper>
             {web3Provider ? (
               <>
