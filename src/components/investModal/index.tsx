@@ -33,11 +33,7 @@ import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import React, { KeyboardEvent, useContext, useEffect, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
-import {
-  Currency,
-  goerliCurrencies,
-  mainnetCurrencies,
-} from "../../constants/currencies";
+import { Currency, mainnetCurrencies } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
 import { getTokenBalance } from "../../web3/getTokenBalance";
 import { toast } from "react-toastify";
@@ -52,6 +48,10 @@ const items = [
 
 const schema = yup.object().shape({
   checkbox: yup.bool().oneOf([true], "This field is required"),
+  amount: yup
+    .number()
+    .required("This field is required")
+    .typeError("This field is required"),
 });
 
 interface InputTypes {
@@ -70,27 +70,30 @@ interface ICurrency {
 }
 
 const InvestModal = ({ onClose }: IInvest) => {
-  const { fundraisingStartDate, fundraisingEndDate } =
+  const { fundraisingStartDate, fundraisingEndDate, currency } =
     useContext(LoadedValuesContext);
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<InputTypes>({
     resolver: yupResolver(schema),
   });
 
-  const [options, setOptions] = useState<Currency[]>(mainnetCurrencies);
-  const [amount, setAmount] = useState<number | undefined>(undefined);
+  const [options, setOptions] = useState<Currency[]>([currency]);
+
+  //const [amount, setAmount] = useState<number | undefined>(undefined);
   const [receivedTokens, setReceivedTokens] = useState<number | undefined>(
     undefined
   );
   const [receivedDAO, setReceivedDAO] = useState<number | undefined>(undefined);
   const [votingPower, setVotingPower] = useState<number | undefined>(undefined);
   const [selectedCurrency, setSelectedCurrency] = useState<ICurrency>({
-    label: mainnetCurrencies[0].label,
-    address: mainnetCurrencies[0].address,
-    decimals: mainnetCurrencies[0].decimals,
+    label: currency.label,
+    address: currency.address,
+    decimals: currency.decimals,
   });
 
   const { web3Provider, address } = useContext(Web3Context);
@@ -120,12 +123,12 @@ const InvestModal = ({ onClose }: IInvest) => {
           decimals: mainnetCurrencies[0].decimals,
         });
       } else if (web3Provider?.network.chainId === 5) {
-        setOptions(goerliCurrencies);
+        setOptions([currency]);
         setNetwork("Goerli Testnet");
         setSelectedCurrency({
-          label: goerliCurrencies[0].label,
-          address: goerliCurrencies[0].address,
-          decimals: goerliCurrencies[0].decimals,
+          label: currency.label,
+          address: currency.address,
+          decimals: currency.decimals,
         });
       } else {
         setNetworkError("Please connect to Ethereum Mainnet or Goerli Tesnet");
@@ -137,11 +140,10 @@ const InvestModal = ({ onClose }: IInvest) => {
   }, []);
 
   useEffect(() => {
-    if (selectedCurrency?.address && selectedCurrency?.decimals) {
+    if (selectedCurrency?.address) {
       getTokenBalance(
         selectedCurrency.address,
         web3Provider,
-        selectedCurrency.decimals,
         address //comment for the test wallet to be checked and choose an address in the getTokenBalance.ts file
       ).then((data) => {
         if (data) {
@@ -167,6 +169,13 @@ const InvestModal = ({ onClose }: IInvest) => {
     }
   };
 
+  const handleSetAmount = () => {
+    setValue("amount", balance);
+    setReceivedTokens(24000);
+    setReceivedDAO(300);
+    setVotingPower(15);
+  };
+
   const submitForm = (data: InputTypes) => {
     console.log(data);
   };
@@ -190,24 +199,16 @@ const InvestModal = ({ onClose }: IInvest) => {
         <IModalInputSectionWrapper>
           <IModalFieldWrapper>
             <CurrencyInline>
+              <ErrorMsg>{errors.amount?.message}</ErrorMsg>
               <InputLabel>Your investment</InputLabel>
               {!networkError && (
                 <BalanceBtn className="bottomText">
                   Balance: {balance}
-                  <MaxBalanceBtn onClick={() => setAmount(balance)}>
-                    Max
-                  </MaxBalanceBtn>
+                  <MaxBalanceBtn onClick={handleSetAmount}>Max</MaxBalanceBtn>
                 </BalanceBtn>
               )}
             </CurrencyInline>
-            <InputField
-              type="number"
-              name="amount"
-              placeholder=""
-              value={amount}
-              onChange={(e) => setAmount(e.target.valueAsNumber)}
-              onKeyDown={handleKeyDown}
-            />
+            <InputField {...register("amount")} onKeyDown={handleKeyDown} />
             <CurrencyInline>
               {networkError ? (
                 <div className="error">{networkError} </div>

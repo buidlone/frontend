@@ -12,14 +12,16 @@ import ERC20TokenABI from './abi/ERC20Token.json'
  */
 
 
-export const getTokenBalance = async (tokenAddress: string, provider: any, decimals: number, address?: string | null | undefined) => {
+export const getTokenBalance = async (tokenAddress: string, provider: any, address?: string | null | undefined) => {
 
 try {
   const contract = new ethers.Contract(tokenAddress, ERC20TokenABI, provider);
   //For testing purposes addresses that have USDC/USDT currencies in Mainnet/Goerli are hardcoded
   //If the address from investModal is provided as an argument - balance of currently connected account will be checked 
   const tokenBalance = await contract.balanceOf(address ? address : "0x618ada3f9f7BC1B2f2765Ba1728BEc5057B3DE40");  
-  const tokenBalanceInDecimals = Number(ethers.utils.formatUnits(tokenBalance, decimals))
+  const tokenDecimals = await contract.decimals()
+
+  const tokenBalanceInDecimals = Number(ethers.utils.formatUnits(tokenBalance, tokenDecimals))
 return tokenBalanceInDecimals;
 } catch (error) {
   console.log('network error', error);

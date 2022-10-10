@@ -1,7 +1,7 @@
-export type AvailableCurrencies = "USDC" | "USDT" | "fDAI" | "fUSDC";
+//export type AvailableCurrencies = "USDC" | "USDT" | "fDAI" | "fUSDC";
 
 export interface Currency {
-  value: AvailableCurrencies;
+  value: string;
   label: string;
   address: string;
   decimals: number;
@@ -36,3 +36,5 @@ export const goerliCurrencies: Currency[] = [
     decimals: 18,
   },
 ];
+
+
