@@ -4,7 +4,7 @@ export type Milestone = {
   endDate: string;
   paid: boolean;
   totalMilestoneTokenAllocation?: number;
-  seedAmount: number;
+  seedAmount: number | string;
   seedAmountPaid: boolean;
   streamOngoing: boolean;
 };

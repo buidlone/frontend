@@ -71,7 +71,7 @@ export const useLoadValues = () => {
               endDate: formatTime(milestone?.endDate),
               paid: milestone?.paid,
 
-              seedAmount: seedAmount.toNumber(),
+              seedAmount: seedAmount.toString(),
               seedAmountPaid: milestone?.seedAmountPaid,
               streamOngoing: milestone?.streamOngoing,
             },
