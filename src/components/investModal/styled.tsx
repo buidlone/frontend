@@ -306,6 +306,9 @@ export const ProceedButton = styled.button`
   .arrow {
     font-size: 2rem;
   }
+  .wait {
+    height: 32px;
+  }
 `;
 export const CheckboxLabel = styled.label`
   cursor: pointer;
@@ -431,6 +434,7 @@ export const IModalWrapper = styled.div`
 
     ${ProceedButton} {
       margin-left: 0;
+      padding: 0 1rem 0 1rem;
     }
   }
 `;

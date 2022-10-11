@@ -38,6 +38,7 @@ import Web3Context from "../../context/web3Context";
 import { getTokenBalance } from "../../web3/getTokenBalance";
 import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { invest } from "../../web3/invest";
 
 const items = [
   {
@@ -55,7 +56,7 @@ const schema = yup.object().shape({
 });
 
 interface InputTypes {
-  amount?: number;
+  amount: number;
   checkbox: boolean;
 }
 
@@ -75,16 +76,16 @@ const InvestModal = ({ onClose }: IInvest) => {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
+    getValues,
+    setError,
     formState: { errors },
   } = useForm<InputTypes>({
     resolver: yupResolver(schema),
   });
 
+  const [buttonState, setButtonState] = useState(false);
   const [options, setOptions] = useState<Currency[]>([currency]);
-
-  //const [amount, setAmount] = useState<number | undefined>(undefined);
   const [receivedTokens, setReceivedTokens] = useState<number | undefined>(
     undefined
   );
@@ -99,7 +100,6 @@ const InvestModal = ({ onClose }: IInvest) => {
   const { web3Provider, address } = useContext(Web3Context);
   const [balance, setBalance] = useState<number>(0);
   const [network, setNetwork] = useState<string | undefined>(undefined);
-
   const [networkError, setNetworkError] = useState<string | undefined>(
     undefined
   );
@@ -176,8 +176,17 @@ const InvestModal = ({ onClose }: IInvest) => {
     setVotingPower(15);
   };
 
-  const submitForm = (data: InputTypes) => {
-    console.log(data);
+  const submitForm = async (data: InputTypes) => {
+    const amount = getValues("amount");
+    if (amount > balance) {
+      setError("amount", { message: "Insufficient token balance" });
+    } else {
+      if (address) {
+        setButtonState(true);
+        await invest(selectedCurrency.address, web3Provider, amount, address);
+        setButtonState(false);
+      }
+    }
   };
 
   let domNode: any = useClickOutside(() => {
@@ -208,7 +217,11 @@ const InvestModal = ({ onClose }: IInvest) => {
                 </BalanceBtn>
               )}
             </CurrencyInline>
-            <InputField {...register("amount")} onKeyDown={handleKeyDown} />
+            <InputField
+              {...register("amount")}
+              type="number"
+              onKeyDown={handleKeyDown}
+            />
             <CurrencyInline>
               {networkError ? (
                 <div className="error">{networkError} </div>
@@ -262,10 +275,17 @@ const InvestModal = ({ onClose }: IInvest) => {
             </CheckboxContainer>
           </ItemWrapper>
           <ItemWrapper>
-            <ProceedButton onClick={handleSubmit(submitForm)}>
-              Proceed to MetaMask
-              <span className="material-icons arrow">trending_flat</span>
-            </ProceedButton>
+            {!buttonState ? (
+              <ProceedButton onClick={handleSubmit(submitForm)}>
+                Proceed to Metamask
+                <span className="material-icons arrow">trending_flat</span>
+              </ProceedButton>
+            ) : (
+              <ProceedButton onClick={handleSubmit(submitForm)}>
+                Transactions in Progress
+                <span className="wait"></span>
+              </ProceedButton>
+            )}
           </ItemWrapper>
           <ItemWrapper>
             <BottomPartWrapper>
