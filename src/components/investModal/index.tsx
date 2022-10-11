@@ -51,6 +51,7 @@ const schema = yup.object().shape({
   checkbox: yup.bool().oneOf([true], "This field is required"),
   amount: yup
     .number()
+    .positive("Invested amount must be greater than 0")
     .required("This field is required")
     .typeError("This field is required"),
 });
@@ -177,6 +178,8 @@ const InvestModal = ({ onClose }: IInvest) => {
   };
 
   const submitForm = async (data: InputTypes) => {
+    console.log(data);
+
     const amount = getValues("amount");
     if (amount > balance) {
       setError("amount", { message: "Insufficient token balance" });
@@ -283,7 +286,7 @@ const InvestModal = ({ onClose }: IInvest) => {
             ) : (
               <ProceedButton onClick={handleSubmit(submitForm)}>
                 Transactions in Progress
-                <span className="wait"></span>
+                <span className="wait" />
               </ProceedButton>
             )}
           </ItemWrapper>
