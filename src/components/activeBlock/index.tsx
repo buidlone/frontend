@@ -19,7 +19,7 @@ import Web3Context from "../../context/web3Context";
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
 import ProjectState from "../projectState";
-import { getProjectState } from "../../utils/getProjectstate";
+import { getProjectState } from "../../utils/getProjectState";
 
 const items = [
   {

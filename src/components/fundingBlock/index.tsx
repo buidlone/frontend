@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import Web3Context from "../../context/web3Context";
-import { getProjectState } from "../../utils/getProjectstate";
+import { getProjectState } from "../../utils/getProjectState";
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import FundingRoadmap from "../fundingRoadmap";
 import InvestModal from "../investModal";

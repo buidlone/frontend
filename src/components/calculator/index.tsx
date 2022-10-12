@@ -23,7 +23,8 @@ import ProjectContext from "../../context/projectContext";
 import Web3Context from "../../context/web3Context";
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
-import { getProjectState } from "../../utils/getProjectstate";
+import { getProjectState } from "../../utils/getProjectState";
+
 
 const min = 0;
 const maxSum = 5000;
