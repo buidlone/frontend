@@ -19,6 +19,7 @@ import Web3Context from "../../context/web3Context";
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
 import ProjectState from "../projectState";
+import { getProjectState } from "../../utils/getProjectstate";
 
 const items = [
   {
@@ -39,22 +40,22 @@ const ActiveBlock = () => {
 
   const handleClick = async () => {
     const isAllowed = await isInvestingAllowed();
-    if (isAllowed) {
+    if (isAllowed?.state) {
       web3Provider && setShowModal(true);
     } else {
-      toast.info("Investing period is over");
+      toast.info(getProjectState(isAllowed?.projectState));
     }
   };
 
   const handleConnectClick = async () => {
     const isAllowed = await isInvestingAllowed();
-    if (isAllowed) {
+    if (isAllowed?.state) {
       if (connect) {
         const isConnected = await connect();
         typeof isConnected !== "boolean" && setShowModal(true);
       }
     } else {
-      toast.info("Investing period is over");
+      toast.info(getProjectState(isAllowed?.projectState));
     }
   };
 

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import Web3Context from "../../context/web3Context";
+import { getProjectState } from "../../utils/getProjectstate";
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import FundingRoadmap from "../fundingRoadmap";
 import InvestModal from "../investModal";
@@ -20,22 +21,22 @@ export default function FundingBlock() {
 
   const handleClick = async () => {
     const isAllowed = await isInvestingAllowed();
-    if (isAllowed) {
+    if (isAllowed?.state) {
       web3Provider && setShowModal(true);
     } else {
-      toast.info("Investing period is over");
+      toast.info(getProjectState(isAllowed?.projectState));
     }
   };
 
   const handleConnectClick = async () => {
     const isAllowed = await isInvestingAllowed();
-    if (isAllowed) {
+    if (isAllowed?.state) {
       if (connect) {
         const isConnected = await connect();
         typeof isConnected !== "boolean" && setShowModal(true);
       }
     } else {
-      toast.info("Investing period is over");
+      toast.info(getProjectState(isAllowed?.projectState));
     }
   };
 

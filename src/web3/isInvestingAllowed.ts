@@ -11,14 +11,29 @@ export const isInvestingAllowed = async () => {
         if (provider) {
           try {
            const contract = new ethers.Contract(InvestmentPoolAddress, InvestmentPoolABI, provider);
-           const isFundraiserActive = await contract.isFundraiserOngoingNow();
-           const isLastMilestoneActive = await contract.isLastMilestoneOngoing();
-           return isFundraiserActive && !isLastMilestoneActive
+           const projectState = await contract.getProjectStateByteValue();
+           const totalInvestedAmount = await contract.totalInvestedAmount()
+           const hardCap = await contract.hardCap()
+           
+           
+           if([4, 32].includes(parseInt(projectState, 10)) && (totalInvestedAmount !== hardCap)) {
+              return {
+                state: true,
+                 projectState: parseInt(projectState, 10)
+               }
+           }
+           return {
+            state: false,
+            projectState: parseInt(projectState, 10)
+           }
+        
          } catch (error) {
            console.log(error);
            toast.error("Error occurred while retrieving data from blockchain")
          }
         }
+       
+
 
 
  

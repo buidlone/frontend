@@ -32,7 +32,8 @@ export const loadedValuesInitialState: ILoadedValues = {
   label: "",
   address: "",
   decimals: 0,
-  }
+},
+  setTotalInvested: null
 
 };
 
@@ -113,7 +114,7 @@ export const useLoadValues = () => {
               endDate: formatTime(milestone?.endDate),
               paid: milestone?.paid,
 
-              seedAmount: seedAmount.toNumber(),
+              seedAmount: seedAmount.toString(),
               seedAmountPaid: milestone?.seedAmountPaid,
               streamOngoing: milestone?.streamOngoing,
             },
@@ -149,7 +150,8 @@ export const useLoadValues = () => {
     fundraisingEndDate,
     milestones,
     projectState,
-    currency
+    currency,
+    setTotalInvested
   };
 };
 

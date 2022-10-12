@@ -72,8 +72,12 @@ interface ICurrency {
 }
 
 const InvestModal = ({ onClose }: IInvest) => {
-  const { fundraisingStartDate, fundraisingEndDate, currency } =
-    useContext(LoadedValuesContext);
+  const {
+    fundraisingStartDate,
+    fundraisingEndDate,
+    currency,
+    setTotalInvested,
+  } = useContext(LoadedValuesContext);
   const {
     register,
     handleSubmit,
@@ -178,15 +182,21 @@ const InvestModal = ({ onClose }: IInvest) => {
   };
 
   const submitForm = async (data: InputTypes) => {
-    console.log(data);
-
     const amount = getValues("amount");
     if (amount > balance) {
       setError("amount", { message: "Insufficient token balance" });
     } else {
       if (address) {
         setButtonState(true);
-        await invest(selectedCurrency.address, web3Provider, amount, address);
+        const result = await invest(
+          selectedCurrency.address,
+          web3Provider,
+          amount,
+          address
+        );
+        result !== undefined &&
+          setTotalInvested !== null &&
+          setTotalInvested(result);
         setButtonState(false);
       }
     }

@@ -4,6 +4,7 @@ import { InvestmentPoolAddress } from "../constants/contractAddresses";
 import ERC20TokenABI from "../web3/abi/ERC20Token.json";
 import InvestmentPoolABI from "./abi/InvestmentPool.json";
 
+
 export const invest = async (
   tokenAddress: string,
   provider: any,
@@ -39,14 +40,20 @@ export const invest = async (
           true
         );
         const investmentReceipt = await investmentTransaction.wait();
+        const totalInvestedAmount = await investmentPoolContract.totalInvestedAmount()
         toast.success("Transaction was successful");
+
+      return (Number(ethers.utils.formatEther(totalInvestedAmount)))
       } else {
         const investmentTransaction = await investmentPoolContract.invest(
           ethers.utils.parseEther(amount.toString()),
           true
         );
         const investmentReceipt = await investmentTransaction.wait();
+        const totalInvestedAmount = await investmentPoolContract.totalInvestedAmount()
         toast.success("Transaction was successful");
+      return (Number(ethers.utils.formatEther(totalInvestedAmount)))
+
       }
     } catch (error) {
       console.log(error);
