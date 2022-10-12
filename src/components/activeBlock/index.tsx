@@ -20,6 +20,7 @@ import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
 import ProjectState from "../projectState";
 import { getProjectState } from "../../utils/getProjectState";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const items = [
   {
@@ -37,25 +38,27 @@ const ActiveBlock = () => {
 
   const [showModal, setShowModal] = useState(false);
   const { web3Provider, connect } = useContext(Web3Context);
+  const { projectState, totalInvested, hardCap } =
+    useContext(LoadedValuesContext);
 
-  const handleClick = async () => {
-    const isAllowed = await isInvestingAllowed();
-    if (isAllowed?.state) {
+  const handleClick = () => {
+    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
+    if (isAllowed) {
       web3Provider && setShowModal(true);
     } else {
-      toast.info(getProjectState(isAllowed?.projectState));
+      toast.info(getProjectState(projectState));
     }
   };
 
-  const handleConnectClick = async () => {
-    const isAllowed = await isInvestingAllowed();
-    if (isAllowed?.state) {
+  const handleConnectClick = () => {
+    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
+    if (isAllowed) {
       if (connect) {
-        const isConnected = await connect();
+        const isConnected = connect();
         typeof isConnected !== "boolean" && setShowModal(true);
       }
     } else {
-      toast.info(getProjectState(isAllowed?.projectState));
+      toast.info(getProjectState(projectState));
     }
   };
 
