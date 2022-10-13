@@ -197,6 +197,17 @@ const InvestModal = ({ onClose }: IInvest) => {
         result !== undefined &&
           setTotalInvested !== null &&
           setTotalInvested(result);
+        getTokenBalance(
+          selectedCurrency.address,
+          web3Provider,
+          address //comment for the test wallet to be checked and choose an address in the getTokenBalance.ts file
+        ).then((data) => {
+          if (data) {
+            setBalance(data);
+          } else {
+            setBalance(0);
+          }
+        });
         setButtonState(false);
       }
     }
