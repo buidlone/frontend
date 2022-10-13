@@ -21,6 +21,10 @@ import Modal from "../modal";
 import InvestModal from "../investModal";
 import ProjectContext from "../../context/projectContext";
 import Web3Context from "../../context/web3Context";
+import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
+import { toast } from "react-toastify";
+import { getProjectState } from "../../utils/getProjectState";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const min = 0;
 const maxSum = 5000;
@@ -37,15 +41,27 @@ const Calculator = () => {
   const [maxMonths, setMaxMonths] = useState<number | null>(null);
   const [currentMonth, setCurrentMonth] = useState<number | null>();
   const { web3Provider, connect } = useContext(Web3Context);
+  const { projectState, totalInvested, hardCap } =
+    useContext(LoadedValuesContext);
 
   const handleClick = () => {
-    web3Provider && setShowModal(true);
+    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
+    if (isAllowed) {
+      web3Provider && setShowModal(true);
+    } else {
+      toast.info(getProjectState(projectState));
+    }
   };
 
-  const handleConnectClick = async () => {
-    if (connect) {
-      const isConnected = await connect();
-      typeof isConnected !== "boolean" && setShowModal(true);
+  const handleConnectClick = () => {
+    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
+    if (isAllowed) {
+      if (connect) {
+        const isConnected = connect();
+        typeof isConnected !== "boolean" && setShowModal(true);
+      }
+    } else {
+      toast.info(getProjectState(projectState));
     }
   };
 

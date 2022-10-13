@@ -14,6 +14,13 @@ export type SoftCap = {
   isReached: boolean | null;
 };
 
+export type Currency = {
+  value: string;
+  label: string;
+  address: string;
+  decimals: number;
+}
+
 export interface ILoadedValues {
   softCap: SoftCap | null;
   hardCap: number;
@@ -22,4 +29,7 @@ export interface ILoadedValues {
   fundraisingEndDate: string | null;
   milestones: Milestone[];
   projectState: number;
+  currency: Currency;
+  setTotalInvested: React.Dispatch<React.SetStateAction<number>> | null
+  
 }

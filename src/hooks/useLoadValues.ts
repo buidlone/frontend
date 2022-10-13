@@ -8,6 +8,9 @@ import {
 import InvestmentPoolABI from "../web3/abi/InvestmentPool.json";
 import { formatTime } from "../utils/formatTime";
 import { ILoadedValues, Milestone, SoftCap } from "../interfaces/ILoadedValues";
+import { Currency } from "../constants/currencies";
+import ERC20TokenABI from '../web3/abi/ERC20Token.json'
+
 
 const provider = new ethers.providers.JsonRpcProvider(
   `https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`
@@ -24,6 +27,14 @@ export const loadedValuesInitialState: ILoadedValues = {
   milestones: [],
   hardCap: 0,
   projectState: 0,
+  currency: {
+    value: "",
+  label: "",
+  address: "",
+  decimals: 0,
+},
+  setTotalInvested: null
+
 };
 
 export const useLoadValues = () => {
@@ -38,6 +49,28 @@ export const useLoadValues = () => {
   );
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [projectState, setProjectState] = useState<number>(0)
+  const [currency, setCurrency] = useState<Currency>( {
+  value: "",
+  label: "",
+  address: "",
+  decimals: 0,
+  })
+
+  const getAvailableCurrencies = async (tokenAddress: string) => {
+
+    if (provider) {
+      try {
+       const tokenContract = new ethers.Contract(tokenAddress, ERC20TokenABI, provider);
+       const tokenDecimals = await tokenContract.decimals()
+       const tokenSymbol = await tokenContract.symbol()
+       return {tokenSymbol, tokenDecimals}
+     } catch (error) {
+       console.log(error);
+       toast.error("Error occurred while retrieving currency data from blockchain")
+     }
+    }
+
+}
 
   const getValuesFromInvestmentPool = async () => {
     if (provider) {
@@ -47,6 +80,7 @@ export const useLoadValues = () => {
           InvestmentPoolABI,
           provider
         );
+       
         const totalInvested = await contract.totalInvestedAmount();
         const softCap = await contract.softCap();
         const hardCap = await contract.hardCap();
@@ -56,8 +90,17 @@ export const useLoadValues = () => {
         const fundraisingEndAt = await contract.fundraiserEndAt();
         const fundraisingEndDate = formatTime(fundraisingEndAt);
         const projectState = await contract.getProjectStateByteValue();
-        const milestoneCountHex = await contract.milestoneCount();
-        const milestoneCount = milestoneCountHex.toNumber();
+        const acceptedTokenAddress = await contract.acceptedToken()
+        const acceptedTokenDetails = await getAvailableCurrencies(acceptedTokenAddress)
+        setCurrency({
+          value: acceptedTokenDetails?.tokenSymbol,
+          label:acceptedTokenDetails?.tokenSymbol,
+          address: acceptedTokenAddress,
+          decimals: acceptedTokenDetails?.tokenDecimals
+        })
+        
+        const milestoneCount = (await contract.milestoneCount()).toNumber();
+      
 
         for (let i = 0; i < milestoneCount; i++) {
           let milestone = await contract.milestones(i);
@@ -106,7 +149,9 @@ export const useLoadValues = () => {
     fundraisingStartDate,
     fundraisingEndDate,
     milestones,
-    projectState
+    projectState,
+    currency,
+    setTotalInvested
   };
 };
 
