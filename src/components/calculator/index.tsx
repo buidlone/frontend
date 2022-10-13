@@ -43,7 +43,6 @@ const Calculator = () => {
   const { web3Provider, connect } = useContext(Web3Context);
   const { projectState, totalInvested, hardCap } =
     useContext(LoadedValuesContext);
-
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
     if (isAllowed) {
@@ -53,11 +52,11 @@ const Calculator = () => {
     }
   };
 
-  const handleConnectClick = () => {
+  const handleConnectClick = async () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
     if (isAllowed) {
       if (connect) {
-        const isConnected = connect();
+        const isConnected = await connect();
         typeof isConnected !== "boolean" && setShowModal(true);
       }
     } else {

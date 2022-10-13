@@ -41,26 +41,34 @@ const ActiveBlock = () => {
   const { projectState, totalInvested, hardCap } =
     useContext(LoadedValuesContext);
 
-  const handleClick = () => {
-    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
-    if (isAllowed) {
-      web3Provider && setShowModal(true);
-    } else {
-      toast.info(getProjectState(projectState));
-    }
-  };
-
-  const handleConnectClick = () => {
-    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
-    if (isAllowed) {
-      if (connect) {
-        const isConnected = connect();
-        typeof isConnected !== "boolean" && setShowModal(true);
+    const handleClick =  () => {
+      const isAllowed = isInvestingAllowed(
+        projectState,
+        hardCap,
+        totalInvested
+      );
+      if (isAllowed) {
+        web3Provider && setShowModal(true);
+      } else {
+        toast.info(getProjectState(projectState));
       }
-    } else {
-      toast.info(getProjectState(projectState));
-    }
-  };
+    };
+  
+    const handleConnectClick = async () => {
+      const isAllowed = isInvestingAllowed(
+        projectState,
+        hardCap,
+        totalInvested
+      );
+      if (isAllowed) {
+        if (connect) {
+          const isConnected = await connect();
+          typeof isConnected !== "boolean" && setShowModal(true);
+        }
+      } else {
+        toast.info(getProjectState(projectState));
+      }
+    };
 
   const showFunds = () => {
     setFlip1(!flip1);
