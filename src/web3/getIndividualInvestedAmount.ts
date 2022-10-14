@@ -10,9 +10,15 @@ export const getIndividualInvestedAmount = async (provider: any, address?: strin
         const contract = new ethers.Contract(InvestmentPoolAddress, InvestmentPoolABI, provider);
         const filter = contract.filters.Invest(address);
         const filteredEvents = await contract.queryFilter(filter);
+        let totalAmountInvested = 0;
 
+        for (let i in filteredEvents) {
+          const investedAmount = Number(ethers.utils.formatEther(filteredEvents[i].args?.amount))
+          totalAmountInvested = totalAmountInvested + investedAmount;
+
+        }
       return {
-        filteredEvents,
+        totalAmountInvested
       }
 
     } catch (error) {

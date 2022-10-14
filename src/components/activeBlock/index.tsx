@@ -26,8 +26,10 @@ const items = [
 ];
 
 const ActiveBlock = () => {
-  const featuredProject = useContext(ProjectContext);
-
+  const [
+    totalIndividualInvestedToProject,
+    setTotalIndividualInvestedToProject,
+  ] = useState(0);
   const [flip1, setFlip1] = useState(true);
   const [flip2, setFlip2] = useState(true);
   const [flip3, setFlip3] = useState(true);
@@ -49,10 +51,13 @@ const ActiveBlock = () => {
   useEffect(() => {
     if (web3Provider) {
       getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        console.log(data);
+        console.log(data.totalAmountInvested);
+        setTotalIndividualInvestedToProject(data.totalAmountInvested);
       });
+    } else {
+      setTotalIndividualInvestedToProject(0);
     }
-  }, [web3Provider]);
+  });
 
   const showFunds = () => {
     setFlip1(!flip1);
@@ -84,7 +89,7 @@ const ActiveBlock = () => {
               onMouseOut={showFunds}
               className="green flippable"
             >
-              {flip1 ? "124555ETH" : "12ETH"}{" "}
+              {flip1 ? totalIndividualInvestedToProject + " ETH" : "12ETH"}{" "}
             </td>
             <td
               onMouseOver={showTokens}
