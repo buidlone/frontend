@@ -1,12 +1,11 @@
 import React, { createContext } from "react";
 import {
   loadedValuesInitialState,
-  LoadedValuesState,
   useLoadValues,
-  
 } from "../hooks/useLoadValues";
+import { ILoadedValues } from "../interfaces/ILoadedValues";
 
-const LoadedValuesContext = createContext<LoadedValuesState>(
+const LoadedValuesContext = createContext<ILoadedValues>(
   loadedValuesInitialState
 );
 

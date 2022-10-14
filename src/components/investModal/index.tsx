@@ -33,15 +33,12 @@ import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import React, { KeyboardEvent, useContext, useEffect, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
-import {
-  Currency,
-  goerliCurrencies,
-  mainnetCurrencies,
-} from "../../constants/currencies";
+import { Currency, mainnetCurrencies } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
 import { getTokenBalance } from "../../web3/getTokenBalance";
 import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { invest } from "../../web3/invest";
 
 const items = [
   {
@@ -52,10 +49,15 @@ const items = [
 
 const schema = yup.object().shape({
   checkbox: yup.bool().oneOf([true], "This field is required"),
+  amount: yup
+    .number()
+    .positive("Invested amount must be greater than 0")
+    .required("This field is required")
+    .typeError("This field is required"),
 });
 
 interface InputTypes {
-  amount?: number;
+  amount: number;
   checkbox: boolean;
 }
 
@@ -70,33 +72,39 @@ interface ICurrency {
 }
 
 const InvestModal = ({ onClose }: IInvest) => {
-  const { fundraisingStartDate, fundraisingEndDate } =
-    useContext(LoadedValuesContext);
+  const {
+    fundraisingStartDate,
+    fundraisingEndDate,
+    currency,
+    setTotalInvested,
+  } = useContext(LoadedValuesContext);
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
+    setError,
     formState: { errors },
   } = useForm<InputTypes>({
     resolver: yupResolver(schema),
   });
 
-  const [options, setOptions] = useState<Currency[]>(mainnetCurrencies);
-  const [amount, setAmount] = useState<number | undefined>(undefined);
+  const [buttonState, setButtonState] = useState(false);
+  const [options, setOptions] = useState<Currency[]>([currency]);
   const [receivedTokens, setReceivedTokens] = useState<number | undefined>(
     undefined
   );
   const [receivedDAO, setReceivedDAO] = useState<number | undefined>(undefined);
   const [votingPower, setVotingPower] = useState<number | undefined>(undefined);
   const [selectedCurrency, setSelectedCurrency] = useState<ICurrency>({
-    label: mainnetCurrencies[0].label,
-    address: mainnetCurrencies[0].address,
-    decimals: mainnetCurrencies[0].decimals,
+    label: currency.label,
+    address: currency.address,
+    decimals: currency.decimals,
   });
 
   const { web3Provider, address } = useContext(Web3Context);
   const [balance, setBalance] = useState<number>(0);
   const [network, setNetwork] = useState<string | undefined>(undefined);
-
   const [networkError, setNetworkError] = useState<string | undefined>(
     undefined
   );
@@ -120,12 +128,12 @@ const InvestModal = ({ onClose }: IInvest) => {
           decimals: mainnetCurrencies[0].decimals,
         });
       } else if (web3Provider?.network.chainId === 5) {
-        setOptions(goerliCurrencies);
+        setOptions([currency]);
         setNetwork("Goerli Testnet");
         setSelectedCurrency({
-          label: goerliCurrencies[0].label,
-          address: goerliCurrencies[0].address,
-          decimals: goerliCurrencies[0].decimals,
+          label: currency.label,
+          address: currency.address,
+          decimals: currency.decimals,
         });
       } else {
         setNetworkError("Please connect to Ethereum Mainnet or Goerli Tesnet");
@@ -137,11 +145,10 @@ const InvestModal = ({ onClose }: IInvest) => {
   }, []);
 
   useEffect(() => {
-    if (selectedCurrency?.address && selectedCurrency?.decimals) {
+    if (selectedCurrency?.address) {
       getTokenBalance(
         selectedCurrency.address,
         web3Provider,
-        selectedCurrency.decimals,
         address //comment for the test wallet to be checked and choose an address in the getTokenBalance.ts file
       ).then((data) => {
         if (data) {
@@ -167,8 +174,32 @@ const InvestModal = ({ onClose }: IInvest) => {
     }
   };
 
-  const submitForm = (data: InputTypes) => {
-    console.log(data);
+  const handleSetAmount = () => {
+    setValue("amount", balance);
+    setReceivedTokens(24000);
+    setReceivedDAO(300);
+    setVotingPower(15);
+  };
+
+  const submitForm = async (data: InputTypes) => {
+    const amount = getValues("amount");
+    if (amount > balance) {
+      setError("amount", { message: "Insufficient token balance" });
+    } else {
+      if (address) {
+        setButtonState(true);
+        const result = await invest(
+          selectedCurrency.address,
+          web3Provider,
+          amount,
+          address
+        );
+        result !== undefined &&
+          setTotalInvested !== null &&
+          setTotalInvested(result);
+        setButtonState(false);
+      }
+    }
   };
 
   let domNode: any = useClickOutside(() => {
@@ -190,22 +221,18 @@ const InvestModal = ({ onClose }: IInvest) => {
         <IModalInputSectionWrapper>
           <IModalFieldWrapper>
             <CurrencyInline>
+              <ErrorMsg>{errors.amount?.message}</ErrorMsg>
               <InputLabel>Your investment</InputLabel>
               {!networkError && (
                 <BalanceBtn className="bottomText">
                   Balance: {balance}
-                  <MaxBalanceBtn onClick={() => setAmount(balance)}>
-                    Max
-                  </MaxBalanceBtn>
+                  <MaxBalanceBtn onClick={handleSetAmount}>Max</MaxBalanceBtn>
                 </BalanceBtn>
               )}
             </CurrencyInline>
             <InputField
+              {...register("amount")}
               type="number"
-              name="amount"
-              placeholder=""
-              value={amount}
-              onChange={(e) => setAmount(e.target.valueAsNumber)}
               onKeyDown={handleKeyDown}
             />
             <CurrencyInline>
@@ -261,10 +288,17 @@ const InvestModal = ({ onClose }: IInvest) => {
             </CheckboxContainer>
           </ItemWrapper>
           <ItemWrapper>
-            <ProceedButton onClick={handleSubmit(submitForm)}>
-              Proceed to MetaMask
-              <span className="material-icons arrow">trending_flat</span>
-            </ProceedButton>
+            {!buttonState ? (
+              <ProceedButton onClick={handleSubmit(submitForm)}>
+                Proceed to Metamask
+                <span className="material-icons arrow">trending_flat</span>
+              </ProceedButton>
+            ) : (
+              <ProceedButton onClick={handleSubmit(submitForm)}>
+                Transactions in Progress
+                <span className="wait" />
+              </ProceedButton>
+            )}
           </ItemWrapper>
           <ItemWrapper>
             <BottomPartWrapper>

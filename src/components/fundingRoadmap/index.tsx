@@ -15,25 +15,15 @@ import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 
-interface IFundingBlock {
-  seed: string;
-  hardCap: string;
-}
-
-export default function FundingRoadmap({
-  seed,
-  hardCap,
-  ...props
-}: IFundingBlock) {
+export default function FundingRoadmap() {
   const project = useContext(ProjectContext);
-  const { softCap } = useContext(LoadedValuesContext);
-  const { totalInvested } = useContext(LoadedValuesContext);
+  const { softCap, hardCap, totalInvested } = useContext(LoadedValuesContext);
   const [progress, setProgress] = useState<number>(
-    (totalInvested * 100) / project.hardCap.amount
+    (totalInvested * 100) / hardCap
   );
 
   useEffect(() => {
-    setProgress((totalInvested * 100) / project.hardCap.amount);
+    setProgress((totalInvested * 100) / hardCap);
   }, [totalInvested]);
 
   return (
@@ -58,10 +48,10 @@ export default function FundingRoadmap({
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
             <TextWhite>
-              {softCap?.toLocaleString().replace(/,/g, " ")} USDT
+              {softCap?.amount?.toLocaleString().replace(/,/g, " ")} USDT
             </TextWhite>
           </VerticalLine>
-          {project.softCap.isReached ? (
+          {softCap?.isReached ? (
             <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
           ) : (
             <Image src={lockedLock} alt="locked lock" height={"14px"} />
@@ -77,7 +67,7 @@ export default function FundingRoadmap({
         <VerticalLine>
           <TextAboveDashed>Hard Cap</TextAboveDashed>
           <TextWhite>
-            {project.hardCap?.amount?.toLocaleString().replace(/,/g, " ")} USDT
+            {hardCap?.toLocaleString().replace(/,/g, " ")} USDT
           </TextWhite>
         </VerticalLine>
       </RoadmapBubble>

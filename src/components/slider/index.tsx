@@ -55,10 +55,10 @@ const Slider = ({
   timeline,
 }: ISlider) => {
   const project = useContext(ProjectContext);
-  const { softCap } = useContext(LoadedValuesContext);
+  const { softCap, hardCap } = useContext(LoadedValuesContext);
   const prop = {
-    softCap: softCap,
-    hardCap: project.hardCap?.amount,
+    softCap: softCap?.amount,
+    hardCap: hardCap,
   };
 
   return (
