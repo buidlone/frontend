@@ -68,7 +68,6 @@ const ActiveBlock = () => {
   useEffect(() => {
     if (web3Provider) {
       getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        console.log(data.totalAmountInvested);
         setTotalIndividualInvestedToProject(data.totalAmountInvested);
       });
     } else {

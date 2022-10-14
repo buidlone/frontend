@@ -5,13 +5,13 @@ import InvestmentPoolABI from './abi/InvestmentPool.json'
 
 export const getIndividualInvestedAmount = async (provider: any, address?: string) => {
 
-  if (provider) {
+  let totalAmountInvested = 0;
+
      try {
         const contract = new ethers.Contract(InvestmentPoolAddress, InvestmentPoolABI, provider);
         const filter = contract.filters.Invest(address);
         const filteredEvents = await contract.queryFilter(filter);
-        let totalAmountInvested = 0;
-
+       
         for (let i in filteredEvents) {
           const investedAmount = Number(ethers.utils.formatEther(filteredEvents[i].args?.amount))
           totalAmountInvested = totalAmountInvested + investedAmount;
@@ -25,6 +25,6 @@ export const getIndividualInvestedAmount = async (provider: any, address?: strin
       console.log(error);
       toast.error("Error occurred while retrieving data from blockchain")
     }
-  }
+  
 
 };
