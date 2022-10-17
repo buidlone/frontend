@@ -22,9 +22,10 @@ export const featuredProject = {
 
 const DetailsBlock = () => {
   const featuredProject = useContext(ProjectContext);
+  const { totalInvested, currency, milestones } =
+    useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
-    useCountdown(featuredProject?.end);
-  const { totalInvested, currency } = useContext(LoadedValuesContext);
+    useCountdown(milestones[milestones.length - 1].endDate);
 
   return (
     <DetailsBlockWrapper>
@@ -39,7 +40,9 @@ const DetailsBlock = () => {
             <Property>Project ends in</Property>
           </FlexItem1>
           <FlexItem1>
-            <Data>{totalInvested} {currency.label}</Data>
+            <Data>
+              {totalInvested} {currency.label}
+            </Data>
 
             <Data>
               {featuredProject?.milestonesCompleted}/
@@ -79,7 +82,9 @@ const DetailsBlock = () => {
             <Property>Project ends in</Property>
           </FlexItem1>
           <FlexItem1>
-            <Data>{totalInvested} {currency.label}</Data>
+            <Data>
+              {totalInvested} {currency.label}
+            </Data>
 
             <Data>
               {featuredProject?.milestonesCompleted}/
