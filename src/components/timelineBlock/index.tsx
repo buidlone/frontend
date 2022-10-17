@@ -10,13 +10,33 @@ import {
 } from "./styled";
 import TimelineGraph from "../timelineGraph";
 import Tooltip from "../tooltip";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const TimelineBlock = () => {
   const [active, setActive] = useState(2);
-  const { fundraisingStartDate, fundraisingEndDate } =
+  const { fundraisingStartDate, fundraisingEndDate, milestones } =
     useContext(LoadedValuesContext);
+
+  const [projectPeriodInYears, setProjectPeriodInYears] = useState("");
+
+  const getProjectPeriod = () => {
+    const lastMilestoneEndDate = milestones[
+      milestones.length - 1
+    ].endDate.replace(/''/g, "/");
+    const firstMilestoneStartDate = milestones[0].startDate.replace(/''/g, "/");
+    const projectPeriod = Math.abs(
+      Number(new Date(lastMilestoneEndDate)) -
+        Number(new Date(firstMilestoneStartDate))
+    );
+
+    return (projectPeriod / 31536000000).toFixed(1);
+  };
+
+  useEffect(() => {
+    const projectPeriod = getProjectPeriod();
+    setProjectPeriodInYears(projectPeriod);
+  }, []);
 
   return (
     <BlockWrapper>
@@ -67,7 +87,9 @@ const TimelineBlock = () => {
         </BottomPartWrapper>
         <BottomPartWrapper>
           <div>Project period</div>
-          <div className="dateWords">Aprx 1,5 year after reaching Soft cap</div>
+          <div className="dateWords">
+            Aprx {projectPeriodInYears} year after reaching Soft cap
+          </div>
         </BottomPartWrapper>
       </BottomWrapper>
     </BlockWrapper>
