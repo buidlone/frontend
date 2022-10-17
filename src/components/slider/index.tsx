@@ -26,9 +26,16 @@ const Track = (props: any, state: any) => (
 const SumTrack = (props: any, state: any) => {
   return (
     <>
-      <SoftCapIndicator funds={props.prop.softCap} />
+      <SoftCapIndicator
+        funds={props.prop.softCap}
+        currency={props.prop.currency}
+        softCapPosition={props.prop.softCapPosition}
+      />
 
-      <HardCapIndicator funds={props.prop.hardCap} />
+      <HardCapIndicator
+        funds={props.prop.hardCap}
+        currency={props.prop.currency}
+      />
 
       <StyledTrack {...props} index={props.index}></StyledTrack>
     </>
@@ -54,11 +61,13 @@ const Slider = ({
   blue,
   timeline,
 }: ISlider) => {
-  const project = useContext(ProjectContext);
-  const { softCap, hardCap } = useContext(LoadedValuesContext);
+  const { softCap, hardCap, currency } = useContext(LoadedValuesContext);
+
   const prop = {
     softCap: softCap?.amount,
     hardCap: hardCap,
+    currency: currency.label,
+    softCapPosition: softCap?.amount && (softCap?.amount * 100) / hardCap,
   };
 
   return (

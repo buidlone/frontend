@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 import { Footer, Table, Header, InvButton } from "./styled";
 
 const tokenStreamData = [
@@ -43,6 +45,7 @@ interface ITokenStreamTable {
 }
 
 const TokenStreamTable = ({ assets }: ITokenStreamTable) => {
+  const { currency } = useContext(LoadedValuesContext);
   return (
     <>
       {assets && (
@@ -55,26 +58,26 @@ const TokenStreamTable = ({ assets }: ITokenStreamTable) => {
       <Table assets={assets}>
         <thead>
           <th />
-          <th>Instant fund release (USDT)</th>
-          <th>Fund stream(USDT)</th>
-          <th>Token release(BDL1)</th>
-          <th>Token stream(BDL1)</th>
+          <th>Instant fund release ({currency.label})</th>
+          <th>Fund stream ({currency.label})</th>
+          <th>Token release (BDL1)</th>
+          <th>Token stream (BDL1)</th>
         </thead>
         <tbody>
           {tokenStreamData &&
             tokenStreamData.map((item) => (
               <tr>
                 <td className="phase">{item.phase}</td>
-                <td data-label="Instant fund release (USDT)" className="fund">
+                <td data-label={`Instant fund release (${currency.label})`} className="fund">
                   {item.fundRelease}
                 </td>
-                <td data-label="Fund stream(USDT)" className="fund">
+                <td data-label={`Fund stream (${currency.label})`} className="fund">
                   {item.fundStream}
                 </td>
-                <td data-label="Token release(BDL1)" className="token">
+                <td data-label="Token release (BDL1)" className="token">
                   {item.tokenRelease}
                 </td>
-                <td data-label="Token stream(BDL1)" className="token">
+                <td data-label="Token stream (BDL1)" className="token">
                   {item.tokenStream}
                 </td>
               </tr>

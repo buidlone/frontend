@@ -308,6 +308,8 @@ export const ProceedButton = styled.button`
   }
   .wait {
     height: 32px;
+    background: transparent linear-gradient(165deg, #00ffc4 0%, #3a8372 100%) 0%
+    0% no-repeat padding-box;
   }
 `;
 export const CheckboxLabel = styled.label`

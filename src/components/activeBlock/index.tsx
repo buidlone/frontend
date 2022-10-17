@@ -8,8 +8,7 @@ import {
 } from "./styled";
 import DiscordImg from "../../../public/DiscordSmall.png";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
-import ProjectContext from "../../context/projectContext";
+import { useContext, useState } from "react";
 import TokenStreamTable from "../tokenStreamTable";
 import Accordion from "../accordion";
 import { InlineWrapper } from "../timelineBlock/styled";
@@ -30,15 +29,13 @@ const items = [
 ];
 
 const ActiveBlock = () => {
-  const featuredProject = useContext(ProjectContext);
-
   const [flip1, setFlip1] = useState(true);
   const [flip2, setFlip2] = useState(true);
   const [flip3, setFlip3] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
   const { web3Provider, connect } = useContext(Web3Context);
-  const { projectState, totalInvested, hardCap } =
+  const { projectState, totalInvested, hardCap, currency } =
     useContext(LoadedValuesContext);
 
     const handleClick =  () => {
@@ -100,7 +97,9 @@ const ActiveBlock = () => {
               onMouseOut={showFunds}
               className="green flippable"
             >
-              {flip1 ? "1245ETH" : "12ETH"}{" "}
+              {flip1
+                ? `${totalInvested} ${currency.label}`
+                : `0 ${currency.label}`}{" "}
             </td>
             <td
               onMouseOver={showTokens}

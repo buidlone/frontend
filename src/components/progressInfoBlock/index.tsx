@@ -32,7 +32,7 @@ const ProgressInfoBlock = () => {
   const [votingTokenBalance, setVotingTokenBalance] = useState<
     number | undefined
   >(undefined);
-  const { totalInvested } = useContext(LoadedValuesContext);
+  const { totalInvested, currency } = useContext(LoadedValuesContext);
 
   useEffect(() => {
     if (web3Provider && web3Provider?.network.chainId === 5) {
@@ -55,7 +55,7 @@ const ProgressInfoBlock = () => {
       </DetailsInfoWrapper>
 
       <DetailsInfoWrapper>
-        <Data>{totalInvested} ETH</Data>
+        <Data>{totalInvested} {currency.label}</Data>
 
         <Data>
           {featuredProject?.milestonesCompleted}/{featuredProject?.milestones}
@@ -65,7 +65,7 @@ const ProgressInfoBlock = () => {
 
         <Data>
           {featuredProject?.fundsReleased?.toLocaleString().replace(/,/g, " ")}{" "}
-          / {featuredProject?.funds?.toLocaleString().replace(/,/g, " ")} USDT
+          / {featuredProject?.funds?.toLocaleString().replace(/,/g, " ")} {currency.label}
         </Data>
 
         <Data>

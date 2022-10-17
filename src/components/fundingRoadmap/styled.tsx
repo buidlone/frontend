@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 interface Props {
   progress?: number;
   funds?: string;
+  currency?: string;
 }
 
 export const FProgressWrapper = styled.div`
@@ -30,7 +31,7 @@ export const FundsIndicator = styled.div<Props>`
 
   z-index: 99999;
   &:after {
-    content: "${(props) => props?.funds} USDT";
+    content: "${(props) => props?.funds} ${(props) => props?.currency}";
     position: absolute;
     font-size: 0.625rem;
     font-family: "IBM Plex Sans", sans-serif;
