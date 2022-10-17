@@ -155,13 +155,7 @@ export const PBWrapper = styled.div`
 export const IButton = styled(GreenButton)`
   width: 100%;
   margin-top: 1rem;
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 500;
-  background: transparent linear-gradient(167deg, #00ffeb 0%, #469898 100%) 0%
-    0% no-repeat padding-box;
-  border: 1px solid #00ffc4;
-  border-radius: 12px;
-  opacity: 1;
+  
 `;
 
 export const VotingRow = styled.div`

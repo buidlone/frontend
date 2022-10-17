@@ -23,8 +23,7 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const ProgressInfoBlock = () => {
   const featuredProject = useContext(ProjectContext);
-  const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
-    useCountdown(featuredProject?.end);
+
   const { web3Provider, address } = useContext(Web3Context);
   const [votingTokensSupply, setVotingTokensSupply] = useState<
     number | undefined
@@ -32,7 +31,10 @@ const ProgressInfoBlock = () => {
   const [votingTokenBalance, setVotingTokenBalance] = useState<
     number | undefined
   >(undefined);
-  const { totalInvested, currency } = useContext(LoadedValuesContext);
+  const { totalInvested, currency, milestones } =
+    useContext(LoadedValuesContext);
+  const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
+    useCountdown(milestones[milestones.length - 1].endDate);
 
   useEffect(() => {
     if (web3Provider && web3Provider?.network.chainId === 5) {
@@ -55,7 +57,9 @@ const ProgressInfoBlock = () => {
       </DetailsInfoWrapper>
 
       <DetailsInfoWrapper>
-        <Data>{totalInvested} {currency.label}</Data>
+        <Data>
+          {totalInvested} {currency.label}
+        </Data>
 
         <Data>
           {featuredProject?.milestonesCompleted}/{featuredProject?.milestones}
@@ -65,7 +69,8 @@ const ProgressInfoBlock = () => {
 
         <Data>
           {featuredProject?.fundsReleased?.toLocaleString().replace(/,/g, " ")}{" "}
-          / {featuredProject?.funds?.toLocaleString().replace(/,/g, " ")} {currency.label}
+          / {featuredProject?.funds?.toLocaleString().replace(/,/g, " ")}{" "}
+          {currency.label}
         </Data>
 
         <Data>
