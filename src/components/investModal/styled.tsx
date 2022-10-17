@@ -184,7 +184,7 @@ export const MaxBalanceBtn = styled.button`
   width: 100%;
   font-size: 13px;
   font-weight: 300;
-  font-family: "Barlow", sans-serif;
+  font-family: "Barlow", sans-serif !important;
   flex: 1;
   height: 20px;
   background: transparent;
@@ -309,7 +309,7 @@ export const ProceedButton = styled.button`
   .wait {
     height: 32px;
     background: transparent linear-gradient(165deg, #00ffc4 0%, #3a8372 100%) 0%
-    0% no-repeat padding-box;
+      0% no-repeat padding-box;
   }
 `;
 export const CheckboxLabel = styled.label`
