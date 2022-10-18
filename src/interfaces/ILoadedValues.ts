@@ -1,3 +1,5 @@
+import { FixedNumber } from "ethers";
+
 export type Milestone = {
   id: number;
   startDate: string;
@@ -10,8 +12,8 @@ export type Milestone = {
 };
 
 export type SoftCap = {
-  amount: number | null;
-  isReached: boolean | null;
+  amount: number;
+  isReached: boolean;
 };
 
 export type Currency = {
@@ -22,13 +24,13 @@ export type Currency = {
 }
 
 export interface ILoadedValues {
-  softCap: SoftCap | null;
+  softCap: SoftCap;
   hardCap: number;
   totalInvested: number;
   fundraisingStartDate: string | null;
   fundraisingEndDate: string | null;
   milestones: Milestone[];
-  currentMilestone: number | null;
+  currentMilestone: number;
   projectState: number;
   currency: Currency;
   setTotalInvested: React.Dispatch<React.SetStateAction<number>> | null

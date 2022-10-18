@@ -18,14 +18,14 @@ const provider = new ethers.providers.JsonRpcProvider(
 
 export const loadedValuesInitialState: ILoadedValues = {
   softCap: {
-    amount: null,
-    isReached: null,
+    amount: 0,
+    isReached: false,
   },
   totalInvested: 0,
   fundraisingStartDate: null,
   fundraisingEndDate: null,
   milestones: [],
-  currentMilestone: null,
+  currentMilestone: 0,
   hardCap: 0,
   projectState: 0,
   currency: {
@@ -40,7 +40,7 @@ setTotalInvested: null,
 };
 
 export const useLoadValues = () => {
-  const [softCap, setSoftCap] = useState<SoftCap | null>(null);
+  const [softCap, setSoftCap] = useState<SoftCap>({amount: 0, isReached: false});
   const [hardCap, setHardCap] = useState<number>(0)
   const [totalInvested, setTotalInvested] = useState<number>(0);
   const [fundraisingStartDate, setFundraisingStartDate] = useState<
@@ -57,7 +57,7 @@ export const useLoadValues = () => {
   address: "",
   decimals: 0,
   })
-  const [currentMilestone, setCurrentMilestone] = useState<number | null>(null)
+  const [currentMilestone, setCurrentMilestone] = useState<number>(0)
 
   const getAvailableCurrencies = async (tokenAddress: string) => {
 
