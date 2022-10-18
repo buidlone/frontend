@@ -25,6 +25,7 @@ const pulse = keyframes`
 `;
 
 export const TimelineScroll = styled(ScrollContainer)`
+  padding-top: 2.3%;
   cursor: grab;
 
   &::-webkit-scrollbar {
@@ -75,7 +76,9 @@ export const TimelineBar = styled.div`
   min-width: max-content;
   margin: 12.2rem 0rem 0rem 0rem;
   position: relative;
-  display: flex;
+  display: inline-flex;
+  gap: 3px;
+  width: 100%;
   justify-content: space-between;
 
   &:before,
@@ -139,13 +142,14 @@ export const TimelineStep = styled.div<Props>`
     color: #e3e3e3;
     text-align: left;
     max-width: 3rem;
+    white-space: nowrap;
   }
 
   &:after {
     content: "";
     position: absolute;
     bottom: 0;
-    width: 96%;
+    width: 100%;
     height: 168px;
     bottom: calc(100% + 0.2rem);
     transform: matrix(-1, 0, 0, -1, 0, 0);
@@ -206,15 +210,15 @@ export const DateStep = styled.div<Props>`
     ${(props) => {
       if (props.scale === 1) {
         return `
-        content: "${props.date?.charAt(0).concat(props.date?.charAt(2))}";
+        content: "${props.date} m";
 `;
       } else if (props.scale === 2) {
         return `
-        content: "${props.date?.substring(0, 4)}";
+        content: "${props.date} mo";
 `;
       } else {
         return `
-        content: "${props.date?.substring(0, 4)}";
+        content: "${props.date} months";
       `;
       }
     }};

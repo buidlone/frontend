@@ -28,6 +28,7 @@ export interface ILoadedValues {
   fundraisingStartDate: string | null;
   fundraisingEndDate: string | null;
   milestones: Milestone[];
+  currentMilestone: number | null;
   projectState: number;
   currency: Currency;
   setTotalInvested: React.Dispatch<React.SetStateAction<number>> | null

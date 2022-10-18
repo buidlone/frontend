@@ -12,6 +12,7 @@ import TimelineGraph from "../timelineGraph";
 import Tooltip from "../tooltip";
 import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { getMonthsBetween } from "../../utils/getMonthsBetween";
 
 const TimelineBlock = () => {
   const [active, setActive] = useState(2);
@@ -21,21 +22,19 @@ const TimelineBlock = () => {
   const [projectPeriodInYears, setProjectPeriodInYears] = useState("");
 
   const getProjectPeriod = () => {
-    const lastMilestoneEndDate = milestones[
-      milestones.length - 1
-    ].endDate.replace(/''/g, "/");
-    const firstMilestoneStartDate = milestones[0].startDate.replace(/''/g, "/");
-    const projectPeriod = Math.abs(
-      Number(new Date(lastMilestoneEndDate)) -
-        Number(new Date(firstMilestoneStartDate))
-    );
-
-    return (projectPeriod / 31536000000).toFixed(1);
+    let projectPeriodInMonths = 0;
+    for (const milestone of milestones) {
+      projectPeriodInMonths += getMonthsBetween(
+        milestone.startDate,
+        milestone.endDate,
+        true
+      );
+    }
+    setProjectPeriodInYears((projectPeriodInMonths / 12).toFixed(1));
   };
 
   useEffect(() => {
-    const projectPeriod = getProjectPeriod();
-    setProjectPeriodInYears(projectPeriod);
+    getProjectPeriod();
   }, []);
 
   return (

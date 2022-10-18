@@ -31,7 +31,7 @@ const ProgressInfoBlock = () => {
   const [votingTokenBalance, setVotingTokenBalance] = useState<
     number | undefined
   >(undefined);
-  const { totalInvested, currency, milestones } =
+  const { totalInvested, currency, milestones, currentMilestone } =
     useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
@@ -62,7 +62,7 @@ const ProgressInfoBlock = () => {
         </Data>
 
         <Data>
-          {featuredProject?.milestonesCompleted}/{featuredProject?.milestones}
+          {currentMilestone}/{milestones.length}
         </Data>
 
         <Data>{featuredProject?.participants} wallets</Data>

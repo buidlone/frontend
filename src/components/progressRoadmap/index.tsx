@@ -15,14 +15,16 @@ import {
   DashedCircle,
 } from "./styled";
 import Image from "next/image";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
-import ScrollContainer from "react-indiana-drag-scroll";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const ProgressRoadmap = () => {
   const project = useContext(ProjectContext);
+  const { softCap, milestones, projectState, currentMilestone } =
+    useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(project?.stages?.find((stage) => stage.active)?.endDate);
 
@@ -57,7 +59,7 @@ const ProgressRoadmap = () => {
           vertical={false}
         >
           <ProgressBar>
-            <Progress progress={6} />
+            <Progress progress={39} />
             <ProgressStep
               stage={"Seed"}
               completed={project?.seed?.isCollected}
@@ -67,28 +69,38 @@ const ProgressRoadmap = () => {
             </ProgressStep>
             <ProgressStep
               stage={"Funding"}
-              completed={project?.softCap?.isReached}
+              completed={softCap?.isReached}
               active
             >
-              {project.softCap?.isReached && <CheckMark />}
-              {project?.seed?.isCollected && !project.softCap?.isReached && (
+              {softCap?.isReached && <CheckMark />}
+              {project?.seed?.isCollected && !softCap?.isReached && (
                 <DashedCircle />
               )}
             </ProgressStep>
-            {project &&
-              project?.stages?.map((stage) => {
-                const itemProps = stage.active ? { ref: activeStageRef } : {};
+            {milestones &&
+              currentMilestone !== null &&
+              milestones.map((milestone) => {
+                const itemProps =
+                  (projectState === 32 || projectState === 64) &&
+                  milestone.id === currentMilestone
+                    ? { ref: activeStageRef }
+                    : {};
                 return (
-                  <Tooltip milestonesArray={stage?.milestones}>
+                  // <Tooltip milestonesArray={milestones}>
+                  <Tooltip text={"Information about milestone"}>
                     <ProgressStep
-                      key={stage.id}
-                      stage={stage.name}
-                      completed={stage.isCompleted}
-                      active={stage.active}
+                      key={milestone.id}
+                      stage={`Milestone ${milestone.id + 1}`}
+                      completed={milestone.id < currentMilestone}
+                      active={
+                        (projectState === 32 || projectState === 64) &&
+                        milestone.id === currentMilestone
+                      }
                       {...itemProps}
                     >
-                      {stage.isCompleted && <CheckMark />}
-                      {stage.active && <DashedCircle />}
+                      {milestone.id < currentMilestone && <CheckMark />}
+                      {(projectState === 32 || projectState === 64) &&
+                        milestone.id === currentMilestone && <DashedCircle />}
                     </ProgressStep>
                   </Tooltip>
                 );
@@ -107,21 +119,17 @@ const ProgressRoadmap = () => {
               )}
             </Lock>
             <Lock
-              unlocked={
-                project?.seed?.isCollected && project?.softCap?.isReached
-              }
-              active={
-                project?.seed?.isCollected && !project?.softCap?.isReached
-              }
+              unlocked={project?.seed?.isCollected && softCap?.isReached}
+              active={project?.seed?.isCollected && !softCap?.isReached}
             >
               {(() => {
-                if (project?.softCap?.isReached) {
+                if (softCap?.isReached) {
                   return <CheckMark />;
-                } else if (
-                  project?.seed?.isCollected &&
-                  !project?.softCap?.isReached
-                ) {
-                  return <DashedCircle />;
+                } else if (project?.seed?.isCollected && !softCap?.isReached) {
+                  return (
+                    <Image src={unlockedLock} alt="unlocked lock" height={15} />
+                  );
+                  // <DashedCircle />;
                 } else {
                   return (
                     <Image src={lockedLock} alt="locked lock" height={15} />
@@ -130,14 +138,24 @@ const ProgressRoadmap = () => {
               })()}
             </Lock>
 
-            {project &&
-              project?.stages?.map((stage) => (
+            {milestones &&
+              currentMilestone !== null &&
+              milestones.map((milestone) => (
                 <Tooltip text={"Information about funds"}>
                   <Lock
-                    unlocked={stage.isCompleted || stage.active}
-                    active={stage.active}
+                    unlocked={
+                      milestone.id < currentMilestone ||
+                      ((projectState === 32 || projectState === 64) &&
+                        milestone.id === currentMilestone)
+                    }
+                    active={
+                      (projectState === 32 || projectState === 64) &&
+                      milestone.id === currentMilestone
+                    }
                   >
-                    {stage.isCompleted || stage.active ? (
+                    {milestone.id < currentMilestone ||
+                    ((projectState === 32 || projectState === 64) &&
+                      milestone.id === currentMilestone) ? (
                       <Image
                         src={unlockedLock}
                         alt="unlocked lock"
@@ -146,7 +164,7 @@ const ProgressRoadmap = () => {
                     ) : (
                       <Image src={lockedLock} alt="locked lock" height={15} />
                     )}
-                    {stage.active && (
+                    {milestone.id === currentMilestone && (
                       <Funds>
                         {project.fundsReleased
                           ?.toLocaleString()
@@ -161,7 +179,7 @@ const ProgressRoadmap = () => {
         <BottomWrapper>
           <text className="topText">Next phase starts in</text>
           <text className="daysLeft">
-            {timerDays
+            {softCap?.isReached
               ? `${timerDays}D ${timerHours}H ${timerMinutes}M ${timerSeconds}S`
               : `After reaching soft cap`}
           </text>

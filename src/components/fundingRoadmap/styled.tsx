@@ -27,7 +27,7 @@ export const FundsIndicator = styled.div<Props>`
   width: 0px;
   border-left: 2px solid #d1d1d1;
   position: absolute;
-  right: 0;
+  left: 100%;
 
   z-index: 99999;
   &:after {

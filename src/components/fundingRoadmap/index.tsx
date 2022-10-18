@@ -17,7 +17,8 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 
 export default function FundingRoadmap() {
   const project = useContext(ProjectContext);
-  const { softCap, hardCap, totalInvested, currency } = useContext(LoadedValuesContext);
+  const { softCap, hardCap, totalInvested, currency } =
+    useContext(LoadedValuesContext);
   const [progress, setProgress] = useState<number>(
     (totalInvested * 100) / hardCap
   );
@@ -40,7 +41,8 @@ export default function FundingRoadmap() {
       <FundsBar>
         <FProgress progress={progress}>
           <FundsIndicator
-            funds={totalInvested?.toLocaleString().replace(/,/g, " ")} currency={currency.label}
+            funds={totalInvested?.toLocaleString().replace(/,/g, " ")}
+            currency={currency.label}
           />
         </FProgress>
 
@@ -48,7 +50,8 @@ export default function FundingRoadmap() {
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
             <TextWhite>
-              {softCap?.amount?.toLocaleString().replace(/,/g, " ")} {currency.label}
+              {softCap?.amount?.toLocaleString().replace(/,/g, " ")}{" "}
+              {currency.label}
             </TextWhite>
           </VerticalLine>
           {softCap?.isReached ? (

@@ -35,37 +35,35 @@ const ActiveBlock = () => {
 
   const [showModal, setShowModal] = useState(false);
   const { web3Provider, connect } = useContext(Web3Context);
-  const { projectState, totalInvested, hardCap, currency } =
-    useContext(LoadedValuesContext);
+  const {
+    projectState,
+    totalInvested,
+    hardCap,
+    currency,
+    milestones,
+    currentMilestone,
+  } = useContext(LoadedValuesContext);
 
-    const handleClick =  () => {
-      const isAllowed = isInvestingAllowed(
-        projectState,
-        hardCap,
-        totalInvested
-      );
-      if (isAllowed) {
-        web3Provider && setShowModal(true);
-      } else {
-        toast.info(getProjectState(projectState));
+  const handleClick = () => {
+    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
+    if (isAllowed) {
+      web3Provider && setShowModal(true);
+    } else {
+      toast.info(getProjectState(projectState));
+    }
+  };
+
+  const handleConnectClick = async () => {
+    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
+    if (isAllowed) {
+      if (connect) {
+        const isConnected = await connect();
+        typeof isConnected !== "boolean" && setShowModal(true);
       }
-    };
-  
-    const handleConnectClick = async () => {
-      const isAllowed = isInvestingAllowed(
-        projectState,
-        hardCap,
-        totalInvested
-      );
-      if (isAllowed) {
-        if (connect) {
-          const isConnected = await connect();
-          typeof isConnected !== "boolean" && setShowModal(true);
-        }
-      } else {
-        toast.info(getProjectState(projectState));
-      }
-    };
+    } else {
+      toast.info(getProjectState(projectState));
+    }
+  };
 
   const showFunds = () => {
     setFlip1(!flip1);
@@ -82,7 +80,7 @@ const ActiveBlock = () => {
       <Table>
         <thead>
           <th className="bigger">Project</th>
-          <th>Stage</th>
+          <th>Milestone</th>
           <th>Funds</th>
           <th>Project tokens</th>
           <th>Voting</th>
@@ -91,7 +89,9 @@ const ActiveBlock = () => {
         <tbody>
           <tr>
             <td className="underlined blue bigger">Buidl1</td>
-            <td className="white bigger">1/60</td>
+            <td className="white bigger">
+              {currentMilestone}/{milestones.length}
+            </td>
             <td
               onMouseOver={showFunds}
               onMouseOut={showFunds}
