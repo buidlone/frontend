@@ -49,6 +49,17 @@ export const XButton = styled.button`
     border-color: transparent;
     background: #00c4ff;
   }
+
+  &.disabled {
+    &:focus,
+    &:hover {
+      cursor: auto;
+      outline-style: none;
+      box-shadow: none;
+      border-color: transparent;
+      background: #2e436c;
+    }
+  }
 `;
 
 export const BottomWrapper = styled.div`

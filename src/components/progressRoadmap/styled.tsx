@@ -41,7 +41,7 @@ const rotateCircle = keyframes`
 `;
 
 export const ScrollableContainer = styled(ScrollContainer)`
-  cursor: grab;
+  //cursor: grab;
   min-height: 295px;
   background: #1d2031 0% 0% no-repeat padding-box;
   box-shadow: inset 0px -20px 20px #1c192769;

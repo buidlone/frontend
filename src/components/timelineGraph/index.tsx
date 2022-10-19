@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import { getMonthsBetween } from "../../utils/getMonthsBetween";
+import { getMilestoneState } from "../../utils/getMilestoneState";
+import { dateDiff } from "../../utils/getDateDifference";
 
 import {
   TimelineBar,
@@ -23,6 +24,17 @@ const TimelineGraph = ({ scale }: ITimeline) => {
 
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
+
+  const getDate = (endDate: string, startDate: string) => {
+    const date = dateDiff(endDate, startDate);
+    if (scale === 1) {
+      return `${date.rounded_months} mo`;
+    } else {
+      return `${date.months} mo ${date.days} ${
+        date.days === 1 ? "day" : "days"
+      } `;
+    }
+  };
 
   useEffect(() => {
     if (
@@ -60,23 +72,25 @@ const TimelineGraph = ({ scale }: ITimeline) => {
         <TimelineBar>
           <TProgress progress={0} />
           {milestones &&
-            currentMilestone !== null &&
             milestones.map((milestone) => {
-              const itemProps =
-                (projectState === 32 || projectState === 64) &&
-                milestone.id === currentMilestone
-                  ? { ref: activeStageRef }
-                  : {};
+              const completed = getMilestoneState(
+                projectState,
+                currentMilestone,
+                milestone.id
+              ).completed;
+              const active = getMilestoneState(
+                projectState,
+                currentMilestone,
+                milestone.id
+              ).active;
+              const itemProps = active ? { ref: activeStageRef } : {};
               return (
                 <TimelineStep
                   scale={scale}
                   key={milestone.id}
                   stage={`Milestone ${milestone.id + 1}`}
-                  completed={milestone.id < currentMilestone}
-                  current={
-                    (projectState === 32 || projectState === 64) &&
-                    milestone.id === currentMilestone
-                  }
+                  completed={completed}
+                  current={active}
                   {...itemProps}
                 />
               );
@@ -89,11 +103,7 @@ const TimelineGraph = ({ scale }: ITimeline) => {
               <DateStep
                 key={milestone.id}
                 scale={scale}
-                date={getMonthsBetween(
-                  milestone.startDate,
-                  milestone.endDate,
-                  true
-                ).toString()}
+                date={getDate(milestone.endDate, milestone.startDate)}
               />
             ))}
         </DateBar>

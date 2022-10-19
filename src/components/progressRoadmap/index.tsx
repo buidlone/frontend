@@ -20,6 +20,7 @@ import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { getMilestoneState } from "../../utils/getMilestoneState";
 
 const ProgressRoadmap = () => {
   const project = useContext(ProjectContext);
@@ -78,29 +79,33 @@ const ProgressRoadmap = () => {
               )}
             </ProgressStep>
             {milestones &&
-              currentMilestone !== null &&
               milestones.map((milestone) => {
-                const itemProps =
-                  (projectState === 32 || projectState === 64) &&
-                  milestone.id === currentMilestone
-                    ? { ref: activeStageRef }
-                    : {};
+                const completed = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.id
+                ).completed;
+                const active = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.id
+                ).active;
+
+                const itemProps = active ? { ref: activeStageRef } : {};
                 return (
                   // <Tooltip milestonesArray={milestones}>
-                  <Tooltip text={"Information about milestone"}>
+                  <Tooltip
+                    key={milestone.id}
+                    text={"Information about milestone"}
+                  >
                     <ProgressStep
-                      key={milestone.id}
                       stage={`Milestone ${milestone.id + 1}`}
-                      completed={milestone.id < currentMilestone}
-                      active={
-                        (projectState === 32 || projectState === 64) &&
-                        milestone.id === currentMilestone
-                      }
+                      completed={completed}
+                      active={active}
                       {...itemProps}
                     >
-                      {milestone.id < currentMilestone && <CheckMark />}
-                      {(projectState === 32 || projectState === 64) &&
-                        milestone.id === currentMilestone && <DashedCircle />}
+                      {completed && <CheckMark />}
+                      {active && <DashedCircle />}
                     </ProgressStep>
                   </Tooltip>
                 );
@@ -139,41 +144,41 @@ const ProgressRoadmap = () => {
             </Lock>
 
             {milestones &&
-              currentMilestone !== null &&
-              milestones.map((milestone) => (
-                <Tooltip text={"Information about funds"}>
-                  <Lock
-                    unlocked={
-                      milestone.id < currentMilestone ||
-                      ((projectState === 32 || projectState === 64) &&
-                        milestone.id === currentMilestone)
-                    }
-                    active={
-                      (projectState === 32 || projectState === 64) &&
-                      milestone.id === currentMilestone
-                    }
-                  >
-                    {milestone.id < currentMilestone ||
-                    ((projectState === 32 || projectState === 64) &&
-                      milestone.id === currentMilestone) ? (
-                      <Image
-                        src={unlockedLock}
-                        alt="unlocked lock"
-                        height={15}
-                      />
-                    ) : (
-                      <Image src={lockedLock} alt="locked lock" height={15} />
-                    )}
-                    {milestone.id === currentMilestone && (
-                      <Funds>
-                        {project.fundsReleased
-                          ?.toLocaleString()
-                          .replace(/,/g, " ")}
-                      </Funds>
-                    )}
-                  </Lock>
-                </Tooltip>
-              ))}
+              milestones.map((milestone) => {
+                const completed = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.id
+                ).completed;
+                const active = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.id
+                ).active;
+
+                return (
+                  <Tooltip key={milestone.id} text={"Information about funds"}>
+                    <Lock unlocked={completed || active} active={active}>
+                      {completed || active ? (
+                        <Image
+                          src={unlockedLock}
+                          alt="unlocked lock"
+                          height={15}
+                        />
+                      ) : (
+                        <Image src={lockedLock} alt="locked lock" height={15} />
+                      )}
+                      {milestone.id === currentMilestone && (
+                        <Funds>
+                          {project.fundsReleased
+                            ?.toLocaleString()
+                            .replace(/,/g, " ")}
+                        </Funds>
+                      )}
+                    </Lock>
+                  </Tooltip>
+                );
+              })}
           </LockBar>
         </ScrollableContainer>
         <BottomWrapper>

@@ -26,7 +26,7 @@ const pulse = keyframes`
 
 export const TimelineScroll = styled(ScrollContainer)`
   padding-top: 2.3%;
-  cursor: grab;
+  //cursor: grab;
 
   &::-webkit-scrollbar {
     height: 0.625rem;
@@ -210,15 +210,15 @@ export const DateStep = styled.div<Props>`
     ${(props) => {
       if (props.scale === 1) {
         return `
-        content: "${props.date} m";
+        content: "${props.date}";
 `;
       } else if (props.scale === 2) {
         return `
-        content: "${props.date} mo";
+        content: "${props.date}";
 `;
       } else {
         return `
-        content: "${props.date} months";
+        content: "${props.date}";
       `;
       }
     }};
