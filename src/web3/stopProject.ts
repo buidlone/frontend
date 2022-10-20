@@ -30,31 +30,36 @@ export const stopProject = async (provider: any, address: string | undefined | n
       const contractGovernancePoolMocked = new ethers.Contract(GovernancePoolAddress1, GovernancePoolABI1, signer)
       const contractWithSigner = new ethers.Contract(VotingTokenAddress, VotingTokenABI, signer);
       
-       const isApprovedPromise = contract.isApprovedForAll(address, GovernancePoolAddress1)
-         let isApproved = await isApprovedPromise;
+      //  const isApprovedPromise = contract.isApprovedForAll(address, GovernancePoolAddress1)
+      //    let isApproved = await isApprovedPromise;
 
 let stop;
 
 //const date = await contractInvestmentPoolMocked.milestones(0);
 const timestamp = await contractInvestmentPoolMocked.setTimestamp(1671204579)
 
+const state = await  contractInvestmentPoolMocked.getProjectStateByteValue();
 
-console.log(timestamp)
-//console.log(date)
+console.log(state);
+
+
+
+// console.log(timestamp)
+// //console.log(date)
 
         
 
 
-         if(isApproved === false) {
-      isApproved =  contractWithSigner.setApprovalForAll(GovernancePoolAddress1, true)
-         } 
-         if(isApproved) {
-           stop = await contractGovernancePoolMocked.voteAgainst(InvestmentPoolAddress1,0)
-         }
+//          if(isApproved === false) {
+//       isApproved =  contractWithSigner.setApprovalForAll(GovernancePoolAddress1, true)
+//          } 
+//          if(isApproved) {
+//            stop = await contractGovernancePoolMocked.voteAgainst(InvestmentPoolAddress1,0)
+//          }
 
          
 
-  console.log(isApproved);
+//   console.log(isApproved);
   
 
 
