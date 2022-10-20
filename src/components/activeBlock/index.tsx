@@ -8,7 +8,7 @@ import {
 } from "./styled";
 import DiscordImg from "../../../public/DiscordSmall.png";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TokenStreamTable from "../tokenStreamTable";
 import Accordion from "../accordion";
 import { InlineWrapper } from "../timelineBlock/styled";
@@ -103,8 +103,9 @@ const ActiveBlock = () => {
               onMouseOut={showFunds}
               className="green flippable"
             >
-              {flip1 ? `${totalIndividualInvestedToProject} ${currency.label}`: `0 ${currency.label}`}
-
+              {flip1
+                ? `${totalIndividualInvestedToProject} ${currency.label}`
+                : `0 ${currency.label}`}
             </td>
             <td
               onMouseOver={showTokens}
