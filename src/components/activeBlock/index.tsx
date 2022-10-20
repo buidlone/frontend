@@ -21,6 +21,8 @@ import { toast } from "react-toastify";
 import ProjectState from "../projectState";
 import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { stopProject } from "../../web3/stopProject";
+import { getVotingTokens } from "../../web3/getVotingTokens";
 
 const items = [
   {
@@ -37,38 +39,49 @@ const ActiveBlock = () => {
   const [flip3, setFlip3] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
-  const { web3Provider, connect } = useContext(Web3Context);
+  const { web3Provider, connect, address } = useContext(Web3Context);
   const { projectState, totalInvested, hardCap } =
     useContext(LoadedValuesContext);
 
-    const handleClick =  () => {
-      const isAllowed = isInvestingAllowed(
-        projectState,
-        hardCap,
-        totalInvested
-      );
-      if (isAllowed) {
-        web3Provider && setShowModal(true);
-      } else {
-        toast.info(getProjectState(projectState));
-      }
-    };
-  
-    const handleConnectClick = async () => {
-      const isAllowed = isInvestingAllowed(
-        projectState,
-        hardCap,
-        totalInvested
-      );
-      if (isAllowed) {
-        if (connect) {
-          const isConnected = await connect();
-          typeof isConnected !== "boolean" && setShowModal(true);
+  const [votingTokenBalance, setVotingTokenBalance] = useState<
+    number | undefined
+  >();
+
+  const handleClick = () => {
+    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
+    if (isAllowed) {
+      web3Provider && setShowModal(true);
+    } else {
+      toast.info(getProjectState(projectState));
+    }
+  };
+
+  useEffect(() => {
+    if (web3Provider && web3Provider?.network.chainId === 5) {
+      getVotingTokens(web3Provider, address).then((data) => {
+        setVotingTokenBalance(data?.votingTokenBalance);
+      });
+    }
+    if (web3Provider) {
+      stopProject(web3Provider, address, votingTokenBalance).then(
+        (data: any) => {
+          console.log(data);
         }
-      } else {
-        toast.info(getProjectState(projectState));
+      );
+    }
+  });
+
+  const handleConnectClick = async () => {
+    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
+    if (isAllowed) {
+      if (connect) {
+        const isConnected = await connect();
+        typeof isConnected !== "boolean" && setShowModal(true);
       }
-    };
+    } else {
+      toast.info(getProjectState(projectState));
+    }
+  };
 
   const showFunds = () => {
     setFlip1(!flip1);
