@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import ProjectContext from "../../context/projectContext";
+import LoadedValuesContext from "../../context/loadedValuesContext";
+import { getMilestoneState } from "../../utils/getMilestoneState";
+import { dateDiff } from "../../utils/getDateDifference";
+
 import {
   TimelineBar,
   TimelineStep,
@@ -15,11 +18,23 @@ interface ITimeline {
 }
 
 const TimelineGraph = ({ scale }: ITimeline) => {
-  const project = useContext(ProjectContext);
   const [active, setActive] = useState(false);
+  const { milestones, currentMilestone, projectState } =
+    useContext(LoadedValuesContext);
 
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
+
+  const getDate = (endDate: string, startDate: string) => {
+    const date = dateDiff(endDate, startDate);
+    if (scale === 1) {
+      return `${date.rounded_months} mo`;
+    } else {
+      return `${date.months} mo ${date.days} ${
+        date.days === 1 ? "day" : "days"
+      } `;
+    }
+  };
 
   useEffect(() => {
     if (
@@ -55,18 +70,27 @@ const TimelineGraph = ({ scale }: ITimeline) => {
         hideScrollbars={active ? false : true}
       >
         <TimelineBar>
-          <TProgress progress={2} />
-
-          {project &&
-            project?.stages?.map((stage) => {
-              const itemProps = stage.active ? { ref: activeStageRef } : {};
+          <TProgress progress={0} />
+          {milestones &&
+            milestones.map((milestone) => {
+              const completed = getMilestoneState(
+                projectState,
+                currentMilestone,
+                milestone.id
+              ).completed;
+              const active = getMilestoneState(
+                projectState,
+                currentMilestone,
+                milestone.id
+              ).active;
+              const itemProps = active ? { ref: activeStageRef } : {};
               return (
                 <TimelineStep
                   scale={scale}
-                  key={stage.id}
-                  stage={stage.name}
-                  completed={stage.isCompleted}
-                  current={stage.active}
+                  key={milestone.id}
+                  stage={`Milestone ${milestone.id + 1}`}
+                  completed={completed}
+                  current={active}
                   {...itemProps}
                 />
               );
@@ -74,9 +98,13 @@ const TimelineGraph = ({ scale }: ITimeline) => {
         </TimelineBar>
 
         <DateBar>
-          {project &&
-            project?.stages?.map((stage) => (
-              <DateStep scale={scale} date={stage.duration} />
+          {milestones &&
+            milestones.map((milestone) => (
+              <DateStep
+                key={milestone.id}
+                scale={scale}
+                date={getDate(milestone.endDate, milestone.startDate)}
+              />
             ))}
         </DateBar>
       </TimelineScroll>

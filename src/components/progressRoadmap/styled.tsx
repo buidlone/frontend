@@ -41,14 +41,15 @@ const rotateCircle = keyframes`
 `;
 
 export const ScrollableContainer = styled(ScrollContainer)`
-cursor: grab;
+  //cursor: grab;
   min-height: 295px;
   background: #1d2031 0% 0% no-repeat padding-box;
   box-shadow: inset 0px -20px 20px #1c192769;
   border-radius: 10px;
   opacity: 1;
   margin-top: 1rem;
-  padding-left: 2.8rem;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
 `;
 
 export const ProgressRoadmapWrapper = styled.div`
@@ -81,18 +82,11 @@ export const ProgressStep = styled.div<Props>`
   ${(props) => {
     if (props.completed) {
       return `
-      
-        //background-color: #00C4FF;
-        //border: 1px solid #ffffff;
-
         background: #00C4FF;
         
       `;
     } else if (props.active) {
       return `
-         //background-color: #2e436c;
-         //border: 1px solid #00c4ff;
-        
         background-color: #00C4FF;
       `;
     } else {
@@ -110,9 +104,10 @@ export const ProgressStep = styled.div<Props>`
     font-family: "Barlow", sans-serif;
     font-weight: 300;
     color: #00c4ff;
-    text-align: left;
-    width: 3rem;
+    text-align: center;
+    width: 3.5rem;
     pointer-events: none;
+    white-space: nowrap;
   }
 
   &:hover {
@@ -227,7 +222,6 @@ export const Lock = styled.div<Props>`
 
 export const Funds = styled.div`
   width: 3rem;
-  position: absolute;
   top: calc(100% + 3px);
   font-size: 16px;
   font-family: "Lato", sans-serif;

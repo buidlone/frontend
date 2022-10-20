@@ -12,30 +12,34 @@ import TimelineGraph from "../timelineGraph";
 import Tooltip from "../tooltip";
 import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { dateDiff } from "../../utils/getDateDifference";
 
 const TimelineBlock = () => {
   const [active, setActive] = useState(2);
+  const [status, setStatus] = useState(3);
   const { fundraisingStartDate, fundraisingEndDate, milestones } =
     useContext(LoadedValuesContext);
 
-  const [projectPeriodInYears, setProjectPeriodInYears] = useState("");
+  const [projectPeriodInMonths, setProjectPeriodInMonths] = useState(3);
 
-  const getProjectPeriod = () => {
-    const lastMilestoneEndDate = milestones[
-      milestones.length - 1
-    ].endDate.replace(/''/g, "/");
-    const firstMilestoneStartDate = milestones[0].startDate.replace(/''/g, "/");
-    const projectPeriod = Math.abs(
-      Number(new Date(lastMilestoneEndDate)) -
-        Number(new Date(firstMilestoneStartDate))
-    );
-
-    return (projectPeriod / 31536000000).toFixed(1);
+  const handleButtonStatus = () => {
+    if (milestones.length < 4) {
+      setStatus(2);
+    } else if (milestones.length >= 4 && milestones.length < 8) {
+      setStatus(1);
+    } else {
+      setStatus(3);
+    }
   };
 
   useEffect(() => {
-    const projectPeriod = getProjectPeriod();
-    setProjectPeriodInYears(projectPeriod);
+    const projectPeriod = dateDiff(
+      milestones[milestones.length - 1].endDate,
+      milestones[0].startDate
+    );
+
+    setProjectPeriodInMonths(projectPeriod.rounded_months);
+    handleButtonStatus();
   }, []);
 
   return (
@@ -44,19 +48,25 @@ const TimelineBlock = () => {
         <Title>Timeline</Title>
         <InlineWrapper className="buttons">
           <XButton
-            className={active == 1 ? "selected" : ""}
+            disabled={status !== 3 ? true : false}
+            className={`${active == 1 ? "selected" : ""} ${
+              status !== 3 ? "disabled" : ""
+            }`}
             onClick={() => setActive(1)}
           >
             x1
           </XButton>
           <XButton
-            className={active == 2 ? "selected" : ""}
+            className={active === 2 ? "selected" : ""}
             onClick={() => setActive(2)}
           >
             x2
           </XButton>
           <XButton
-            className={active == 3 ? "selected" : ""}
+            disabled={status === 2 ? true : false}
+            className={`${active === 3 ? "selected" : ""} ${
+              status === 2 ? "disabled" : ""
+            }`}
             onClick={() => setActive(3)}
           >
             x3
@@ -88,7 +98,9 @@ const TimelineBlock = () => {
         <BottomPartWrapper>
           <div>Project period</div>
           <div className="dateWords">
-            Aprx {projectPeriodInYears} year after reaching Soft cap
+            Aprx {projectPeriodInMonths}{" "}
+            {projectPeriodInMonths === 1 ? "month" : "months"} after reaching
+            Soft cap
           </div>
         </BottomPartWrapper>
       </BottomWrapper>

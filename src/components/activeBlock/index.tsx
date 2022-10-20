@@ -38,9 +38,18 @@ const ActiveBlock = () => {
   const [flip2, setFlip2] = useState(true);
   const [flip3, setFlip3] = useState(true);
   const [showModal, setShowModal] = useState(false);
+
+  const {
+    projectState,
+    totalInvested,
+    hardCap,
+    currency,
+    milestones,
+    currentMilestone,
+  } = useContext(LoadedValuesContext);
+
   const { web3Provider, connect, address } = useContext(Web3Context);
-  const { projectState, totalInvested, hardCap, currency } =
-    useContext(LoadedValuesContext);
+
 
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -73,6 +82,7 @@ const ActiveBlock = () => {
     }
   });
 
+
   const showFunds = () => {
     setFlip1(!flip1);
   };
@@ -88,7 +98,7 @@ const ActiveBlock = () => {
       <Table>
         <thead>
           <th className="bigger">Project</th>
-          <th>Stage</th>
+          <th>Milestone</th>
           <th>Funds</th>
           <th>Project tokens</th>
           <th>Voting</th>
@@ -97,7 +107,9 @@ const ActiveBlock = () => {
         <tbody>
           <tr>
             <td className="underlined blue bigger">Buidl1</td>
-            <td className="white bigger">1/60</td>
+            <td className="white bigger">
+              {currentMilestone}/{milestones.length}
+            </td>
             <td
               onMouseOver={showFunds}
               onMouseOut={showFunds}

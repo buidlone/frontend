@@ -18,13 +18,14 @@ const provider = new ethers.providers.JsonRpcProvider(
 
 export const loadedValuesInitialState: ILoadedValues = {
   softCap: {
-    amount: null,
-    isReached: null,
+    amount: 0,
+    isReached: false,
   },
   totalInvested: 0,
   fundraisingStartDate: null,
   fundraisingEndDate: null,
   milestones: [],
+  currentMilestone: 0,
   hardCap: 0,
   projectState: 0,
   currency: {
@@ -33,12 +34,13 @@ export const loadedValuesInitialState: ILoadedValues = {
   address: "",
   decimals: 0,
 },
-  setTotalInvested: null
+setTotalInvested: null,
+
 
 };
 
 export const useLoadValues = () => {
-  const [softCap, setSoftCap] = useState<SoftCap | null>(null);
+  const [softCap, setSoftCap] = useState<SoftCap>({amount: 0, isReached: false});
   const [hardCap, setHardCap] = useState<number>(0)
   const [totalInvested, setTotalInvested] = useState<number>(0);
   const [fundraisingStartDate, setFundraisingStartDate] = useState<
@@ -55,6 +57,7 @@ export const useLoadValues = () => {
   address: "",
   decimals: 0,
   })
+  const [currentMilestone, setCurrentMilestone] = useState<number>(0)
 
   const getAvailableCurrencies = async (tokenAddress: string) => {
 
@@ -99,9 +102,11 @@ export const useLoadValues = () => {
           decimals: acceptedTokenDetails?.tokenDecimals
         })
         
-        const milestoneCount = (await contract.milestoneCount()).toNumber();
-      
-
+       const milestoneCount = (await contract.milestoneCount()).toNumber()
+        const currentMilestone = (await contract.currentMilestone()).toNumber();
+    
+        setCurrentMilestone(currentMilestone) 
+        ;
         for (let i = 0; i < milestoneCount; i++) {
           let milestone = await contract.milestones(i);
           let seedAmount = await contract.getMilestoneSeedAmount(i);
@@ -149,6 +154,7 @@ export const useLoadValues = () => {
     fundraisingStartDate,
     fundraisingEndDate,
     milestones,
+    currentMilestone,
     projectState,
     currency,
     setTotalInvested
