@@ -41,7 +41,7 @@ const Calculator = () => {
   const [maxMonths, setMaxMonths] = useState<number | null>(null);
   const [currentMonth, setCurrentMonth] = useState<number | null>();
   const { web3Provider, connect } = useContext(Web3Context);
-  const { projectState, totalInvested, hardCap } =
+  const { projectState, totalInvested, hardCap, currency } =
     useContext(LoadedValuesContext);
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -130,7 +130,7 @@ const Calculator = () => {
             </Tooltip>
           </InlineWrapper>
 
-          <SelectWrapper>
+          <SelectWrapper currency={currency.label}>
             <div className="blueText">Invested Sum:</div>
             <InputField
               type="number"

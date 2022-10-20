@@ -20,7 +20,6 @@ export const TableButton = styled.button`
   transition: 9s ease-in;
   transform: translateX(0);
   cursor: pointer;
-  font-family: "Space Grotesk", sans-serif;
   border-radius: 10px;
   background: #2e314d 0% 0% no-repeat padding-box;
 `;
@@ -73,7 +72,6 @@ export const ActiveBlockWrapper = styled.div`
     border: 1px solid #00ffc4;
     border-radius: 12px;
     font-size: 18px;
-    font-family: "Barlow", sans-serif;
     color: rgba(255, 255, 255, 1);
 
     &:hover {

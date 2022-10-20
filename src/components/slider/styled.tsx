@@ -5,6 +5,8 @@ interface Props {
   index?: number;
   progress?: number;
   funds?: string;
+  currency?: string;
+  softCapPosition?: number;
 }
 
 export const StyledTrack = styled.div<Props>`
@@ -24,11 +26,11 @@ export const SoftCapIndicator = styled.div<Props>`
   border-left: 2px dashed rgb(255 255 255 / 50%);
   position: absolute;
   bottom: 15%;
-  left: 80%;
+  left: calc(${(props) => props?.softCapPosition}% + 0.6%);
   z-index: 99999;
 
   &:after {
-    content: "${(props) => props?.funds} ETH";
+    content: "${(props) => props?.funds} ${(props) => props?.currency}";
     position: absolute;
     font-size: 14px;
     font-family: "IBM Plex Sans", sans-serif;
@@ -56,10 +58,10 @@ export const HardCapIndicator = styled.div<Props>`
   border-left: 2px dashed rgb(255 255 255 / 50%);
   position: absolute;
   bottom: 15%;
-  right: 1.1%;
+  left: 98.5%;
   z-index: 99999;
   &:after {
-    content: "${(props) => props?.funds} ETH";
+    content: "${(props) => props?.funds} ${(props) => props?.currency}";
     position: absolute;
     font-size: 14px;
     font-family: "IBM Plex Sans", sans-serif;
@@ -75,7 +77,7 @@ export const HardCapIndicator = styled.div<Props>`
     font-size: 14px;
     font-family: "IBM Plex Sans", sans-serif;
     color: rgba(255, 255, 255, 0.42);
-    left: -25px;
+    left: -27.5px;
     bottom: 160%;
     white-space: nowrap;
   }

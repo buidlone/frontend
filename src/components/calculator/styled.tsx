@@ -4,6 +4,10 @@ import { BlockWrapper, GreenButton } from "../fundingBlock/styled";
 import "react-circular-progressbar/dist/styles.css";
 import { InlineWrapper } from "../timelineBlock/styled";
 
+interface Props {
+  currency?: string;
+}
+
 export const CalculatorBlock = styled(BlockWrapper)`
   width: 72%;
   min-width: 39.063rem;
@@ -48,19 +52,19 @@ export const CalculationWrapper = styled.div`
   justify-content: flex-start;
   gap: 2.156rem;
   padding: 1.25rem 1.875rem;
-
 `;
 
-export const SelectWrapper = styled.div`
+export const SelectWrapper = styled.div<Props>`
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   position: relative;
   gap: 1.219rem;
+  margin-bottom: 5%;
 
   &::before {
-    content: "$";
+    content: "${(props) => props?.currency}";
     position: absolute;
     top: 63%;
     left: 3%;
@@ -70,7 +74,6 @@ export const SelectWrapper = styled.div`
     font-weight: 400;
     font-size: 15px;
   }
-
 `;
 
 export const InputField = styled.input`
@@ -80,7 +83,7 @@ export const InputField = styled.input`
   box-shadow: inset 0px 0px 5px #141620;
   border-radius: 8px;
   opacity: 1;
-  padding-left: 5%;
+  padding-left: 10%;
   border: none;
   position: relative;
   outline: none;
@@ -152,13 +155,7 @@ export const PBWrapper = styled.div`
 export const IButton = styled(GreenButton)`
   width: 100%;
   margin-top: 1rem;
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 500;
-  background: transparent linear-gradient(167deg, #00ffeb 0%, #469898 100%) 0%
-    0% no-repeat padding-box;
-  border: 1px solid #00ffc4;
-  border-radius: 12px;
-  opacity: 1;
+  
 `;
 
 export const VotingRow = styled.div`
