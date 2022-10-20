@@ -5,10 +5,10 @@ import { Tooltip } from "../milestonesTooltip/styled";
 //Passed props
 interface Props {
   progress?: number;
-  completed?: boolean;
+  completed?: boolean | null | undefined;
   active?: boolean;
   stage?: string;
-  unlocked?: boolean;
+  unlocked?: boolean | null | undefined;
   ref?: any;
 }
 

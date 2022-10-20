@@ -26,11 +26,12 @@ const ProgressRoadmap = () => {
   const project = useContext(ProjectContext);
   const { softCap, milestones, projectState, currentMilestone } =
     useContext(LoadedValuesContext);
-  const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
-    useCountdown(project?.stages?.find((stage) => stage.active)?.endDate);
-
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
+
+  const timeTillNextMilestone = useCountdown(
+    milestones[currentMilestone + 1].startDate
+  );
 
   useEffect(() => {
     if (
@@ -185,7 +186,7 @@ const ProgressRoadmap = () => {
           <text className="topText">Next phase starts in</text>
           <text className="daysLeft">
             {softCap?.isReached
-              ? `${timerDays}D ${timerHours}H ${timerMinutes}M ${timerSeconds}S`
+              ? `${timeTillNextMilestone.timerDays}D ${timeTillNextMilestone.timerHours}H ${timeTillNextMilestone.timerMinutes}M ${timeTillNextMilestone.timerSeconds}S`
               : `After reaching soft cap`}
           </text>
         </BottomWrapper>
