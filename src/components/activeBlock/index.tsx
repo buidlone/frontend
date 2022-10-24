@@ -40,6 +40,9 @@ const ActiveBlock = () => {
   const [flip2, setFlip2] = useState(true);
   const [flip3, setFlip3] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [stopDisabled, setStopDisabled] = useState(false);
+  const [investDisabled, setInvestDisabled] = useState(false);
+  const [isAllowed, setIsAllowed] = useState(true);
 
   const {
     projectState,
@@ -53,16 +56,15 @@ const ActiveBlock = () => {
   const { web3Provider, connect, address } = useContext(Web3Context);
 
   const handleClick = () => {
-    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
     if (isAllowed) {
       web3Provider && setShowModal(true);
     } else {
       toast.info(getProjectState(projectState));
+      setInvestDisabled(true);
     }
   };
 
   const handleConnectClick = async () => {
-    const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
     if (isAllowed) {
       if (connect) {
         const isConnected = await connect();
@@ -70,10 +72,20 @@ const ActiveBlock = () => {
       }
     } else {
       toast.info(getProjectState(projectState));
+      setInvestDisabled(true);
+    }
+  };
+
+  const handleStop = async () => {
+    if (web3Provider) {
+      stopProject(web3Provider, address);
+      setStopDisabled(true);
     }
   };
 
   useEffect(() => {
+    setIsAllowed(isInvestingAllowed(projectState, hardCap, totalInvested));
+
     if (web3Provider) {
       getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
         setTotalIndividualInvestedToProject(data.totalAmountInvested);
@@ -158,11 +170,17 @@ const ActiveBlock = () => {
             <TableLink>Project discussion</TableLink>
           </InlineWrapper>
 
-          <TableButton className="stopBtn">STOP</TableButton>
+          <TableButton className="stopBtn" onClick={handleStop}>
+            STOP
+          </TableButton>
           <TableButton className="claimBtn">Claim tokens</TableButton>
           {web3Provider ? (
             <>
-              <TableButton className="invBtn" onClick={handleClick}>
+              <TableButton
+                disabled={!isAllowed}
+                className="invBtn"
+                onClick={handleClick}
+              >
                 Invest
               </TableButton>
             </>

@@ -19,6 +19,8 @@ export const invest = async (
         ERC20TokenABI,
         signer
       );
+      
+      
       const investmentPoolContract = new ethers.Contract(
         InvestmentPoolAddress,
         InvestmentPoolABI,
@@ -28,6 +30,7 @@ export const invest = async (
         address,
         InvestmentPoolAddress
       );
+      
 
       if (amount > Number(ethers.utils.formatEther(allowance.toString()))) {
         const approvalTransaction = await tokenContract.approve(
@@ -44,6 +47,7 @@ export const invest = async (
         toast.success("Transaction was successful");
 
       return (Number(ethers.utils.formatEther(totalInvestedAmount)))
+
       } else {
         const investmentTransaction = await investmentPoolContract.invest(
           ethers.utils.parseEther(amount.toString()),
@@ -55,8 +59,8 @@ export const invest = async (
       return (Number(ethers.utils.formatEther(totalInvestedAmount)))
 
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
       toast.error("Transaction was rejected");
     }
   } else {

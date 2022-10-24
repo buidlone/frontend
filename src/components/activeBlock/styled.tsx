@@ -1,6 +1,10 @@
 import styled, { css } from "styled-components";
 import { InlineWrapper } from "../timelineBlock/styled";
 
+interface isDisabled {
+  disabled?: boolean;
+}
+
 export const TableLink = styled.a`
   color: rgba(214, 214, 214, 1);
   font-size: 11px;
@@ -9,7 +13,7 @@ export const TableLink = styled.a`
   font-family: "IBM Plex Sans", sans-serif;
 `;
 
-export const TableButton = styled.button`
+export const TableButton = styled.button<isDisabled>`
   max-width: 11.408rem;
   width: 100%;
   height: 2.5rem;
@@ -22,6 +26,7 @@ export const TableButton = styled.button`
   cursor: pointer;
   border-radius: 10px;
   background: #2e314d 0% 0% no-repeat padding-box;
+  opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
 `;
 
 export const ActiveBlockWrapper = styled.div`
