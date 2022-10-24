@@ -274,7 +274,7 @@
     },
     {
       "inputs": [],
-      "name": "ACTIVE_FUNDRAISER_BYTE_VALUE",
+      "name": "ANY_MILESTONE_ONGOING_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -287,7 +287,7 @@
     },
     {
       "inputs": [],
-      "name": "ANY_ACTIVE_MILESTONE_BYTE_VALUE",
+      "name": "BEFORE_FUNDRAISER_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -300,20 +300,7 @@
     },
     {
       "inputs": [],
-      "name": "BEFORE_FUNDRAISER_BYTE_VALUE",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "CANCELED_PROJECT_BYTE_VALUE",
+      "name": "CANCELED_PROJECT_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -352,7 +339,7 @@
     },
     {
       "inputs": [],
-      "name": "FAILED_FUNDRAISER_BYTE_VALUE",
+      "name": "FAILED_FUNDRAISER_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -365,7 +352,7 @@
     },
     {
       "inputs": [],
-      "name": "FUNDRAISER_ENDED_NO_ACTIVE_MILESTONE_BYTE_VALUE",
+      "name": "FUNDRAISER_ENDED_NO_MILESTONES_ONGOING_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -378,7 +365,7 @@
     },
     {
       "inputs": [],
-      "name": "LAST_MILESTONE_BYTE_VALUE",
+      "name": "FUNDRAISER_ONGOING_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -391,7 +378,7 @@
     },
     {
       "inputs": [],
-      "name": "NOT_LAST_ACTIVE_MILESTONE_BYTE_VALUE",
+      "name": "LAST_MILESTONE_ONGOING_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -404,7 +391,7 @@
     },
     {
       "inputs": [],
-      "name": "NO_STATE_BYTE_VALUE",
+      "name": "MILESTONES_ONGOING_BEFORE_LAST_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -430,7 +417,7 @@
     },
     {
       "inputs": [],
-      "name": "SUCCESSFULLY_ENDED_BYTE_VALUE",
+      "name": "SUCCESSFULLY_ENDED_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -443,7 +430,33 @@
     },
     {
       "inputs": [],
-      "name": "TERMINATED_BY_VOTING_BYTE_VALUE",
+      "name": "TERMINATED_BY_GELATO_STATE_VALUE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "TERMINATED_BY_VOTING_STATE_VALUE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "UNKNOWN_STATE_VALUE",
       "outputs": [
         {
           "internalType": "uint256",
@@ -800,6 +813,19 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "claim",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "creator",
       "outputs": [
@@ -823,6 +849,13 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "deleteGelatoTask",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -961,6 +994,57 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "getCurrentMilestoneId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMemMilestoneInvestments",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMemMilestonePortions",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -974,6 +1058,19 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMilestonesInvestmentsListForFormula",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
         }
       ],
       "stateMutability": "view",
@@ -1008,7 +1105,7 @@
           "type": "uint256"
         }
       ],
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -1038,20 +1135,17 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "increaseMilestone",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "contract ISuperfluid",
           "name": "_host",
-          "type": "address"
-        },
-        {
-          "internalType": "contract ISuperToken",
-          "name": "_acceptedToken",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_creator",
           "type": "address"
         },
         {
@@ -1061,6 +1155,21 @@
         },
         {
           "components": [
+            {
+              "internalType": "contract ISuperToken",
+              "name": "acceptedToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "internalType": "uint96",
+              "name": "seedFundingLimit",
+              "type": "uint96"
+            },
             {
               "internalType": "uint96",
               "name": "softCap",
@@ -1080,6 +1189,16 @@
               "internalType": "uint48",
               "name": "fundraiserEndAt",
               "type": "uint48"
+            },
+            {
+              "internalType": "uint48",
+              "name": "terminationWindow",
+              "type": "uint48"
+            },
+            {
+              "internalType": "uint48",
+              "name": "automatedTerminationWindow",
+              "type": "uint48"
             }
           ],
           "internalType": "struct IInvestmentPool.ProjectInfo",
@@ -1087,14 +1206,31 @@
           "type": "tuple"
         },
         {
-          "internalType": "uint48",
-          "name": "_terminationWindow",
-          "type": "uint48"
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "seedFundingMultiplier",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "privateFundingMultiplier",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "publicFundingMultiplier",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IInvestmentPool.VotingTokensMultipliers",
+          "name": "_multipliers",
+          "type": "tuple"
         },
         {
-          "internalType": "uint48",
-          "name": "_automatedTerminationWindow",
-          "type": "uint48"
+          "internalType": "uint256",
+          "name": "_investmentWithdrawFee",
+          "type": "uint256"
         },
         {
           "components": [
@@ -1178,7 +1314,33 @@
     },
     {
       "inputs": [],
+      "name": "investmentWithdrawFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "isAnyMilestoneOngoing",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "isAnyMilestoneOngoingAndActive",
       "outputs": [
         {
           "internalType": "bool",
@@ -1401,7 +1563,72 @@
     },
     {
       "inputs": [],
+      "name": "privateFundingMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "publicFundingMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "refund",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "seedFundingLimit",
+      "outputs": [
+        {
+          "internalType": "uint96",
+          "name": "",
+          "type": "uint96"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "seedFundingMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "setTimestamp",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -1429,6 +1656,19 @@
     {
       "inputs": [],
       "name": "startGelatoTask",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        }
+      ],
+      "name": "terminateMilestoneStreamFinal",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -1470,6 +1710,24 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_paymentToken",
+          "type": "address"
+        }
+      ],
+      "name": "transferGelatoFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {

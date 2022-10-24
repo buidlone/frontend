@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 import ProjectContext from "../../context/projectContext";
 import {
   BarChartBlock,
@@ -12,6 +13,7 @@ import {
 
 const InvestorsBarChart = () => {
   const project = useContext(ProjectContext);
+  const { currency } = useContext(LoadedValuesContext);
   const [active, setActive] = useState(false);
   const [max, setMax] = useState<number>();
   const [min, setMin] = useState<number>();
@@ -69,13 +71,13 @@ const InvestorsBarChart = () => {
           <InvFooterItem>
             <div className="text">Lowest</div>
             <div className="amount">
-              {min && min.toLocaleString().replace(/,/g, " ")}$
+              {min && min.toLocaleString().replace(/,/g, " ")} {currency.label}
             </div>
           </InvFooterItem>
           <InvFooterItem>
             <div className="text">Highest</div>
             <div className="amount">
-              {max && max.toLocaleString().replace(/,/g, " ")}$
+              {max && max.toLocaleString().replace(/,/g, " ")} {currency.label}
             </div>
           </InvFooterItem>
         </InvFooter>

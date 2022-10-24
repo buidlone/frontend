@@ -9,13 +9,13 @@ import {
 import DiscordImg from "../../../public/DiscordSmall.png";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-import ProjectContext from "../../context/projectContext";
 import TokenStreamTable from "../tokenStreamTable";
 import Accordion from "../accordion";
 import { InlineWrapper } from "../timelineBlock/styled";
 import InvestModal from "../investModal";
 import Modal from "../modal";
 import Web3Context from "../../context/web3Context";
+import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
 import ProjectState from "../projectState";
@@ -32,20 +32,25 @@ const items = [
 ];
 
 const ActiveBlock = () => {
-  const featuredProject = useContext(ProjectContext);
-
+  const [
+    totalIndividualInvestedToProject,
+    setTotalIndividualInvestedToProject,
+  ] = useState(0);
   const [flip1, setFlip1] = useState(true);
   const [flip2, setFlip2] = useState(true);
   const [flip3, setFlip3] = useState(true);
-
   const [showModal, setShowModal] = useState(false);
-  const { web3Provider, connect, address } = useContext(Web3Context);
-  const { projectState, totalInvested, hardCap } =
-    useContext(LoadedValuesContext);
 
-  const [votingTokenBalance, setVotingTokenBalance] = useState<
-    number | undefined
-  >();
+  const {
+    projectState,
+    totalInvested,
+    hardCap,
+    currency,
+    milestones,
+    currentMilestone,
+  } = useContext(LoadedValuesContext);
+
+  const { web3Provider, connect, address } = useContext(Web3Context);
 
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -55,22 +60,6 @@ const ActiveBlock = () => {
       toast.info(getProjectState(projectState));
     }
   };
-
-  useEffect(() => {
-    if (web3Provider && web3Provider?.network.chainId === 5) {
-      getVotingTokens(web3Provider, address).then((data) => {
-        setVotingTokenBalance(data?.votingTokenBalance);
-        console.log(data?.votingTokenBalance1);
-      });
-    }
-    if (web3Provider) {
-      stopProject(web3Provider, address, votingTokenBalance).then(
-        (data: any) => {
-          console.log(data);
-        }
-      );
-    }
-  });
 
   const handleConnectClick = async () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -83,6 +72,16 @@ const ActiveBlock = () => {
       toast.info(getProjectState(projectState));
     }
   };
+
+  useEffect(() => {
+    if (web3Provider) {
+      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
+        setTotalIndividualInvestedToProject(data.totalAmountInvested);
+      });
+    } else {
+      setTotalIndividualInvestedToProject(0);
+    }
+  });
 
   const showFunds = () => {
     setFlip1(!flip1);
@@ -99,7 +98,7 @@ const ActiveBlock = () => {
       <Table>
         <thead>
           <th className="bigger">Project</th>
-          <th>Stage</th>
+          <th>Milestone</th>
           <th>Funds</th>
           <th>Project tokens</th>
           <th>Voting</th>
@@ -108,13 +107,17 @@ const ActiveBlock = () => {
         <tbody>
           <tr>
             <td className="underlined blue bigger">Buidl1</td>
-            <td className="white bigger">1/60</td>
+            <td className="white bigger">
+              {currentMilestone}/{milestones.length}
+            </td>
             <td
               onMouseOver={showFunds}
               onMouseOut={showFunds}
               className="green flippable"
             >
-              {flip1 ? "1245ETH" : "12ETH"}{" "}
+              {flip1
+                ? `${totalIndividualInvestedToProject} ${currency.label}`
+                : `0 ${currency.label}`}
             </td>
             <td
               onMouseOver={showTokens}

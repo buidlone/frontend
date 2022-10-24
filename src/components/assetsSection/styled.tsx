@@ -21,8 +21,6 @@ export const StateButton = styled.button`
   cursor: pointer;
   transition: 250ms ease-in;
   transform: translateX(0);
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 500;
   z-index: 4;
 
   &:hover,

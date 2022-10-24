@@ -17,10 +17,12 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 
 export default function FundingRoadmap() {
   const project = useContext(ProjectContext);
-  const { softCap, hardCap, totalInvested } = useContext(LoadedValuesContext);
+  const { softCap, hardCap, totalInvested, currency } =
+    useContext(LoadedValuesContext);
   const [progress, setProgress] = useState<number>(
     (totalInvested * 100) / hardCap
   );
+  
 
   useEffect(() => {
     setProgress((totalInvested * 100) / hardCap);
@@ -33,22 +35,21 @@ export default function FundingRoadmap() {
           <TextAboveDashed>Seed</TextAboveDashed>
           <TextWhite>
             {project.seed?.fundsRequired.toLocaleString().replace(/,/g, " ")}{" "}
-            USDT
+            {currency.label}
           </TextWhite>
         </VerticalLine>
       </RoadmapBubble>
       <FundsBar>
         <FProgress progress={progress}>
-          <FundsIndicator
-            funds={totalInvested?.toLocaleString().replace(/,/g, " ")}
-          />
+          <FundsIndicator funds={totalInvested} currency={currency.label} />
         </FProgress>
 
         <RoadmapBubble>
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
             <TextWhite>
-              {softCap?.amount?.toLocaleString().replace(/,/g, " ")} USDT
+              {softCap?.amount?.toLocaleString().replace(/,/g, " ")}{" "}
+              {currency.label}
             </TextWhite>
           </VerticalLine>
           {softCap?.isReached ? (
@@ -67,7 +68,7 @@ export default function FundingRoadmap() {
         <VerticalLine>
           <TextAboveDashed>Hard Cap</TextAboveDashed>
           <TextWhite>
-            {hardCap?.toLocaleString().replace(/,/g, " ")} USDT
+            {hardCap?.toLocaleString().replace(/,/g, " ")} {currency.label}
           </TextWhite>
         </VerticalLine>
       </RoadmapBubble>

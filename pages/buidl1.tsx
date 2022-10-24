@@ -11,13 +11,14 @@ import BuidlLogo from "../public/BuidlLogo2x.png";
 import { LogoWrapper } from "../src/components/projectHeader/styled";
 import Calculator from "../src/components/calculator";
 import InvestorsBarChart from "../src/components/investorsBarChart";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import LoadedValuesContext from "../src/context/loadedValuesContext";
 import { Spinner } from "../src/components/navbar/styled";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
-  return loadedValuesState.softCap !== null ? (
+
+  return loadedValuesState.fundraisingStartDate !== null ? (
     <>
       <BgImage isFixed />
       <Container>

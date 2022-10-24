@@ -27,22 +27,24 @@ import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const min = 0;
-const maxSum = 5000;
+const minStep = 0.0000001;
 
 const Calculator = () => {
   const project = useContext(ProjectContext);
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState<number>(0);
-  const [sum, setSum] = useState<number | null>(null);
-  const [tokens, setTokens] = useState<number | null>(null);
-  const [tokensPerMonth, setTokensPerMont] = useState<number | null>(null);
-  const [voting, setVoting] = useState<number | null>(null);
-  const [tickets, setTickets] = useState<number | null>(null);
-  const [maxMonths, setMaxMonths] = useState<number | null>(null);
-  const [currentMonth, setCurrentMonth] = useState<number | null>();
+  const [sum, setSum] = useState<number>(0);
+  const [tokens, setTokens] = useState<number>(0);
+  const [tokensPerMonth, setTokensPerMonth] = useState<number>(0);
+  const [voting, setVoting] = useState<number>(0);
+  const [tickets, setTickets] = useState<number>(0);
+  const [maxMonths, setMaxMonths] = useState<number>(0);
+  const [currentMonth, setCurrentMonth] = useState<number>(0);
   const { web3Provider, connect } = useContext(Web3Context);
-  const { projectState, totalInvested, hardCap } =
+  const { projectState, totalInvested, hardCap, currency } =
     useContext(LoadedValuesContext);
+  const [maxSum, setMaxSum] = useState(hardCap);
+
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
     if (isAllowed) {
@@ -87,32 +89,32 @@ const Calculator = () => {
   useEffect(() => {
     if (amount <= maxSum) {
       setSum(amount);
-      setTokens(amount * 2);
-      setTokensPerMont(Math.round((amount * 2) / 12));
+      setTokens(Number((amount * 2).toFixed(3)));
+      setTokensPerMonth(Number(((amount * 2) / 12).toFixed(4)));
       setVoting(Math.round((amount * 100) / maxSum));
-      setTickets(Math.round((amount * 1000) / maxSum));
+      setTickets(Number(amount.toFixed(3)));
     } else if (!amount) {
       setSum(0);
       setTokens(0);
-      setTokensPerMont(0);
+      setTokensPerMonth(0);
       setVoting(0);
       setTickets(0);
     } else {
       setSum(maxSum);
-      setTokens(maxSum * 2);
-      setTokensPerMont(Math.round((maxSum * 2) / 12));
+      setTokens(Number((maxSum * 2).toFixed(3)));
+      setTokensPerMonth(Number(((maxSum * 2) / 12).toFixed(4)));
       setVoting(Math.round((maxSum * 100) / maxSum));
-      setTickets(Math.round((maxSum * 1000) / maxSum));
+      setTickets(Number(maxSum.toFixed(3)));
     }
   }, [amount]);
 
   const handleSumChange = (value: number) => {
     setAmount(value);
     setSum(value);
-    setTokens(value * 2);
-    setTokensPerMont(Math.round((value * 2) / 12));
+    setTokens(Number((value * 2).toFixed(3)));
+    setTokensPerMonth(Number(((value * 2) / 12).toFixed(4)));
     setVoting(Math.round((value * 100) / maxSum));
-    setTickets(Math.round((value * 1000) / maxSum));
+    setTickets(Number(value.toFixed(3)));
   };
 
   return (
@@ -130,7 +132,7 @@ const Calculator = () => {
             </Tooltip>
           </InlineWrapper>
 
-          <SelectWrapper>
+          <SelectWrapper currency={currency.label}>
             <div className="blueText">Invested Sum:</div>
             <InputField
               type="number"
@@ -147,6 +149,7 @@ const Calculator = () => {
             onChange={handleSumChange}
             min={min}
             max={maxSum}
+            step={minStep}
           />
 
           <div className="blueText">Timeline:</div>
@@ -163,7 +166,7 @@ const Calculator = () => {
           <PBContainer>
             <PBWrapper>
               <CircularProgressbarWithChildren
-                maxValue={(maxSum * 2) / 12}
+                maxValue={Number(((maxSum * 2) / 12).toFixed(4))}
                 value={tokensPerMonth ? tokensPerMonth : 0}
                 counterClockwise
                 styles={{
