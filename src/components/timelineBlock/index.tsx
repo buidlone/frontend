@@ -21,6 +21,7 @@ const TimelineBlock = () => {
     useContext(LoadedValuesContext);
 
   const [projectPeriodInMonths, setProjectPeriodInMonths] = useState(3);
+  const [projectPeriodInYears, setProjectPeriodInYears] = useState(0);
 
   const handleButtonStatus = () => {
     if (milestones.length < 4) {
@@ -38,7 +39,9 @@ const TimelineBlock = () => {
       milestones[0].startDate
     );
 
-    setProjectPeriodInMonths(projectPeriod.rounded_months);
+    projectPeriod.years > 0
+      ? setProjectPeriodInYears(projectPeriod.years_and_months)
+      : setProjectPeriodInMonths(projectPeriod.rounded_months);
     handleButtonStatus();
   }, []);
 
@@ -97,11 +100,19 @@ const TimelineBlock = () => {
         </BottomPartWrapper>
         <BottomPartWrapper>
           <div>Project period</div>
-          <div className="dateWords">
-            Aprx {projectPeriodInMonths}{" "}
-            {projectPeriodInMonths === 1 ? "month" : "months"} after reaching
-            Soft cap
-          </div>
+          {projectPeriodInYears > 0 ? (
+            <div className="dateWords">
+              Aprx {projectPeriodInYears}{" "}
+              {projectPeriodInYears < 2 ? "year" : "years"} after reaching Soft
+              cap
+            </div>
+          ) : (
+            <div className="dateWords">
+              Aprx {projectPeriodInMonths}{" "}
+              {projectPeriodInMonths === 1 ? "month" : "months"} after reaching
+              Soft cap
+            </div>
+          )}
         </BottomPartWrapper>
       </BottomWrapper>
     </BlockWrapper>

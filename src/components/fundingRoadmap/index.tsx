@@ -22,6 +22,7 @@ export default function FundingRoadmap() {
   const [progress, setProgress] = useState<number>(
     (totalInvested * 100) / hardCap
   );
+  
 
   useEffect(() => {
     setProgress((totalInvested * 100) / hardCap);
@@ -40,10 +41,7 @@ export default function FundingRoadmap() {
       </RoadmapBubble>
       <FundsBar>
         <FProgress progress={progress}>
-          <FundsIndicator
-            funds={totalInvested?.toLocaleString().replace(/,/g, " ")}
-            currency={currency.label}
-          />
+          <FundsIndicator funds={totalInvested} currency={currency.label} />
         </FProgress>
 
         <RoadmapBubble>

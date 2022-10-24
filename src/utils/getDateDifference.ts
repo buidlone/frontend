@@ -30,11 +30,14 @@ export function dateDiff(date1: string, date2: string) {
   var days = startDay <= endDay ? endDay - startDay : daysOfMonth[(12 + endMonth - 1) % 12] - startDay + endDay;
 
   var rounded_months = days >= 15 ? months + 1 : months;
+ 
+  var years_and_months = years + Number((rounded_months/12).toFixed(1))
 
   return {
     years: years,
     months: months,
     days: days,
-    rounded_months: rounded_months
+    rounded_months: rounded_months,
+    years_and_months: years_and_months
   };
 }

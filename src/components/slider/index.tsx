@@ -50,6 +50,7 @@ interface ISlider {
   value?: any;
   blue?: boolean;
   timeline?: boolean;
+  step?: number;
 }
 
 const Slider = ({
@@ -60,6 +61,7 @@ const Slider = ({
   value,
   blue,
   timeline,
+  step
 }: ISlider) => {
   const { softCap, hardCap, currency } = useContext(LoadedValuesContext);
 
@@ -87,6 +89,7 @@ const Slider = ({
       onChange={onChange}
       trackClassName={blue ? "blue" : ""}
       thumbClassName={blue ? "blue" : ""}
+      step={step}
     />
   );
 };
