@@ -60,6 +60,7 @@ const ActiveBlock = () => {
     if (web3Provider && web3Provider?.network.chainId === 5) {
       getVotingTokens(web3Provider, address).then((data) => {
         setVotingTokenBalance(data?.votingTokenBalance);
+        console.log(data?.votingTokenBalance1);
       });
     }
     if (web3Provider) {
