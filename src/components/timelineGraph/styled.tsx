@@ -26,7 +26,7 @@ const pulse = keyframes`
 
 export const TimelineScroll = styled(ScrollContainer)`
   padding-top: 2.3%;
-  //cursor: grab;
+  cursor: grab;
 
   &::-webkit-scrollbar {
     height: 0.625rem;
@@ -126,7 +126,7 @@ export const TimelineStep = styled.div<Props>`
         content: "${props.stage
           ?.charAt(0)
           .toUpperCase()
-          .concat(props.stage?.slice(-1))}";
+          .concat(props.stage?.slice(-2))}";
 `;
       } else {
         return `
@@ -234,8 +234,11 @@ export const DateStep = styled.div<Props>`
 export const DateBar = styled.div`
   width: 100%;
   margin: 0.644rem 0rem 1.7rem 0rem;
+  display: inline-flex;
+  justify-content: space-between;
   position: relative;
-  display: flex;
+  gap: 3px;
+
   justify-content: space-between;
 
   &:before {

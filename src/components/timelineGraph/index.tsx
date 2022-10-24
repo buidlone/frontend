@@ -30,9 +30,13 @@ const TimelineGraph = ({ scale }: ITimeline) => {
     if (scale === 1) {
       return `${date.rounded_months} mo`;
     } else {
-      return `${date.months} mo ${date.days} ${
-        date.days === 1 ? "day" : "days"
-      } `;
+      if (date.days > 0) {
+        return `${date.months} mo ${date.days} ${
+          date.days === 1 ? "day" : "days"
+        }`;
+      } else {
+        return `${date.months} mo`;
+      }
     }
   };
 

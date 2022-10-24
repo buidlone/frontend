@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 interface Props {
   progress?: number;
-  funds?: string;
+  funds?: number;
   currency?: string;
 }
 

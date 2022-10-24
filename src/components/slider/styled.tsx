@@ -26,7 +26,7 @@ export const SoftCapIndicator = styled.div<Props>`
   border-left: 2px dashed rgb(255 255 255 / 50%);
   position: absolute;
   bottom: 15%;
-  left: calc(${(props) => props?.softCapPosition}% + 0.6%);
+  left: calc(${(props) => props?.softCapPosition}%);
   z-index: 99999;
 
   &:after {
@@ -58,7 +58,7 @@ export const HardCapIndicator = styled.div<Props>`
   border-left: 2px dashed rgb(255 255 255 / 50%);
   position: absolute;
   bottom: 15%;
-  left: 98.5%;
+  left: 98.3%;
   z-index: 99999;
   &:after {
     content: "${(props) => props?.funds} ${(props) => props?.currency}";
