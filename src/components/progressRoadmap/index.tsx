@@ -60,7 +60,7 @@ const ProgressRoadmap = () => {
           vertical={false}
         >
           <ProgressBar>
-            <Progress progress={17} />
+            <Progress progress={20} />
             <ProgressStep
               stage={"Seed"}
               completed={project?.seed?.isCollected}
