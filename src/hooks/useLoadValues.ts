@@ -25,7 +25,7 @@ export const loadedValuesInitialState: ILoadedValues = {
   fundraisingStartDate: null,
   fundraisingEndDate: null,
   milestones: [],
-  currentMilestone: 0,
+  currentMilestone: -1,
   hardCap: 0,
   projectState: 0,
   currency: {
@@ -34,8 +34,8 @@ export const loadedValuesInitialState: ILoadedValues = {
   address: "",
   decimals: 0,
 },
-setTotalInvested: null,
-
+  setTotalInvested: null,
+ 
 
 };
 
@@ -50,6 +50,7 @@ export const useLoadValues = () => {
     null
   );
   const [milestones, setMilestones] = useState<Milestone[]>([]);
+  const [currentMilestone, setCurrentMilestone] = useState<number>(-1);
   const [projectState, setProjectState] = useState<number>(0)
   const [currency, setCurrency] = useState<Currency>( {
   value: "",
@@ -57,7 +58,6 @@ export const useLoadValues = () => {
   address: "",
   decimals: 0,
   })
-  const [currentMilestone, setCurrentMilestone] = useState<number>(0)
 
   const getAvailableCurrencies = async (tokenAddress: string) => {
 
@@ -102,9 +102,9 @@ export const useLoadValues = () => {
           decimals: acceptedTokenDetails?.tokenDecimals
         })
         
-       const milestoneCount = (await contract.milestoneCount()).toNumber()
+        const milestoneCount = (await contract.milestoneCount()).toNumber();
         const currentMilestone = (await contract.currentMilestone()).toNumber();
-    
+      
         setCurrentMilestone(currentMilestone) 
         ;
         for (let i = 0; i < milestoneCount; i++) {
