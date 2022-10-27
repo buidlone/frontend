@@ -29,7 +29,7 @@ export const invest = async (
         address,
         InvestmentPoolAddress
       );
-
+      
       if (amount > Number(ethers.utils.formatEther(allowance.toString()))) {
         const approvalTransaction = await tokenContract.approve(
           InvestmentPoolAddress,
@@ -59,9 +59,14 @@ export const invest = async (
        
       }
     } catch (err: any) {
+      if(err.error) {
       const revertData = err.error.data.originalError.data;
       const decodedError = investmentPoolContract?.interface?.parseError(revertData);
+
       toast.error(getErrorMessage(decodedError?.name));
+      } else {
+        toast.error('Transaction was rejected');
+      }
     }
   } else {
     toast.error("Could not connect to the provider");
