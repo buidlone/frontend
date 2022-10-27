@@ -1,11 +1,11 @@
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import { InvestmentPoolAddress } from "../constants/contractAddresses";
 import InvestmentPoolABI from './abi/InvestmentPool.json'
 
 export const getIndividualInvestedAmount = async (provider: any, address?: string) => {
 
-  let totalAmountInvested = 0;
+  let totalAmountInvestedBig = BigNumber.from(0)
 
      try {
         const contract = new ethers.Contract(InvestmentPoolAddress, InvestmentPoolABI, provider);
@@ -13,10 +13,12 @@ export const getIndividualInvestedAmount = async (provider: any, address?: strin
         const filteredEvents = await contract.queryFilter(filter);
        
         for (let i in filteredEvents) {
-          const investedAmount = Number(ethers.utils.formatEther(filteredEvents[i].args?.amount))
-          totalAmountInvested = totalAmountInvested + investedAmount;
+          
+          const investedAmount = filteredEvents[i].args?.amount
+          totalAmountInvestedBig = totalAmountInvestedBig.add(investedAmount);
 
         }
+        const totalAmountInvested = ethers.utils.formatEther(totalAmountInvestedBig)
       return {
         totalAmountInvested
       }
