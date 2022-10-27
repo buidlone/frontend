@@ -77,6 +77,7 @@ const InvestModal = ({ onClose }: IInvest) => {
     fundraisingEndDate,
     currency,
     setTotalInvested,
+    hardCap,
   } = useContext(LoadedValuesContext);
   const {
     register,
@@ -185,6 +186,8 @@ const InvestModal = ({ onClose }: IInvest) => {
     const amount = getValues("amount");
     if (amount > balance) {
       setError("amount", { message: "Insufficient token balance" });
+    } else if (amount > hardCap) {
+      setError("amount", { message: "Unable to invest above Hard Cap" });
     } else {
       if (address) {
         setButtonState(true);
