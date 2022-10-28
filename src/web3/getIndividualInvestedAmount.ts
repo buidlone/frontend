@@ -5,7 +5,7 @@ import InvestmentPoolABI from './abi/InvestmentPool.json'
 
 export const getIndividualInvestedAmount = async (provider: any, address?: string) => {
 
-  let totalAmountInvestedBig = BigNumber.from(0)
+  let totalAmountInvestedBN = BigNumber.from(0)
 
      try {
         const contract = new ethers.Contract(InvestmentPoolAddress, InvestmentPoolABI, provider);
@@ -15,10 +15,10 @@ export const getIndividualInvestedAmount = async (provider: any, address?: strin
         for (let i in filteredEvents) {
           
           const investedAmount = filteredEvents[i].args?.amount
-          totalAmountInvestedBig = totalAmountInvestedBig.add(investedAmount);
+          totalAmountInvestedBN = totalAmountInvestedBN.add(investedAmount);
 
         }
-        const totalAmountInvested = ethers.utils.formatEther(totalAmountInvestedBig)
+        const totalAmountInvested = ethers.utils.formatEther(totalAmountInvestedBN)
       return {
         totalAmountInvested
       }

@@ -29,12 +29,12 @@ export const invest = async (
         address,
         InvestmentPoolAddress
       );
-     
+
       
       if (amount > Number(ethers.utils.formatEther(allowance.toString()))) {
 
-        const bigAmount = BigNumber.from(ethers.utils.parseEther(amount.toString()))
-        const addedValue = bigAmount.sub(allowance)
+        const amountBN = ethers.utils.parseEther(amount.toString())
+        const addedValue = amountBN.sub(allowance)
 
         const approvalTransaction = await tokenContract.increaseAllowance(
           InvestmentPoolAddress,
@@ -47,7 +47,7 @@ export const invest = async (
           ethers.utils.parseEther(amount.toString()),
           true
         );
-        
+
         const investmentReceipt = await investmentTransaction.wait();
         const totalInvestedAmount = await investmentPoolContract.totalInvestedAmount()
         toast.success("Transaction was successful");
