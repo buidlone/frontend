@@ -29,12 +29,13 @@ export const invest = async (
         address,
         InvestmentPoolAddress
       );
-
       
-      if (amount > Number(ethers.utils.formatEther(allowance.toString()))) {
 
-        const amountBN = ethers.utils.parseEther(amount.toString())
+      if (amount > Number(ethers.utils.formatEther(allowance.toString()))) {
+      
+        const amountBN = BigNumber.from(ethers.utils.parseEther(amount.toString()))
         const addedValue = amountBN.sub(allowance)
+        
 
         const approvalTransaction = await tokenContract.increaseAllowance(
           InvestmentPoolAddress,
@@ -67,7 +68,7 @@ export const invest = async (
        
       }
     } catch (err: any) {
-      
+     
       if(err.error) {
       const revertData = err.error.data.originalError.data;
       const decodedError = investmentPoolContract?.interface?.parseError(revertData);
