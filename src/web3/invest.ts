@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import { InvestmentPoolAddress } from "../constants/contractAddresses";
 import { getErrorMessage } from "../utils/getErrorMessage";
@@ -30,16 +30,25 @@ export const invest = async (
         InvestmentPoolAddress
       );
       
+
       if (amount > Number(ethers.utils.formatEther(allowance.toString()))) {
-        const approvalTransaction = await tokenContract.approve(
+      
+        const amountBN = BigNumber.from(ethers.utils.parseEther(amount.toString()))
+        const addedValue = amountBN.sub(allowance)
+        
+
+        const approvalTransaction = await tokenContract.increaseAllowance(
           InvestmentPoolAddress,
-          ethers.utils.parseEther(amount.toString())
+          addedValue
         );
         const approvalReceipt = await approvalTransaction.wait();
+       
+        
         const investmentTransaction = await investmentPoolContract.invest(
           ethers.utils.parseEther(amount.toString()),
           true
         );
+
         const investmentReceipt = await investmentTransaction.wait();
         const totalInvestedAmount = await investmentPoolContract.totalInvestedAmount()
         toast.success("Transaction was successful");
@@ -59,6 +68,7 @@ export const invest = async (
        
       }
     } catch (err: any) {
+     
       if(err.error) {
       const revertData = err.error.data.originalError.data;
       const decodedError = investmentPoolContract?.interface?.parseError(revertData);
