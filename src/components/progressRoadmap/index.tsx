@@ -24,13 +24,20 @@ import { getMilestoneState } from "../../utils/getMilestoneState";
 
 const ProgressRoadmap = () => {
   const project = useContext(ProjectContext);
-  const { softCap, milestones, projectState, currentMilestone } =
-    useContext(LoadedValuesContext);
+  const {
+    softCap,
+    milestones,
+    projectState,
+    currentMilestone,
+    fundraisingEndDate,
+  } = useContext(LoadedValuesContext);
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
 
-  const timeTillNextMilestone = useCountdown(
-    milestones[currentMilestone + 1].startDate
+  let timeTillNextMilestone = useCountdown(
+    projectState === 32 || projectState === 64
+      ? milestones[currentMilestone + 1].startDate
+      : fundraisingEndDate
   );
 
   useEffect(() => {
@@ -61,7 +68,7 @@ const ProgressRoadmap = () => {
           vertical={false}
         >
           <ProgressBar>
-            <Progress progress={20} />
+            <Progress progress={11} />
             <ProgressStep
               stage={"Seed"}
               completed={project?.seed?.isCollected}
@@ -74,8 +81,8 @@ const ProgressRoadmap = () => {
               completed={softCap?.isReached}
               active
             >
-              {softCap?.isReached && <CheckMark />}
-              {project?.seed?.isCollected && !softCap?.isReached && (
+              {softCap?.isReached && projectState === 16 && <CheckMark />}
+              {project?.seed?.isCollected && projectState === 4 && (
                 <DashedCircle />
               )}
             </ProgressStep>
@@ -126,16 +133,19 @@ const ProgressRoadmap = () => {
             </Lock>
             <Lock
               unlocked={project?.seed?.isCollected && softCap?.isReached}
-              active={project?.seed?.isCollected && !softCap?.isReached}
+              active={project?.seed?.isCollected && projectState === 4}
             >
               {(() => {
-                if (softCap?.isReached) {
+                if (
+                  projectState === 32 ||
+                  projectState === 64 ||
+                  projectState === 16
+                ) {
                   return <CheckMark />;
-                } else if (project?.seed?.isCollected && !softCap?.isReached) {
+                } else if (project?.seed?.isCollected && projectState === 4) {
                   return (
                     <Image src={unlockedLock} alt="unlocked lock" height={15} />
                   );
-                  // <DashedCircle />;
                 } else {
                   return (
                     <Image src={lockedLock} alt="locked lock" height={15} />
