@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import { GovernancePoolAddress, InvestmentPoolAddress, VotingTokenAddress } from "../constants/contractAddresses";
 import GovernancePoolABI from './abi/GovernancePool.json'
-import VotingTokenABI from './abi/votingToken.json'
+import VotingTokenABI from './abi/VotingToken.json'
 import InvestmentPoolABI from './abi/InvestmentPool.json'
 
 
