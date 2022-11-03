@@ -25,8 +25,8 @@ export interface ILoadedValues {
   softCap: SoftCap;
   hardCap: number;
   totalInvested: number;
-  fundraisingStartDate: string | null;
-  fundraisingEndDate: string | null;
+  fundraisingStartDate: string;
+  fundraisingEndDate: string;
   milestones: Milestone[];
   currentMilestone: number;
   projectState: number;

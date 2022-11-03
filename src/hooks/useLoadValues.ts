@@ -22,8 +22,8 @@ export const loadedValuesInitialState: ILoadedValues = {
     isReached: false,
   },
   totalInvested: 0,
-  fundraisingStartDate: null,
-  fundraisingEndDate: null,
+  fundraisingStartDate: '',
+  fundraisingEndDate: '',
   milestones: [],
   currentMilestone: -1,
   hardCap: 0,
@@ -43,12 +43,8 @@ export const useLoadValues = () => {
   const [softCap, setSoftCap] = useState<SoftCap>({amount: 0, isReached: false});
   const [hardCap, setHardCap] = useState<number>(0)
   const [totalInvested, setTotalInvested] = useState<number>(0);
-  const [fundraisingStartDate, setFundraisingStartDate] = useState<
-    string | null
-  >(null);
-  const [fundraisingEndDate, setFundraisingEndDate] = useState<string | null>(
-    null
-  );
+  const [fundraisingStartDate, setFundraisingStartDate] = useState<string >('');
+  const [fundraisingEndDate, setFundraisingEndDate] = useState<string>('');
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [currentMilestone, setCurrentMilestone] = useState<number>(-1);
   const [projectState, setProjectState] = useState<number>(0)
@@ -84,16 +80,16 @@ export const useLoadValues = () => {
           provider
         );
        
-        const totalInvested = await contract.totalInvestedAmount();
-        const softCap = await contract.softCap();
-        const hardCap = await contract.hardCap();
+        const totalInvested = await contract.getTotalInvestedAmount();
+        const softCap = await contract.getSoftCap();
+        const hardCap = await contract.getHardCap();
         const isSoftCapReached = await contract.isSoftCapReached();
-        const fundraisingStartAt = await contract.fundraiserStartAt();
+        const fundraisingStartAt = await contract.getFundraiserStartTime();
         const fundraisingStartDate = formatTime(fundraisingStartAt);
-        const fundraisingEndAt = await contract.fundraiserEndAt();
+        const fundraisingEndAt = await contract.getFundraiserEndTime();
         const fundraisingEndDate = formatTime(fundraisingEndAt);
         const projectState = await contract.getProjectStateByteValue();
-        const acceptedTokenAddress = await contract.acceptedToken()
+        const acceptedTokenAddress = await contract.getAcceptedToken()
         const acceptedTokenDetails = await getAvailableCurrencies(acceptedTokenAddress)
         setCurrency({
           value: acceptedTokenDetails?.tokenSymbol,
@@ -102,13 +98,13 @@ export const useLoadValues = () => {
           decimals: acceptedTokenDetails?.tokenDecimals
         })
         
-        const milestoneCount = (await contract.milestoneCount()).toNumber();
-        const currentMilestone = (await contract.currentMilestone()).toNumber();
+        const milestoneCount = (await contract.getMilestonesCount()).toNumber();
+        const currentMilestone = (await contract.getCurrentMilestoneId()).toNumber();
       
         setCurrentMilestone(currentMilestone) 
         ;
         for (let i = 0; i < milestoneCount; i++) {
-          let milestone = await contract.milestones(i);
+          let milestone = await contract.getMilestone(i);
           let seedAmount = await contract.getMilestoneSeedAmount(i);
 
           setMilestones((prevData) => [
@@ -157,7 +153,7 @@ export const useLoadValues = () => {
     currentMilestone,
     projectState,
     currency,
-    setTotalInvested
+    setTotalInvested,
   };
 };
 
