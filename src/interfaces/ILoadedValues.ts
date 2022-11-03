@@ -1,5 +1,3 @@
-import { FixedNumber } from "ethers";
-
 export type Milestone = {
   id: number;
   startDate: string;
