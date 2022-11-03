@@ -50,7 +50,7 @@ export const invest = async (
         );
 
         const investmentReceipt = await investmentTransaction.wait();
-        const totalInvestedAmount = await investmentPoolContract.totalInvestedAmount()
+        const totalInvestedAmount = await investmentPoolContract.getTotalInvestedAmount()
         toast.success("Transaction was successful");
 
       return (Number(ethers.utils.formatEther(totalInvestedAmount)))
@@ -61,7 +61,8 @@ export const invest = async (
         true
       );
       const investmentReceipt = await investmentTransaction.wait();
-      const totalInvestedAmount = await investmentPoolContract.totalInvestedAmount()
+      const totalInvestedAmount = await investmentPoolContract.getTotalInvestedAmount()
+      
       toast.success("Transaction was successful");
 
       return (Number(ethers.utils.formatEther(totalInvestedAmount)))

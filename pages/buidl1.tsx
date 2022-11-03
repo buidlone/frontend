@@ -18,7 +18,7 @@ import { Spinner } from "../src/components/navbar/styled";
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
 
-  return loadedValuesState.fundraisingStartDate !== null ? (
+  return loadedValuesState.fundraisingStartDate !== "" ? (
     <>
       <BgImage isFixed />
       <Container>
