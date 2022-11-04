@@ -4,7 +4,6 @@ import { GovernancePoolAddress, InvestmentPoolAddress, VotingTokenAddress } from
 import GovernancePoolABI from './abi/GovernancePool.json'
 import VotingTokenABI from './abi/VotingToken.json'
 import InvestmentPoolABI from './abi/InvestmentPool.json'
-import { log } from "console";
 import { VoteAgainstErrorEnum } from "../interfaces/enums/VoteAgainstErrorEnums";
 
 
