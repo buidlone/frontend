@@ -15,7 +15,7 @@ import {
   DashedCircle,
 } from "./styled";
 import Image from "next/image";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
@@ -25,6 +25,8 @@ import { getMilestoneState } from "../../utils/getMilestoneState";
 const ProgressRoadmap = () => {
   const project = useContext(ProjectContext);
   const {
+    seedFundingLimit,
+    totalInvested,
     softCap,
     milestones,
     projectState,
@@ -39,8 +41,13 @@ const ProgressRoadmap = () => {
       ? milestones[currentMilestone + 1].startDate
       : fundraisingEndDate
   );
+  const [isSeedReached, setIsSeedReached] = useState(false);
 
   useEffect(() => {
+    seedFundingLimit <= totalInvested
+      ? setIsSeedReached(true)
+      : setIsSeedReached(false);
+
     if (
       containerRef &&
       containerRef.current &&
@@ -55,7 +62,7 @@ const ProgressRoadmap = () => {
         behavior: "smooth",
       });
     }
-  }, []);
+  }, [totalInvested]);
 
   return (
     <>
@@ -69,12 +76,8 @@ const ProgressRoadmap = () => {
         >
           <ProgressBar>
             <Progress progress={11} />
-            <ProgressStep
-              stage={"Seed"}
-              completed={project?.seed?.isCollected}
-              active
-            >
-              {project?.seed?.isCollected && <CheckMark />}
+            <ProgressStep stage={"Seed"} completed={isSeedReached} active>
+              {isSeedReached ? <CheckMark /> : <DashedCircle />}
             </ProgressStep>
             <ProgressStep
               stage={"Funding"}
@@ -82,9 +85,7 @@ const ProgressRoadmap = () => {
               active
             >
               {softCap?.isReached && projectState === 16 && <CheckMark />}
-              {project?.seed?.isCollected && projectState === 4 && (
-                <DashedCircle />
-              )}
+              {isSeedReached && projectState === 4 && <DashedCircle />}
             </ProgressStep>
             {milestones &&
               milestones.map((milestone) => {
@@ -121,19 +122,16 @@ const ProgressRoadmap = () => {
           </ProgressBar>
 
           <LockBar>
-            <Lock
-              unlocked={project?.seed?.isCollected}
-              active={!project?.seed?.isCollected}
-            >
-              {project?.seed?.isCollected ? (
+            <Lock unlocked={isSeedReached} active={!isSeedReached}>
+              {isSeedReached ? (
                 <CheckMark />
               ) : (
                 <Image src={lockedLock} alt="locked lock" height={15} />
               )}
             </Lock>
             <Lock
-              unlocked={project?.seed?.isCollected && softCap?.isReached}
-              active={project?.seed?.isCollected && projectState === 4}
+              unlocked={isSeedReached && softCap?.isReached}
+              active={isSeedReached && projectState === 4}
             >
               {(() => {
                 if (
@@ -142,7 +140,7 @@ const ProgressRoadmap = () => {
                   projectState === 16
                 ) {
                   return <CheckMark />;
-                } else if (project?.seed?.isCollected && projectState === 4) {
+                } else if (isSeedReached && projectState === 4) {
                   return (
                     <Image src={unlockedLock} alt="unlocked lock" height={15} />
                   );

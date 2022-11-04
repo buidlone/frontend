@@ -17,11 +17,12 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 
 export default function FundingRoadmap() {
   const project = useContext(ProjectContext);
-  const { softCap, hardCap, totalInvested, currency } =
+  const { seedFundingLimit, softCap, hardCap, totalInvested, currency } =
     useContext(LoadedValuesContext);
   const [progress, setProgress] = useState<number>(
     (totalInvested * 100) / hardCap
   );
+  
   
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function FundingRoadmap() {
         <VerticalLine>
           <TextAboveDashed>Seed</TextAboveDashed>
           <TextWhite>
-            {project.seed?.fundsRequired.toLocaleString().replace(/,/g, " ")}{" "}
+            {seedFundingLimit.toLocaleString().replace(/,/g, " ")}{" "}
             {currency.label}
           </TextWhite>
         </VerticalLine>

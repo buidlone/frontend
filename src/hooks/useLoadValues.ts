@@ -17,6 +17,7 @@ const provider = new ethers.providers.JsonRpcProvider(
 );
 
 export const loadedValuesInitialState: ILoadedValues = {
+  seedFundingLimit: 0,
   softCap: {
     amount: 0,
     isReached: false,
@@ -40,6 +41,7 @@ export const loadedValuesInitialState: ILoadedValues = {
 };
 
 export const useLoadValues = () => {
+  const [seedFundingLimit, setSeedFundingLimit] = useState<number>(0)
   const [softCap, setSoftCap] = useState<SoftCap>({amount: 0, isReached: false});
   const [hardCap, setHardCap] = useState<number>(0)
   const [totalInvested, setTotalInvested] = useState<number>(0);
@@ -80,6 +82,7 @@ export const useLoadValues = () => {
           provider
         );
        
+        const seedFundingLimit = await contract.getSeedFundingLimit()
         const totalInvested = await contract.getTotalInvestedAmount();
         const softCap = await contract.getSoftCap();
         const hardCap = await contract.getHardCap();
@@ -122,6 +125,7 @@ export const useLoadValues = () => {
           ]);
         }
 
+        setSeedFundingLimit(Number(ethers.utils.formatEther(seedFundingLimit)));
         setTotalInvested(Number(ethers.utils.formatEther(totalInvested)));
         setSoftCap({
           amount: Number(ethers.utils.formatEther(softCap)),
@@ -144,6 +148,7 @@ export const useLoadValues = () => {
   }, []);
 
   return {
+    seedFundingLimit,
     totalInvested,
     softCap,
     hardCap,

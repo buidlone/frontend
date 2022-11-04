@@ -22,6 +22,7 @@ export type Currency = {
 }
 
 export interface ILoadedValues {
+  seedFundingLimit: number;
   softCap: SoftCap;
   hardCap: number;
   totalInvested: number;
