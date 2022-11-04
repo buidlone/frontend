@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { InvestmentPoolAddress } from "../constants/contractAddresses";
 import InvestmentPoolABI from './abi/InvestmentPool.json'
 
-export const getIndividualInvestedAmount = async (provider: any, address?: string) => {
+export const getIndividualInvestedAmount = async (provider: any, address?: null | string) => {
 
   let totalAmountInvestedBN = BigNumber.from(0)
 

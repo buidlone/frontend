@@ -20,6 +20,7 @@ import Tooltip from "../tooltip";
 import { getVotingTokens } from "../../web3/getVotingTokens";
 import Web3Context from "../../context/web3Context";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { stopProject } from "../../web3/stopProject";
 
 const ProgressInfoBlock = () => {
   const featuredProject = useContext(ProjectContext);
@@ -44,6 +45,12 @@ const ProgressInfoBlock = () => {
       });
     }
   }, [web3Provider]);
+
+  const handleStop = async () => {
+    if (web3Provider) {
+      stopProject(web3Provider, address);
+    }
+  };
 
   return (
     <DetailsCard>
@@ -121,7 +128,7 @@ const ProgressInfoBlock = () => {
           </KeysWrapper>
         </BottomPartWrapper>
         <BottomPartWrapper className="centerItems">
-          <OrangeButton>STOP</OrangeButton>
+          <OrangeButton onClick={handleStop}>STOP</OrangeButton>
           <TableLink>Trust us? Try burning the ticket</TableLink>
         </BottomPartWrapper>
       </BottomWrapper>

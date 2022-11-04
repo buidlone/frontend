@@ -19,6 +19,8 @@ export const invest = async (
         ERC20TokenABI,
         signer
       );
+      
+      
       const investmentPoolContract = new ethers.Contract(
         InvestmentPoolAddress,
         InvestmentPoolABI,
@@ -54,6 +56,7 @@ export const invest = async (
         toast.success("Transaction was successful");
 
       return (Number(ethers.utils.formatEther(totalInvestedAmount)))
+
       } else {
       
       const investmentTransaction = await investmentPoolContract.invest(
