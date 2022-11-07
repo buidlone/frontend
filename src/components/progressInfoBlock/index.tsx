@@ -22,7 +22,11 @@ import Web3Context from "../../context/web3Context";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
 
-const ProgressInfoBlock = () => {
+interface IProgressInfoBlockProps {
+  wallets: String[];
+}
+
+const ProgressInfoBlock = ({ wallets, ...props }: IProgressInfoBlockProps) => {
   const featuredProject = useContext(ProjectContext);
 
   const { web3Provider, address } = useContext(Web3Context);
@@ -44,7 +48,7 @@ const ProgressInfoBlock = () => {
         setVotingTokenBalance(data?.votingTokenBalance);
       });
     }
-  }, [web3Provider]);
+  }, [web3Provider, totalInvested]);
 
   const handleStop = async () => {
     if (web3Provider) {
@@ -72,7 +76,11 @@ const ProgressInfoBlock = () => {
           {currentMilestone}/{milestones.length}
         </Data>
 
-        <Data>{featuredProject?.participants} wallets</Data>
+        <Data>
+          {" "}
+          {wallets[0] !== "" ? wallets?.length : 0}{" "}
+          {wallets?.length === 1 && wallets[0] !== "" ? "wallet" : "wallets"}
+        </Data>
 
         <Data>
           {featuredProject?.fundsReleased?.toLocaleString().replace(/,/g, " ")}{" "}

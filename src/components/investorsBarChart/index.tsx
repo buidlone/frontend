@@ -1,6 +1,6 @@
+import { BigNumber, ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import ProjectContext from "../../context/projectContext";
 import {
   BarChartBlock,
   BarChartColumn,
@@ -11,14 +11,17 @@ import {
   InvFooterItem,
 } from "./styled";
 
-const InvestorsBarChart = () => {
-  const project = useContext(ProjectContext);
-  const { currency } = useContext(LoadedValuesContext);
-  const [active, setActive] = useState(false);
-  const [max, setMax] = useState<number>();
-  const [min, setMin] = useState<number>();
+interface IInvestorsBarChartProps {
+  wallets: String[];
+}
 
+const InvestorsBarChart = ({ wallets, ...props }: IInvestorsBarChartProps) => {
+  const { currency, allInvestors } = useContext(LoadedValuesContext);
+  const [active, setActive] = useState(false);
+  const [max, setMax] = useState<BigNumber>(BigNumber.from(0));
+  const [min, setMin] = useState<BigNumber>(BigNumber.from(0));
   const containerRef = React.createRef<HTMLElement>();
+
   const handleMouseOver = () => {
     setActive(true);
   };
@@ -26,21 +29,24 @@ const InvestorsBarChart = () => {
     setActive(false);
   };
 
-  useEffect(() => {
+  const findLowHigh = () => {
     setMax((prev) =>
-      project?.investors?.reduce(
-        (max, p) => (p.invested > max ? p.invested : max),
-        project.investors[0].invested
+      allInvestors.reduce(
+        (max, p) => (p.amount.gt(max) ? p.amount : max),
+        allInvestors[0].amount
       )
     );
-
     setMin((prev) =>
-      project?.investors?.reduce(
-        (min, p) => (p.invested < min ? p.invested : min),
-        project.investors[0].invested
+      allInvestors.reduce(
+        (min, p) => (p.amount.lt(min) ? p.amount : min),
+        allInvestors[0].amount
       )
     );
-  }, []);
+  };
+
+  useEffect(() => {
+    findLowHigh();
+  }, [allInvestors]);
 
   return (
     <BarChartBlock>
@@ -48,21 +54,32 @@ const InvestorsBarChart = () => {
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       >
-        <InvHeader>{project.investors?.length} investors</InvHeader>
+        <InvHeader>
+          {wallets[0] !== "" ? wallets?.length : 0}{" "}
+          {wallets?.length === 1 && wallets[0] !== ""
+            ? "investor"
+            : "investors"}
+        </InvHeader>
+
         <BarChartScroll
           innerRef={containerRef}
           hideScrollbars={active ? false : true}
           vertical={false}
           horizontal
         >
-          {project &&
-            min &&
-            max &&
-            project?.investors?.map((inv, index) => {
+          {allInvestors &&
+            min.gte(BigNumber.from(0)) &&
+            max.gte(BigNumber.from(0)) &&
+            allInvestors.map((inv, index) => {
               return (
                 <BarChartColumn
                   key={index}
-                  amount={5 + ((inv.invested - min) / (max - min)) * 95}
+                  amount={
+                    5 +
+                    ((Number(inv.amount) - Number(min)) /
+                      (Number(max) - Number(min))) *
+                      95
+                  }
                 />
               );
             })}
@@ -71,13 +88,17 @@ const InvestorsBarChart = () => {
           <InvFooterItem>
             <div className="text">Lowest</div>
             <div className="amount">
-              {min && min.toLocaleString().replace(/,/g, " ")} {currency.label}
+              {min.gte(BigNumber.from(0)) &&
+                ethers.utils.formatEther(min).replace(/,/g, " ")}{" "}
+              {currency.label}
             </div>
           </InvFooterItem>
           <InvFooterItem>
             <div className="text">Highest</div>
             <div className="amount">
-              {max && max.toLocaleString().replace(/,/g, " ")} {currency.label}
+              {max.gte(BigNumber.from(0)) &&
+                ethers.utils.formatEther(max).replace(/,/g, " ")}{" "}
+              {currency.label}
             </div>
           </InvFooterItem>
         </InvFooter>

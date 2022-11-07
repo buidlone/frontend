@@ -20,7 +20,11 @@ export const featuredProject = {
   end: "23D 03H 30M 23S",
 };
 
-const DetailsBlock = () => {
+interface IDetailsBlockProps {
+  wallets: String[];
+}
+
+const DetailsBlock = ({ wallets, ...props }: IDetailsBlockProps) => {
   const featuredProject = useContext(ProjectContext);
   const { totalInvested, currency, milestones, currentMilestone } =
     useContext(LoadedValuesContext);
@@ -48,7 +52,12 @@ const DetailsBlock = () => {
               {currentMilestone}/{milestones.length}
             </Data>
 
-            <Data>{featuredProject?.participants} wallets</Data>
+            <Data>
+              {wallets[0] !== "" ? wallets?.length : 0}{" "}
+              {wallets?.length === 1 && wallets[0] !== ""
+                ? "wallet"
+                : "wallets"}
+            </Data>
 
             <Data className="medium">
               {featuredProject?.fundsReleased
@@ -89,7 +98,12 @@ const DetailsBlock = () => {
               {currentMilestone}/{milestones.length}
             </Data>
 
-            <Data>{featuredProject?.participants} wallets</Data>
+            <Data>
+              {wallets[0] !== "" ? wallets?.length : 0}{" "}
+              {wallets?.length === 1 && wallets[0] !== ""
+                ? "wallet"
+                : "wallets"}
+            </Data>
 
             <Data className="medium">
               {featuredProject?.fundsReleased

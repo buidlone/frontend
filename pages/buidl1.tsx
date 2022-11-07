@@ -11,12 +11,29 @@ import BuidlLogo from "../public/BuidlLogo2x.png";
 import { LogoWrapper } from "../src/components/projectHeader/styled";
 import Calculator from "../src/components/calculator";
 import InvestorsBarChart from "../src/components/investorsBarChart";
-import { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../src/context/loadedValuesContext";
 import { Spinner } from "../src/components/navbar/styled";
+import { getAllInvestments } from "../src/web3/getAllInvestments";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
+  const [wallets, setWallets] = useState<String[]>([""]);
+
+  useEffect(() => {
+    getAllInvestments().then((data: any) =>
+      loadedValuesState.setAllInvestors(data.allInvestments)
+    );
+  }, [loadedValuesState.totalInvested]);
+
+  useEffect(() => {
+    const uniqueInv = [
+      ...Array.from(
+        new Set(loadedValuesState.allInvestors.map((item) => item.caller))
+      ),
+    ];
+    setWallets(uniqueInv);
+  }, [loadedValuesState.totalInvested]);
 
   return loadedValuesState.fundraisingStartDate !== "" ? (
     <>
@@ -33,12 +50,12 @@ const Buidl1 = () => {
           <FundingBlock />
           <TimelineBlock />
         </FeaturesSec>
-        <ProgressSection />
+        <ProgressSection wallets={wallets} />
         <FeaturesSec>
           <Calculator />
-          <InvestorsBarChart />
+          <InvestorsBarChart wallets={wallets} />
         </FeaturesSec>
-        <AboutSection />
+        <AboutSection wallets={wallets} />
       </Container>
 
       <FooterSection />

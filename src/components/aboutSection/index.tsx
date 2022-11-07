@@ -4,7 +4,10 @@ import DetailsBlock from "../detailsBlock";
 import { AboutSec, ButtonsWrapper, AboutButton } from "./styled";
 import Buidl1Section from "../buidl1Section";
 
-const AboutSection = () => {
+interface IAboutSectionProps {
+  wallets: String[];
+}
+const AboutSection = ({ wallets, ...props }: IAboutSectionProps) => {
   const [active, setActive] = useState("details");
 
   return (
@@ -29,7 +32,7 @@ const AboutSection = () => {
           History
         </AboutButton>
       </ButtonsWrapper>
-      {active === "details" && <DetailsBlock />}
+      {active === "details" && <DetailsBlock wallets={wallets} />}
       {active === "about" && <Buidl1Section />}
       {active === "history" && <HistoryBlock />}
     </AboutSec>

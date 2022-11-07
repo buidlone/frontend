@@ -1,3 +1,5 @@
+import { IInvestor } from "./IInvestors";
+
 export type Milestone = {
   id: number;
   startDate: string;
@@ -32,6 +34,8 @@ export interface ILoadedValues {
   currentMilestone: number;
   projectState: number;
   currency: Currency;
-  setTotalInvested: React.Dispatch<React.SetStateAction<number>> | null
+  setTotalInvested: React.Dispatch<React.SetStateAction<number>>;
+  allInvestors: IInvestor[];
+  setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   
 }
