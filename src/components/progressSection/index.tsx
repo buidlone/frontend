@@ -4,12 +4,16 @@ import ProgressRoadmap from '../progressRoadmap';
 
 import { ProgressBlockWrapper, ProgressContentWrapper } from './styled';
 
-const ProgressSection = () => {
+interface IProgressSectionProps {
+  wallets: String[];
+}
+
+const ProgressSection = ({ wallets, ...props }: IProgressSectionProps) => {
   return (
     <ProgressBlockWrapper>
       <ProgressContentWrapper>
         <ProgressRoadmap />
-        <ProgressInfoBlock />
+        <ProgressInfoBlock wallets={wallets}/>
       </ProgressContentWrapper>
     </ProgressBlockWrapper>
   );

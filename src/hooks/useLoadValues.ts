@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
   InvestmentPoolAddress,
@@ -10,6 +10,8 @@ import { formatTime } from "../utils/formatTime";
 import { ILoadedValues, Milestone, SoftCap } from "../interfaces/ILoadedValues";
 import { Currency } from "../constants/currencies";
 import ERC20TokenABI from '../web3/abi/ERC20Token.json'
+import { IInvestor } from "../interfaces/IInvestors";
+import { getAllInvestments } from "../web3/getAllInvestments";
 
 
 const provider = new ethers.providers.JsonRpcProvider(
@@ -35,7 +37,9 @@ export const loadedValuesInitialState: ILoadedValues = {
   address: "",
   decimals: 0,
 },
-  setTotalInvested: null,
+  setTotalInvested: () => {},
+  allInvestors: [],
+  setAllInvestors: () => {},
  
 
 };
@@ -56,6 +60,7 @@ export const useLoadValues = () => {
   address: "",
   decimals: 0,
   })
+  const [allInvestors, setAllInvestors] = useState<IInvestor[]>([{caller: '', amount: BigNumber.from(0)}])
 
   const getAvailableCurrencies = async (tokenAddress: string) => {
 
@@ -94,6 +99,7 @@ export const useLoadValues = () => {
         const projectState = await contract.getProjectStateByteValue();
         const acceptedTokenAddress = await contract.getAcceptedToken()
         const acceptedTokenDetails = await getAvailableCurrencies(acceptedTokenAddress)
+        
         setCurrency({
           value: acceptedTokenDetails?.tokenSymbol,
           label:acceptedTokenDetails?.tokenSymbol,
@@ -101,6 +107,7 @@ export const useLoadValues = () => {
           decimals: acceptedTokenDetails?.tokenDecimals
         })
         
+        const allInvestors = await getAllInvestments()
         const milestoneCount = (await contract.getMilestonesCount()).toNumber();
         const currentMilestone = (await contract.getCurrentMilestoneId()).toNumber();
       
@@ -135,6 +142,7 @@ export const useLoadValues = () => {
         setFundraisingStartDate(fundraisingStartDate);
         setFundraisingEndDate(fundraisingEndDate);
         setProjectState(parseInt(projectState, 10))
+        allInvestors !== undefined && setAllInvestors(allInvestors.allInvestments)
       } catch (error) {
         console.log(error);
         toast.error("Error occurred while retrieving data from blockchain");
@@ -159,6 +167,8 @@ export const useLoadValues = () => {
     projectState,
     currency,
     setTotalInvested,
+    allInvestors,
+    setAllInvestors
   };
 };
 
