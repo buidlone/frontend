@@ -4,6 +4,7 @@ interface Props {
   progress?: number;
   funds?: number;
   currency?: string;
+  softCapPosition?: number;
 }
 
 export const FProgressWrapper = styled.div`
@@ -84,7 +85,7 @@ export const VerticalLine = styled.div`
   z-index: -1;
 `;
 
-export const RoadmapBubble = styled.div`
+export const RoadmapBubble = styled.div<Props>`
   max-width: 1.563rem;
   width: 100%;
   height: 1.563rem;
@@ -98,6 +99,11 @@ export const RoadmapBubble = styled.div`
   z-index: 2;
   position: relative;
   right: 0.01rem;
+
+  &.softCap {
+    position: absolute;
+    left: calc(${(props) => props?.softCapPosition}% - 3%);
+  }
 `;
 
 export const TextAboveDashed = styled.text`

@@ -100,6 +100,7 @@ const Calculator = () => {
       setVoting(0);
       setTickets(0);
     } else {
+      setAmount(maxSum);
       setSum(maxSum);
       setTokens(Number((maxSum * 2).toFixed(3)));
       setTokensPerMonth(Number(((maxSum * 2) / 12).toFixed(4)));
