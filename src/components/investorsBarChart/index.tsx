@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import {
   BarChartBlock,
   BarChartColumn,
@@ -11,11 +12,7 @@ import {
   InvFooterItem,
 } from "./styled";
 
-interface IInvestorsBarChartProps {
-  wallets: String[];
-}
-
-const InvestorsBarChart = ({ wallets, ...props }: IInvestorsBarChartProps) => {
+const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
   const { currency, allInvestors } = useContext(LoadedValuesContext);
   const [active, setActive] = useState(false);
   const [max, setMax] = useState<BigNumber>(BigNumber.from(0));

@@ -3,11 +3,9 @@ import { useState } from "react";
 import DetailsBlock from "../detailsBlock";
 import { AboutSec, ButtonsWrapper, AboutButton } from "./styled";
 import Buidl1Section from "../buidl1Section";
+import { IInvestorsProps } from "../../interfaces/ICommonProps";
 
-interface IAboutSectionProps {
-  wallets: String[];
-}
-const AboutSection = ({ wallets, ...props }: IAboutSectionProps) => {
+const AboutSection = ({ wallets, ...props }: IInvestorsProps) => {
   const [active, setActive] = useState("details");
 
   return (

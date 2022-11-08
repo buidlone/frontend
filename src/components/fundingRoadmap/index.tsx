@@ -22,10 +22,12 @@ export default function FundingRoadmap() {
   const [progress, setProgress] = useState<number>(
     (totalInvested * 100) / hardCap
   );
-  
-  
+  const [softCapPosition, setSoftCapPosition] = useState<number>(
+    (softCap.amount * 100) / hardCap
+  );
 
   useEffect(() => {
+    setSoftCapPosition((softCap.amount * 100) / hardCap);
     setProgress((totalInvested * 100) / hardCap);
   }, [totalInvested]);
 
@@ -45,7 +47,7 @@ export default function FundingRoadmap() {
           <FundsIndicator funds={totalInvested} currency={currency.label} />
         </FProgress>
 
-        <RoadmapBubble>
+        <RoadmapBubble className="softCap" softCapPosition={softCapPosition}>
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
             <TextWhite>

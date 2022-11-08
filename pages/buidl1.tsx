@@ -19,10 +19,11 @@ import { getAllInvestments } from "../src/web3/getAllInvestments";
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
   const [wallets, setWallets] = useState<String[]>([""]);
+  
 
   useEffect(() => {
     getAllInvestments().then((data: any) =>
-      loadedValuesState.setAllInvestors(data.allInvestments)
+      loadedValuesState.setAllInvestors((prev) => data.allInvestments)
     );
   }, [loadedValuesState.totalInvested]);
 
@@ -32,8 +33,8 @@ const Buidl1 = () => {
         new Set(loadedValuesState.allInvestors.map((item) => item.caller))
       ),
     ];
-    setWallets(uniqueInv);
-  }, [loadedValuesState.totalInvested]);
+    setWallets((prev) => uniqueInv);
+  }, [loadedValuesState.allInvestors]);
 
   return loadedValuesState.fundraisingStartDate !== "" ? (
     <>

@@ -21,12 +21,10 @@ import { getVotingTokens } from "../../web3/getVotingTokens";
 import Web3Context from "../../context/web3Context";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
+import { IInvestorsProps } from "../../interfaces/ICommonProps";
 
-interface IProgressInfoBlockProps {
-  wallets: String[];
-}
 
-const ProgressInfoBlock = ({ wallets, ...props }: IProgressInfoBlockProps) => {
+const ProgressInfoBlock = ({ wallets, ...props }: IInvestorsProps) => {
   const featuredProject = useContext(ProjectContext);
 
   const { web3Provider, address } = useContext(Web3Context);
