@@ -6,5 +6,6 @@ export const isInvestingAllowed = (
   if ([4, 32].includes(projectState) && totalInvested !== hardCap) {
     return true;
   } else {
-    return false}
+    return false;
+  }
 };

@@ -21,6 +21,7 @@ import { getVotingTokens } from "../../web3/getVotingTokens";
 import Web3Context from "../../context/web3Context";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
+import { isStopAllowed } from "../../web3/isStopAllowed";
 
 const ProgressInfoBlock = () => {
   const featuredProject = useContext(ProjectContext);
@@ -32,10 +33,16 @@ const ProgressInfoBlock = () => {
   const [votingTokenBalance, setVotingTokenBalance] = useState<
     number | undefined
   >(undefined);
-  const { totalInvested, currency, milestones, currentMilestone } =
-    useContext(LoadedValuesContext);
+  const {
+    totalInvested,
+    currency,
+    milestones,
+    currentMilestone,
+    projectState,
+  } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
+  const [stopDisabled, setStopDisabled] = useState(false);
 
   useEffect(() => {
     if (web3Provider && web3Provider?.network.chainId === 5) {
@@ -46,10 +53,17 @@ const ProgressInfoBlock = () => {
     }
   }, [web3Provider]);
 
+  useEffect(() => {
+    setStopDisabled(
+      isStopAllowed(projectState, currentMilestone, address, web3Provider)
+    );
+  }, []);
+
   const handleStop = async () => {
     if (web3Provider) {
       stopProject(web3Provider, address);
     }
+    setStopDisabled(true);
   };
 
   return (
@@ -128,7 +142,9 @@ const ProgressInfoBlock = () => {
           </KeysWrapper>
         </BottomPartWrapper>
         <BottomPartWrapper className="centerItems">
-          <OrangeButton onClick={handleStop}>STOP</OrangeButton>
+          <OrangeButton disabled={stopDisabled} onClick={handleStop}>
+            STOP
+          </OrangeButton>
           <TableLink>Trust us? Try burning the ticket</TableLink>
         </BottomPartWrapper>
       </BottomWrapper>

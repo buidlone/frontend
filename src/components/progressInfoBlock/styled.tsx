@@ -2,6 +2,10 @@ import styled, { css } from "styled-components";
 import { Property, Data, FlexItem1 } from "../detailsBlock/styled";
 import { InfoIcon } from "../timelineBlock/styled";
 
+interface isDisabled {
+  disabled?: boolean;
+}
+
 export const DetailsCard = styled.div`
   display: block;
   background: #2e314d 0% 0% no-repeat padding-box;
@@ -55,7 +59,7 @@ export const BottomPartWrapper = styled.div`
   margin: 5px auto;
 `;
 
-export const OrangeButton = styled.button`
+export const OrangeButton = styled.button<isDisabled>`
   background: #2e314d 0% 0% no-repeat padding-box;
   border: 1px solid #f68503;
   border-radius: 10px;
@@ -66,6 +70,7 @@ export const OrangeButton = styled.button`
   font-size: 16px;
   font-family: "Space Grotesk", sans-serif;
   cursor: pointer;
+  opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
 `;
 
 export const KeysWrapper = styled.div`
