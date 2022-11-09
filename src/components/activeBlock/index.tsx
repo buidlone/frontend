@@ -23,6 +23,7 @@ import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
 import { getVotingTokens } from "../../web3/getVotingTokens";
+import { isStopAllowed } from "../../web3/isStopAllowed";
 
 const items = [
   {
@@ -85,6 +86,9 @@ const ActiveBlock = () => {
 
   useEffect(() => {
     setIsAllowed(isInvestingAllowed(projectState, hardCap, totalInvested));
+    setStopDisabled(
+      isStopAllowed(projectState, currentMilestone, address, web3Provider)
+    );
 
     if (web3Provider) {
       getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
@@ -170,7 +174,11 @@ const ActiveBlock = () => {
             <TableLink>Project discussion</TableLink>
           </InlineWrapper>
 
-          <TableButton className="stopBtn" onClick={handleStop}>
+          <TableButton
+            disabled={stopDisabled}
+            className="stopBtn"
+            onClick={handleStop}
+          >
             STOP
           </TableButton>
           <TableButton className="claimBtn">Claim tokens</TableButton>
