@@ -31,7 +31,12 @@ import Accordion from "../accordion";
 import TokenStreamTable from "../tokenStreamTable";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
-import React, { KeyboardEvent, useContext, useEffect, useState } from "react";
+import React, {
+  KeyboardEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Currency, mainnetCurrencies } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
@@ -46,15 +51,6 @@ const items = [
     content: <TokenStreamTable />,
   },
 ];
-
-const schema = yup.object().shape({
-  checkbox: yup.bool().oneOf([true], "This field is required"),
-  amount: yup
-    .number()
-    .positive("Invested amount must be greater than 0")
-    .required("This field is required")
-    .typeError("This field is required"),
-});
 
 interface InputTypes {
   amount: number;
@@ -78,16 +74,17 @@ const InvestModal = ({ onClose }: IInvest) => {
     currency,
     setTotalInvested,
     hardCap,
+    totalInvested,
   } = useContext(LoadedValuesContext);
   const {
     register,
     handleSubmit,
     setValue,
     getValues,
-    setError,
-    formState: { errors },
+    trigger,
+    formState: { errors, isValid },
   } = useForm<InputTypes>({
-    resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   const [buttonState, setButtonState] = useState(false);
@@ -147,17 +144,15 @@ const InvestModal = ({ onClose }: IInvest) => {
 
   useEffect(() => {
     if (selectedCurrency?.address) {
-      getTokenBalance(
-        selectedCurrency.address,
-        web3Provider,
-        address //comment for the test wallet to be checked and choose an address in the getTokenBalance.ts file
-      ).then((data) => {
-        if (data) {
-          setBalance(data);
-        } else {
-          setBalance(0);
+      getTokenBalance(selectedCurrency.address, web3Provider, address).then(
+        (data) => {
+          if (data) {
+            setBalance(data);
+          } else {
+            setBalance(0);
+          }
         }
-      });
+      );
     }
   }, [selectedCurrency]);
 
@@ -177,6 +172,7 @@ const InvestModal = ({ onClose }: IInvest) => {
 
   const handleSetAmount = () => {
     setValue("amount", balance);
+    trigger("amount");
     setReceivedTokens(24000);
     setReceivedDAO(300);
     setVotingPower(15);
@@ -184,35 +180,27 @@ const InvestModal = ({ onClose }: IInvest) => {
 
   const submitForm = async (data: InputTypes) => {
     const amount = getValues("amount");
-    if (amount > balance) {
-      setError("amount", { message: "Insufficient token balance" });
-    } else if (amount > hardCap) {
-      setError("amount", { message: "Unable to invest above Hard Cap" });
-    } else {
-      if (address) {
-        setButtonState(true);
-        const result = await invest(
-          selectedCurrency.address,
-          web3Provider,
-          amount,
-          address
-        );
-        result !== undefined &&
-          setTotalInvested !== null &&
-          setTotalInvested(result);
-        getTokenBalance(
-          selectedCurrency.address,
-          web3Provider,
-          address //comment for the test wallet to be checked and choose an address in the getTokenBalance.ts file
-        ).then((data) => {
+    if (address) {
+      setButtonState(true);
+      const result = await invest(
+        selectedCurrency.address,
+        web3Provider,
+        amount,
+        address
+      );
+      result !== undefined &&
+        setTotalInvested !== null &&
+        setTotalInvested(result);
+      getTokenBalance(selectedCurrency.address, web3Provider, address).then(
+        (data) => {
           if (data) {
             setBalance(data);
           } else {
             setBalance(0);
           }
-        });
-        setButtonState(false);
-      }
+        }
+      );
+      setButtonState(false);
     }
   };
 
@@ -235,7 +223,7 @@ const InvestModal = ({ onClose }: IInvest) => {
         <IModalInputSectionWrapper>
           <IModalFieldWrapper>
             <CurrencyInline>
-              <ErrorMsg>{errors.amount?.message}</ErrorMsg>
+              {errors.amount && <ErrorMsg>{errors.amount?.message}</ErrorMsg>}
               <InputLabel>Your investment</InputLabel>
               {!networkError && (
                 <BalanceBtn className="bottomText">
@@ -245,9 +233,23 @@ const InvestModal = ({ onClose }: IInvest) => {
               )}
             </CurrencyInline>
             <InputField
-              {...register("amount")}
               type="number"
               onKeyDown={handleKeyDown}
+              {...register("amount", {
+                required: "This field is required",
+                valueAsNumber: true,
+                validate: {
+                  belowHardCap: (value) =>
+                    value < hardCap - totalInvested ||
+                    "Unable to invest above Hard Cap",
+                  belowBalance: (value) =>
+                    value < balance ||
+                    value === balance ||
+                    "Insufficient token balance",
+                  positive: (value) =>
+                    value > 0 || "Invested amount must be greater than 0",
+                },
+              })}
             />
             <CurrencyInline>
               {networkError ? (
@@ -293,8 +295,17 @@ const InvestModal = ({ onClose }: IInvest) => {
         <IModalFormConfirmSection>
           <ItemWrapper>
             <CheckboxContainer>
-              <ErrorMsg>{errors.checkbox?.message}</ErrorMsg>
-              <Checkbox type="checkbox" {...register("checkbox")} />
+              {errors.checkbox && (
+                <ErrorMsg>{errors.checkbox?.message}</ErrorMsg>
+              )}
+              <Checkbox
+                type="checkbox"
+                {...register("checkbox", {
+                  required: "This field is required",
+                  validate: (value) =>
+                    value === true || "This field is required",
+                })}
+              />
               <CheckboxLabel>
                 {" "}
                 <a>Please read and agree to terms and conditions</a>
@@ -303,7 +314,10 @@ const InvestModal = ({ onClose }: IInvest) => {
           </ItemWrapper>
           <ItemWrapper>
             {!buttonState ? (
-              <ProceedButton onClick={handleSubmit(submitForm)}>
+              <ProceedButton
+                onClick={handleSubmit(submitForm)}
+                disabled={!isValid}
+              >
                 Proceed to Metamask
                 <span className="material-icons arrow">trending_flat</span>
               </ProceedButton>
