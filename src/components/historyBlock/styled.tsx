@@ -1,13 +1,20 @@
-import styled, { css } from 'styled-components';
-import { BlockWrapper } from '../fundingBlock/styled';
+import styled, { css } from "styled-components";
+import { BlockWrapper } from "../fundingBlock/styled";
 
 export const HistoryTable = styled(BlockWrapper)`
   height: 386px;
   width: 100%;
-  padding: 50px;
-  background: #1F233C 0% 0% no-repeat padding-box;
-  border: 1px solid #157FC1;
+  padding: 20px;
+  background: #1f233c 0% 0% no-repeat padding-box;
+  border: 1px solid #157fc1;
   opacity: 0.85;
+  overflow: auto;
 
   ${BlockWrapper};
+`;
+
+export const HistoryFlex = styled.div`
+  display: flex;
+  flex: 2 1 auto;
+  justify-content: space-between;
 `;
