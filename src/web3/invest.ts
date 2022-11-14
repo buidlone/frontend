@@ -42,32 +42,43 @@ export const invest = async (
         const approvalTransaction = await tokenContract.increaseAllowance(
           InvestmentPoolAddress,
           addedValue
-        );
-        const approvalReceipt = await approvalTransaction.wait();
-       
+        )
+        const approvalReceipt = await toast.promise(approvalTransaction.wait(),{
+          pending: 'Approval is pending',
+          success: 'Approval resolved',
+          error: 'Approval rejected'
+
+        });
         
         const investmentTransaction = await investmentPoolContract.invest(
           ethers.utils.parseEther(amount.toString()),
           true
-        );
+        )
 
-        const investmentReceipt = await investmentTransaction.wait();
+        const investmentReceipt = await toast.promise(investmentTransaction.wait(), {
+          pending: 'Transaction is pending',
+          success: 'Transaction was successful',
+          error: 'Transaction was rejected'
+        });
         const totalInvestedAmount = await investmentPoolContract.getTotalInvestedAmount()
-        toast.success("Transaction was successful");
+        
 
       return (Number(ethers.utils.formatEther(totalInvestedAmount)))
 
       } else {
       
-      const investmentTransaction = await investmentPoolContract.invest(
-        ethers.utils.parseEther(amount.toString()),
-        true
-      );
-      const investmentReceipt = await investmentTransaction.wait();
+        const investmentTransaction = await investmentPoolContract.invest(
+          ethers.utils.parseEther(amount.toString()),
+          true
+        )
+
+        const investmentReceipt = await toast.promise(investmentTransaction.wait(), {
+          pending: 'Transaction is pending',
+          success: 'Transaction was successful',
+          error: 'Transaction was rejected'
+        });
       const totalInvestedAmount = await investmentPoolContract.getTotalInvestedAmount()
       
-      toast.success("Transaction was successful");
-
       return (Number(ethers.utils.formatEther(totalInvestedAmount)))
        
       }
@@ -86,3 +97,10 @@ export const invest = async (
     toast.error("Could not connect to the provider");
   }
 };
+
+
+
+
+
+
+
