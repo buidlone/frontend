@@ -24,7 +24,6 @@ import { stopProject } from "../../web3/stopProject";
 import { isStopAllowed } from "../../web3/isStopAllowed";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
 
-
 const ProgressInfoBlock = ({ wallets, ...props }: IInvestorsProps) => {
   const featuredProject = useContext(ProjectContext);
 
@@ -59,13 +58,17 @@ const ProgressInfoBlock = ({ wallets, ...props }: IInvestorsProps) => {
     setStopDisabled(
       isStopAllowed(projectState, currentMilestone, address, web3Provider)
     );
-  }, []);
+    if (web3Provider) {
+      setStopDisabled(false);
+    } else {
+      setStopDisabled(true);
+    }
+  }, [web3Provider]);
 
   const handleStop = async () => {
     if (web3Provider) {
       stopProject(web3Provider, address);
     }
-    setStopDisabled(true);
   };
 
   return (
