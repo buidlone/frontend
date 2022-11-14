@@ -1,9 +1,16 @@
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import { toast } from "react-toastify";
-import { InvestmentPoolAddress } from "../constants/contractAddresses";
+import {
+  InvestmentPoolAddress,
+  NEXT_PUBLIC_INFURA_ID,
+} from "../constants/contractAddresses";
 import InvestmentPoolABI from "./abi/InvestmentPool.json";
 
-export const getHistoryTable = async (provider: any) => {
+export const getHistoryTable = async () => {
+  const provider = new ethers.providers.JsonRpcProvider(
+    `https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`
+  );
+
   try {
     const contract = new ethers.Contract(
       InvestmentPoolAddress,

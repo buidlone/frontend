@@ -18,11 +18,9 @@ const HistoryBlock = () => {
   const { currency } = useContext(LoadedValuesContext);
 
   useEffect(() => {
-    if (web3Provider) {
-      getHistoryTable(web3Provider).then((data: any) => {
-        setHistory(data);
-      });
-    }
+    getHistoryTable().then((data: any) => {
+      setHistory(data);
+    });
   }, []);
 
   if (history) {
