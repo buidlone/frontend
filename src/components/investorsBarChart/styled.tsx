@@ -7,20 +7,18 @@ interface Props {
 }
 
 export const BarChartContainer = styled.div`
-
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   position: relative;
-  
 `;
 
 export const BarChartBlock = styled(BlockWrapper)`
   width: 24%;
   min-width: 17.688rem;
   height: 23.938rem;
-  background: #1F233C 0% 0% no-repeat padding-box;
+  background: #1f233c 0% 0% no-repeat padding-box;
   border-radius: 12px;
   padding: 1rem 1.845rem;
 `;
@@ -87,7 +85,6 @@ export const InvHeader = styled.div`
   margin: 0 auto;
   margin-bottom: 2.085rem;
   margin-top: 1rem;
-  
 `;
 
 export const InvFooter = styled.div`

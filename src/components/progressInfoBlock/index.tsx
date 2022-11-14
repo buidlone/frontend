@@ -21,8 +21,11 @@ import { getVotingTokens } from "../../web3/getVotingTokens";
 import Web3Context from "../../context/web3Context";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
+import { isStopAllowed } from "../../web3/isStopAllowed";
+import { IInvestorsProps } from "../../interfaces/ICommonProps";
 
-const ProgressInfoBlock = () => {
+
+const ProgressInfoBlock = ({ wallets, ...props }: IInvestorsProps) => {
   const featuredProject = useContext(ProjectContext);
 
   const { web3Provider, address } = useContext(Web3Context);
@@ -32,10 +35,16 @@ const ProgressInfoBlock = () => {
   const [votingTokenBalance, setVotingTokenBalance] = useState<
     number | undefined
   >(undefined);
-  const { totalInvested, currency, milestones, currentMilestone } =
-    useContext(LoadedValuesContext);
+  const {
+    totalInvested,
+    currency,
+    milestones,
+    currentMilestone,
+    projectState,
+  } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
+  const [stopDisabled, setStopDisabled] = useState(false);
 
   useEffect(() => {
     if (web3Provider && web3Provider?.network.chainId === 5) {
@@ -44,12 +53,19 @@ const ProgressInfoBlock = () => {
         setVotingTokenBalance(data?.votingTokenBalance);
       });
     }
-  }, [web3Provider]);
+  }, [web3Provider, totalInvested]);
+
+  useEffect(() => {
+    setStopDisabled(
+      isStopAllowed(projectState, currentMilestone, address, web3Provider)
+    );
+  }, []);
 
   const handleStop = async () => {
     if (web3Provider) {
       stopProject(web3Provider, address);
     }
+    setStopDisabled(true);
   };
 
   return (
@@ -72,7 +88,11 @@ const ProgressInfoBlock = () => {
           {currentMilestone}/{milestones.length}
         </Data>
 
-        <Data>{featuredProject?.participants} wallets</Data>
+        <Data>
+          {" "}
+          {wallets[0] !== "" ? wallets?.length : 0}{" "}
+          {wallets?.length === 1 && wallets[0] !== "" ? "wallet" : "wallets"}
+        </Data>
 
         <Data>
           {featuredProject?.fundsReleased?.toLocaleString().replace(/,/g, " ")}{" "}
@@ -128,7 +148,9 @@ const ProgressInfoBlock = () => {
           </KeysWrapper>
         </BottomPartWrapper>
         <BottomPartWrapper className="centerItems">
-          <OrangeButton onClick={handleStop}>STOP</OrangeButton>
+          <OrangeButton disabled={stopDisabled} onClick={handleStop}>
+            STOP
+          </OrangeButton>
           <TableLink>Trust us? Try burning the ticket</TableLink>
         </BottomPartWrapper>
       </BottomWrapper>

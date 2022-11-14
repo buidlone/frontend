@@ -68,7 +68,7 @@ const ProgressRoadmap = () => {
           vertical={false}
         >
           <ProgressBar>
-            <Progress progress={11} />
+            <Progress progress={20} />
             <ProgressStep stage={"Seed"} completed={isSeedReached} active>
               {isSeedReached ? <CheckMark /> : <DashedCircle />}
             </ProgressStep>
@@ -77,8 +77,8 @@ const ProgressRoadmap = () => {
               completed={softCap?.isReached}
               active
             >
-              {(softCap?.isReached && projectState === 16) ||
-                (32 && <CheckMark />)}
+              {softCap?.isReached &&
+                (projectState === 16 || projectState === 32) && <CheckMark />}
               {isSeedReached && projectState === 4 && <DashedCircle />}
             </ProgressStep>
             {milestones &&

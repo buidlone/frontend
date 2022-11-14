@@ -2,6 +2,7 @@ import { useContext } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
+import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import {
   FlexItem,
   Property,
@@ -20,12 +21,16 @@ export const featuredProject = {
   end: "23D 03H 30M 23S",
 };
 
-const DetailsBlock = () => {
+
+
+const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
   const featuredProject = useContext(ProjectContext);
   const { totalInvested, currency, milestones, currentMilestone } =
     useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
+    
+    
 
   return (
     <DetailsBlockWrapper>
@@ -48,7 +53,12 @@ const DetailsBlock = () => {
               {currentMilestone}/{milestones.length}
             </Data>
 
-            <Data>{featuredProject?.participants} wallets</Data>
+            <Data>
+              {wallets[0] !== "" ? wallets?.length : 0}{" "}
+              {wallets?.length === 1 && wallets[0] !== ""
+                ? "wallet"
+                : "wallets"}
+            </Data>
 
             <Data className="medium">
               {featuredProject?.fundsReleased
@@ -89,7 +99,12 @@ const DetailsBlock = () => {
               {currentMilestone}/{milestones.length}
             </Data>
 
-            <Data>{featuredProject?.participants} wallets</Data>
+            <Data>
+              {wallets[0] !== "" ? wallets?.length : 0}{" "}
+              {wallets?.length === 1 && wallets[0] !== ""
+                ? "wallet"
+                : "wallets"}
+            </Data>
 
             <Data className="medium">
               {featuredProject?.fundsReleased

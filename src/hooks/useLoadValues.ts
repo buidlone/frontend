@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
   InvestmentPoolAddress,
@@ -10,6 +10,8 @@ import { formatTime } from "../utils/formatTime";
 import { ILoadedValues, Milestone, SoftCap } from "../interfaces/ILoadedValues";
 import { Currency } from "../constants/currencies";
 import ERC20TokenABI from '../web3/abi/ERC20Token.json'
+import { IInvestor } from "../interfaces/IInvestors";
+import { getAllInvestments } from "../web3/getAllInvestments";
 
 
 const provider = new ethers.providers.JsonRpcProvider(
@@ -23,32 +25,40 @@ export const loadedValuesInitialState: ILoadedValues = {
     isReached: false,
   },
   totalInvested: 0,
-  fundraisingStartDate: '',
-  fundraisingEndDate: '',
+  fundraisingStartDate: "",
+  fundraisingEndDate: "",
   milestones: [],
   currentMilestone: -1,
   hardCap: 0,
   projectState: 0,
   currency: {
     value: "",
+
   label: "",
   address: "",
   decimals: 0,
 },
-  setTotalInvested: null,
+  setTotalInvested: () => {},
+  allInvestors: [],
+  setAllInvestors: () => {},
  
+
 
 };
 
 export const useLoadValues = () => {
-  const [seedFundingLimit, setSeedFundingLimit] = useState<number>(0)
-  const [softCap, setSoftCap] = useState<SoftCap>({amount: 0, isReached: false});
-  const [hardCap, setHardCap] = useState<number>(0)
+  const [seedFundingLimit, setSeedFundingLimit] = useState<number>(0);
+  const [softCap, setSoftCap] = useState<SoftCap>({
+    amount: 0,
+    isReached: false,
+  });
+  const [hardCap, setHardCap] = useState<number>(0);
   const [totalInvested, setTotalInvested] = useState<number>(0);
-  const [fundraisingStartDate, setFundraisingStartDate] = useState<string >('');
-  const [fundraisingEndDate, setFundraisingEndDate] = useState<string>('');
+  const [fundraisingStartDate, setFundraisingStartDate] = useState<string>("");
+  const [fundraisingEndDate, setFundraisingEndDate] = useState<string>("");
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [currentMilestone, setCurrentMilestone] = useState<number>(-1);
+
   const [projectState, setProjectState] = useState<number>(0)
   const [currency, setCurrency] = useState<Currency>( {
   value: "",
@@ -56,22 +66,27 @@ export const useLoadValues = () => {
   address: "",
   decimals: 0,
   })
+  const [allInvestors, setAllInvestors] = useState<IInvestor[]>([{caller: '', amount: BigNumber.from(0)}])
 
   const getAvailableCurrencies = async (tokenAddress: string) => {
-
     if (provider) {
       try {
-       const tokenContract = new ethers.Contract(tokenAddress, ERC20TokenABI, provider);
-       const tokenDecimals = await tokenContract.decimals()
-       const tokenSymbol = await tokenContract.symbol()
-       return {tokenSymbol, tokenDecimals}
-     } catch (error) {
-       console.log(error);
-       toast.error("Error occurred while retrieving currency data from blockchain")
-     }
+        const tokenContract = new ethers.Contract(
+          tokenAddress,
+          ERC20TokenABI,
+          provider
+        );
+        const tokenDecimals = await tokenContract.decimals();
+        const tokenSymbol = await tokenContract.symbol();
+        return { tokenSymbol, tokenDecimals };
+      } catch (error) {
+        console.log(error);
+        toast.error(
+          "Error occurred while retrieving currency data from blockchain"
+        );
+      }
     }
-
-}
+  };
 
   const getValuesFromInvestmentPool = async () => {
     if (provider) {
@@ -81,8 +96,8 @@ export const useLoadValues = () => {
           InvestmentPoolABI,
           provider
         );
-       
-        const seedFundingLimit = await contract.getSeedFundingLimit()
+
+        const seedFundingLimit = await contract.getSeedFundingLimit();
         const totalInvested = await contract.getTotalInvestedAmount();
         const softCap = await contract.getSoftCap();
         const hardCap = await contract.getHardCap();
@@ -92,20 +107,27 @@ export const useLoadValues = () => {
         const fundraisingEndAt = await contract.getFundraiserEndTime();
         const fundraisingEndDate = formatTime(fundraisingEndAt);
         const projectState = await contract.getProjectStateByteValue();
+
         const acceptedTokenAddress = await contract.getAcceptedToken()
         const acceptedTokenDetails = await getAvailableCurrencies(acceptedTokenAddress)
+        
+
         setCurrency({
           value: acceptedTokenDetails?.tokenSymbol,
-          label:acceptedTokenDetails?.tokenSymbol,
+          label: acceptedTokenDetails?.tokenSymbol,
           address: acceptedTokenAddress,
+
           decimals: acceptedTokenDetails?.tokenDecimals
         })
         
+        const allInvestors = await getAllInvestments()
+
         const milestoneCount = (await contract.getMilestonesCount()).toNumber();
-        const currentMilestone = (await contract.getCurrentMilestoneId()).toNumber();
-      
-        setCurrentMilestone(currentMilestone) 
-        ;
+        const currentMilestone = (
+          await contract.getCurrentMilestoneId()
+        ).toNumber();
+
+        setCurrentMilestone(currentMilestone);
         for (let i = 0; i < milestoneCount; i++) {
           let milestone = await contract.getMilestone(i);
           let seedAmount = await contract.getMilestoneSeedAmount(i);
@@ -131,16 +153,18 @@ export const useLoadValues = () => {
           amount: Number(ethers.utils.formatEther(softCap)),
           isReached: isSoftCapReached,
         });
-        setHardCap(Number(ethers.utils.formatEther(hardCap)))
+        setHardCap(Number(ethers.utils.formatEther(hardCap)));
         setFundraisingStartDate(fundraisingStartDate);
         setFundraisingEndDate(fundraisingEndDate);
+
         setProjectState(parseInt(projectState, 10))
+        allInvestors !== undefined && setAllInvestors(allInvestors.allInvestments)
+
       } catch (error) {
         console.log(error);
         toast.error("Error occurred while retrieving data from blockchain");
       }
     }
-
   };
 
   useEffect(() => {
@@ -159,6 +183,7 @@ export const useLoadValues = () => {
     projectState,
     currency,
     setTotalInvested,
+    allInvestors,
+    setAllInvestors
   };
 };
-

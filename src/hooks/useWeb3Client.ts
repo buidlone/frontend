@@ -17,7 +17,7 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider, 
     options: {
-      infuraId: NEXT_PUBLIC_INFURA_ID,  //have to be changed to a locally running node
+      infuraId: NEXT_PUBLIC_INFURA_ID,
     },
   },
 }
@@ -39,12 +39,8 @@ export const useWeb3 = () => {
   const connect = useCallback(async () => {
     if (web3Modal) {
       try {
-        // This is the initial `provider` that is returned when
-        // using web3Modal to connect. Can be MetaMask or WalletConnect.
         const provider = await web3Modal.connect()
-        // We plug the initial `provider` into ethers.js and get back
-        // a Web3Provider. This will add on methods from ethers.js and
-        // event listeners such as `.on()` will be different.
+       
         const web3Provider = new ethers.providers.Web3Provider(provider)
       
         const signer = web3Provider.getSigner()
@@ -90,7 +86,7 @@ export const useWeb3 = () => {
     }
   }, [provider])
 
-  // Auto connect to the cached provider
+  
   useEffect(() => {
     if (web3Modal && web3Modal.cachedProvider) {
       connect()
@@ -98,8 +94,7 @@ export const useWeb3 = () => {
   }, [connect])
 
   
-  //listening for EIP-1193 events so that when a user switches accounts or networks, 
-  //we can update the local state with that new information
+ 
   useEffect(() => {
     if (provider?.on) {
       const handleAccountsChanged = (accounts: string[]) => {
@@ -108,9 +103,10 @@ export const useWeb3 = () => {
           type: 'SET_ADDRESS',
           address: accounts[0],
         } as Web3Action)
+        window.location.reload()
       }
 
-      // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
+     
       const handleChainChanged = (_hexChainId: string) => {
         if (typeof window !== 'undefined') {
           console.log('switched to chain...', _hexChainId)
@@ -133,7 +129,7 @@ export const useWeb3 = () => {
       provider.on('chainChanged', handleChainChanged)
       provider.on('disconnect', handleDisconnect)
 
-      // Subscription Cleanup
+      
       return () => {
         if (provider.removeListener) {
           provider.removeListener('accountsChanged', handleAccountsChanged)
