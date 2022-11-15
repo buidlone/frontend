@@ -1,3 +1,4 @@
+import { BigNumber } from "ethers";
 import { IInvestor } from "./IInvestors";
 
 export type Milestone = {
@@ -9,6 +10,8 @@ export type Milestone = {
   seedAmount: number | string;
   seedAmountPaid: boolean;
   streamOngoing: boolean;
+  intervalSeedPortion: BigNumber;
+  intervalStreamingPortion: BigNumber;
 };
 
 export type SoftCap = {
@@ -21,7 +24,7 @@ export type Currency = {
   label: string;
   address: string;
   decimals: number;
-}
+};
 
 export interface ILoadedValues {
   seedFundingLimit: number;
@@ -37,5 +40,12 @@ export interface ILoadedValues {
   setTotalInvested: React.Dispatch<React.SetStateAction<number>>;
   allInvestors: IInvestor[];
   setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
-  
+  percentageDivider: BigNumber;
+  milestonesInvestmentsListForFormula: BigNumber[];
+}
+
+export interface IMilestoneFundsAllocated {
+  streamAllocated: string;
+  seedAllocated: string;
+  totalFundsAllocated: string;
 }

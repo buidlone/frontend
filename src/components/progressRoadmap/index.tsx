@@ -19,9 +19,17 @@ import ProjectContext from "../../context/projectContext";
 import Tooltip from "../tooltip";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getMilestoneState } from "../../utils/getMilestoneState";
+
+import { IMilestoneFundsAllocated } from "../../interfaces/ILoadedValues";
+
 import ProgressRoadmapTimer from "../progressRoadmapTimer";
 
-const ProgressRoadmap = () => {
+
+interface IProgressRoadmap {
+  milestoneFunds: IMilestoneFundsAllocated[];
+}
+
+const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
   const project = useContext(ProjectContext);
   const {
     seedFundingLimit,
@@ -34,12 +42,15 @@ const ProgressRoadmap = () => {
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
 
-  const [isSeedReached, setIsSeedReached] = useState(false);
+
+  const [isSeedReached, setIsSeedReached] = useState(true);
+
+
 
   useEffect(() => {
-    seedFundingLimit <= totalInvested
-      ? setIsSeedReached(true)
-      : setIsSeedReached(false);
+    // seedFundingLimit <= totalInvested
+    //   ? setIsSeedReached(true)
+    //   : setIsSeedReached(false);
 
     if (
       containerRef &&
@@ -147,7 +158,7 @@ const ProgressRoadmap = () => {
             </Lock>
 
             {milestones &&
-              milestones.map((milestone) => {
+              milestones.map((milestone, index) => {
                 const completed = getMilestoneState(
                   projectState,
                   currentMilestone,
@@ -160,7 +171,10 @@ const ProgressRoadmap = () => {
                 ).active;
 
                 return (
-                  <Tooltip key={milestone.id} text={"Information about funds"}>
+                  <Tooltip
+                    key={milestone.id}
+                    fundsObject={milestoneFunds[index]}
+                  >
                     <Lock unlocked={completed || active} active={active}>
                       {completed || active ? (
                         <Image
@@ -173,9 +187,10 @@ const ProgressRoadmap = () => {
                       )}
                       {milestone.id === currentMilestone && (
                         <Funds>
-                          {project.fundsReleased
-                            ?.toLocaleString()
-                            .replace(/,/g, " ")}
+                          {milestoneFunds[index].totalFundsAllocated.replace(
+                            /,/g,
+                            " "
+                          )}
                         </Funds>
                       )}
                     </Lock>

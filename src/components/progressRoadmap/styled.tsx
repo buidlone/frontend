@@ -230,6 +230,7 @@ export const Funds = styled.div`
   text-align: center;
   position: absolute;
   white-space: nowrap;
+  right: 50%;
 
   &:before {
     content: "";
