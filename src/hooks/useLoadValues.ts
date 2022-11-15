@@ -40,7 +40,7 @@ export const loadedValuesInitialState: ILoadedValues = {
   setTotalInvested: () => {},
   allInvestors: [],
   setAllInvestors: () => {},
-  percentageDivider: 0,
+  percentageDivider: BigNumber.from(0),
   milestonesInvestmentsListForFormula: [],
 };
 
@@ -67,11 +67,13 @@ export const useLoadValues = () => {
   const [allInvestors, setAllInvestors] = useState<IInvestor[]>([
     { caller: "", amount: BigNumber.from(0) },
   ]);
-  const [percentageDivider, setPercentageDivider] = useState<number>(0);
+  const [percentageDivider, setPercentageDivider] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
   const [
     milestonesInvestmentsListForFormula,
     setMilestonesInvestmentListForFormula,
-  ] = useState<number[]>([]);
+  ] = useState<BigNumber[]>([]);
 
   const getAvailableCurrencies = async (tokenAddress: string) => {
     if (provider) {
@@ -133,15 +135,10 @@ export const useLoadValues = () => {
           await contract.getCurrentMilestoneId()
         ).toNumber();
 
-        const percentageDivider = Number(await contract.getPercentageDivider());
+        const percentageDivider = await contract.getPercentageDivider();
         const milestonesInvestmentsList =
           await contract.getMilestonesInvestmentsListForFormula();
-        for (let i in milestonesInvestmentsList) {
-          setMilestonesInvestmentListForFormula((prevData) => [
-            ...prevData,
-            Number(milestonesInvestmentsList[i]),
-          ]);
-        }
+        setMilestonesInvestmentListForFormula(milestonesInvestmentsList);
 
         setPercentageDivider(percentageDivider);
         setCurrentMilestone(currentMilestone);
@@ -159,10 +156,8 @@ export const useLoadValues = () => {
               seedAmount: seedAmount.toNumber(),
               seedAmountPaid: milestone?.seedAmountPaid,
               streamOngoing: milestone?.streamOngoing,
-              intervalSeedPortion: Number(milestone?.intervalSeedPortion),
-              intervalStreamingPortion: Number(
-                milestone?.intervalStreamingPortion
-              ),
+              intervalSeedPortion: milestone?.intervalSeedPortion,
+              intervalStreamingPortion: milestone?.intervalStreamingPortion,
             },
           ]);
         }

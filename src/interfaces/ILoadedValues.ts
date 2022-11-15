@@ -10,8 +10,8 @@ export type Milestone = {
   seedAmount: number | string;
   seedAmountPaid: boolean;
   streamOngoing: boolean;
-  intervalSeedPortion: number;
-  intervalStreamingPortion: number;
+  intervalSeedPortion: BigNumber;
+  intervalStreamingPortion: BigNumber;
 };
 
 export type SoftCap = {
@@ -40,8 +40,8 @@ export interface ILoadedValues {
   setTotalInvested: React.Dispatch<React.SetStateAction<number>>;
   allInvestors: IInvestor[];
   setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
-  percentageDivider: number;
-  milestonesInvestmentsListForFormula: number[];
+  percentageDivider: BigNumber;
+  milestonesInvestmentsListForFormula: BigNumber[];
 }
 
 export interface IMilestoneFundsAllocated {

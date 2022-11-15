@@ -6,62 +6,58 @@ import {
 
 export const calculateFundsAllocation = (
   milestones: Milestone[],
-  milestonesInvestmentsListForFormula: number[],
-  percentageDivider: number
+  milestonesInvestmentsListForFormula: BigNumber[],
+  percentageDivider: BigNumber
 ) => {
   let milestonesFundsAllocation: IMilestoneFundsAllocated[] = [];
 
-  let firstDupeIndex = milestonesInvestmentsListForFormula.findIndex(
-    (item: number, index: number) =>
-      milestonesInvestmentsListForFormula.lastIndexOf(item) !== index &&
-      item === 0
-  );
-
-  let firstNonZero = milestonesInvestmentsListForFormula[firstDupeIndex - 1];
+  let firstNonZero = milestonesInvestmentsListForFormula
+    .slice()
+    .reverse()
+    .find((element) => element.toString() != "0");
 
   for (let i in milestonesInvestmentsListForFormula) {
-    if (milestonesInvestmentsListForFormula[i] !== 0) {
-      let stream =
-        milestonesInvestmentsListForFormula[i] *
-        (milestones[i].intervalStreamingPortion / percentageDivider);
-      let seed =
-        milestonesInvestmentsListForFormula[i] *
-        (milestones[i].intervalSeedPortion / percentageDivider);
-      let total = stream + seed;
+    if (milestonesInvestmentsListForFormula[i].toString() !== "0") {
+      let stream = milestonesInvestmentsListForFormula[i]
+        .mul(milestones[i].intervalStreamingPortion)
+        .div(percentageDivider);
+
+      let seed = milestonesInvestmentsListForFormula[i]
+        .mul(milestones[i].intervalSeedPortion)
+        .div(percentageDivider);
+
+      let total = stream.add(seed);
 
       let milestoneFundsAllocation = {
-        streamAllocated: ethers.utils.formatEther(
-          BigNumber.from(parseInt(stream.toString()))
-        ),
-        seedAllocated: ethers.utils.formatEther(
-          BigNumber.from(parseInt(seed.toString()))
-        ),
-        totalFundsAllocated: ethers.utils.formatEther(
-          BigNumber.from(parseInt(total.toString()))
-        ),
+        streamAllocated: ethers.utils.formatEther(stream),
+
+        seedAllocated: ethers.utils.formatEther(seed),
+
+        totalFundsAllocated: ethers.utils.formatEther(total),
       };
 
       milestonesFundsAllocation.push(milestoneFundsAllocation);
     } else {
-      let stream =
-        firstNonZero *
-        (milestones[i].intervalStreamingPortion / percentageDivider);
-      let seed =
-        firstNonZero * (milestones[i].intervalSeedPortion / percentageDivider);
-      let total = stream + seed;
+      if (firstNonZero) {
+        let stream = firstNonZero
+          .mul(milestones[i].intervalStreamingPortion)
+          .div(percentageDivider);
 
-      let milestoneFundsAllocation = {
-        streamAllocated: ethers.utils.formatEther(
-          BigNumber.from(parseInt(stream.toString()))
-        ),
-        seedAllocated: ethers.utils.formatEther(
-          BigNumber.from(parseInt(seed.toString()))
-        ),
-        totalFundsAllocated: ethers.utils.formatEther(
-          BigNumber.from(parseInt(total.toString()))
-        ),
-      };
-      milestonesFundsAllocation.push(milestoneFundsAllocation);
+        let seed = firstNonZero
+          .mul(milestones[i].intervalSeedPortion)
+          .div(percentageDivider);
+
+        let total = stream.add(seed);
+
+        let milestoneFundsAllocation = {
+          streamAllocated: ethers.utils.formatEther(stream),
+
+          seedAllocated: ethers.utils.formatEther(seed),
+
+          totalFundsAllocated: ethers.utils.formatEther(total),
+        };
+        milestonesFundsAllocation.push(milestoneFundsAllocation);
+      }
     }
   }
   return milestonesFundsAllocation;
