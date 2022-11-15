@@ -9,7 +9,6 @@ import {
   Title,
   LockBar,
   Lock,
-  BottomWrapper,
   Funds,
   ScrollableContainer,
   DashedCircle,
@@ -17,10 +16,10 @@ import {
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
-import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getMilestoneState } from "../../utils/getMilestoneState";
+import ProgressRoadmapTimer from "../progressRoadmapTimer";
 
 const ProgressRoadmap = () => {
   const project = useContext(ProjectContext);
@@ -31,16 +30,10 @@ const ProgressRoadmap = () => {
     milestones,
     projectState,
     currentMilestone,
-    fundraisingEndDate,
   } = useContext(LoadedValuesContext);
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
 
-  let timeTillNextMilestone = useCountdown(
-    projectState === 32 || projectState === 64
-      ? milestones[currentMilestone + 1].startDate
-      : fundraisingEndDate
-  );
   const [isSeedReached, setIsSeedReached] = useState(false);
 
   useEffect(() => {
@@ -191,14 +184,7 @@ const ProgressRoadmap = () => {
               })}
           </LockBar>
         </ScrollableContainer>
-        <BottomWrapper>
-          <text className="topText">Next phase starts in</text>
-          <text className="daysLeft">
-            {softCap?.isReached
-              ? `${timeTillNextMilestone.timerDays}D ${timeTillNextMilestone.timerHours}H ${timeTillNextMilestone.timerMinutes}M ${timeTillNextMilestone.timerSeconds}S`
-              : `After reaching soft cap`}
-          </text>
-        </BottomWrapper>
+        <ProgressRoadmapTimer />
       </ProgressRoadmapWrapper>
     </>
   );
