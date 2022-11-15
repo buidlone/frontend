@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
-import LoadedValuesContext from "../context/loadedValuesContext";
-import useCountdown from "../hooks/useCountdown";
+import LoadedValuesContext from "../../context/loadedValuesContext";
+import useCountdown from "../../hooks/useCountdown";
 import { TextWrapper } from "./styled";
 
 const ProgressRoadmapTimer = () => {
@@ -55,7 +55,7 @@ const ProgressRoadmapTimer = () => {
 
     case 16:
       timeTillNextMilestone = useCountdown(
-        milestones[currentMilestone + 1].startDate
+        milestones[currentMilestone].startDate
       );
       return (
         <TextWrapper>
@@ -106,7 +106,11 @@ const ProgressRoadmapTimer = () => {
       return <TextWrapper>Project was terminated by voting</TextWrapper>;
 
     case 256:
+      return <TextWrapper>Project was terminated by gelato</TextWrapper>;
+    case 512:
       return <TextWrapper>Project successfully ended</TextWrapper>;
+    case 1024:
+      return <TextWrapper>Project state is unknown</TextWrapper>;
 
     default:
       return <TextWrapper>Project state is unknown</TextWrapper>;

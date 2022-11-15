@@ -19,7 +19,7 @@ import ProjectContext from "../../context/projectContext";
 import Tooltip from "../tooltip";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getMilestoneState } from "../../utils/getMilestoneState";
-import ProgressRoadmapTimer from "../../progressRoadmapTimer";
+import ProgressRoadmapTimer from "../progressRoadmapTimer";
 
 const ProgressRoadmap = () => {
   const project = useContext(ProjectContext);
