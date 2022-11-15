@@ -3,7 +3,8 @@ import Select from "react-select";
 import Image from "next/image";
 
 interface Props {
-  isActive: boolean;
+  isActive?: boolean;
+  disabled?: boolean;
 }
 
 export const IModalHeader = styled.div`
@@ -271,7 +272,7 @@ export const SelectField = styled(Select)`
   }
 `;
 
-export const ProceedButton = styled.button`
+export const ProceedButton = styled.button<Props>`
   max-width: 20rem;
   width: 100%;
   min-width: 14rem;
@@ -281,7 +282,8 @@ export const ProceedButton = styled.button`
     0% no-repeat padding-box;
   border: 1px solid #00ffc4;
   border-radius: 12px;
-  opacity: 1;
+  opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
+
   color: white;
   text-align: center;
   font-size: 20px;
