@@ -39,7 +39,7 @@ export const calculateFundsAllocation = (
         totalFundsAllocated: ethers.utils.formatEther(
           BigNumber.from(parseInt(total.toString()))
         ),
-      };      
+      };
 
       milestonesFundsAllocation.push(milestoneFundsAllocation);
     } else {
@@ -64,6 +64,5 @@ export const calculateFundsAllocation = (
       milestonesFundsAllocation.push(milestoneFundsAllocation);
     }
   }
-  console.log(milestonesFundsAllocation);
   return milestonesFundsAllocation;
 };
