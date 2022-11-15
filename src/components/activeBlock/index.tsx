@@ -80,7 +80,6 @@ const ActiveBlock = () => {
   const handleStop = async () => {
     if (web3Provider) {
       stopProject(web3Provider, address);
-      setStopDisabled(true);
     }
   };
 
@@ -98,6 +97,14 @@ const ActiveBlock = () => {
       setTotalIndividualInvestedToProject(0);
     }
   });
+
+  useEffect(() => {
+    if (web3Provider) {
+      setStopDisabled(false);
+    } else {
+      setStopDisabled(true);
+    }
+  }, [web3Provider]);
 
   const showFunds = () => {
     setFlip1(!flip1);
