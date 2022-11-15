@@ -19,8 +19,8 @@ import { getAllInvestments } from "../src/web3/getAllInvestments";
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
   const [wallets, setWallets] = useState<String[]>([""]);
+ 
   
-
   useEffect(() => {
     getAllInvestments().then((data: any) =>
       loadedValuesState.setAllInvestors((prev) => data.allInvestments)

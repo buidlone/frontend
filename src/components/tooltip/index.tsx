@@ -4,6 +4,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { IMilestoneFundsAllocated } from '../../interfaces/ILoadedValues';
 import Portal from '../portal';
 import TooltipList from '../tooltipList';
 import { StyledTooltip } from './styled';
@@ -114,6 +115,7 @@ interface ITooltip {
     description?: string;
     isCompleted?: boolean;
   }[];
+  fundsObject?: IMilestoneFundsAllocated
   text?: string;
   placement?: string;
   space?: number;
@@ -129,6 +131,7 @@ export interface IPosition {
 
 const Tooltip = ({
   milestonesArray,
+  fundsObject,
   text,
   placement = 'top',
   space = 15,
@@ -175,6 +178,9 @@ const Tooltip = ({
           >
             {milestonesArray && (
               <TooltipList milestonesArray={milestonesArray} />
+            )}
+            {fundsObject && (
+              <TooltipList fundsObject={fundsObject} />
             )}
             {text}
           </StyledTooltip>

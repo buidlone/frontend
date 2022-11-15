@@ -9,10 +9,9 @@ import InvestmentPoolABI from "../web3/abi/InvestmentPool.json";
 import { formatTime } from "../utils/formatTime";
 import { ILoadedValues, Milestone, SoftCap } from "../interfaces/ILoadedValues";
 import { Currency } from "../constants/currencies";
-import ERC20TokenABI from '../web3/abi/ERC20Token.json'
+import ERC20TokenABI from "../web3/abi/ERC20Token.json";
 import { IInvestor } from "../interfaces/IInvestors";
 import { getAllInvestments } from "../web3/getAllInvestments";
-
 
 const provider = new ethers.providers.JsonRpcProvider(
   `https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`
@@ -34,16 +33,15 @@ export const loadedValuesInitialState: ILoadedValues = {
   currency: {
     value: "",
 
-  label: "",
-  address: "",
-  decimals: 0,
-},
+    label: "",
+    address: "",
+    decimals: 0,
+  },
   setTotalInvested: () => {},
   allInvestors: [],
   setAllInvestors: () => {},
- 
-
-
+  percentageDivider: 0,
+  milestonesInvestmentsListForFormula: [],
 };
 
 export const useLoadValues = () => {
@@ -59,14 +57,21 @@ export const useLoadValues = () => {
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [currentMilestone, setCurrentMilestone] = useState<number>(-1);
 
-  const [projectState, setProjectState] = useState<number>(0)
-  const [currency, setCurrency] = useState<Currency>( {
-  value: "",
-  label: "",
-  address: "",
-  decimals: 0,
-  })
-  const [allInvestors, setAllInvestors] = useState<IInvestor[]>([{caller: '', amount: BigNumber.from(0)}])
+  const [projectState, setProjectState] = useState<number>(0);
+  const [currency, setCurrency] = useState<Currency>({
+    value: "",
+    label: "",
+    address: "",
+    decimals: 0,
+  });
+  const [allInvestors, setAllInvestors] = useState<IInvestor[]>([
+    { caller: "", amount: BigNumber.from(0) },
+  ]);
+  const [percentageDivider, setPercentageDivider] = useState<number>(0);
+  const [
+    milestonesInvestmentsListForFormula,
+    setMilestonesInvestmentListForFormula,
+  ] = useState<number[]>([]);
 
   const getAvailableCurrencies = async (tokenAddress: string) => {
     if (provider) {
@@ -108,25 +113,37 @@ export const useLoadValues = () => {
         const fundraisingEndDate = formatTime(fundraisingEndAt);
         const projectState = await contract.getProjectStateByteValue();
 
-        const acceptedTokenAddress = await contract.getAcceptedToken()
-        const acceptedTokenDetails = await getAvailableCurrencies(acceptedTokenAddress)
-        
+        const acceptedTokenAddress = await contract.getAcceptedToken();
+        const acceptedTokenDetails = await getAvailableCurrencies(
+          acceptedTokenAddress
+        );
 
         setCurrency({
           value: acceptedTokenDetails?.tokenSymbol,
           label: acceptedTokenDetails?.tokenSymbol,
           address: acceptedTokenAddress,
 
-          decimals: acceptedTokenDetails?.tokenDecimals
-        })
-        
-        const allInvestors = await getAllInvestments()
+          decimals: acceptedTokenDetails?.tokenDecimals,
+        });
+
+        const allInvestors = await getAllInvestments();
 
         const milestoneCount = (await contract.getMilestonesCount()).toNumber();
         const currentMilestone = (
           await contract.getCurrentMilestoneId()
         ).toNumber();
 
+        const percentageDivider = Number(await contract.getPercentageDivider());
+        const milestonesInvestmentsList =
+          await contract.getMilestonesInvestmentsListForFormula();
+        for (let i in milestonesInvestmentsList) {
+          setMilestonesInvestmentListForFormula((prevData) => [
+            ...prevData,
+            Number(milestonesInvestmentsList[i]),
+          ]);
+        }
+
+        setPercentageDivider(percentageDivider);
         setCurrentMilestone(currentMilestone);
         for (let i = 0; i < milestoneCount; i++) {
           let milestone = await contract.getMilestone(i);
@@ -139,10 +156,13 @@ export const useLoadValues = () => {
               startDate: formatTime(milestone?.startDate),
               endDate: formatTime(milestone?.endDate),
               paid: milestone?.paid,
-
-              seedAmount: seedAmount.toString(),
+              seedAmount: seedAmount.toNumber(),
               seedAmountPaid: milestone?.seedAmountPaid,
               streamOngoing: milestone?.streamOngoing,
+              intervalSeedPortion: Number(milestone?.intervalSeedPortion),
+              intervalStreamingPortion: Number(
+                milestone?.intervalStreamingPortion
+              ),
             },
           ]);
         }
@@ -157,9 +177,9 @@ export const useLoadValues = () => {
         setFundraisingStartDate(fundraisingStartDate);
         setFundraisingEndDate(fundraisingEndDate);
 
-        setProjectState(parseInt(projectState, 10))
-        allInvestors !== undefined && setAllInvestors(allInvestors.allInvestments)
-
+        setProjectState(parseInt(projectState, 10));
+        allInvestors !== undefined &&
+          setAllInvestors(allInvestors.allInvestments);
       } catch (error) {
         console.log(error);
         toast.error("Error occurred while retrieving data from blockchain");
@@ -184,6 +204,8 @@ export const useLoadValues = () => {
     currency,
     setTotalInvested,
     allInvestors,
-    setAllInvestors
+    setAllInvestors,
+    percentageDivider,
+    milestonesInvestmentsListForFormula,
   };
 };
