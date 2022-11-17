@@ -21,10 +21,12 @@ export const getProjectState = (projectState: number | undefined) => {
     case 128:
       return "Project was terminated by voting";
     case 256:
-      return "Project successfully ended";
+      return "Project was terminated by gelato";
 
     case 512:
-      return "State is unknown";
+      return "Project successfully ended";
+    case 1024:
+      return "Project state is unknown";
 
     default:
       return "Error occured while retrieving project state";

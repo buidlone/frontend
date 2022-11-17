@@ -12,6 +12,7 @@ import {
   TimelineContainer,
   TimelineScroll,
 } from "./styled";
+import useCountdown from "../../hooks/useCountdown";
 
 interface ITimeline {
   scale: number;
@@ -24,6 +25,33 @@ const TimelineGraph = ({ scale }: ITimeline) => {
 
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
+
+  const maxDays = useCountdown(
+    milestones[currentMilestone].endDate,
+    milestones[0].startDate
+  );
+
+  const currentDays = useCountdown(undefined, milestones[0].startDate, true);
+
+  const getTimelineProgress = () => {
+    let progress = 0;
+
+    if (projectState === 32 || projectState === 64) {
+      let oneMilestonePortion = 100 / milestones.length;
+
+      let currentMaxProgress =
+        projectState === 32
+          ? oneMilestonePortion * (currentMilestone + 1)
+          : 100;
+
+      progress =
+        (Number(currentDays.timerDays) * currentMaxProgress) /
+        Number(maxDays.timerDays);
+    } else if (projectState === 512) {
+      progress = 100;
+    }
+    return progress;
+  };
 
   const getDate = (endDate: string, startDate: string) => {
     const date = dateDiff(endDate, startDate);
@@ -74,7 +102,7 @@ const TimelineGraph = ({ scale }: ITimeline) => {
         hideScrollbars={active ? false : true}
       >
         <TimelineBar>
-          <TProgress progress={0} />
+          <TProgress progress={getTimelineProgress()} />
           {milestones &&
             milestones.map((milestone) => {
               const completed = getMilestoneState(
