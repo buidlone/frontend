@@ -13,11 +13,18 @@ import {
 const Thumb = (props: any, state: any) => <StyledThumb {...props} />;
 
 //Timeline Slider is still in progress
-const TimelineThumb = (props: any, state: any) => (
-  <StyledThumb {...props}>
-    <STooltip className="timeline">2022/09</STooltip>
-  </StyledThumb>
-);
+const TimelineThumb = (props: any, state: any) => {
+  const date = new Date();
+  const month = date.getUTCMonth() + 1;
+  const year = date.getUTCFullYear();
+  return (
+    <StyledThumb {...props}>
+      <STooltip className="timeline">
+        {year}/{month}
+      </STooltip>
+    </StyledThumb>
+  );
+};
 
 const Track = (props: any, state: any) => (
   <StyledTrack {...props} index={props.index} />
@@ -61,7 +68,7 @@ const Slider = ({
   value,
   blue,
   timeline,
-  step
+  step,
 }: ISlider) => {
   const { softCap, hardCap, currency } = useContext(LoadedValuesContext);
 

@@ -115,7 +115,7 @@ export const STooltip = styled.span`
   }
 
   &.timeline {
-    right: -155%;
+    right: -140%;
   }
 `;
 
