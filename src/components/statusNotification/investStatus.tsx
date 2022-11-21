@@ -25,8 +25,10 @@ import instagram from "../../assets/Instagram.svg";
 import linkedin from "../../assets/linkedin.svg";
 import twitter from "../../assets/Twitter.svg";
 
-const InvestStatus = (setIsShownStop: any) => {
-  const handleClose = () => {};
+const InvestStatus = ({ setIsShownInvest }: any) => {
+  const handleClose = () => {
+    setIsShownInvest(false);
+  };
 
   return (
     <Block color="#3AEDC4">

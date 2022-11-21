@@ -32,7 +32,11 @@ const items = [
   },
 ];
 
-const ActiveBlock = () => {
+const ActiveBlock = ({
+  setIsShownStop,
+  setIsShownWrong,
+  setIsShownInvest,
+}: any) => {
   const [
     totalIndividualInvestedToProject,
     setTotalIndividualInvestedToProject,
@@ -79,7 +83,10 @@ const ActiveBlock = () => {
 
   const handleStop = async () => {
     if (web3Provider) {
-      stopProject(web3Provider, address);
+      const stopped = await stopProject(web3Provider, address);
+      if (stopped === true) {
+        setIsShownStop(true);
+      } else if (stopped === false) setIsShownWrong(true);
     }
   };
 
@@ -208,7 +215,11 @@ const ActiveBlock = () => {
           )}
 
           <Modal show={showModal}>
-            <InvestModal onClose={() => setShowModal(false)} />
+            <InvestModal
+              setIsShownInvest={setIsShownInvest}
+              setIsShownWrong={setIsShownWrong}
+              onClose={() => setShowModal(false)}
+            />
           </Modal>
         </ButtonsWrapper>
         <Accordion items={items} />

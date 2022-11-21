@@ -4,7 +4,11 @@ import { ButtonsWrapper, StateButton, AboutSec } from "./styled";
 import { useState } from "react";
 import ActiveBlock from "../activeBlock";
 
-const AssetsSection = () => {
+const AssetsSection = ({
+  setIsShownStop,
+  setIsShownWrong,
+  setIsShownInvest,
+}: any) => {
   const [active, setActive] = useState("active");
 
   const handleClick = (
@@ -25,7 +29,7 @@ const AssetsSection = () => {
         >
           Active
         </StateButton>
-        <StateButton
+        {/* <StateButton
           className={active == "claimed" ? "selected" : ""}
           onClick={(e) => handleClick(e, "claimed")}
         >
@@ -36,9 +40,15 @@ const AssetsSection = () => {
           onClick={(e) => handleClick(e, "cancelled")}
         >
           Cancelled
-        </StateButton>
+        </StateButton> */}
       </ButtonsWrapper>
-      {active === "active" && <ActiveBlock />}
+      {active === "active" && (
+        <ActiveBlock
+          setIsShownStop={setIsShownStop}
+          setIsShownWrong={setIsShownWrong}
+          setIsShownInvest={setIsShownInvest}
+        />
+      )}
       {active === "claimed" && <AboutBlock />}
       {active === "cancelled" && <HistoryBlock />}
     </AboutSec>

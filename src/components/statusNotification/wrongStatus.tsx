@@ -16,7 +16,7 @@ import wrongBuidler from "../../assets/smthWrong.png";
 import discord from "../../assets/discord.svg";
 import { useRouter } from "next/router";
 
-const WrongStatus = (setIsShownWrong: any) => {
+const WrongStatus = ({ setIsShownWrong }: any) => {
   const router = useRouter();
   const handleClose = () => {
     setIsShownWrong(false);

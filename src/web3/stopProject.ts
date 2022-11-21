@@ -99,7 +99,7 @@ export const stopProject = async (
           });
 
           if (voteReceipt) {
-            // TODO: modaliukas
+            return true;
           }
         } catch (err: any) {
           const revertData = err.error.data.originalError.data;
@@ -124,9 +124,8 @@ export const stopProject = async (
           }
         }
       }
-      return true;
     } catch (err: any) {
-      toast.error("Transaction was rejected");
+      return false;
     }
   } else {
     toast.error("Could not connect to the provider");
