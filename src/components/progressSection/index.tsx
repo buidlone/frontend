@@ -1,19 +1,23 @@
-import ProgressInfoBlock from '../progressInfoBlock';
+import { IInvestorsProps } from "../../interfaces/ICommonProps";
+import ProgressInfoBlock from "../progressInfoBlock";
+import ProgressRoadmap from "../progressRoadmap";
+import { ProgressBlockWrapper, ProgressContentWrapper } from "./styled";
 
-import ProgressRoadmap from '../progressRoadmap';
-
-import { ProgressBlockWrapper, ProgressContentWrapper } from './styled';
-
-interface IProgressSectionProps {
-  wallets: String[];
-}
-
-const ProgressSection = ({ wallets, ...props }: IProgressSectionProps) => {
+const ProgressSection = ({
+  wallets,
+  setIsShownStop,
+  setIsShownWrong,
+  ...props
+}: IInvestorsProps) => {
   return (
     <ProgressBlockWrapper>
       <ProgressContentWrapper>
         <ProgressRoadmap />
-        <ProgressInfoBlock wallets={wallets}/>
+        <ProgressInfoBlock
+          setIsShownStop={setIsShownStop}
+          setIsShownWrong={setIsShownWrong}
+          wallets={wallets}
+        />
       </ProgressContentWrapper>
     </ProgressBlockWrapper>
   );

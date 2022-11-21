@@ -1,3 +1,5 @@
 export interface IInvestorsProps {
-    wallets: String[];
-  }
+  wallets: String[];
+  setIsShownStop?: any;
+  setIsShownWrong?: any;
+}
