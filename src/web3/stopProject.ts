@@ -76,15 +76,15 @@ export const stopProject = async (
       let isApproved = await isApprovedPromise;
 
       if (!isApproved) {
-        try {
-          const isApproved = await contractVotingTokenSigner.setApprovalForAll(
-            GovernancePoolAddress,
-            true
-          );
-          const approveReceipt = await isApproved.wait();
-        } catch (err: any) {
-          toast.error("Transaction was rejected");
-        }
+        isApproved = await contractVotingTokenSigner.setApprovalForAll(
+          GovernancePoolAddress,
+          true
+        );
+        const approveReceipt = await toast.promise(isApproved.wait(), {
+          pending: "Approval is pending",
+          success: "Approved successfully",
+          error: "Transaction was rejected",
+        });
       }
       if (isApproved) {
         try {
@@ -92,9 +92,14 @@ export const stopProject = async (
             InvestmentPoolAddress,
             votesBalance
           );
-          const voteReceipt = await voteTx.wait();
+          const voteReceipt = await toast.promise(voteTx.wait(), {
+            pending: "Transaction is pending",
+            success: "You have successfully raised your vote!",
+            error: "Transaction rejected",
+          });
+
           if (voteReceipt) {
-            toast.success("You have successfully voted!");
+            // TODO: modaliukas
           }
         } catch (err: any) {
           const revertData = err.error.data.originalError.data;
@@ -119,6 +124,7 @@ export const stopProject = async (
           }
         }
       }
+      return true;
     } catch (err: any) {
       toast.error("Transaction was rejected");
     }

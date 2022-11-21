@@ -15,12 +15,16 @@ import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../src/context/loadedValuesContext";
 import { Spinner } from "../src/components/navbar/styled";
 import { getAllInvestments } from "../src/web3/getAllInvestments";
+import StopStatus from "../src/components/statusNotification/stopStatus";
+import WrongStatus from "../src/components/statusNotification/wrongStatus";
+import InvestStatus from "../src/components/statusNotification/investStatus";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
   const [wallets, setWallets] = useState<String[]>([""]);
- 
-  
+  const [isShownStop, setIsShownStop] = useState(false);
+  const [isShownWrong, setIsShownWrong] = useState(false);
+
   useEffect(() => {
     getAllInvestments().then((data: any) =>
       loadedValuesState.setAllInvestors((prev) => data.allInvestments)
@@ -38,20 +42,35 @@ const Buidl1 = () => {
 
   return loadedValuesState.fundraisingStartDate !== "" ? (
     <>
-      <BgImage isFixed />
+      {!isShownStop || (!isShownWrong && <BgImage isFixed />)}
+
       <Container>
-        <LogoWrapper>
-          <Image src={BuidlLogo} />
-        </LogoWrapper>
-        <ProjectHeader
-          text={"Project 1 - BUIDL 1 - Self raising capital"}
-          stage={"STAGE 1"}
-        />
+        {/* <InvestStatus /> */}
+        {isShownStop ? (
+          <StopStatus setIsShownStop={setIsShownStop} />
+        ) : isShownWrong ? (
+          <WrongStatus setIsShownStop={setIsShownWrong} />
+        ) : (
+          <>
+            <LogoWrapper>
+              <Image src={BuidlLogo} />
+            </LogoWrapper>
+            <ProjectHeader
+              text={"Project 1 - BUIDL 1 - Self raising capital"}
+              stage={"STAGE 1"}
+            />
+          </>
+        )}
+
         <FeaturesSec>
           <FundingBlock />
           <TimelineBlock />
         </FeaturesSec>
-        <ProgressSection wallets={wallets} />
+        <ProgressSection
+          setIsShownStop={setIsShownStop}
+          setIsShownWrong={setIsShownWrong}
+          wallets={wallets}
+        />
         <FeaturesSec>
           <Calculator />
           <InvestorsBarChart wallets={wallets} />
