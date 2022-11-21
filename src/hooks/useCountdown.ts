@@ -1,31 +1,76 @@
 import { useEffect, useRef, useState } from "react";
 
-const useCountdown = ( date?: string ) => {
-    
-    const [timerDays, setTimerDays] = useState<number | string>('00');
-    const [timerHours, setTimerHours] = useState<number | string>('00');
-    const [timerMinutes, setTimerMinutes] = useState<number | string>('00');
-    const [timerSeconds, setTimerseconds] = useState<number | string>('00');
-    const [isExpired, setIsExpired] = useState<boolean>(false);
-  
-    let interval = useRef<number | undefined | ReturnType<typeof setInterval>>(undefined);
-  
-    const startTimer = () => {
-      const countDownDate = new Date(<string>date).getTime();
-      // Update the count down every 1 second
+const useCountdown = (
+  dateTo?: string,
+  dateFrom?: string,
+  progress?: boolean
+) => {
+  const [timerDays, setTimerDays] = useState<number | string>("00");
+  const [timerHours, setTimerHours] = useState<number | string>("00");
+  const [timerMinutes, setTimerMinutes] = useState<number | string>("00");
+  const [timerSeconds, setTimerseconds] = useState<number | string>("00");
+  const [isExpired, setIsExpired] = useState<boolean>(false);
+
+  let interval = useRef<number | undefined | ReturnType<typeof setInterval>>(
+    undefined
+  );
+
+  const startTimer = () => {
+    if (dateTo && dateFrom) {
+      const countDownDate = new Date(<string>dateTo).getTime();
+      const now = new Date(<string>dateFrom).getTime();
+
+      const distance = countDownDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (distance < 0) {
+        setIsExpired(true);
+        clearInterval(interval.current);
+      } else {
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMinutes(minutes);
+        setTimerseconds(seconds);
+      }
+    } else if (progress) {
+      //hardcoded value while using fake timestamp in the SC to activate the 1st milestone
+      //Date object should be empty (current date)
+      const currentDate = new Date("2023 01 05").getTime();
+      const startDate = new Date(<string>dateFrom).getTime();
+
+      const distance = currentDate - startDate;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (distance < 0) {
+        setIsExpired(true);
+        clearInterval(interval.current);
+      } else {
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMinutes(minutes);
+        setTimerseconds(seconds);
+      }
+    } else {
+      const countDownDate = new Date(<string>dateTo).getTime();
       interval.current = setInterval(() => {
-        // Get today's date and time
         const now = new Date().getTime();
-        // Find the distance between now and the count down date
         const distance = countDownDate - now;
-        // Time calculations for days, hours, minutes and seconds
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
           (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
         );
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  
         if (distance < 0) {
           setIsExpired(true);
           clearInterval(interval.current);
@@ -36,18 +81,16 @@ const useCountdown = ( date?: string ) => {
           setTimerseconds(seconds);
         }
       }, 1000);
-      
+    }
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => {
+      clearInterval(interval.current);
     };
-  
-    useEffect(() => {
-      startTimer();
-      return () => {
-        clearInterval(interval.current);
-      };
-    });
+  });
 
-
-    return {timerDays, timerHours, timerMinutes, timerSeconds, isExpired}
-
-}
+  return { timerDays, timerHours, timerMinutes, timerSeconds, isExpired };
+};
 export default useCountdown;

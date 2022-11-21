@@ -15,13 +15,13 @@ const HistoryBlock = () => {
   };
   const { web3Provider, connect, address } = useContext(Web3Context);
   const [history, setHistory] = useState<History[]>();
-  const { currency } = useContext(LoadedValuesContext);
+  const { currency, totalInvested } = useContext(LoadedValuesContext);
 
   useEffect(() => {
     getHistoryTable().then((data: any) => {
       setHistory(data);
     });
-  }, []);
+  }, [totalInvested]);
 
   if (history) {
     return (
