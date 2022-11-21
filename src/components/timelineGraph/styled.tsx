@@ -56,8 +56,9 @@ export const TProgress = styled.div<Props>`
   background-color: #009dff !important;
   left: 0;
   position: relative;
-  max-width: 99.5%;
-  width: ${(props) => props.progress}% !important;
+  max-width: 100%;
+  width: ${(props) => (props.progress ? props.progress : 0)}% !important;
+
   transition: 0.3s;
   opacity: 1 !important;
 

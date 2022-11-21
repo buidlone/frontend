@@ -20,18 +20,18 @@ interface ITimeline {
 
 const TimelineGraph = ({ scale }: ITimeline) => {
   const [active, setActive] = useState(false);
-  const { milestones, currentMilestone, projectState } =
+  const { milestones, projectState, currentMilestone } =
     useContext(LoadedValuesContext);
 
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
 
   const maxDays = useCountdown(
-    milestones[currentMilestone].endDate,
-    milestones[0].startDate
+    milestones[currentMilestone]?.endDate,
+    milestones[0]?.startDate
   );
 
-  const currentDays = useCountdown(undefined, milestones[0].startDate, true);
+  const currentDays = useCountdown(undefined, milestones[0]?.startDate, true);
 
   const getTimelineProgress = () => {
     let progress = 0;

@@ -14,12 +14,6 @@ interface Props {
 
 //Animations
 const barGrow = keyframes`
-  /* 0%  {height:20px;}
-  20%  {height:70.4px;}
-  40%  {height:176px;}
-  60%  {height:176px;}
-  80%  {height:70.4px;}
-  100% {height:20px;} */
   0% {
     opacity: 0;
   }
@@ -48,7 +42,7 @@ export const ScrollableContainer = styled(ScrollContainer)`
   border-radius: 10px;
   opacity: 1;
   margin-top: 1rem;
-  padding-left: 2.5rem;
+  padding-left: 3.5rem;
   padding-right: 1rem;
 `;
 
@@ -66,6 +60,12 @@ export const Title = styled.text`
   font-size: 12px;
   font-family: "IBM Plex Sans", sans-serif;
 `;
+export const Progress = styled.div<Props>`
+  background-color: #00c4ff;
+  width: ${(props) => (props.progress ? props.progress : 0)}% !important;
+  transition: 0.3s;
+  opacity: 1 !important;
+`;
 
 export const ProgressStep = styled.div<Props>`
   min-width: 1.563rem;
@@ -78,6 +78,7 @@ export const ProgressStep = styled.div<Props>`
   flex-wrap: wrap;
   position: relative;
   cursor: default;
+  border: 1px solid rgba(0, 196, 255, 0.5);
 
   ${(props) => {
     if (props.completed) {
@@ -91,19 +92,20 @@ export const ProgressStep = styled.div<Props>`
       `;
     } else {
       return `
-        background-color: #2e436c;
+        //background-color: #2e436c;
+        background-color: #00C4FF;
       `;
     }
   }};
 
   &:before {
-    content: "${(props) => props.stage}";
+    content: "${(props) => (props.completed ? "" : props.stage)}";
     position: absolute;
-    bottom: calc(100% + 1rem);
-    font-size: 0.875rem;
-    font-family: "Barlow", sans-serif;
-    font-weight: 300;
-    color: #00c4ff;
+    //bottom: calc(100% + 1rem);
+    font-size: 0.75rem;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    color: #1d2031;
     text-align: center;
     width: 3.5rem;
     pointer-events: none;
@@ -111,27 +113,25 @@ export const ProgressStep = styled.div<Props>`
   }
 
   &:hover {
+    opacity: 1;
+    background-color: rgba(0, 196, 255, 0.16);
+
     & > ${Tooltip} {
       visibility: visible;
     }
   }
 `;
 
-export const Progress = styled.div<Props>`
-  background-color: #00c4ff;
-  width: ${(props) => props.progress}% !important;
-  transition: 0.3s;
-  opacity: 1 !important;
+export const MilestoneProgressWrapper = styled.div<Props>`
+  display: flex;
+  position: relative;
+  align-items: center;
 `;
 
-export const ProgressBar = styled.div`
+export const MProgressBar = styled.div<Props>`
+  width: 7rem;
+  height: 5px;
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  margin: 4rem 2.5rem auto 1rem;
-  gap: 6.438rem;
-  min-width: max-content;
-
   &:before,
   & > ${Progress} {
     content: "";
@@ -143,6 +143,15 @@ export const ProgressBar = styled.div`
     background-color: #00c4ff;
     opacity: 0.16;
   }
+`;
+
+export const ProgressBar = styled.div<Props>`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin: 4rem 2.5rem auto 1rem;
+  //gap: 6.438rem;
+  min-width: max-content;
 `;
 
 export const CheckMark = styled.div`
@@ -173,8 +182,8 @@ export const LockBar = styled.div`
   display: flex;
   justify-content: space-between;
   counter-reset: step;
-  margin: 8rem 2.5rem auto 1rem;
-  gap: 6.438rem;
+  margin: 7rem 2.5rem auto 1rem;
+  gap: 7rem;
 `;
 
 export const Lock = styled.div<Props>`
@@ -194,7 +203,7 @@ export const Lock = styled.div<Props>`
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 11rem;
+    height: 10rem;
     margin: 2px;
     opacity: ${(props) => (props.unlocked ? 1 : 0.09)};
     transform: matrix(-1, 0, 0, -1, 0, 0);
@@ -253,20 +262,4 @@ export const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .topText {
-    font-size: 9px;
-    font-weight: 500;
-    font-family: "Roboto", sans-serif;
-    color: #a5a5a5;
-    opacity: 1;
-    margin-bottom: 0.2rem;
-  }
-
-  .daysLeft {
-    font-size: 21px;
-    font-family: "Roboto", sans-serif;
-    color: #00c4ff;
-    opacity: 1;
-  }
 `;
