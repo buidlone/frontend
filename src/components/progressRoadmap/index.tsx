@@ -11,47 +11,49 @@ import {
   Lock,
   Funds,
   ScrollableContainer,
-  DashedCircle,
+  MilestoneProgressWrapper,
+  MProgressBar,
 } from "./styled";
 import Image from "next/image";
-import React, { useContext, useEffect, useState } from "react";
-import ProjectContext from "../../context/projectContext";
+import React, { useContext, useEffect } from "react";
 import Tooltip from "../tooltip";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getMilestoneState } from "../../utils/getMilestoneState";
-
 import { IMilestoneFundsAllocated } from "../../interfaces/ILoadedValues";
-
 import ProgressRoadmapTimer from "../progressRoadmapTimer";
-
+import useCountdown from "../../hooks/useCountdown";
 
 interface IProgressRoadmap {
   milestoneFunds: IMilestoneFundsAllocated[];
 }
 
 const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
-  const project = useContext(ProjectContext);
-  const {
-    seedFundingLimit,
-    totalInvested,
-    softCap,
-    milestones,
-    projectState,
-    currentMilestone,
-  } = useContext(LoadedValuesContext);
+  const { milestones, currentMilestone, projectState } =
+    useContext(LoadedValuesContext);
+
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
 
+  const maxDays = useCountdown(
+    milestones[currentMilestone]?.endDate,
+    milestones[currentMilestone]?.startDate
+  );
 
-  const [isSeedReached, setIsSeedReached] = useState(true);
+  const currentDays = useCountdown(
+    undefined,
+    milestones[currentMilestone]?.startDate,
+    true
+  );
 
+  const getMilestoneProgress = () => {
+    let progress = 0;
+    progress =
+      (Number(currentDays.timerDays) * 100) / Number(maxDays.timerDays);
 
+    return progress;
+  };
 
   useEffect(() => {
-    // seedFundingLimit <= totalInvested
-    //   ? setIsSeedReached(true)
-    //   : setIsSeedReached(false);
-
     if (
       containerRef &&
       containerRef.current &&
@@ -66,7 +68,7 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
         behavior: "smooth",
       });
     }
-  }, [totalInvested]);
+  }, []);
 
   return (
     <>
@@ -79,19 +81,6 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
           vertical={false}
         >
           <ProgressBar>
-            <Progress progress={20} />
-            <ProgressStep stage={"Seed"} completed={isSeedReached} active>
-              {isSeedReached ? <CheckMark /> : <DashedCircle />}
-            </ProgressStep>
-            <ProgressStep
-              stage={"Funding"}
-              completed={softCap?.isReached}
-              active
-            >
-              {softCap?.isReached &&
-                (projectState === 16 || projectState === 32) && <CheckMark />}
-              {isSeedReached && projectState === 4 && <DashedCircle />}
-            </ProgressStep>
             {milestones &&
               milestones.map((milestone) => {
                 const completed = getMilestoneState(
@@ -107,56 +96,43 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
 
                 const itemProps = active ? { ref: activeStageRef } : {};
                 return (
-                  // <Tooltip milestonesArray={milestones}>
-                  <Tooltip
-                    key={milestone.id}
-                    text={"Information about milestone"}
-                  >
-                    <ProgressStep
-                      stage={`Milestone ${milestone.id + 1}`}
-                      completed={completed}
-                      active={active}
-                      {...itemProps}
+                  <MilestoneProgressWrapper {...itemProps}>
+                    {/* <Tooltip milestonesArray={milestones}> */}
+                    <Tooltip
+                      key={milestone.id}
+                      text={"Information about milestone"}
                     >
-                      {completed && <CheckMark />}
-                      {active && <DashedCircle />}
-                    </ProgressStep>
-                  </Tooltip>
+                      <ProgressStep
+                        stage={`M${milestone.id + 1}`}
+                        completed={completed}
+                        active={active}
+                        {...itemProps}
+                      >
+                        {completed && <CheckMark />}
+                        {/* {active && <DashedCircle />} */}
+                      </ProgressStep>
+                    </Tooltip>
+
+                    <MProgressBar>
+                      <Progress
+                        progress={
+                          active ? getMilestoneProgress() : completed ? 100 : 0
+                        }
+                      />
+                    </MProgressBar>
+                  </MilestoneProgressWrapper>
                 );
               })}
+            {projectState === 512 ? (
+              <ProgressStep completed>
+                <CheckMark />
+              </ProgressStep>
+            ) : (
+              <ProgressStep></ProgressStep>
+            )}
           </ProgressBar>
 
           <LockBar>
-            <Lock unlocked={isSeedReached} active={!isSeedReached}>
-              {isSeedReached ? (
-                <CheckMark />
-              ) : (
-                <Image src={lockedLock} alt="locked lock" height={15} />
-              )}
-            </Lock>
-            <Lock
-              unlocked={isSeedReached && softCap?.isReached}
-              active={isSeedReached && projectState === 4}
-            >
-              {(() => {
-                if (
-                  projectState === 32 ||
-                  projectState === 64 ||
-                  projectState === 16
-                ) {
-                  return <CheckMark />;
-                } else if (isSeedReached && projectState === 4) {
-                  return (
-                    <Image src={unlockedLock} alt="unlocked lock" height={15} />
-                  );
-                } else {
-                  return (
-                    <Image src={lockedLock} alt="locked lock" height={15} />
-                  );
-                }
-              })()}
-            </Lock>
-
             {milestones &&
               milestones.map((milestone, index) => {
                 const completed = getMilestoneState(
@@ -185,18 +161,28 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                       ) : (
                         <Image src={lockedLock} alt="locked lock" height={15} />
                       )}
-                      {milestone.id === currentMilestone && (
-                        <Funds>
-                          {milestoneFunds[index].totalFundsAllocated.replace(
-                            /,/g,
-                            " "
-                          )}
-                        </Funds>
-                      )}
+                      {milestone.id == currentMilestone &&
+                        projectState !== 512 && (
+                          <Funds>
+                            {milestoneFunds[index]?.totalFundsAllocated.replace(
+                              /,/g,
+                              " "
+                            )}
+                          </Funds>
+                        )}
                     </Lock>
                   </Tooltip>
                 );
               })}
+            {projectState === 512 ? (
+              <Lock unlocked completed>
+                <CheckMark />
+              </Lock>
+            ) : (
+              <Lock>
+                <Image src={lockedLock} alt="locked lock" height={15} />
+              </Lock>
+            )}
           </LockBar>
         </ScrollableContainer>
         <ProgressRoadmapTimer />
