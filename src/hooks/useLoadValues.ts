@@ -104,7 +104,7 @@ export const useLoadValues = () => {
           provider
         );
 
-        const seedFundingLimit = await contract.getSeedFundingLimit();
+        //const seedFundingLimit = await contract.getSeedFundingLimit();
         const totalInvested = await contract.getTotalInvestedAmount();
         const softCap = await contract.getSoftCap();
         const hardCap = await contract.getHardCap();
@@ -162,7 +162,7 @@ export const useLoadValues = () => {
           ]);
         }
 
-        setSeedFundingLimit(Number(ethers.utils.formatEther(seedFundingLimit)));
+        //setSeedFundingLimit(Number(ethers.utils.formatEther(seedFundingLimit)));
         setTotalInvested(Number(ethers.utils.formatEther(totalInvested)));
         setSoftCap({
           amount: Number(ethers.utils.formatEther(softCap)),
