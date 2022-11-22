@@ -23,7 +23,7 @@ import instagram from "../../assets/Instagram.svg";
 import linkedin from "../../assets/linkedin.svg";
 import twitter from "../../assets/Twitter.svg";
 
-const StopStatus = (setIsShownStop: any) => {
+const StopStatus = ({ setIsShownStop }: any) => {
   const handleClose = () => {
     setIsShownStop(false);
   };

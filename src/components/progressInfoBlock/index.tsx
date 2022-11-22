@@ -73,9 +73,9 @@ const ProgressInfoBlock = ({
   const handleStop = async () => {
     if (web3Provider) {
       const stopped = await stopProject(web3Provider, address);
-      if (stopped) {
+      if (stopped === true) {
         setIsShownStop(true);
-      } else setIsShownWrong(true);
+      } else if (stopped === false) setIsShownWrong(true);
     }
   };
 

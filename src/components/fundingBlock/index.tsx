@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import { info } from "console";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
@@ -16,7 +17,10 @@ import {
   Title,
 } from "./styled";
 
-export default function FundingBlock() {
+export default function FundingBlock({
+  setIsShownInvest,
+  setIsShownWrong,
+}: any) {
   const [showModal, setShowModal] = useState(false);
   const { web3Provider, connect } = useContext(Web3Context);
   const { projectState, totalInvested, hardCap } =
@@ -62,7 +66,11 @@ export default function FundingBlock() {
             )}
 
             <Modal show={showModal}>
-              <InvestModal onClose={() => setShowModal(false)} />
+              <InvestModal
+                setIsShownInvest={setIsShownInvest}
+                setIsShownWrong={setIsShownWrong}
+                onClose={() => setShowModal(false)}
+              />
             </Modal>
             <StyledA>Learn about ROI and how it works</StyledA>
           </BottomWrapper>

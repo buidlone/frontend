@@ -31,12 +31,7 @@ import Accordion from "../accordion";
 import TokenStreamTable from "../tokenStreamTable";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
-import React, {
-  KeyboardEvent,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { KeyboardEvent, useContext, useEffect, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Currency, mainnetCurrencies } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
@@ -59,6 +54,8 @@ interface InputTypes {
 
 interface IInvest {
   onClose(): void;
+  setIsShownInvest?: any;
+  setIsShownWrong?: any;
 }
 
 interface ICurrency {
@@ -67,7 +64,11 @@ interface ICurrency {
   decimals: number;
 }
 
-const InvestModal = ({ onClose }: IInvest) => {
+const InvestModal = ({
+  onClose,
+  setIsShownInvest,
+  setIsShownWrong,
+}: IInvest) => {
   const {
     fundraisingStartDate,
     fundraisingEndDate,
@@ -191,6 +192,15 @@ const InvestModal = ({ onClose }: IInvest) => {
       result !== undefined &&
         setTotalInvested !== null &&
         setTotalInvested(result);
+
+      if (result !== undefined) {
+        setIsShownInvest(true);
+        onClose();
+      } else if (result == undefined) {
+        setIsShownWrong(true);
+        onClose();
+      }
+
       getTokenBalance(selectedCurrency.address, web3Provider, address).then(
         (data) => {
           if (data) {

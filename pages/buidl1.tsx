@@ -24,6 +24,7 @@ const Buidl1 = () => {
   const [wallets, setWallets] = useState<String[]>([""]);
   const [isShownStop, setIsShownStop] = useState(false);
   const [isShownWrong, setIsShownWrong] = useState(false);
+  const [isShownInvest, setIsShownInvest] = useState(false);
 
   useEffect(() => {
     getAllInvestments().then((data: any) =>
@@ -42,14 +43,16 @@ const Buidl1 = () => {
 
   return loadedValuesState.fundraisingStartDate !== "" ? (
     <>
-      {!isShownStop || (!isShownWrong && <BgImage isFixed />)}
+      {!isShownStop || !isShownWrong || (!isShownInvest && <BgImage isFixed />)}
 
       <Container>
         {/* <InvestStatus /> */}
         {isShownStop ? (
           <StopStatus setIsShownStop={setIsShownStop} />
         ) : isShownWrong ? (
-          <WrongStatus setIsShownStop={setIsShownWrong} />
+          <WrongStatus setIsShownWrong={setIsShownWrong} />
+        ) : isShownInvest ? (
+          <InvestStatus setIsShownInvest={setIsShownInvest} />
         ) : (
           <>
             <LogoWrapper>
@@ -63,7 +66,10 @@ const Buidl1 = () => {
         )}
 
         <FeaturesSec>
-          <FundingBlock />
+          <FundingBlock
+            setIsShownInvest={setIsShownInvest}
+            setIsShownWrong={setIsShownWrong}
+          />
           <TimelineBlock />
         </FeaturesSec>
         <ProgressSection
