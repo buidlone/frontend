@@ -46,7 +46,7 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
     true
   );
 
-
+  
   const getMilestoneProgress = () => {
     let progress = 0;
     progress =
@@ -172,9 +172,12 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                         {milestone.id == currentMilestone &&
                           projectState !== 512 && (
                             <Funds>
-                              {milestoneFunds[
-                                index
-                              ]?.totalFundsAllocated.replace(/,/g, " ")}
+                              {Number(
+                                milestoneFunds[index]?.totalFundsAllocated
+                              )
+                                .toFixed(4)
+                                .toString()
+                                .replace(/,/g, " ")}
                             </Funds>
                           )}
                       </Lock>

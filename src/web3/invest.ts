@@ -32,7 +32,8 @@ export const invest = async (
 
       if (amount > Number(ethers.utils.formatEther(allowance.toString()))) {
         const amountBN = BigNumber.from(
-          ethers.utils.parseEther(amount.toString())
+          //ethers.utils.parseEther(amount.toString())
+          ethers.utils.parseEther(amount.toFixed(18))
         );
         const addedValue = amountBN.sub(allowance);
 

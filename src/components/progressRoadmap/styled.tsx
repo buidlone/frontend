@@ -112,8 +112,6 @@ export const ProgressStep = styled.div<Props>`
       }
     }};
 
-   
-
     position: absolute;
     //bottom: calc(100% + 1rem);
     font-size: 0.75rem;
@@ -253,7 +251,6 @@ export const Funds = styled.div`
   text-align: center;
   position: absolute;
   white-space: nowrap;
-  right: 50%;
 
   &:before {
     content: "";

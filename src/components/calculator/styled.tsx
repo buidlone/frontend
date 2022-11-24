@@ -59,20 +59,24 @@ export const SelectWrapper = styled.div<Props>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  position: relative;
+  //position: relative;
   gap: 1.219rem;
   margin-bottom: 5%;
 
-  &::before {
+  &:before {
     content: "${(props) => props?.currency}";
     position: absolute;
     top: 63%;
-    left: 3%;
+
+    left: 40%;
     z-index: 1;
     color: #00ffc4;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 400;
     font-size: 15px;
+
+    border-left: 1.5px solid #00ffc4;
+    padding-left: 1%;
   }
 `;
 
@@ -83,7 +87,7 @@ export const InputField = styled.input`
   box-shadow: inset 0px 0px 5px #141620;
   border-radius: 8px;
   opacity: 1;
-  padding-left: 10%;
+  padding-left: 3%;
   border: none;
   position: relative;
   outline: none;
@@ -105,7 +109,9 @@ export const InputField = styled.input`
 
 export const VotingWrapper = styled.div`
   width: 33%;
-
+  display: flex;
+  align-items: center;
+  padding-right: 2%;
   font-size: 30px;
   font-weight: 500;
   font-family: "Space Grotesk", sans-serif;
@@ -138,7 +144,7 @@ export const PBContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 90%;
   border-radius: 13px;
   box-shadow: inset 0px 0px 20px #404a8c;
   opacity: 1;
@@ -155,7 +161,6 @@ export const PBWrapper = styled.div`
 export const IButton = styled(GreenButton)`
   width: 100%;
   margin-top: 1rem;
-  
 `;
 
 export const VotingRow = styled.div`
