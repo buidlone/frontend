@@ -30,7 +30,7 @@ const Navbar = () => {
               <NavLink
                 className={router.pathname == "/projects" ? "active" : ""}
               >
-                Projects
+                Home
               </NavLink>
             </Link>
           </NavItem>
@@ -44,7 +44,7 @@ const Navbar = () => {
           <NavItem>
             <Link href="/assets" passHref>
               <NavLink className={router.pathname == "/assets" ? "active" : ""}>
-                My assets
+            Portfolio
               </NavLink>
             </Link>
           </NavItem>
