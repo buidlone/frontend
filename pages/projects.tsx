@@ -9,10 +9,10 @@ const Projects = () => {
       <ProjectsInfoSection
         text={'Yep. Buidl1 also needs to be build'}
         mainText={
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco'
+          'In order to help investors choose and connect with upcoming projects - BUIDL1 has to build itself up and earn trust from new partnered projects. In order to achieve these goals, we aim to be transparent and provide reliable services, in hopes to create a prospering and supportive community.'
         }
         moto={
-          'We use our own platform to raise capital. If we can’t trust ourselfs- no one can. That’s how we going to enable Builders to build and investors to trust'
+          'Thank you for your support and understanding, BUIDL1 depends on you - fellow builders!'
         }
       />
       <FeaturedProjectsSection />
