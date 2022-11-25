@@ -25,6 +25,7 @@ export const BarChartBlock = styled(BlockWrapper)`
 
 export const BarChartScroll = styled(ScrollContainer)`
   display: flex;
+  justify-content: center;
   overflow-y: hidden;
   position: relative;
 
@@ -49,6 +50,7 @@ export const BarChartScroll = styled(ScrollContainer)`
 
 export const BarChartColumn = styled.div<Props>`
   min-width: 0.313rem;
+  max-width: 40%;
   height: 14.341rem;
   display: flex;
   justify-content: space-evenly;

@@ -1,5 +1,4 @@
-import { info } from "console";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";

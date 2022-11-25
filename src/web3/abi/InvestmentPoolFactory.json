@@ -7,7 +7,7 @@
         "type": "address"
       },
       {
-        "internalType": "contract IGelatoOps",
+        "internalType": "address payable",
         "name": "_gelatoOps",
         "type": "address"
       },
@@ -133,22 +133,6 @@
     "type": "error"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint96",
-        "name": "seedFundingLimit",
-        "type": "uint96"
-      },
-      {
-        "internalType": "uint96",
-        "name": "softCap",
-        "type": "uint96"
-      }
-    ],
-    "name": "InvestmentPoolFactory__SeedFundingLimitIsGreaterThanSoftCap",
-    "type": "error"
-  },
-  {
     "inputs": [],
     "name": "InvestmentPoolFactory__SeedFundsAllocationExceedsMax",
     "type": "error"
@@ -227,11 +211,6 @@
       },
       {
         "internalType": "uint96",
-        "name": "_seedFundingLimit",
-        "type": "uint96"
-      },
-      {
-        "internalType": "uint96",
         "name": "_softCap",
         "type": "uint96"
       },
@@ -286,25 +265,12 @@
     "name": "createInvestmentPool",
     "outputs": [
       {
-        "internalType": "contract IInvestmentPool",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
     ],
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "deployClone",
-    "outputs": [
-      {
-        "internalType": "contract IInitializableInvestmentPool",
-        "name": "pool",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -364,7 +330,7 @@
     "name": "getGelatoOps",
     "outputs": [
       {
-        "internalType": "contract IGelatoOps",
+        "internalType": "address payable",
         "name": "",
         "type": "address"
       }
@@ -377,9 +343,22 @@
     "name": "getGovernancePool",
     "outputs": [
       {
-        "internalType": "contract IGovernancePool",
+        "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getHardCapMultiplier",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -465,33 +444,7 @@
   },
   {
     "inputs": [],
-    "name": "getPrivateFundingMultiplier",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getPublicFundingMultiplier",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getSeedFundingMultiplier",
+    "name": "getSoftCapMultiplier",
     "outputs": [
       {
         "internalType": "uint256",
@@ -507,7 +460,7 @@
     "name": "getSuperfluidHost",
     "outputs": [
       {
-        "internalType": "contract ISuperfluid",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -572,32 +525,6 @@
     "name": "setGovernancePool",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_timestamp",
-        "type": "uint256"
-      }
-    ],
-    "name": "setTimestamp",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "timestamp",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {

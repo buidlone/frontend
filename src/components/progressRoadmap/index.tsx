@@ -13,6 +13,7 @@ import {
   ScrollableContainer,
   MilestoneProgressWrapper,
   MProgressBar,
+  DashedCircle,
 } from "./styled";
 import Image from "next/image";
 import React, { useContext, useEffect } from "react";
@@ -45,6 +46,7 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
     true
   );
 
+  
   const getMilestoneProgress = () => {
     let progress = 0;
     progress =
@@ -96,7 +98,7 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
 
                 const itemProps = active ? { ref: activeStageRef } : {};
                 return (
-                  <MilestoneProgressWrapper {...itemProps}>
+                  <MilestoneProgressWrapper key={milestone.id} {...itemProps}>
                     {/* <Tooltip milestonesArray={milestones}> */}
                     <Tooltip
                       key={milestone.id}
@@ -109,7 +111,7 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                         {...itemProps}
                       >
                         {completed && <CheckMark />}
-                        {/* {active && <DashedCircle />} */}
+                        {active && <DashedCircle />}
                       </ProgressStep>
                     </Tooltip>
 
@@ -128,7 +130,7 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                 <CheckMark />
               </ProgressStep>
             ) : (
-              <ProgressStep></ProgressStep>
+              <ProgressStep stage=""></ProgressStep>
             )}
           </ProgressBar>
 
@@ -146,34 +148,56 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                   milestone.id
                 ).active;
 
-                return (
-                  <Tooltip
-                    key={milestone.id}
-                    fundsObject={milestoneFunds[index]}
-                  >
-                    <Lock unlocked={completed || active} active={active}>
-                      {completed || active ? (
-                        <Image
-                          src={unlockedLock}
-                          alt="unlocked lock"
-                          height={15}
-                        />
-                      ) : (
-                        <Image src={lockedLock} alt="locked lock" height={15} />
-                      )}
-                      {milestone.id == currentMilestone &&
-                        projectState !== 512 && (
-                          <Funds>
-                            {milestoneFunds[index]?.totalFundsAllocated.replace(
-                              /,/g,
-                              " "
-                            )}
-                          </Funds>
+                return milestoneFunds[index]?.totalFundsAllocated !==
+                  undefined ? (
+                  <>
+                    <Tooltip
+                      key={milestone.id}
+                      fundsObject={milestoneFunds[index]}
+                    >
+                      <Lock unlocked={completed || active} active={active}>
+                        {completed || active ? (
+                          <Image
+                            src={unlockedLock}
+                            alt="unlocked lock"
+                            height={15}
+                          />
+                        ) : (
+                          <Image
+                            src={lockedLock}
+                            alt="locked lock"
+                            height={15}
+                          />
                         )}
-                    </Lock>
-                  </Tooltip>
+                        {milestone.id == currentMilestone &&
+                          projectState !== 512 && (
+                            <Funds>
+                              {Number(
+                                milestoneFunds[index]?.totalFundsAllocated
+                              )
+                                .toFixed(4)
+                                .toString()
+                                .replace(/,/g, " ")}
+                            </Funds>
+                          )}
+                      </Lock>
+                    </Tooltip>
+                  </>
+                ) : (
+                  <Lock unlocked={completed || active} active={active}>
+                    {completed || active ? (
+                      <Image
+                        src={unlockedLock}
+                        alt="unlocked lock"
+                        height={15}
+                      />
+                    ) : (
+                      <Image src={lockedLock} alt="locked lock" height={15} />
+                    )}{" "}
+                  </Lock>
                 );
               })}
+
             {projectState === 512 ? (
               <Lock unlocked completed>
                 <CheckMark />
