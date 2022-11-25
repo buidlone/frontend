@@ -22,6 +22,7 @@ export const Block = styled.div<BlockColors>`
   margin-bottom: 20px;
   padding: 0px 0px 0px 7%;
   background: ${(props) => props.color};
+  color: black;
 `;
 
 export const CloseButton = styled.button`
@@ -35,6 +36,7 @@ export const CloseButton = styled.button`
   font-weight: bold;
   height: 0px;
   cursor: pointer;
+  color: black;
 `;
 
 export const Columns = styled.div<ColumnAmount>`
@@ -50,6 +52,7 @@ export const TitleMessage = styled.text`
   font-size: 34px;
   font-weight: bold;
   align-self: center;
+  color: black;
 `;
 export const MadBuidler = styled(Image)`
   width: 150px;
@@ -63,6 +66,7 @@ export const MadBuidlerWrapper = styled.div`
 export const BigExlamation = styled.text`
   font-size: 90px;
   font-weight: bold;
+  color: black;
 `;
 
 export const Box = styled.div`
@@ -91,6 +95,7 @@ export const DiscordButton = styled.a`
   font-weight: semi-bold;
   gap: 20px;
   display: flex;
+  color: black;
 `;
 
 export const VotingButton = styled(DiscordButton)`
@@ -108,11 +113,13 @@ export const TryAgain = styled.button<Dashed>`
   font-weight: semi-bold;
   background: transparent;
   cursor: pointer;
+  color: black;
 `;
 
 export const TitleBoxText = styled.text`
   font-weight: bold;
   font-size: 24px;
+  color: black;
 `;
 
 export const BoxText = styled.p`
@@ -121,6 +128,7 @@ export const BoxText = styled.p`
   margin-top: 10px;
   display: flex;
   justify-content: space-evenly;
+  color: black;
 `;
 export const Logo = styled(Image)`
   height: 18px;
@@ -141,6 +149,7 @@ export const AboveFooterText = styled.p`
   font-size: 18px;
   margin-bottom: 1px;
   margin-top: 0px;
+  color: black;
 `;
 
 export const Footer = styled.div`
