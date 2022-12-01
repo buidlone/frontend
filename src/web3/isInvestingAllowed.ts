@@ -1,9 +1,11 @@
+import { BigNumber } from "ethers";
+
 export const isInvestingAllowed = (
   projectState: number,
-  hardCap: number,
-  totalInvested: number
+  hardCap: BigNumber,
+  totalInvested: BigNumber
 ) => {
-  if ([4, 32].includes(projectState) && totalInvested !== hardCap) {
+  if ([4, 32].includes(projectState) && !totalInvested.eq(hardCap)) {
     return true;
   } else {
     return false;

@@ -1,6 +1,6 @@
+import { BigNumber, ethers } from "ethers";
 import React, { useContext } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import ProjectContext from "../../context/projectContext";
 import {
   HardCapIndicator,
   SoftCapIndicator,
@@ -73,10 +73,12 @@ const Slider = ({
   const { softCap, hardCap, currency } = useContext(LoadedValuesContext);
 
   const prop = {
-    softCap: softCap?.amount,
-    hardCap: hardCap,
+    softCap: ethers.utils.formatEther(softCap.amount),
+    hardCap: ethers.utils.formatEther(hardCap),
     currency: currency.label,
-    softCapPosition: softCap?.amount && (softCap?.amount * 100) / hardCap,
+    softCapPosition: Number(
+      softCap.amount.mul(BigNumber.from(100)).div(hardCap)
+    ),
   };
 
   return (
