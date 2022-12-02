@@ -8,11 +8,12 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import Web3Context from "../../context/web3Context";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
-import ProjectState, { StatusColor } from "../projectState";
+import  { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
 import DetailedPortfolio from "../detailedPortfolio";
+import { getVotingPower } from "../../web3/getVotingPower";
 
 
 const ActiveBlock = ({
@@ -27,12 +28,16 @@ const ActiveBlock = ({
     currency,
   } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
+  const [votingPower, setVotingPower] = useState(false);
   const { web3Provider, address } = useContext(Web3Context);
 
   useEffect(() => {
     if (web3Provider) {
       getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
         setTotalIndividualInvestedToProject(data.totalAmountInvested);
+      });
+      getVotingPower(web3Provider, address).then((data: any) => {
+        setVotingPower(data)
       });
     } else {
       setTotalIndividualInvestedToProject(0);
@@ -72,8 +77,8 @@ const ActiveBlock = ({
        
             </td>
     
-            <td className="flexGap">
-              <ProjectState />
+            <td className="flexGap yellowText bigger">
+              {votingPower} %
               <AccordionButtonIcon
                 style={{
                   color: "white",
@@ -91,7 +96,8 @@ const ActiveBlock = ({
           </tr>
 
           {showMore && (
-            <DetailedPortfolio />
+            <DetailedPortfolio  setIsShownStop={setIsShownStop}
+            setIsShownWrong={setIsShownWrong} />
           )}
         </tbody>
       </Table>

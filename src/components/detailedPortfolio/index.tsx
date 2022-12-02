@@ -31,6 +31,7 @@ const DetailedPortfolio = ({
         hardCap,
         milestones,
         currentMilestone,
+        votedAgainst
     } = useContext(LoadedValuesContext);
     const [stopDisabled, setStopDisabled] = useState(false);
     const [isAllowed, setIsAllowed] = useState(true);
@@ -98,7 +99,7 @@ const DetailedPortfolio = ({
 
                 <td>
                     <p>Voted against</p>
-                    <p className="greenText">544 USDT</p>
+                    <p className="yellowText">{votedAgainst} %</p>
                 </td>
 
 
