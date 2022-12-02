@@ -8,7 +8,7 @@ import InvestmentPoolABI from "./abi/InvestmentPool.json";
 export const invest = async (
   tokenAddress: string,
   provider: any,
-  amount: number,
+  amount: string,
   address: string
 ) => {
   if (provider) {
@@ -30,10 +30,8 @@ export const invest = async (
         InvestmentPoolAddress
       );
 
-      if (amount > Number(ethers.utils.formatEther(allowance.toString()))) {
-        const amountBN = BigNumber.from(
-          ethers.utils.parseEther(amount.toString())
-        );
+      const amountBN = BigNumber.from(ethers.utils.parseEther(amount));
+      if (amountBN.gt(allowance)) {
         const addedValue = amountBN.sub(allowance);
 
         const approvalTransaction = await tokenContract.increaseAllowance(
@@ -50,7 +48,7 @@ export const invest = async (
         );
 
         const investmentTransaction = await investmentPoolContract.invest(
-          ethers.utils.parseEther(amount.toString()),
+          ethers.utils.parseEther(amount),
           true
         );
 
@@ -65,10 +63,10 @@ export const invest = async (
         const totalInvestedAmount =
           await investmentPoolContract.getTotalInvestedAmount();
 
-        return Number(ethers.utils.formatEther(totalInvestedAmount));
+        return totalInvestedAmount;
       } else {
         const investmentTransaction = await investmentPoolContract.invest(
-          ethers.utils.parseEther(amount.toString()),
+          ethers.utils.parseEther(amount),
           true
         );
 
@@ -83,7 +81,7 @@ export const invest = async (
         const totalInvestedAmount =
           await investmentPoolContract.getTotalInvestedAmount();
 
-        return Number(ethers.utils.formatEther(totalInvestedAmount));
+        return totalInvestedAmount;
       }
     } catch (err: any) {
       if (err.error) {

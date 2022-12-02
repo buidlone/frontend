@@ -30,7 +30,7 @@ const Buidl1 = () => {
     getAllInvestments().then((data: any) =>
       loadedValuesState.setAllInvestors((prev) => data.allInvestments)
     );
-  }, [loadedValuesState.totalInvested]);
+  }, [loadedValuesState.totalInvested._hex]);
 
   useEffect(() => {
     const uniqueInv = [

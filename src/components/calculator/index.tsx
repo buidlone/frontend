@@ -26,6 +26,7 @@ import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getCalculatedTokens } from "../../web3/getCalculatedTokens";
 import useCountdown from "../../hooks/useCountdown";
+import { ethers } from "ethers";
 
 const minStep = 0.0000001;
 
@@ -35,12 +36,12 @@ const Calculator = () => {
     useContext(LoadedValuesContext);
 
   const [showModal, setShowModal] = useState(false);
-  const [amount, setAmount] = useState<number>(0);
-  const [sum, setSum] = useState<number>(0);
-  const [tokens, setTokens] = useState<number>(0);
+  const [amount, setAmount] = useState<string>("0");
+  const [sum, setSum] = useState<string>("");
+  const [tokens, setTokens] = useState<string>("");
   const [tokensPerMonth, setTokensPerMonth] = useState<number>(0);
   const [voting, setVoting] = useState<number>(0);
-  const [tickets, setTickets] = useState<number>(0);
+  const [tickets, setTickets] = useState<string>("");
   const [maxSum, setMaxSum] = useState(hardCap);
   const maxDays = useCountdown(
     milestones[milestones.length - 1]?.endDate,
@@ -69,28 +70,42 @@ const Calculator = () => {
     }
   };
 
-  const handleSumChange = (value: number) => {
-    setSum(value);
-    setAmount(value);
+  const handleSumChange = (value: string) => {
+    setSum(value.toString());
+    setAmount(value.toString());
   };
 
   const inputSumChange = async () => {
-    const result = await getCalculatedTokens(amount || 0);
-    const calculateTokens =
-      (result?.votingTokensToMint / result?.votingTokensSupplyCap) * 100;
-    setTickets(Number(result?.votingTokensToMint.toFixed(6)));
-    setVoting(
-      calculateTokens < 1
-        ? Number(calculateTokens.toFixed(5))
-        : Number(calculateTokens.toFixed(2))
-    );
+    const result = await getCalculatedTokens(amount || "0");
+
+    if (result) {
+      setTickets(
+        result.votingTokensToMint.toString() != "0"
+          ? ethers.utils.formatEther(result.votingTokensToMint)
+          : "0"
+      );
+
+      const calculatedVotingTokens =
+        result.calculatedVotingTokens.toNumber() / 100;
+
+      setVoting(
+        calculatedVotingTokens > 1
+          ? Math.round(calculatedVotingTokens)
+          : Number(calculatedVotingTokens.toFixed(2))
+      );
+    }
   };
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      if (amount + totalInvested > hardCap) {
-        setSum(hardCap - totalInvested);
-        setAmount(hardCap - totalInvested);
+      if (
+        ethers.utils
+          .parseEther(amount || "0")
+          .add(totalInvested)
+          .gt(hardCap)
+      ) {
+        setSum(ethers.utils.formatEther(hardCap.sub(totalInvested)));
+        setAmount(ethers.utils.formatEther(hardCap.sub(totalInvested)));
         return;
       }
       setSum(amount);
@@ -98,7 +113,7 @@ const Calculator = () => {
     }, 200);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [amount, totalInvested]);
+  }, [amount, totalInvested._hex]);
 
   return (
     <CalculatorBlock>
@@ -127,19 +142,27 @@ const Calculator = () => {
             <div className="blueText">Invested Sum:</div>
             <InputField
               type="number"
+              autoComplete="off"
               name="amount"
               placeholder=""
-              defaultValue={0}
+              defaultValue={"0"}
               value={amount}
-              onChange={(e) => setAmount(e.target.valueAsNumber)}
+              onChange={(e) => setAmount(e.target.value)}
+              onKeyPress={(e) => {
+                if (
+                  e.target.value.charAt(0) == "0" &&
+                  e.target.value.length == 20
+                )
+                  e.preventDefault();
+              }}
             />
           </SelectWrapper>
 
           <Slider
             value={sum}
             onChange={handleSumChange}
-            min={0}
-            max={hardCap}
+            min={"0"}
+            max={ethers.utils.formatEther(hardCap)}
             step={minStep}
           />
 
@@ -156,7 +179,7 @@ const Calculator = () => {
           <PBContainer>
             <PBWrapper>
               <CircularProgressbarWithChildren
-                maxValue={Number(((maxSum * 2) / 12).toFixed(4))}
+                //maxValue={Number(((maxSum * 2) / 12).toFixed(4))}
                 value={tokensPerMonth ? tokensPerMonth : 0}
                 counterClockwise
                 styles={{
@@ -204,11 +227,11 @@ const Calculator = () => {
                     <div className="votingPercentage">
                       {" "}
                       {`${
-                        voting > 1
+                        Number(amount) == 0 || amount == ""
+                          ? "0"
+                          : voting > 1
                           ? voting
-                          : voting < 1 && voting > 0
-                          ? "<1.00"
-                          : 0
+                          : "<1.00"
                       }%`}
                     </div>
                   </CircularProgressbarWithChildren>

@@ -14,26 +14,29 @@ import unlockedLock from "../../../public/lock_open.svg";
 import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { BigNumber, ethers } from "ethers";
 
 export default function FundingRoadmap() {
   const project = useContext(ProjectContext);
   const { seedFundingLimit, softCap, hardCap, totalInvested, currency } =
     useContext(LoadedValuesContext);
   const [progress, setProgress] = useState<number>(
-    (totalInvested * 100) / hardCap
+    Number(totalInvested.mul(BigNumber.from(100)).div(hardCap))
   );
   const [softCapPosition, setSoftCapPosition] = useState<number>(
-    (softCap.amount * 100) / hardCap
+    Number(softCap.amount.mul(BigNumber.from(100)).div(hardCap))
   );
 
   useEffect(() => {
-    setSoftCapPosition((softCap.amount * 100) / hardCap);
-    setProgress((totalInvested * 100) / hardCap);
-  }, [totalInvested]);
+    setSoftCapPosition(
+      softCap.amount.mul(BigNumber.from(100)).div(hardCap).toNumber()
+    );
+    setProgress(totalInvested.mul(BigNumber.from(100)).div(hardCap).toNumber());
+  }, [totalInvested._hex]);
 
   return (
     <FProgressWrapper>
-      <RoadmapBubble>
+      {/* <RoadmapBubble>
         <VerticalLine>
           <TextAboveDashed>Seed</TextAboveDashed>
           <TextWhite>
@@ -41,17 +44,20 @@ export default function FundingRoadmap() {
             {currency.label}
           </TextWhite>
         </VerticalLine>
-      </RoadmapBubble>
+      </RoadmapBubble> */}
       <FundsBar>
         <FProgress progress={progress}>
-          <FundsIndicator funds={totalInvested} currency={currency.label} />
+          <FundsIndicator
+            funds={ethers.utils.formatEther(totalInvested)}
+            currency={currency.label}
+          />
         </FProgress>
 
         <RoadmapBubble className="softCap" softCapPosition={softCapPosition}>
           <VerticalLine>
             <TextAboveDashed>Soft Cap</TextAboveDashed>
             <TextWhite>
-              {softCap?.amount?.toLocaleString().replace(/,/g, " ")}{" "}
+              {ethers.utils.formatEther(softCap.amount).replace(/,/g, " ")}{" "}
               {currency.label}
             </TextWhite>
           </VerticalLine>
@@ -63,6 +69,7 @@ export default function FundingRoadmap() {
         </RoadmapBubble>
       </FundsBar>
       <RoadmapBubble>
+        {/* TODO: check if hardCap is reached */}
         {project.hardCap.isReached ? (
           <Image src={unlockedLock} alt="unlocked lock" height={"14px"} />
         ) : (
@@ -71,7 +78,8 @@ export default function FundingRoadmap() {
         <VerticalLine>
           <TextAboveDashed>Hard Cap</TextAboveDashed>
           <TextWhite>
-            {hardCap?.toLocaleString().replace(/,/g, " ")} {currency.label}
+            {ethers.utils.formatEther(hardCap).replace(/,/g, " ")}{" "}
+            {currency.label}
           </TextWhite>
         </VerticalLine>
       </RoadmapBubble>

@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
   InvestmentPoolAddress,
@@ -10,7 +10,7 @@ const provider = new ethers.providers.JsonRpcProvider(
   `https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`
 );
 
-export const getCalculatedTokens = async (amount: number) => {
+export const getCalculatedTokens = async (amount: string) => {
   try {
     const contract = new ethers.Contract(
       InvestmentPoolAddress,
@@ -18,19 +18,19 @@ export const getCalculatedTokens = async (amount: number) => {
       provider
     );
 
-    let votingTokensToMint = await contract.getVotingTokensAmountToMint(
-      ethers.utils.parseEther(amount.toFixed(18)) //with toString ethersjs throws an error: fractional component exceeds decimals
+    const votingTokensToMint = await contract.getVotingTokensAmountToMint(
+      ethers.utils.parseEther(amount)
     );
-    let votingTokensSupplyCap = await contract.getVotingTokensSupplyCap();
+    const votingTokensSupplyCap = await contract.getVotingTokensSupplyCap();
 
-    votingTokensToMint = Number(ethers.utils.formatEther(votingTokensToMint));
-    votingTokensSupplyCap = Number(
-      ethers.utils.formatEther(votingTokensSupplyCap)
-    );
+    const calculatedVotingTokens = votingTokensToMint
+      .mul(BigNumber.from(10000))
+      .div(votingTokensSupplyCap);
 
     return {
       votingTokensToMint,
       votingTokensSupplyCap,
+      calculatedVotingTokens,
     };
   } catch (error) {
     console.log(error);

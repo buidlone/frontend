@@ -100,6 +100,7 @@ export const InputField = styled.input`
     font-size: 15px;
     color: #00ffc4;
     opacity: 1;
+    padding-right: 12%;
   }
 
   @media screen and (max-width: 800px) {
@@ -160,7 +161,11 @@ export const PBWrapper = styled.div`
 
 export const IButton = styled(GreenButton)`
   width: 100%;
+
+  height: 15%;
   margin-top: 1rem;
+  background: transparent linear-gradient(168deg, #3aedc4 0%, #469898 100%) 0%
+    0% no-repeat padding-box;
 `;
 
 export const VotingRow = styled.div`
@@ -174,12 +179,12 @@ export const VotingRow = styled.div`
 export const VotingItem = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-size: 12px;
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 500;
 
   .text {
-    font-size: 14px;
+    font-size: 12px;
     color: rgba(255, 255, 255, 0.5);
   }
 
@@ -189,7 +194,7 @@ export const VotingItem = styled.div`
   }
 
   .tickets {
-    font-size: 16px;
+    font-size: 14px;
     color: #ffb100;
   }
 `;
