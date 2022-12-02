@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, KeyboardEvent } from "react";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
@@ -75,6 +75,11 @@ const Calculator = () => {
     setAmount(value.toString());
   };
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.target.value.charAt(0) == "0" && e.target.value.length == 20)
+      e.preventDefault();
+  };
+
   const inputSumChange = async () => {
     const result = await getCalculatedTokens(amount || "0");
 
@@ -148,13 +153,7 @@ const Calculator = () => {
               defaultValue={"0"}
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              onKeyPress={(e) => {
-                if (
-                  e.target.value.charAt(0) == "0" &&
-                  e.target.value.length == 20
-                )
-                  e.preventDefault();
-              }}
+              onKeyPress={handleKeyPress}
             />
           </SelectWrapper>
 

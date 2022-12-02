@@ -3,11 +3,11 @@ import React, {
   ReactElement,
   useRef,
   useState,
-} from 'react';
-import { IMilestoneFundsAllocated } from '../../interfaces/ILoadedValues';
-import Portal from '../portal';
-import TooltipList from '../tooltipList';
-import { StyledTooltip } from './styled';
+} from "react";
+import { IMilestoneFundsAllocated } from "../../interfaces/ILoadedValues";
+import Portal from "../portal";
+import TooltipList from "../tooltipList";
+import { StyledTooltip } from "./styled";
 
 type PositionFn = (p: string) => {
   current: string;
@@ -26,17 +26,17 @@ type PointFn = () => {
 export const position: PositionFn = (p: string) => ({
   current: p,
   negate() {
-    if (this.current === 'left') return 'right';
-    if (this.current === 'right') return 'left';
-    if (this.current === 'top') return 'bottom';
-    if (this.current === 'bottom') return 'top';
-    return '';
+    if (this.current === "left") return "right";
+    if (this.current === "right") return "left";
+    if (this.current === "top") return "bottom";
+    if (this.current === "bottom") return "top";
+    return "";
   },
   isHorizontal() {
-    return this.current === 'left' || this.current === 'right';
+    return this.current === "left" || this.current === "right";
   },
   isVertical() {
-    return this.current === 'top' || this.current === 'bottom';
+    return this.current === "top" || this.current === "bottom";
   },
 });
 
@@ -77,15 +77,15 @@ const getPoint = (
     recurCount++;
     const pos = position(placement);
     switch (pos.current) {
-      case 'left':
+      case "left":
         pt.x = elRect.left - (tt.offsetWidth + space);
         pt.y = elRect.top + (el.offsetHeight - tt.offsetHeight) / 2;
         break;
-      case 'right':
+      case "right":
         pt.x = elRect.right + space;
         pt.y = elRect.top + (el.offsetHeight - tt.offsetHeight) / 2;
         break;
-      case 'top':
+      case "top":
         pt.x = elRect.left + (el.offsetWidth - tt.offsetWidth) / 2;
         pt.y = elRect.top - (tt.offsetHeight + space);
         break;
@@ -115,13 +115,14 @@ interface ITooltip {
     description?: string;
     isCompleted?: boolean;
   }[];
-  fundsObject?: IMilestoneFundsAllocated
+  fundsObject?: IMilestoneFundsAllocated;
   text?: string;
   placement?: string;
   space?: number;
   children: ReactElement<any, string | JSXElementConstructor<any>>;
   disabled?: number;
   delay?: number;
+  nowrap?: boolean;
 }
 
 export interface IPosition {
@@ -133,11 +134,12 @@ const Tooltip = ({
   milestonesArray,
   fundsObject,
   text,
-  placement = 'top',
+  placement = "top",
   space = 15,
   children,
   disabled = 0,
   delay,
+  nowrap = false,
   ...props
 }: ITooltip) => {
   const [show, setShow] = useState(0);
@@ -168,20 +170,19 @@ const Tooltip = ({
             onMouseOut: handleMOut,
           })}
       {disabled || (
-        <Portal selector='#portal'>
+        <Portal selector="#portal">
           <StyledTooltip
             delay={delay}
             ref={tooltipRef}
             posRef={posRef}
             show={show}
             placement={placement}
+            nowrap={nowrap}
           >
             {milestonesArray && (
               <TooltipList milestonesArray={milestonesArray} />
             )}
-            {fundsObject && (
-              <TooltipList fundsObject={fundsObject} />
-            )}
+            {fundsObject && <TooltipList fundsObject={fundsObject} />}
             {text}
           </StyledTooltip>
         </Portal>

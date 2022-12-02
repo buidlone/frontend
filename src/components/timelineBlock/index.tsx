@@ -48,7 +48,7 @@ const TimelineBlock = () => {
   return (
     <BlockWrapper>
       <TopWrapper>
-        <Title>Timeline</Title>
+        <Title>Roadmap</Title>
         <InlineWrapper className="buttons">
           <XButton
             disabled={status !== 3 ? true : false}
