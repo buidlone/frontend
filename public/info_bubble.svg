@@ -1,0 +1,7 @@
+<svg id="info_bubble" xmlns="http://www.w3.org/2000/svg" width="14.332" height="14.438" viewBox="0 0 14.332 14.438">
+  <g id="Ellipse_292" data-name="Ellipse 292" fill="#2e436c" stroke="#00c4ff" stroke-width="1">
+    <ellipse cx="7.166" cy="7.219" rx="7.166" ry="7.219" stroke="none"/>
+    <ellipse cx="7.166" cy="7.219" rx="6.666" ry="6.719" fill="none"/>
+  </g>
+  <text id="i" transform="translate(5.666 10.719)" fill="#00c4ff" font-size="10" font-family="Space Grotesk, sans-serif" font-weight="700"><tspan x="0" y="0">i</tspan></text>
+</svg>

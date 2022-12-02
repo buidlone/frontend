@@ -6,6 +6,7 @@ interface Props {
   posRef?: any;
   delay?: number;
   placement: string;
+  nowrap?: boolean;
 }
 
 export const StyledTooltip = styled.span<Props>`
@@ -15,7 +16,7 @@ export const StyledTooltip = styled.span<Props>`
 
   z-index: 9999;
   display: inline-block;
-  white-space: wrap;
+
   pointer-events: none;
 
   opacity: ${(props) => props.show};
@@ -26,10 +27,10 @@ export const StyledTooltip = styled.span<Props>`
   border-radius: 13px;
   padding: 13px 13px;
 
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  color: #00c4ff;
   font-family: "Barlow", sans-serif;
-  max-width: 310px;
+
   font-weight: 300;
 
   transition-property: transform, opacity !important;
@@ -38,6 +39,20 @@ export const StyledTooltip = styled.span<Props>`
   transition-delay: ${(props) => (props.show ? props.delay : 0.02)}s !important;
   transform-origin: ${(props) => position(props.placement).negate()};
   transform: scale(${(props) => (props.show ? 1 : 0.7)});
+
+  ${(props) => {
+    if (props.nowrap) {
+      return `
+      white-space: nowrap;
+       
+      `;
+    } else {
+      return `
+      max-width: 310px;
+      white-space: wrap;
+      `;
+    }
+  }};
 
   &:after {
     content: "";

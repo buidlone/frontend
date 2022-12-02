@@ -270,13 +270,9 @@ const InvestModal = ({
                       hardCap.sub(totalInvested)
                     ) || "Unable to invest above Hard Cap",
                   belowBalance: (value) =>
-                    BigNumber.from(ethers.utils.parseEther(value)).lt(
+                    BigNumber.from(ethers.utils.parseEther(value)).lte(
                       BigNumber.from(ethers.utils.parseEther(balance))
-                    ) ||
-                    BigNumber.from(ethers.utils.parseEther(value)).eq(
-                      BigNumber.from(ethers.utils.parseEther(balance))
-                    ) ||
-                    "Insufficient token balance",
+                    ) || "Insufficient token balance",
                   positive: (value) =>
                     BigNumber.from(ethers.utils.parseEther(value)).gt(
                       BigNumber.from(0)
