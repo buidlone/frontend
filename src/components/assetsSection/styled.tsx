@@ -34,7 +34,7 @@ export const StateButton = styled.button`
 `;
 
 export const ButtonsWrapper = styled.div`
-  margin: 1.875rem 0 7rem 0;
+  margin: 1.875rem 0 50px 0;
   width: 100%;
   display: flex;
   align-items: start;

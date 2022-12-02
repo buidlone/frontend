@@ -1,101 +1,35 @@
 import {
-  TableButton,
-  TableLink,
   ActiveBlockWrapper,
   Table,
-  Footer,
-  ButtonsWrapper,
+  RoundImgWrapper,
+  StatusBubble,
 } from "./styled";
-import DiscordImg from "../../../public/DiscordSmall.png";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-import TokenStreamTable from "../tokenStreamTable";
-import Accordion from "../accordion";
-import { InlineWrapper } from "../timelineBlock/styled";
-import InvestModal from "../investModal";
-import Modal from "../modal";
 import Web3Context from "../../context/web3Context";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
-import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
-import { toast } from "react-toastify";
-import ProjectState from "../projectState";
-import { getProjectState } from "../../utils/getProjectState";
+import ProjectState, { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import { stopProject } from "../../web3/stopProject";
-import { getVotingTokens } from "../../web3/getVotingTokens";
-import { isStopAllowed } from "../../web3/isStopAllowed";
+import LogoBuidl from "../../../public/logoNew.svg";
+import { AccordionButtonIcon } from "../accordionContent/styled";
+import DetailedPortfolio from "../detailedPortfolio";
 
-const items = [
-  {
-    name: "Your detailed project token stream",
-    content: <TokenStreamTable assets />,
-  },
-];
 
 const ActiveBlock = ({
   setIsShownStop,
   setIsShownWrong,
-  setIsShownInvest,
 }: any) => {
   const [
     totalIndividualInvestedToProject,
     setTotalIndividualInvestedToProject,
   ] = useState(0);
-  const [flip1, setFlip1] = useState(true);
-  const [flip2, setFlip2] = useState(true);
-  const [flip3, setFlip3] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [stopDisabled, setStopDisabled] = useState(false);
-  const [investDisabled, setInvestDisabled] = useState(false);
-  const [isAllowed, setIsAllowed] = useState(true);
-
   const {
-    projectState,
-    totalInvested,
-    hardCap,
     currency,
-    milestones,
-    currentMilestone,
   } = useContext(LoadedValuesContext);
-
-  const { web3Provider, connect, address } = useContext(Web3Context);
-
-  const handleClick = () => {
-    if (isAllowed) {
-      web3Provider && setShowModal(true);
-    } else {
-      toast.info(getProjectState(projectState));
-      setInvestDisabled(true);
-    }
-  };
-
-  const handleConnectClick = async () => {
-    if (isAllowed) {
-      if (connect) {
-        const isConnected = await connect();
-        typeof isConnected !== "boolean" && setShowModal(true);
-      }
-    } else {
-      toast.info(getProjectState(projectState));
-      setInvestDisabled(true);
-    }
-  };
-
-  const handleStop = async () => {
-    if (web3Provider) {
-      const stopped = await stopProject(web3Provider, address);
-      if (stopped === true) {
-        setIsShownStop(true);
-      } else if (stopped === false) setIsShownWrong(true);
-    }
-  };
+  const [showMore, setShowMore] = useState(false);
+  const { web3Provider, address } = useContext(Web3Context);
 
   useEffect(() => {
-    setIsAllowed(isInvestingAllowed(projectState, hardCap, totalInvested));
-    setStopDisabled(
-      isStopAllowed(projectState, currentMilestone, address, web3Provider)
-    );
-
     if (web3Provider) {
       getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
         setTotalIndividualInvestedToProject(data.totalAmountInvested);
@@ -103,129 +37,67 @@ const ActiveBlock = ({
     } else {
       setTotalIndividualInvestedToProject(0);
     }
-  });
-
-  useEffect(() => {
-    if (web3Provider) {
-      setStopDisabled(false);
-    } else {
-      setStopDisabled(true);
-    }
-  }, [web3Provider]);
-
-  const showFunds = () => {
-    setFlip1(!flip1);
-  };
-  const showTokens = () => {
-    setFlip2(!flip2);
-  };
-  const showVoting = () => {
-    setFlip3(!flip3);
-  };
+  }, []);
 
   return (
     <ActiveBlockWrapper>
-      <Table>
+      <Table id="main" cellSpacing="0" className="colored">
         <thead>
-          <th className="bigger">Project</th>
-          <th>Milestone</th>
-          <th>Funds</th>
-          <th>Project tokens</th>
-          <th>Voting</th>
-          <th>State</th>
+          <th>Project</th>
+          <th>Launchpad</th>
+          <th>Invested</th>
+          <th>Voting power</th>
         </thead>
         <tbody>
-          <tr>
-            <td className="underlined blue bigger">Buidl1</td>
-            <td className="white bigger">
-              {currentMilestone}/{milestones.length}
+          <tr style={{ background: "rgba(46, 49, 77, 0.1)" }}>
+            <td className="underlined blue bigger flex">
+              <RoundImgWrapper>
+                <StatusBubble color={StatusColor} />
+                <Image
+                  src={LogoBuidl}
+                  alt="buidl logo"
+                  width="20px"
+                  height="20px"
+                />
+              </RoundImgWrapper>
+              Buidl1 protocol
+            </td>
+            <td className="underlined blue bigger ">
+              buidl.one
             </td>
             <td
-              onMouseOver={showFunds}
-              onMouseOut={showFunds}
-              className="green flippable"
+              className="greenText bigger"
             >
-              {flip1
-                ? `${totalIndividualInvestedToProject} ${currency.label}`
-                : `0 ${currency.label}`}
+              {totalIndividualInvestedToProject} {currency.label}
+       
             </td>
-            <td
-              onMouseOver={showTokens}
-              onMouseOut={showTokens}
-              className="blue flippable"
-            >
-              {flip2 ? "125/5000 DPP" : "125 DPP"}
-            </td>
-            <td
-              onMouseOver={showVoting}
-              onMouseOut={showVoting}
-              className="orange bigger flippable"
-            >
-              {flip3 ? "5%" : "500 tickets"}
-            </td>
-            <td>
+    
+            <td className="flexGap">
               <ProjectState />
+              <AccordionButtonIcon
+                style={{
+                  color: "white",
+                  right: "20px",
+                  position: "absolute",
+                  top: "35px",
+                }}
+                onClick={() => setShowMore(!showMore)}
+                isActive={showMore}
+                className="material-icons"
+              >
+                expand_more
+              </AccordionButtonIcon>
             </td>
           </tr>
-          <tr>
-            <td />
-            <td />
-            <td>{flip1 ? "Invested" : "In use"}</td>
-            <td>{flip2 ? "Tokens collected" : "Tokens claimed"}</td> <td />
-            <td />
-          </tr>
+
+          {showMore && (
+            <DetailedPortfolio />
+          )}
         </tbody>
       </Table>
-      <Footer>
-        <ButtonsWrapper>
-          <InlineWrapper>
-            <Image
-              src={DiscordImg}
-              alt="discord logo"
-              height={"26px"}
-              width={"26px"}
-            />
-            <TableLink>Project discussion</TableLink>
-          </InlineWrapper>
-
-          <TableButton
-            disabled={stopDisabled}
-            className="stopBtn"
-            onClick={handleStop}
-          >
-            STOP
-          </TableButton>
-          <TableButton className="claimBtn">Claim tokens</TableButton>
-          {web3Provider ? (
-            <>
-              <TableButton
-                disabled={!isAllowed}
-                className="invBtn"
-                onClick={handleClick}
-              >
-                Invest
-              </TableButton>
-            </>
-          ) : (
-            <>
-              <TableButton className="invBtn" onClick={handleConnectClick}>
-                Invest
-              </TableButton>{" "}
-            </>
-          )}
-
-          <Modal show={showModal}>
-            <InvestModal
-              setIsShownInvest={setIsShownInvest}
-              setIsShownWrong={setIsShownWrong}
-              onClose={() => setShowModal(false)}
-            />
-          </Modal>
-        </ButtonsWrapper>
-        <Accordion items={items} />
-      </Footer>
     </ActiveBlockWrapper>
   );
 };
 
 export default ActiveBlock;
+
