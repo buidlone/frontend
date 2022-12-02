@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import { useContext } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import ProjectContext from "../../context/projectContext";
@@ -21,16 +22,12 @@ export const featuredProject = {
   end: "23D 03H 30M 23S",
 };
 
-
-
 const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
   const featuredProject = useContext(ProjectContext);
   const { totalInvested, currency, milestones, currentMilestone } =
     useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
-    
-    
 
   return (
     <DetailsBlockWrapper>
@@ -46,7 +43,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
           </FlexItem1>
           <FlexItem1>
             <Data>
-              {totalInvested} {currency.label}
+              {ethers.utils.formatEther(totalInvested)} {currency.label}
             </Data>
 
             <Data>
@@ -92,7 +89,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
           </FlexItem1>
           <FlexItem1>
             <Data>
-              {totalInvested} {currency.label}
+              {ethers.utils.formatEther(totalInvested)} {currency.label}
             </Data>
 
             <Data>

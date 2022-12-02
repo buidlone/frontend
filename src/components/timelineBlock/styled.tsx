@@ -110,7 +110,7 @@ export const InlineWrapper = styled.div`
   gap: 0.5rem;
 `;
 
-export const InfoIcon = styled.div`
+export const InfoIcon = styled.span`
   width: 14px;
   height: 14px;
   border-radius: 50%;

@@ -22,22 +22,6 @@
     "type": "error"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "givenAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "investedAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "InvestmentPool__AmountIsGreaterThanInvested",
-    "type": "error"
-  },
-  {
     "inputs": [],
     "name": "InvestmentPool__CannotInvestAboveHardCap",
     "type": "error"
@@ -60,12 +44,12 @@
   },
   {
     "inputs": [],
-    "name": "InvestmentPool__GelatoEthTransferFailed",
+    "name": "InvestmentPool__GelatoMilestoneStreamTerminationUnavailable",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "InvestmentPool__GelatoMilestoneStreamTerminationUnavailable",
+    "name": "InvestmentPool__GelatoTaskAlreadyStarted",
     "type": "error"
   },
   {
@@ -105,7 +89,7 @@
   },
   {
     "inputs": [],
-    "name": "InvestmentPool__NotGelatoOps",
+    "name": "InvestmentPool__NotGelatoDedicatedSender",
     "type": "error"
   },
   {
@@ -219,6 +203,25 @@
       }
     ],
     "name": "Invest",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
     "type": "event"
   },
   {
@@ -592,26 +595,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      }
-    ],
-    "name": "claim",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "deleteGelatoTask",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "didFundraiserPeriodEnd",
     "outputs": [
@@ -635,25 +618,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_milestoneId",
-        "type": "uint256"
-      }
-    ],
-    "name": "encodeGelatoTerminationWithSelector",
-    "outputs": [
-      {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -692,7 +656,7 @@
     "name": "getAcceptedToken",
     "outputs": [
       {
-        "internalType": "contract ISuperToken",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -897,10 +861,36 @@
   },
   {
     "inputs": [],
+    "name": "getGelatoDedicatedMsgSender",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getGelatoOps",
     "outputs": [
       {
-        "internalType": "contract IGelatoOps",
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getGelatoOpsProxyFactory",
+    "outputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -926,7 +916,7 @@
     "name": "getGovernancePool",
     "outputs": [
       {
-        "internalType": "contract IGovernancePool",
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -942,6 +932,19 @@
         "internalType": "uint96",
         "name": "",
         "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getHardCapMultiplier",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -995,44 +998,6 @@
       }
     ],
     "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      }
-    ],
-    "name": "getMemMilestoneInvestments",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
-      }
-    ],
-    "name": "getMemMilestonePortions",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1169,63 +1134,11 @@
   },
   {
     "inputs": [],
-    "name": "getPrivateFundingMultiplier",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "getProjectStateByteValue",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "stateNumber",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getPublicFundingMultiplier",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getSeedFundingLimit",
-    "outputs": [
-      {
-        "internalType": "uint96",
-        "name": "",
-        "type": "uint96"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getSeedFundingMultiplier",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
         "type": "uint256"
       }
     ],
@@ -1240,6 +1153,19 @@
         "internalType": "uint96",
         "name": "",
         "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSoftCapMultiplier",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1375,23 +1301,16 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "getVotingTokensSupplyCap",
+    "outputs": [
       {
         "internalType": "uint256",
-        "name": "_milestoneId",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "ifNeededUpdateMemInvestmentValue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "increaseMilestone",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1402,7 +1321,7 @@
         "type": "address"
       },
       {
-        "internalType": "contract IGelatoOps",
+        "internalType": "address payable",
         "name": "_gelatoOps",
         "type": "address"
       },
@@ -1417,11 +1336,6 @@
             "internalType": "address",
             "name": "creator",
             "type": "address"
-          },
-          {
-            "internalType": "uint96",
-            "name": "seedFundingLimit",
-            "type": "uint96"
           },
           {
             "internalType": "uint96",
@@ -1462,17 +1376,12 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "seedFundingMultiplier",
+            "name": "softCapMultiplier",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "privateFundingMultiplier",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "publicFundingMultiplier",
+            "name": "hardCapMultiplier",
             "type": "uint256"
           }
         ],
@@ -1544,19 +1453,6 @@
   {
     "inputs": [],
     "name": "isAnyMilestoneOngoing",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "isAnyMilestoneOngoingAndActive",
     "outputs": [
       {
         "internalType": "bool",
@@ -1712,33 +1608,27 @@
   },
   {
     "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "refund",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_milestone",
-        "type": "uint256"
-      }
-    ],
-    "name": "setCurrentMilestone",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_timestamp",
-        "type": "uint256"
-      }
-    ],
-    "name": "setTimestamp",
+    "inputs": [],
+    "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1754,61 +1644,24 @@
     "inputs": [],
     "name": "startGelatoTask",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_id",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "name": "terminateMilestoneStreamFinal",
+    "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "timestamp",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_paymentToken",
-        "type": "address"
-      }
-    ],
-    "name": "transferGelatoFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
     "name": "unpledge",
     "outputs": [],
     "stateMutability": "nonpayable",

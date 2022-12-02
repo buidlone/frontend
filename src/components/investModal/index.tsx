@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {
   IModalHeader,
@@ -39,6 +38,7 @@ import { getTokenBalance } from "../../web3/getTokenBalance";
 import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { invest } from "../../web3/invest";
+import { BigNumber, ethers } from "ethers";
 
 const items = [
   {
@@ -48,7 +48,7 @@ const items = [
 ];
 
 interface InputTypes {
-  amount: number;
+  amount: string;
   checkbox: boolean;
 }
 
@@ -83,6 +83,7 @@ const InvestModal = ({
     setValue,
     getValues,
     trigger,
+
     formState: { errors, isValid },
   } = useForm<InputTypes>({
     mode: "onChange",
@@ -102,7 +103,7 @@ const InvestModal = ({
   });
 
   const { web3Provider, address } = useContext(Web3Context);
-  const [balance, setBalance] = useState<number>(0);
+  const [balance, setBalance] = useState<string>("0");
   const [network, setNetwork] = useState<string | undefined>(undefined);
   const [networkError, setNetworkError] = useState<string | undefined>(
     undefined
@@ -150,7 +151,7 @@ const InvestModal = ({
           if (data) {
             setBalance(data);
           } else {
-            setBalance(0);
+            setBalance("0");
           }
         }
       );
@@ -206,7 +207,7 @@ const InvestModal = ({
           if (data) {
             setBalance(data);
           } else {
-            setBalance(0);
+            setBalance("0");
           }
         }
       );
@@ -217,6 +218,19 @@ const InvestModal = ({
   let domNode: any = useClickOutside(() => {
     onClose();
   });
+
+  const handleAmountChange = (value: string) => {
+    if (value !== "0" && value !== "") {
+      try {
+        BigNumber.from(ethers.utils.parseEther(value));
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    }
+    return true;
+  };
 
   return (
     <IModalWrapper ref={domNode}>
@@ -244,20 +258,25 @@ const InvestModal = ({
             </CurrencyInline>
             <InputField
               type="number"
+              autoComplete="off"
               onKeyDown={handleKeyDown}
               {...register("amount", {
                 required: "This field is required",
-                valueAsNumber: true,
                 validate: {
+                  errorBN: (value) =>
+                    handleAmountChange(value) || "Unable to invest below 1 WEI",
                   belowHardCap: (value) =>
-                    value < hardCap - totalInvested ||
-                    "Unable to invest above Hard Cap",
+                    BigNumber.from(ethers.utils.parseEther(value)).lt(
+                      hardCap.sub(totalInvested)
+                    ) || "Unable to invest above Hard Cap",
                   belowBalance: (value) =>
-                    value < balance ||
-                    value === balance ||
-                    "Insufficient token balance",
+                    BigNumber.from(ethers.utils.parseEther(value)).lte(
+                      BigNumber.from(ethers.utils.parseEther(balance))
+                    ) || "Insufficient token balance",
                   positive: (value) =>
-                    value > 0 || "Invested amount must be greater than 0",
+                    BigNumber.from(ethers.utils.parseEther(value)).gt(
+                      BigNumber.from(0)
+                    ) || "Invested amount must be greater than 0",
                 },
               })}
             />

@@ -1,5 +1,4 @@
-import { info } from "console";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
@@ -54,6 +53,7 @@ export default function FundingBlock({
         <FContainer>
           <FundingRoadmap />
           <BottomWrapper>
+            <StyledA>Learn about ROI and how it works</StyledA>
             {web3Provider ? (
               <>
                 <GreenButton onClick={handleClick}>Invest</GreenButton> <br />
@@ -72,7 +72,6 @@ export default function FundingBlock({
                 onClose={() => setShowModal(false)}
               />
             </Modal>
-            <StyledA>Learn about ROI and how it works</StyledA>
           </BottomWrapper>
         </FContainer>
       </BlockWrapper>

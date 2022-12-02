@@ -30,19 +30,21 @@ const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
     setMax((prev) =>
       allInvestors.reduce(
         (max, p) => (p.amount.gt(max) ? p.amount : max),
-        allInvestors[0].amount
+        allInvestors[0]?.amount
       )
     );
     setMin((prev) =>
       allInvestors.reduce(
         (min, p) => (p.amount.lt(min) ? p.amount : min),
-        allInvestors[0].amount
+        allInvestors[0]?.amount
       )
     );
   };
 
   useEffect(() => {
-    findLowHigh();
+    if (allInvestors.length !== 0) {
+      findLowHigh();
+    }
   }, [allInvestors]);
 
   return (
@@ -72,10 +74,14 @@ const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
                 <BarChartColumn
                   key={index}
                   amount={
-                    5 +
-                    ((Number(inv.amount) - Number(min)) /
-                      (Number(max) - Number(min))) *
-                      95
+                    allInvestors.length === 1
+                      ? 100
+                      : 5 +
+                        (Number(
+                          ((Number(inv.amount) - Number(min)) /
+                            (Number(max) - Number(min))) *
+                            95
+                        ) || 0)
                   }
                 />
               );

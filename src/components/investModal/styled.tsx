@@ -129,6 +129,7 @@ export const InputField = styled.input`
     letter-spacing: 0px;
     color: #00ffc4;
     opacity: 1;
+    width: 71.5%;
   }
 `;
 export const IModalFieldWrapper = styled.div`
@@ -173,12 +174,12 @@ export const CurrencyInline = styled.div`
 export const BalanceBtn = styled.div`
   white-space: nowrap;
   cursor: default;
-  gap: 0.5rem;
+  gap: 0.2rem;
   display: flex;
   text-align: left;
   position: absolute;
   right: 0%;
-  top: -5%;
+  //top: 0%;
 `;
 export const MaxBalanceBtn = styled.button`
   max-width: 2rem;

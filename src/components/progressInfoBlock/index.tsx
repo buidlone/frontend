@@ -23,6 +23,7 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
 import { isStopAllowed } from "../../web3/isStopAllowed";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
+import { ethers } from "ethers";
 
 const ProgressInfoBlock = ({
   wallets,
@@ -57,7 +58,7 @@ const ProgressInfoBlock = ({
         setVotingTokenBalance(data?.votingTokenBalance);
       });
     }
-  }, [web3Provider, totalInvested]);
+  }, [web3Provider, totalInvested._hex]);
 
   useEffect(() => {
     setStopDisabled(
@@ -92,7 +93,7 @@ const ProgressInfoBlock = ({
 
       <DetailsInfoWrapper>
         <Data>
-          {totalInvested} {currency.label}
+          {ethers.utils.formatEther(totalInvested)} {currency.label}
         </Data>
 
         <Data>

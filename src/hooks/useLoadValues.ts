@@ -20,15 +20,15 @@ const provider = new ethers.providers.JsonRpcProvider(
 export const loadedValuesInitialState: ILoadedValues = {
   seedFundingLimit: 0,
   softCap: {
-    amount: 0,
+    amount: BigNumber.from(0),
     isReached: false,
   },
-  totalInvested: 0,
+  totalInvested: BigNumber.from(0),
   fundraisingStartDate: "",
   fundraisingEndDate: "",
   milestones: [],
   currentMilestone: -1,
-  hardCap: 0,
+  hardCap: BigNumber.from(0),
   projectState: 0,
   currency: {
     value: "",
@@ -47,11 +47,13 @@ export const loadedValuesInitialState: ILoadedValues = {
 export const useLoadValues = () => {
   const [seedFundingLimit, setSeedFundingLimit] = useState<number>(0);
   const [softCap, setSoftCap] = useState<SoftCap>({
-    amount: 0,
+    amount: BigNumber.from(0),
     isReached: false,
   });
-  const [hardCap, setHardCap] = useState<number>(0);
-  const [totalInvested, setTotalInvested] = useState<number>(0);
+  const [hardCap, setHardCap] = useState<BigNumber>(BigNumber.from(0));
+  const [totalInvested, setTotalInvested] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
   const [fundraisingStartDate, setFundraisingStartDate] = useState<string>("");
   const [fundraisingEndDate, setFundraisingEndDate] = useState<string>("");
   const [milestones, setMilestones] = useState<Milestone[]>([]);
@@ -104,7 +106,7 @@ export const useLoadValues = () => {
           provider
         );
 
-        const seedFundingLimit = await contract.getSeedFundingLimit();
+        //const seedFundingLimit = await contract.getSeedFundingLimit();
         const totalInvested = await contract.getTotalInvestedAmount();
         const softCap = await contract.getSoftCap();
         const hardCap = await contract.getHardCap();
@@ -162,13 +164,13 @@ export const useLoadValues = () => {
           ]);
         }
 
-        setSeedFundingLimit(Number(ethers.utils.formatEther(seedFundingLimit)));
-        setTotalInvested(Number(ethers.utils.formatEther(totalInvested)));
+        //setSeedFundingLimit(Number(ethers.utils.formatEther(seedFundingLimit)));
+        setTotalInvested(totalInvested);
         setSoftCap({
-          amount: Number(ethers.utils.formatEther(softCap)),
+          amount: softCap,
           isReached: isSoftCapReached,
         });
-        setHardCap(Number(ethers.utils.formatEther(hardCap)));
+        setHardCap(hardCap);
         setFundraisingStartDate(fundraisingStartDate);
         setFundraisingEndDate(fundraisingEndDate);
 

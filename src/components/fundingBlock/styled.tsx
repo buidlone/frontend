@@ -12,10 +12,14 @@ export const BlockWrapper = styled.div`
 export const FContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
+  
   width: 100%;
   height: 100%;
-  gap: 20%;
+  gap: 30%;
+  padding-top: 22%;
+  padding-bottom: 4%;
+  
 `;
 
 export const Title = styled.text`
@@ -26,18 +30,16 @@ export const Title = styled.text`
 
 export const StyledA = styled.a`
   color: #00ffc4;
-  font-size: 14px;
+  font-family: "IBM Plex Sans" sans-serif !important;
+  font-size: 11px;
   text-decoration: underline;
   text-align: center;
-  bottom: -30px;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
 `;
 
 export const GreenButton = styled.button`
-  width: 55%;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 200;
+  width: 50%;
   height: 40px;
   color: white;
   text-align: center;
@@ -45,13 +47,12 @@ export const GreenButton = styled.button`
   transition: 9s ease-in;
   transform: translateX(0);
   cursor: pointer;
-  margin-left: auto;
-  margin-right: auto;
-  background: transparent linear-gradient(120deg, #00ffc4 0%, #008062 100%) 0%
+  background: transparent linear-gradient(167deg, #3aedc4 0%, #469898 100%) 0%
     0% no-repeat padding-box;
   border: 1px solid #00ffc4;
   border-radius: 12px;
   opacity: 1;
+  margin-left: auto;
 
   &:hover {
     background: transparent linear-gradient(168deg, #3a8372 0%, #00ffc4 100%) 0%
@@ -61,5 +62,8 @@ export const GreenButton = styled.button`
 
 export const BottomWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;

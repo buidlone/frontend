@@ -15,7 +15,7 @@ export type Milestone = {
 };
 
 export type SoftCap = {
-  amount: number;
+  amount: BigNumber;
   isReached: boolean;
 };
 
@@ -27,17 +27,17 @@ export type Currency = {
 };
 
 export interface ILoadedValues {
-  seedFundingLimit: number;
+  seedFundingLimit: number;  //will be removed
   softCap: SoftCap;
-  hardCap: number;
-  totalInvested: number;
+  hardCap: BigNumber;
+  totalInvested: BigNumber;
   fundraisingStartDate: string;
   fundraisingEndDate: string;
   milestones: Milestone[];
   currentMilestone: number;
   projectState: number;
   currency: Currency;
-  setTotalInvested: React.Dispatch<React.SetStateAction<number>>;
+  setTotalInvested: React.Dispatch<React.SetStateAction<BigNumber>>;
   allInvestors: IInvestor[];
   setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   percentageDivider: BigNumber;

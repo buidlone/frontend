@@ -1,17 +1,57 @@
+import Image from "next/image";
 import styled, { css } from "styled-components";
 
 interface Props {
   progress?: number;
-  funds?: number;
+  funds?: string;
   currency?: string;
   softCapPosition?: number;
 }
 
 export const FProgressWrapper = styled.div`
-  margin: 18% 10% 1% 10%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const FundsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  font-size: 14px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 300;
+  padding-top: 1.3%;
+
+  .required {
+    color: #f0f0f0;
+  }
+
+  .total {
+    color: #3aedc4;
+  }
+`;
+
+export const InlineLabel = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.3%;
+  width: 100%;
+  align-items: flex-end;
+  padding-bottom: 2%;
+
+  & > div {
+    margin-bottom: -3.3px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+    color: #f0f0f0;
+  }
 `;
 
 export const FProgress = styled.div<Props>`
@@ -29,8 +69,8 @@ export const FundsIndicator = styled.div<Props>`
   border-left: 2px solid #d1d1d1;
   position: absolute;
   left: 100%;
-
   z-index: 99999;
+
   &:after {
     content: "${(props) => props?.funds} ${(props) => props?.currency}";
     position: absolute;
@@ -45,7 +85,7 @@ export const FundsIndicator = styled.div<Props>`
 
 export const FundsBar = styled.div`
   width: 100%;
-  height: 7px;
+  height: 0.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,12 +94,13 @@ export const FundsBar = styled.div`
   &:before,
   & > ${FProgress} {
     content: "";
+    border-radius: 12px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: 7px;
+    height: 100%;
     width: 100%;
-    background-color: #00c4ff8f;
+    background-color: #2b3453;
     opacity: 0.5;
   }
 `;
