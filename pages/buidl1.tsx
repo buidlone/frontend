@@ -18,6 +18,7 @@ import { getAllInvestments } from "../src/web3/getAllInvestments";
 import StopStatus from "../src/components/statusNotification/stopStatus";
 import WrongStatus from "../src/components/statusNotification/wrongStatus";
 import InvestStatus from "../src/components/statusNotification/investStatus";
+import Buidl1Header from "../src/components/buidl1Header";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
@@ -35,7 +36,7 @@ const Buidl1 = () => {
   useEffect(() => {
     const uniqueInv = [
       ...Array.from(
-        new Set(loadedValuesState.allInvestors.map((item) => item.caller))
+        new Set(loadedValuesState?.allInvestors.map((item) => item.caller))
       ),
     ];
     setWallets((prev) => uniqueInv);
@@ -43,28 +44,39 @@ const Buidl1 = () => {
 
   return loadedValuesState.fundraisingStartDate !== "" ? (
     <>
-      {!isShownStop || !isShownWrong || (!isShownInvest && <BgImage isFixed />)}
+      {!isShownStop || !isShownWrong || !isShownInvest ? (
+        <BgImage isFixed />
+      ) : (
+        ""
+      )}
 
-      <Container>
-        {/* <InvestStatus /> */}
-        {isShownStop ? (
+      {/* <InvestStatus /> */}
+
+      {isShownStop ? (
+        <Container>
           <StopStatus setIsShownStop={setIsShownStop} />
-        ) : isShownWrong ? (
-          <WrongStatus setIsShownWrong={setIsShownWrong} />
-        ) : isShownInvest ? (
-          <InvestStatus setIsShownInvest={setIsShownInvest} />
-        ) : (
-          <>
-            <LogoWrapper>
+        </Container>
+      ) : isShownWrong ? (
+        <Container>
+          <WrongStatus setIsShownWrong={setIsShownWrong} />{" "}
+        </Container>
+      ) : isShownInvest ? (
+        <Container>
+          <InvestStatus setIsShownInvest={setIsShownInvest} />{" "}
+        </Container>
+      ) : (
+        <>
+          {/* <LogoWrapper>
               <Image src={BuidlLogo} />
             </LogoWrapper>
             <ProjectHeader
               text={"Project 1 - BUIDL 1 - Self raising capital"}
               stage={"STAGE 1"}
-            />
-          </>
-        )}
-
+            /> */}
+          <Buidl1Header />
+        </>
+      )}
+      <Container>
         <FeaturesSec>
           <FundingBlock
             setIsShownInvest={setIsShownInvest}

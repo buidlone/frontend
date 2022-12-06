@@ -13,24 +13,23 @@ export const FContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  
+
   width: 100%;
   height: 100%;
   gap: 30%;
   padding-top: 22%;
   padding-bottom: 4%;
-  
 `;
 
 export const Title = styled.text`
   color: rgb(255 255 255 / 50%);
   font-size: 12px;
-  font-family: "IBM Plex Sans" sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
 `;
 
 export const StyledA = styled.a`
   color: #00ffc4;
-  font-family: "IBM Plex Sans" sans-serif !important;
+  font-family: "IBM Plex Sans", sans-serif !important;
   font-size: 11px;
   text-decoration: underline;
   text-align: center;

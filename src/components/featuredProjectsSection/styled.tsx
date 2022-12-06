@@ -6,7 +6,7 @@ export const FeatureTitle = styled.p`
   text-align: center;
   font-size: 22px;
   margin: auto;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 300;
 `;
 
@@ -38,7 +38,7 @@ export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
 export const ProjectName = styled.p`
   font-size: 30px;
   color: rgba(255, 255, 255, 1);
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 300;
   margin: 0;
 `;
