@@ -15,7 +15,7 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 import { dateDiff } from "../../utils/getDateDifference";
 
 const TimelineBlock = () => {
-  const [active, setActive] = useState(2);
+  const [active, setActive] = useState(1);
   const [status, setStatus] = useState(3);
   const { fundraisingStartDate, fundraisingEndDate, milestones } =
     useContext(LoadedValuesContext);
@@ -59,12 +59,12 @@ const TimelineBlock = () => {
           >
             x1
           </XButton>
-          <XButton
+          {/* <XButton
             className={active === 2 ? "selected" : ""}
             onClick={() => setActive(2)}
           >
             x2
-          </XButton>
+          </XButton> */}
           <XButton
             disabled={status === 2 ? true : false}
             className={`${active === 3 ? "selected" : ""} ${
@@ -72,13 +72,13 @@ const TimelineBlock = () => {
             }`}
             onClick={() => setActive(3)}
           >
-            x3
+            x2
           </XButton>
         </InlineWrapper>
       </TopWrapper>
 
       {active === 1 && <TimelineGraph scale={1} />}
-      {active === 2 && <TimelineGraph scale={2} />}
+      {/* {active === 2 && <TimelineGraph scale={2} />} */}
       {active === 3 && <TimelineGraph scale={3} />}
 
       <BottomWrapper>

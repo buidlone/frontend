@@ -21,7 +21,7 @@ export const FundsWrapper = styled.div`
   width: 100%;
 
   font-size: 14px;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 300;
   padding-top: 1.3%;
 
@@ -45,7 +45,7 @@ export const InlineLabel = styled.div`
 
   & > div {
     margin-bottom: -3.3px;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 300;
     font-size: 14px;
     text-align: center;
@@ -75,7 +75,7 @@ export const FundsIndicator = styled.div<Props>`
     content: "${(props) => props?.funds} ${(props) => props?.currency}";
     position: absolute;
     font-size: 0.625rem;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     color: #00ffc4;
     bottom: -40%;
     left: -2.2rem;

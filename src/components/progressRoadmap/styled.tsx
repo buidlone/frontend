@@ -58,7 +58,7 @@ export const ProgressRoadmapWrapper = styled.div`
 export const Title = styled.text`
   color: rgb(255 255 255 / 50%);
   font-size: 12px;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
 `;
 export const Progress = styled.div<Props>`
   background-color: #00c4ff;

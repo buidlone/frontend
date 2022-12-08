@@ -7,7 +7,7 @@ interface ConnectProps {
 }
 const ConnectButton = ({ connect }: ConnectProps) => {
   return connect ? (
-    <ConnectWalletBtn onClick={connect}>Connect</ConnectWalletBtn>
+    <ConnectWalletBtn onClick={connect}>Connect wallet</ConnectWalletBtn>
   ) : (
     <ConnectWalletBtn>Loading...</ConnectWalletBtn>
   );
@@ -19,7 +19,7 @@ interface DisconnectProps {
 
 const DisconnectButton = ({ disconnect }: DisconnectProps) => {
   return disconnect ? (
-    <ConnectWalletBtn onClick={disconnect}>Disconnect</ConnectWalletBtn>
+    <ConnectWalletBtn onClick={disconnect}>Disconnect wallet</ConnectWalletBtn>
   ) : (
     <ConnectWalletBtn>Loading...</ConnectWalletBtn>
   );

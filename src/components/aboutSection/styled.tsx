@@ -16,8 +16,18 @@ export const AboutButton = styled.button`
   &:focus,
   &:hover,
   &.selected {
-    color: #ffffff;
-    border-bottom: 0.2px solid #ffffff;
+    color: #00c4ff;
+    position: relative;
+    //border-bottom: 0.2px solid #00c4ff;
+  }
+  &.selected::after {
+    content: "";
+    width: 75%;
+    position: absolute;
+    bottom: 0;
+    left: 12%;
+    color: #00c4ff;
+    border-bottom: 1px solid #00c4ff;
   }
 `;
 

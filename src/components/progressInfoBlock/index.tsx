@@ -1,17 +1,21 @@
 import { Property, Data } from "../detailsBlock/styled";
 import {
+  BottomBlock,
   BottomPartWrapper,
   BottomWrapper,
   DetailsCard,
   DetailsInfoWrapper,
   GreyLine,
-  InfoIconKeys,
-  KeysWrapper,
+  InlineBlock,
   OrangeButton,
+  UpperBlock,
+  VotingWrapper,
 } from "./styled";
 import Image from "next/image";
+import infoBubble from "../../../public/info_bubble.svg";
+import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import DiscordImg from "../../../public/DiscordSmall.png";
-import OrangeLock from "../../../public/OrangeLock.svg";
+import OrangeLock from "../../../public/yellow_lock.svg";
 import { TableLink } from "../activeBlock/styled";
 import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
@@ -34,12 +38,11 @@ const ProgressInfoBlock = ({
   const featuredProject = useContext(ProjectContext);
 
   const { web3Provider, address } = useContext(Web3Context);
-  const [votingTokensSupply, setVotingTokensSupply] = useState<
-    number | undefined
-  >(undefined);
-  const [votingTokenBalance, setVotingTokenBalance] = useState<
-    number | undefined
-  >(undefined);
+
+  // TODO: get voting power
+  const [votingPower, setVotingPower] = useState(0);
+  // TODO: get totalFundsForCuttingVotes
+  const [totalFundsForCuttingVotes, setTotalFundsForCuttingVotes] = useState(0);
   const {
     totalInvested,
     currency,
@@ -50,13 +53,17 @@ const ProgressInfoBlock = ({
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
   const [stopDisabled, setStopDisabled] = useState(false);
+  const [over, setOver] = useState(0);
 
   useEffect(() => {
     if (web3Provider && web3Provider?.network.chainId === 5) {
-      getVotingTokens(web3Provider, address).then((data) => {
-        setVotingTokensSupply(data?.votingTokensSupply);
-        setVotingTokenBalance(data?.votingTokenBalance);
-      });
+      // TODO: get voting power
+      // TODO: get totalFundsForCuttingVotes
+      setVotingPower(15);
+      setTotalFundsForCuttingVotes(7);
+    } else {
+      setVotingPower(0);
+      setTotalFundsForCuttingVotes(0);
     }
   }, [web3Provider, totalInvested._hex]);
 
@@ -86,9 +93,10 @@ const ProgressInfoBlock = ({
         <Property>Raised</Property>
         <Property>Milestones completed</Property>
         <Property>Participants</Property>
-        <Property>Funds released</Property>
+        <Property>Funds used</Property>
         <Property>Tokens reserved</Property>
-        <Property>Project ends in</Property>
+        <Property>Total votes for cutting funds</Property>
+        <Property>Project timeline</Property>
       </DetailsInfoWrapper>
 
       <DetailsInfoWrapper>
@@ -117,55 +125,54 @@ const ProgressInfoBlock = ({
           DPP
         </Data>
 
+        <Data className="votes">{totalFundsForCuttingVotes}%</Data>
+
         <Data>
           {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S
         </Data>
       </DetailsInfoWrapper>
+
       <GreyLine />
-      <BottomWrapper>
-        <BottomPartWrapper>
-          <KeysWrapper>
+      <BottomBlock>
+        <InlineBlock>
+          <VotingWrapper>
             <Image
               src={OrangeLock}
               alt={"Locked lock"}
-              height={"26px"}
-              width={"26px"}
+              height={"20px"}
+              width={"20px"}
             />
 
-            {web3Provider &&
-            votingTokenBalance !== undefined &&
-            votingTokensSupply !== undefined ? (
-              <>
-                <div>Keys activated</div>
-                <div>
-                  {" "}
-                  {votingTokenBalance} / {votingTokensSupply}
-                </div>
-                <Tooltip text={"Information about the keys"}>
-                  <InfoIconKeys />
-                </Tooltip>
-              </>
-            ) : (
-              <div>Connect to Goerli testnet to view the keys</div>
-            )}
-          </KeysWrapper>
-          <KeysWrapper>
-            <Image
-              src={DiscordImg}
-              alt={"Discord logo"}
-              height={"26px"}
-              width={"26px"}
-            />
-            <TableLink>Project discussion</TableLink>
-          </KeysWrapper>
-        </BottomPartWrapper>
-        <BottomPartWrapper className="centerItems">
+            <div>
+              Your word have <span className="votingPower">{votingPower}%</span>{" "}
+              impact
+            </div>
+
+            <div onMouseOver={() => setOver(1)} onMouseOut={() => setOver(0)}>
+              <Tooltip nowrap text={"Information about voting"}>
+                <Image
+                  src={over === 1 ? infoBubble : infoBubbleWhite}
+                  alt="information"
+                  height={"18px"}
+                  width={"18px"}
+                />
+              </Tooltip>
+            </div>
+          </VotingWrapper>
           <OrangeButton disabled={stopDisabled} onClick={handleStop}>
-            STOP
+            STOP cash flow
           </OrangeButton>
-          <TableLink>Trust us? Try burning the ticket</TableLink>
-        </BottomPartWrapper>
-      </BottomWrapper>
+        </InlineBlock>
+        <InlineBlock>
+          <Image
+            src={DiscordImg}
+            alt={"Discord logo"}
+            height={"26px"}
+            width={"26px"}
+          />
+          <TableLink>Project discussion</TableLink>
+        </InlineBlock>
+      </BottomBlock>
     </DetailsCard>
   );
 };

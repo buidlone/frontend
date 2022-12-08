@@ -2,19 +2,19 @@ import { useRouter } from "next/router";
 import {
   Nav,
   NavbarContainer,
-  NavLogo,
   NavLink,
   NavMenu,
   NavItem,
   ConnectWalletBtn,
   ButtonWrapper,
 } from "./styled";
-import logo from "../../../public/buidl1.svg";
+import logo from "../../../public/brandmark_blue.svg";
 import Link from "next/link";
 import React, { useContext } from "react";
 
 import Web3Context from "../../context/web3Context";
 import { Web3Button } from "../web3Button";
+import Image from "next/image";
 
 const Navbar = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <Nav>
       <NavbarContainer>
-        <NavLogo src={logo} />
+        <Image src={logo} alt={"logo"} height={"31.8px"} width={"31.8px"} />
         <NavMenu>
           <NavItem>
             <Link href="/projects" passHref>
@@ -44,7 +44,7 @@ const Navbar = () => {
           <NavItem>
             <Link href="/assets" passHref>
               <NavLink className={router.pathname == "/assets" ? "active" : ""}>
-            Portfolio
+                Portfolio
               </NavLink>
             </Link>
           </NavItem>
@@ -52,16 +52,6 @@ const Navbar = () => {
         {/* Address will not be displayed in the production version */}
         <ButtonWrapper>
           <Web3Button />
-          <div
-            style={{
-              color: "white",
-              fontSize: "9px",
-              position: "absolute",
-              bottom: "0",
-            }}
-          >
-            {address ? address : ""}
-          </div>
         </ButtonWrapper>
       </NavbarContainer>
     </Nav>

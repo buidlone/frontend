@@ -103,7 +103,7 @@ export const OutputField = styled.div`
   .voting1,
   .voting2 {
     text-align: left;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
     font-size: 14px;
     padding-left: 2px;
