@@ -36,7 +36,6 @@ export const BottomWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  background-color: red;
 
   .centerItems {
     align-items: end;
@@ -67,7 +66,6 @@ export const BottomPartWrapper = styled.div`
   flex-direction: column;
   justify-content: space-around;
   margin: 5px auto;
-  //background-color: red;
 `;
 
 export const OrangeButton = styled.button<isDisabled>`
@@ -101,22 +99,11 @@ export const VotingWrapper = styled.div`
   color: #ffb100;
   font-size: 14px;
   gap: 0.5rem;
-  //white-space: nowrap;
 
   .votingPower {
     font-weight: 600;
   }
 `;
-
-// export const InfoIconKeys = styled(InfoIcon)`
-//   width: 17px;
-//   height: 17px;
-//   padding: 0.7px 1px 0 0;
-
-//   &::after {
-//     font-size: 13px;
-//   }
-// `;
 
 export const BottomBlock = styled.div`
   height: 30%;

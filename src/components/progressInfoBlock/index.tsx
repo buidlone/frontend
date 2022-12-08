@@ -57,8 +57,8 @@ const ProgressInfoBlock = ({
 
   useEffect(() => {
     if (web3Provider && web3Provider?.network.chainId === 5) {
-      //get voting power
-      //get totalFunds for cuttinfg votes
+      // TODO: get voting power
+      // TODO: get totalFundsForCuttingVotes
       setVotingPower(15);
       setTotalFundsForCuttingVotes(7);
     } else {
@@ -172,8 +172,6 @@ const ProgressInfoBlock = ({
           />
           <TableLink>Project discussion</TableLink>
         </InlineBlock>
-
-        {/* <TableLink>Trust us? Try burning the ticket</TableLink> */}
       </BottomBlock>
     </DetailsCard>
   );

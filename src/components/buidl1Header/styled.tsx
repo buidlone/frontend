@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const BackgroundBlur = styled.div`
   background-image: url("/header_blur.png");
-  background-size: 103% 100%;
+  background-size: 103% 150%;
   background-repeat: no-repeat;
 `;
 
