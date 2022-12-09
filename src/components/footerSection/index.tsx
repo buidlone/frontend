@@ -4,14 +4,13 @@ import {
   FooterSectionWrapper,
   MainText,
   ContactsLine,
-  InputLine1,
-  InputLine2,
   LogoWrapper,
   InputWrapper,
+  CommunityLink,
 } from "./styled";
 import InstagramLogo from "../../../public/instagram_logo.svg";
 import TwitterLogo from "../../../public/twitter_logo.svg";
-import FacebookLogo from "../../../public/facebook_logo.svg";
+import LinkedinLogo from "../../../public/linkedin_logo.svg";
 import { BgImage } from "../../../styles/Container";
 
 export default function FooterSection() {
@@ -19,26 +18,27 @@ export default function FooterSection() {
     <FooterSectionWrapper>
       <FooterHeader>Start building with trust</FooterHeader>
       <MainText>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut ero labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco.
+      As buidl1 is a new and growing project, we await any feedback on what might be improved, what you look for in our platform or have any questions regarding upcoming projects that will be collaborated with.
+Don't hesitate to follow us on our social networks and join up on the discord community for lots of varied discussions and plain chatting.
       </MainText>
       <ContactsLine>
+      <InputWrapper>
+        <CommunityLink  href="https://discord.com/channels/998519974714941480/998519974714941483" target="_blank">
+        Join our community!
+          </CommunityLink >
+        </InputWrapper>
         <LogoWrapper>
-          <a href="">
+          <a href="https://twitter.com/buidlone" target="_blank">
             <Image src={TwitterLogo} />
           </a>
-          <a href="">
-            <Image src={FacebookLogo} />
+          <a href="https://www.linkedin.com/company/buidl1" target="_blank">
+            <Image src={LinkedinLogo} />
           </a>
-          <a href="">
+          <a href="https://www.instagram.com/buidl1/" target="_blank">
             <Image src={InstagramLogo} />
           </a>
         </LogoWrapper>
-        <InputWrapper>
-          <InputLine1 />
-          <InputLine2 />
-        </InputWrapper>
+       
       </ContactsLine>
       <BgImage isBottom />
     </FooterSectionWrapper>

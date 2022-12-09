@@ -1,18 +1,15 @@
 
-import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import Accordion from "../accordion";
 import Web3Context from "../../context/web3Context";
-import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import ProjectState, { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
 import { isStopAllowed } from "../../web3/isStopAllowed";
-import LogoBuidl from "../../../public/logoNew.svg";
-import { AccordionButtonIcon } from "../accordionContent/styled";
 import UserInvesmentHistory from "../userInvestmentHistory";
 import { StatusBubble, TableButton } from "../activeBlock/styled";
+import { getVotedAgainst } from "../../web3/getVotedAgainst";
 
 const items = [
     {
@@ -31,9 +28,9 @@ const DetailedPortfolio = ({
         hardCap,
         milestones,
         currentMilestone,
-        votedAgainst
     } = useContext(LoadedValuesContext);
     const [stopDisabled, setStopDisabled] = useState(false);
+    const [votedAgainst, setVotedAgainst] = useState<number>(0);
     const [isAllowed, setIsAllowed] = useState(true);
     const milestonePercentage = currentMilestone * 100 / milestones.length;
 
@@ -54,7 +51,13 @@ const DetailedPortfolio = ({
         setStopDisabled(
             isStopAllowed(projectState, currentMilestone, address, web3Provider)
         );
+
+        getVotedAgainst().then((data: any) => {
+            setVotedAgainst(data)
+          });
     }, []);
+
+    
 
     useEffect(() => {
         if (web3Provider) {
@@ -110,7 +113,7 @@ const DetailedPortfolio = ({
                         className="stopBtn"
                         onClick={handleStop}
                     >
-                        STOP
+                        Vote to stop
                     </TableButton>
                 </td>
             </tr>

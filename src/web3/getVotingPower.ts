@@ -1,7 +1,6 @@
 import { ethers } from "ethers";
 import GovernancePoolABI from "./abi/GovernancePool.json";
-import { InvestmentPoolAddress } from "../constants/contractAddresses";
-import { GovernancePoolAddress } from "../constants/contractAddresses";
+import { InvestmentPoolAddress, GovernancePoolAddress } from "../constants/contractAddresses";
 
 export const getVotingPower = async (
   provider: any,
@@ -16,7 +15,7 @@ export const getVotingPower = async (
       );
 
     const votingTokens = await contractGovernance.getVotingTokenBalance(
-      GovernancePoolAddress,
+      InvestmentPoolAddress,
       address
     );
     const votingPower = await contractGovernance.votesAgainstPercentageCount(
@@ -24,7 +23,7 @@ export const getVotingPower = async (
       votingTokens
     );
 
-    return Number(ethers.utils.formatEther(votingPower));
+   return votingPower;
   } catch (error) {
     console.log("network error", error);
   }

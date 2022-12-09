@@ -42,7 +42,6 @@ export const loadedValuesInitialState: ILoadedValues = {
   setAllInvestors: () => {},
   percentageDivider: BigNumber.from(0),
   milestonesInvestmentsListForFormula: [],
-  votedAgainst: 0,
 };
 
 export const useLoadValues = () => {
@@ -61,7 +60,6 @@ export const useLoadValues = () => {
   const [currentMilestone, setCurrentMilestone] = useState<number>(-1);
 
   const [projectState, setProjectState] = useState<number>(0);
-  const [votedAgainst, setVotedAgainst] = useState<number>(0);
   const [currency, setCurrency] = useState<Currency>({
     value: "",
     label: "",
@@ -119,14 +117,6 @@ export const useLoadValues = () => {
         const fundraisingEndDate = formatTime(fundraisingEndAt);
         const projectState = await contract.getProjectStateByteValue();
 
-        const totalVotesAmount = await contract.getTotalVotesAmount(
-          InvestmentPoolAddress
-        );
-        const votedAgainst = await contract.votesAgainstPercentageCount(
-          InvestmentPoolAddress,
-          totalVotesAmount
-        );
-
         const acceptedTokenAddress = await contract.getAcceptedToken();
         const acceptedTokenDetails = await getAvailableCurrencies(
           acceptedTokenAddress
@@ -136,7 +126,6 @@ export const useLoadValues = () => {
           value: acceptedTokenDetails?.tokenSymbol,
           label: acceptedTokenDetails?.tokenSymbol,
           address: acceptedTokenAddress,
-
           decimals: acceptedTokenDetails?.tokenDecimals,
         });
 
@@ -183,7 +172,6 @@ export const useLoadValues = () => {
         setHardCap(hardCap);
         setFundraisingStartDate(fundraisingStartDate);
         setFundraisingEndDate(fundraisingEndDate);
-        setVotedAgainst(votedAgainst);
 
         setProjectState(parseInt(projectState, 10));
         allInvestors !== undefined &&
@@ -215,7 +203,6 @@ export const useLoadValues = () => {
     setAllInvestors,
     percentageDivider,
     milestonesInvestmentsListForFormula,
-    votedAgainst,
   };
 };
 

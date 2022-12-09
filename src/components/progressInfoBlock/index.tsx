@@ -55,7 +55,7 @@ const ProgressInfoBlock = ({
     if (web3Provider && web3Provider?.network.chainId === 5) {
       getVotingTokens(web3Provider, address).then((data) => {
         setVotingTokensSupply(data?.votingTokensSupply);
-        setVotingTokenBalance(data?.votingTokenBalance);
+        setVotingTokenBalance(data?.activeVotingTokens);
       });
     }
   }, [web3Provider, totalInvested._hex]);
@@ -161,7 +161,7 @@ const ProgressInfoBlock = ({
         </BottomPartWrapper>
         <BottomPartWrapper className="centerItems">
           <OrangeButton disabled={stopDisabled} onClick={handleStop}>
-            STOP
+            Vote to stop
           </OrangeButton>
           <TableLink>Trust us? Try burning the ticket</TableLink>
         </BottomPartWrapper>

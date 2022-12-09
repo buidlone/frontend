@@ -397,6 +397,7 @@ export const IModalFormConfirmSection = styled.div`
   justify-content: space-between;
   padding: 0rem 0rem 0.6rem 0rem;
   gap: 4rem;
+  margin-bottom: 20px;
 
   & > ${ItemWrapper} {
     max-width: 23rem;

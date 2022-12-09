@@ -61,7 +61,7 @@ export const LogoWrapper = styled.div`
   display: flex;
   align-items: space-evenly;
   gap: 1rem;
-  padding-right: 6rem;
+  padding-left: 4rem;
 
   & > a {
     height: 1.5rem;
@@ -77,6 +77,15 @@ export const InputWrapper = styled.div`
   align-items: space-between;
   justify-content: center;
   gap: 1.2rem;
+`;
+
+export const CommunityLink = styled.a`
+  font-size: 20px;
+  transition: 1s;
+
+  &:hover {
+    color: rgba(0,196,255,1);
+  }
 `;
 
 export const InputLine1 = styled.div`
