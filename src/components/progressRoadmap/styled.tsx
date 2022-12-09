@@ -10,6 +10,9 @@ interface Props {
   stage?: string;
   unlocked?: boolean;
   ref?: any;
+  activeFunds?: boolean;
+  milestone?: string;
+  suspended?: boolean;
 }
 
 //Animations
@@ -36,14 +39,22 @@ const rotateCircle = keyframes`
 
 export const ScrollableContainer = styled(ScrollContainer)`
   cursor: grab;
+  position: relative;
+  padding-right: 18rem !important;
+  padding-left: 2.8rem !important;
+  width: 100%;
+`;
+export const ScrollableContainerWrapper = styled.div`
   min-height: 295px;
   background: #1d2031 0% 0% no-repeat padding-box;
   box-shadow: inset 0px -20px 20px #1c192769;
   border-radius: 10px;
   opacity: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   margin-top: 1rem;
-  padding-left: 3.5rem;
-  padding-right: 1rem;
 `;
 
 export const ProgressRoadmapWrapper = styled.div`
@@ -58,7 +69,7 @@ export const ProgressRoadmapWrapper = styled.div`
 export const Title = styled.text`
   color: rgb(255 255 255 / 50%);
   font-size: 12px;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
 `;
 export const Progress = styled.div<Props>`
   background-color: #00c4ff;
@@ -86,14 +97,13 @@ export const ProgressStep = styled.div<Props>`
         background: #00C4FF;
         
       `;
-    } else if (props.active) {
+    } else if (props.active || props.suspended) {
       return `
         background-color: #00C4FF;
       `;
     } else {
       return `
-        //background-color: #2e436c;
-        background-color: #00C4FF;
+      background: #0E7298 0% 0% no-repeat padding-box;
       `;
     }
   }};
@@ -113,7 +123,6 @@ export const ProgressStep = styled.div<Props>`
     }};
 
     position: absolute;
-    //bottom: calc(100% + 1rem);
     font-size: 0.75rem;
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600;
@@ -152,8 +161,7 @@ export const MProgressBar = styled.div<Props>`
     transform: translateY(-50%);
     height: 5px;
     width: 100%;
-    background-color: #00c4ff;
-    opacity: 0.16;
+    background: #0e7298 0% 0% no-repeat padding-box;
   }
 `;
 
@@ -162,7 +170,6 @@ export const ProgressBar = styled.div<Props>`
   display: flex;
   justify-content: space-between;
   margin: 4rem 2.5rem auto 1rem;
-  //gap: 6.438rem;
   min-width: max-content;
 `;
 
@@ -176,6 +183,18 @@ export const CheckMark = styled.div`
   margin-left: 10px;
   transform: translate(-50%, -60%) rotate(-45deg);
   transform-origin: center center;
+
+  &.lastMilestone {
+    height: 27.25px;
+    width: 38.74px;
+    border-left: 6px solid #00c4ff;
+    border-bottom: 6px solid #00c4ff;
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 40px;
+    transform: translate(-50%, -60%) rotate(-45deg);
+    transform-origin: center center;
+  }
 `;
 
 export const DashedCircle = styled.div`
@@ -201,7 +220,8 @@ export const LockBar = styled.div`
 export const Lock = styled.div<Props>`
   min-width: 1.563rem;
   height: 1.563rem;
-  background-color: #00ffc4;
+  background-color: ${(props) =>
+    props.unlocked ? "#00ffc4" : props.suspended ? "#FFB100" : "#2B877A"};
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -217,19 +237,14 @@ export const Lock = styled.div<Props>`
     width: 100%;
     height: 10rem;
     margin: 2px;
-    opacity: ${(props) => (props.unlocked ? 1 : 0.09)};
+    opacity: ${(props) => (props.active || props.suspended ? 1 : 0.09)};
     transform: matrix(-1, 0, 0, -1, 0, 0);
     pointer-events: none;
 
-    background: transparent
-      linear-gradient(
-        180deg,
-        #00ffc4 0%,
-        #00ffc4 10%,
-        #2e436c 86%,
-        #2e436c 100%
-      )
-      0% 0% no-repeat padding-box;
+    background: ${(props) =>
+      props.suspended
+        ? "transparent linear-gradient(180deg, #FFB100 0%, #FFB100 10%, #2E436C 86%, #2E436C 100%) 0% 0% no-repeat padding-box"
+        : "transparent linear-gradient(180deg, #00FFC4 0%, #00FFC4 10%, #2E436C 86%, #2E436C 100%) 0% 0% no-repeat padding-box"};
 
     border-radius: 14px;
     animation: ${(props) =>
@@ -241,31 +256,6 @@ export const Lock = styled.div<Props>`
   }
 `;
 
-export const Funds = styled.div`
-  width: 3rem;
-  top: calc(100% + 3px);
-  font-size: 16px;
-  font-family: "Lato", sans-serif;
-  font-weight: 700;
-  color: #00fbc7;
-  text-align: center;
-  position: absolute;
-  white-space: nowrap;
-
-  &:before {
-    content: "";
-    background: #ff8900;
-    box-shadow: 0px 0px 5px #ffba00a8;
-    opacity: 1;
-    border-radius: 50%;
-    right: calc(100% + 5px);
-    top: 40%;
-    width: 7px;
-    height: 7px;
-    position: absolute;
-  }
-`;
-
 export const BottomWrapper = styled.div`
   width: 100%;
   height: 10%;
@@ -274,3 +264,31 @@ export const BottomWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
+export const PBWrapper = styled.div`
+  width: 5.526rem;
+  height: 5.526rem;
+  position: absolute;
+  top: 100%;
+  margin-left: 7.5rem;
+
+  &:before {
+    content: "Project complete";
+    position: absolute;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: "IBM Plex Sans", sans-serif;
+    color: #a5a5a5;
+    top: 105%;
+    left: 0;
+  }
+
+  .lastMilestoneProgress {
+    color: #00c4ff;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 20px;
+  }
+`;
+
+export const PBContainer = styled.div``;

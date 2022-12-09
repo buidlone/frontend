@@ -49,7 +49,7 @@ export const BottomText = styled.div`
 `;
 
 export const Line = styled.div`
-  width: 55%;
+  width: 57%;
   height: 1px;
   border-bottom: 1px solid #00c4ff;
 `;
