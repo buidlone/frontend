@@ -82,6 +82,7 @@ export const InputWrapper = styled.div`
 export const CommunityLink = styled.a`
   font-size: 20px;
   transition: 1s;
+  color: white;
 
   &:hover {
     color: rgba(0,196,255,1);

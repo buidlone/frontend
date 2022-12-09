@@ -15,7 +15,7 @@ export const TextWrapper = styled.div`
   .topText {
     font-size: 0.75rem;
     font-weight: 400;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     color: #a5a5a5;
     opacity: 1;
     margin-bottom: 0.2rem;

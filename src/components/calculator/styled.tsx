@@ -32,7 +32,7 @@ export const CalculatorContainer = styled.div`
 
   .ctext {
     font-size: 16px;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.5);
   }
@@ -40,7 +40,7 @@ export const CalculatorContainer = styled.div`
   .blueText {
     font-size: 16px;
     font-weight: 500;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     color: #1eb5ff;
   }
 `;
@@ -180,7 +180,7 @@ export const VotingItem = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 12px;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 500;
 
   .text {

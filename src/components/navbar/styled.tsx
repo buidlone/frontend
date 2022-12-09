@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styled, { css, keyframes } from "styled-components";
 
 export const Nav = styled.nav`
@@ -24,7 +23,7 @@ export const NavbarContainer = styled.div`
   height: 70px;
   z-index: 1;
   width: 100%;
-  padding: 0 3rem;
+  padding: 0 3.1rem;
   max-width: 1400px;
 
   @media screen and (max-width: 991px) {
@@ -32,20 +31,12 @@ export const NavbarContainer = styled.div`
   }
 `;
 
-export const NavLogo = styled(Image)`
-  justify-self: flex-start;
-  display: flex;
-  align-items: center;
-  margin-left: 24px;
-  opacity: 1;
-`;
-
 export const NavMenu = styled.ul`
   display: flex;
   align-items: center;
   list-style: none;
   text-align: center;
-  margin-right: -70px;
+  margin-right: -159px;
   gap: 3.75rem;
 
   @media screen and (max-width: 800px) {
@@ -64,16 +55,30 @@ export const NavLink = styled.a`
   text-decoration: none;
   cursor: pointer;
   height: 100%;
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-family: "Barlow", sans-serif;
-  color: rgba(0, 196, 255, 1);
+  color: #f0f0f0;
+  position: relative;
 
   &:hover {
-    color: white;
+    color: #00c4ff;
   }
 
   &.active {
-    color: white;
+    color: #00c4ff;
+  }
+
+  &.active::after {
+    content: "";
+    position: absolute;
+    width: 95%;
+    bottom: 1.75rem;
+    left: 1px;
+    border-bottom: 1px solid #00c4ff;
+  }
+
+  @media screen and (max-width: 800px) {
+    width: 100%;
   }
 `;
 

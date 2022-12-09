@@ -1,29 +1,16 @@
+import FeaturedProject from "../featuredProject";
 import {
   FeatureTextWrapper,
   FeatureTitle,
   FeaturesSec,
-  FeaturedProjectsBlockWrapper,
-  ProjectName,
-} from './styled';
+} from "./styled";
 
 export const featuredProjects = [
   {
-    name: 'Buidl1',
+    name: "Buidl1",
   },
   {
-    name: '...',
-  },
-  {
-    name: '...',
-  },
-  {
-    name: '...',
-  },
-  {
-    name: '...',
-  },
-  {
-    name: '...',
+    name: "?",
   },
 ];
 
@@ -35,9 +22,7 @@ export default function FeaturedrojectsSection() {
       </FeatureTextWrapper>
       <FeaturesSec>
         {featuredProjects.map((el, index) => (
-          <FeaturedProjectsBlockWrapper key={index}>
-            <ProjectName>{el.name}</ProjectName>
-          </FeaturedProjectsBlockWrapper>
+          <FeaturedProject key={index} project={el.name} />
         ))}
       </FeaturesSec>
     </>

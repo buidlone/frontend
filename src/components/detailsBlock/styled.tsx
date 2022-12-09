@@ -1,6 +1,5 @@
-import styled, { css } from 'styled-components';
-import { BlockWrapper } from '../fundingBlock/styled';
-
+import styled, { css } from "styled-components";
+import { BlockWrapper } from "../fundingBlock/styled";
 
 export const DetailsBlockWrapper = styled.div`
   background: #1f233c 0% 0% no-repeat padding-box;
@@ -79,7 +78,6 @@ export const DetailsTable = styled(BlockWrapper)`
   }
 `;
 
-
 export const FlexItem1 = styled.div`
   display: inline-block;
   width: 50%;
@@ -87,7 +85,7 @@ export const FlexItem1 = styled.div`
 
 export const Property = styled.p`
   color: white;
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   font-size: 20px;
   text-align: left;
   opacity: 0.5;
@@ -95,7 +93,7 @@ export const Property = styled.p`
 
 export const Data = styled.p`
   color: white;
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
   font-size: 20px;
   text-align: right;
   opacity: 0.5;

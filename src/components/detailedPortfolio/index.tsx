@@ -113,7 +113,7 @@ const DetailedPortfolio = ({
                         className="stopBtn"
                         onClick={handleStop}
                     >
-                        Vote to stop
+                        STOP cash flow
                     </TableButton>
                 </td>
             </tr>

@@ -12,7 +12,7 @@ import  { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
-import DetailedPortfolio from "../detailedPortfolio";
+import DetailedPortfolio from "../detailedPortfolio"
 import { getVotingPower } from "../../web3/getVotingPower";
 
 
