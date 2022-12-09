@@ -5,7 +5,6 @@ import {
   NavLink,
   NavMenu,
   NavItem,
-  ConnectWalletBtn,
   ButtonWrapper,
 } from "./styled";
 import logo from "../../../public/brandmark_blue.svg";

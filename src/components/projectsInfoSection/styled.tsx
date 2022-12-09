@@ -1,63 +1,55 @@
-import Image from 'next/image';
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const InfoSec = styled.section`
   display: flex;
   align-items: start;
-  justify-content: center;
-  padding-bottom: 120px;
+  padding-top: 6rem;
+  justify-content: flex-start;
+  padding-bottom: 8rem;
   flex-wrap: wrap;
+
+  flex-direction: column;
+  width: 100%;
+  gap: 0.65rem;
 `;
 
-export const TextWrapper = styled.div`
-  margin-right: 40px;
-  flex: 1;
-  z-index: 10;
-`;
-
-export const ImgWrapper = styled.div`
-  margin-top: 20px;
-  margin-left: -70px;
-  flex-shrink: 0;
-  background: transparent
-    radial-gradient(closest-side at 50% 50%, #00c4ff 0%, #00c4ff00 100%) 0% 0%
-    no-repeat padding-box;
-  mix-blend-mode: overlay;
-  opacity: 0.2;
-`;
-
-export const Img = styled(Image)`
-  opacity: 0.3;
-  filter: drop-shadow(0 -6mm 4mm #4dc9ef);
-`;
-
-export const TopText = styled.p`
-  font-size: 65px;
+export const TopText = styled.div`
+  width: 50%;
+  font-size: 61px;
   color: rgba(255, 255, 255, 1);
-  margin-bottom: 10px;
   opacity: 0.85;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;
-`;
-export const MiddleText = styled.p`
-  font-size: 24px;
-  color: grey;
-  margin-bottom: 10px;
-  opacity: 0.85;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
 `;
 
-export const BottomText = styled.p`
-  font-style: italic;
-  font-size: 22px;
-  color: rgba(0, 196, 255, 1);
-  margin-top: 10px;
-  opacity: 0.85;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 400;
+export const BottomText = styled.div`
+  margin-top: 1.3rem;
+  margin-left: 1.4rem;
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  color: rgba(0, 196, 255, 0.85);
+  text-align: left;
+  white-space: nowrap;
+  position: relative;
+  text-decoration: underline;
+
+  &:before {
+    content: "";
+    background: #ffc400 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 10px #ffed89;
+    opacity: 1;
+    border-radius: 50%;
+    right: calc(100% + 0.4rem);
+    top: 21%;
+    width: 0.85rem;
+    height: 0.85rem;
+    position: absolute;
+  }
 `;
 
 export const Line = styled.div`
+  width: 55%;
+  height: 1px;
   border-bottom: 1px solid #00c4ff;
 `;
