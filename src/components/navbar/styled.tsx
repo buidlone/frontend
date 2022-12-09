@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styled, { css, keyframes } from "styled-components";
 
 export const Nav = styled.nav`
@@ -37,7 +36,7 @@ export const NavMenu = styled.ul`
   align-items: center;
   list-style: none;
   text-align: center;
-  margin-right: -70px;
+  margin-right: -159px;
   gap: 3.75rem;
 
   @media screen and (max-width: 800px) {

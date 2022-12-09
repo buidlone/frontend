@@ -6,7 +6,7 @@ export const FeatureTitle = styled.p`
   text-align: center;
   font-size: 22px;
   margin: auto;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 300;
 `;
 
@@ -24,21 +24,4 @@ export const FeaturesSec = styled.div`
   @media screen and (max-width: 1394px) {
     justify-content: center;
   }
-`;
-
-export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
-  height: 291px;
-  width: 600px;
-  padding: 50px;
-  background: rgba(34, 34, 53, 1) 0% 0% no-repeat padding-box;
-  opacity: 0.85;
-  margin-bottom: 3%;
-`;
-
-export const ProjectName = styled.p`
-  font-size: 30px;
-  color: rgba(255, 255, 255, 1);
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 300;
-  margin: 0;
 `;

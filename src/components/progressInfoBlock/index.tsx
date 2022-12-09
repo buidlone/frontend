@@ -1,14 +1,11 @@
 import { Property, Data } from "../detailsBlock/styled";
 import {
   BottomBlock,
-  BottomPartWrapper,
-  BottomWrapper,
   DetailsCard,
   DetailsInfoWrapper,
   GreyLine,
   InlineBlock,
   OrangeButton,
-  UpperBlock,
   VotingWrapper,
 } from "./styled";
 import Image from "next/image";
@@ -21,7 +18,6 @@ import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
-import { getVotingTokens } from "../../web3/getVotingTokens";
 import Web3Context from "../../context/web3Context";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
