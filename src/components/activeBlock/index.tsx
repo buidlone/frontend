@@ -8,27 +8,21 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import Web3Context from "../../context/web3Context";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
-import  { StatusColor } from "../projectState";
+import { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
-import DetailedPortfolio from "../detailedPortfolio"
+import DetailedPortfolio from "../detailedPortfolio";
 import { getVotingPower } from "../../web3/getVotingPower";
 
-
-const ActiveBlock = ({
-  setIsShownStop,
-  setIsShownWrong,
-}: any) => {
+const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
   const [
     totalIndividualInvestedToProject,
     setTotalIndividualInvestedToProject,
   ] = useState(0);
-  const {
-    currency,
-  } = useContext(LoadedValuesContext);
+  const { currency } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
-  const [votingPower, setVotingPower] = useState(false);
+  const [votingPower, setVotingPower] = useState("0");
   const { web3Provider, address } = useContext(Web3Context);
 
   useEffect(() => {
@@ -37,12 +31,12 @@ const ActiveBlock = ({
         setTotalIndividualInvestedToProject(data.totalAmountInvested);
       });
       getVotingPower(web3Provider, address).then((data: any) => {
-        setVotingPower(data)
+        setVotingPower(data);
       });
     } else {
       setTotalIndividualInvestedToProject(0);
     }
-  }, []);
+  });
 
   return (
     <ActiveBlockWrapper>
@@ -67,16 +61,11 @@ const ActiveBlock = ({
               </RoundImgWrapper>
               Buidl1 protocol
             </td>
-            <td className="underlined blue bigger ">
-              buidl.one
-            </td>
-            <td
-              className="greenText bigger"
-            >
+            <td className="underlined blue bigger ">buidl.one</td>
+            <td className="greenText bigger">
               {totalIndividualInvestedToProject} {currency.label}
-       
             </td>
-    
+
             <td className="flexGap yellowText bigger">
               {votingPower} %
               <AccordionButtonIcon
@@ -96,8 +85,10 @@ const ActiveBlock = ({
           </tr>
 
           {showMore && (
-            <DetailedPortfolio  setIsShownStop={setIsShownStop}
-            setIsShownWrong={setIsShownWrong} />
+            <DetailedPortfolio
+              setIsShownStop={setIsShownStop}
+              setIsShownWrong={setIsShownWrong}
+            />
           )}
         </tbody>
       </Table>

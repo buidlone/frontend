@@ -50,8 +50,6 @@ const ProgressInfoBlock = ({
   const [stopDisabled, setStopDisabled] = useState(false);
   const [over, setOver] = useState(0);
 
-
-
   useEffect(() => {
     setStopDisabled(
       isStopAllowed(projectState, currentMilestone, address, web3Provider)
@@ -74,14 +72,14 @@ const ProgressInfoBlock = ({
 
   useEffect(() => {
     getVotedAgainst().then((data: any) => {
-      setVotedAgainst(data)
+      setVotedAgainst(data);
     });
     if (web3Provider) {
       getVotingPower(web3Provider, address).then((data: any) => {
-        setVotingPower(data)
+        setVotingPower(data);
       });
-    } 
-  }, []);
+    }
+  }, [totalInvested._hex]);
 
   return (
     <DetailsCard>
@@ -140,7 +138,7 @@ const ProgressInfoBlock = ({
             />
 
             <div>
-              Your word has <span className="votingPower">{votingPower}%</span> {" "}
+              Your word has <span className="votingPower">{votingPower}%</span>{" "}
               impact
             </div>
 
@@ -174,3 +172,4 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
+

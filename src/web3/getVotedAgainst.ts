@@ -26,11 +26,9 @@ export const getVotedAgainst = async () => {
       totalVotesAmount
     );
 
-    console.log(totalVotesAmount)
-    console.log(votedAgainst)
-
     return votedAgainst;
   } catch (error) {
     console.log("network error", error);
   }
 };
+
