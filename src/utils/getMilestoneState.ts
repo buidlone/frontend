@@ -5,6 +5,7 @@ export function getMilestoneState(
 ) {
   let active = false;
   let completed = false;
+  let suspended = false;
 
   if (
     (projectState === 32 || projectState === 64) &&
@@ -13,7 +14,9 @@ export function getMilestoneState(
     active = true;
   } else if (milestoneID < currentMilestoneID || projectState === 512) {
     completed = true;
+  } else if (milestoneID === currentMilestoneID && projectState === 128) {
+    suspended = true;
   }
 
-  return { active, completed };
+  return { active, completed, suspended };
 }

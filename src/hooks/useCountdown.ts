@@ -38,9 +38,7 @@ const useCountdown = (
         setTimerseconds(seconds);
       }
     } else if (progress) {
-      //hardcoded value while using fake timestamp in the SC to activate the 1st milestone
-      //Date object should be empty (current date)
-      const currentDate = new Date("2023 01 05").getTime();
+      const currentDate = new Date().getTime();
       const startDate = new Date(<string>dateFrom).getTime();
 
       const distance = currentDate - startDate;

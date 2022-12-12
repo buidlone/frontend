@@ -19,8 +19,12 @@ const ProgressRoadmapTimer = () => {
   switch (projectState) {
     case 1:
       return (
-        <TextWrapper>
-          Project was canceled by the creator before the fundraiser started
+        <TextWrapper suspended>
+          <text className="topText">Fundraising starts in</text>
+          <text className="daysLeft">
+            {" "}
+            Project was canceled by the creator before the fundraiser started
+          </text>
         </TextWrapper>
       );
     case 2:
@@ -51,7 +55,12 @@ const ProgressRoadmapTimer = () => {
       );
 
     case 8:
-      return <TextWrapper>Fundraiser failed to raise soft cap</TextWrapper>;
+      return (
+        <TextWrapper suspended>
+          <text className="topText">Fundraiser ends in</text>
+          <text className="daysLeft"> Fundraiser failed to raise soft cap</text>
+        </TextWrapper>
+      );
 
     case 16:
       timeTillNextMilestone = useCountdown(
@@ -103,12 +112,36 @@ const ProgressRoadmapTimer = () => {
       );
 
     case 128:
-      return <TextWrapper>Project was terminated by voting</TextWrapper>;
+      return (
+        <TextWrapper suspended>
+          <text className="topText">Next milestone starts in</text>
+          <text className="daysLeft">Project suspended</text>
+        </TextWrapper>
+      );
 
     case 256:
-      return <TextWrapper>Project was terminated by gelato</TextWrapper>;
+      return (
+        <TextWrapper suspended>
+          <text className="topText">Next milestone starts in</text>
+          <text className="daysLeft">Project was terminated by gelato</text>
+        </TextWrapper>
+      );
     case 512:
-      return <TextWrapper>Project successfully ended</TextWrapper>;
+      timeTillNextMilestone = useCountdown(
+        milestones[currentMilestone].endDate,
+        milestones[0].startDate
+      );
+      return (
+        <TextWrapper>
+          <text className="topText">Project completed in</text>
+          <text className="daysLeft">
+            {timeTillNextMilestone.timerDays}D{" "}
+            {timeTillNextMilestone.timerHours}H{" "}
+            {timeTillNextMilestone.timerMinutes}M{" "}
+            {timeTillNextMilestone.timerSeconds}S
+          </text>
+        </TextWrapper>
+      );
     case 1024:
       return <TextWrapper>Project state is unknown</TextWrapper>;
 

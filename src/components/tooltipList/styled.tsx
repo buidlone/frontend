@@ -31,7 +31,7 @@ export const List = styled.ul`
     }
   }
 
-  .funds {
+  /* .funds {
     font-size: 14px;
     &::marker {
       content: "";
@@ -40,5 +40,56 @@ export const List = styled.ul`
       font-size: 13px;
       opacity: 0.5;
     }
+  } */
+`;
+export const TooltipWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  gap: 0.9rem;
+  position: relative;
+
+  .title {
+    color: #00c4ff;
+    font-family: "Barlow", sans-serif;
+    font-size: 17px;
+  }
+`;
+
+export const InfoBlock = styled.div`
+  align-self: flex-start;
+  width: 50%;
+`;
+export const InlineWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: space-between;
+
+  .label {
+    color: #f0f0f0;
+    font-family: "Barlow", sans-serif;
+    font-size: 12px;
+  }
+
+  .funds {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 15px;
+    color: #00ffc4;
+    white-space: nowrap;
+  }
+
+  .surplus {
+    padding-top: 2%;
+    width: 50%;
+    padding-right: 5px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 10px;
+    color: rgba(0, 255, 196, 0.5);
+    white-space: nowrap;
   }
 `;
