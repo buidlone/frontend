@@ -11,6 +11,7 @@ import {
   NumbersInsights,
   NumbersSection,
   ProjectInfoWrapper,
+  WhitepaperLink,
 } from "./styled";
 import Image from "next/image";
 import { TableLink } from "../activeBlock/styled";
@@ -33,27 +34,29 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
   );
   return project == "Buidl1" ? (
     <ProjectInfoWrapper>
-        <NumbersInsights>
-      <NumbersSection>
-        <div className="names">Soft / Hard</div>
-        <div className="names">Timeline</div>
-      </NumbersSection>
-      <NumbersSection>
-        <div className="numbers">
-          {ethers.utils.formatEther(softCap.amount)} -{" "}
-          {ethers.utils.formatEther(hardCap)} {currency.label}
-        </div>
-        <div className="numbers">
-          {projectDays.timerDays ? projectDays.timerDays : 0} days
-        </div>
-      </NumbersSection>
+      <NumbersInsights>
+        <NumbersSection>
+          <div className="names">Soft / Hard</div>
+          <div className="names">Timeline</div>
+        </NumbersSection>
+        <NumbersSection>
+          <div className="numbers">
+            {ethers.utils.formatEther(softCap.amount)} -{" "}
+            {ethers.utils.formatEther(hardCap)} {currency.label}
+          </div>
+          <div className="numbers">
+            {projectDays.timerDays ? projectDays.timerDays : 0} days
+          </div>
+        </NumbersSection>
       </NumbersInsights>
       <ProgressInsights />
       <DescriptionSection>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu dui id
-        felis tempor fringilla vel at lacus. Nunc velit ante, pharetra vel justo
-        non, auctor impLorem ipsum ….. vel at lacus. Nunc velerdiet sem. Sed vel
-        purus vehicula,
+        To simply put it - we are a protocol and launchpad that secures invested
+        capital in web3 projects. Read more on{" "}
+        <WhitepaperLink target="_blank" href="https://docs.buidl.one/">
+          WhitePaper
+        </WhitepaperLink>
+        .
       </DescriptionSection>
       <BottomSection>
         <LinkWrapper>

@@ -1,5 +1,7 @@
+import { useContext } from "react";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 import { IMilestoneFundsAllocated } from "../../interfaces/ILoadedValues";
-import { List } from "./styled";
+import { InfoBlock, InlineWrapper, List, TooltipWrapper } from "./styled";
 
 interface IMilestones {
   milestonesArray?: {
@@ -8,9 +10,12 @@ interface IMilestones {
     isCompleted?: boolean;
   }[];
   fundsObject?: IMilestoneFundsAllocated;
+  index?: number;
 }
 
-const TooltipList = ({ milestonesArray, fundsObject }: IMilestones) => {
+const TooltipList = ({ milestonesArray, fundsObject, index }: IMilestones) => {
+  const { currency } = useContext(LoadedValuesContext);
+
   if (milestonesArray) {
     return (
       <List>
@@ -30,16 +35,32 @@ const TooltipList = ({ milestonesArray, fundsObject }: IMilestones) => {
     );
   } else {
     return (
-      <List>
-        {fundsObject && (
+      <TooltipWrapper>
+        {fundsObject && index && (
           <>
-            <li className="funds">From Seed: {fundsObject.seedAllocated}</li>
-            <li className="funds">
-              From Stream: {fundsObject.streamAllocated}
-            </li>
+            <div className="title">Milestone {index}</div>
+            <InlineWrapper>
+              <InfoBlock>
+                <div className="label">Instant release</div>
+                <InlineWrapper>
+                  <div className="funds">
+                    {fundsObject.seedAllocated} {currency.label}
+                  </div>
+                </InlineWrapper>
+              </InfoBlock>
+              <InfoBlock>
+                <div className="label">Streaming</div>
+
+                <InlineWrapper>
+                  <div className="funds">
+                    {fundsObject.streamAllocated} {currency.label}
+                  </div>
+                </InlineWrapper>
+              </InfoBlock>
+            </InlineWrapper>
           </>
         )}
-      </List>
+      </TooltipWrapper>
     );
   }
 };

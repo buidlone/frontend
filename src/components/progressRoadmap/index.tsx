@@ -43,6 +43,12 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
 
+  const maxProjectDays = useCountdown(
+    milestones[milestones.length - 1]?.endDate,
+    milestones[0]?.startDate
+  );
+  const daysPassed = useCountdown(undefined, milestones[0]?.startDate, true);
+
   const maxDays = useCountdown(
     milestones[currentMilestone]?.endDate,
     milestones[currentMilestone]?.startDate
@@ -53,6 +59,13 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
     milestones[currentMilestone]?.startDate,
     true
   );
+  const getFullProjectProgress = () => {
+    let progress = 0;
+    progress =
+      (Number(daysPassed.timerDays) * 100) / Number(maxProjectDays.timerDays);
+
+    return progress;
+  };
 
   const getMilestoneProgress = () => {
     let progress = 0;
@@ -152,9 +165,10 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                     value={
                       projectState === 512
                         ? 100
-                        : currentMilestone ===
-                          milestones[milestones.length - 1].id
-                        ? getMilestoneProgress()
+                        : // : currentMilestone ===
+                        //   milestones[milestones.length - 1].id
+                        projectState === 32 || projectState === 64
+                        ? getFullProjectProgress()
                         : 0
                     }
                     strokeWidth={6}
@@ -170,9 +184,8 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                       <CheckMark className="lastMilestone" />
                     ) : (
                       <div className="lastMilestoneProgress">
-                        {currentMilestone ===
-                        milestones[milestones.length - 1].id
-                          ? getMilestoneProgress()
+                        {projectState === 32 || projectState === 64
+                          ? getFullProjectProgress().toFixed(1)
                           : 0}
                         %
                       </div>
@@ -206,6 +219,7 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                     <>
                       <Tooltip
                         key={milestone.id}
+                        index={index + 1}
                         fundsObject={milestoneFunds[index]}
                       >
                         <Lock

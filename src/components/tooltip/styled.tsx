@@ -7,6 +7,7 @@ interface Props {
   delay?: number;
   placement: string;
   nowrap?: boolean;
+  fundsObject?: any;
 }
 
 export const StyledTooltip = styled.span<Props>`
@@ -45,6 +46,12 @@ export const StyledTooltip = styled.span<Props>`
       return `
       white-space: nowrap;
        
+      `;
+    } else if (props.fundsObject) {
+      return `
+      display: flex;
+      max-width: 500px;
+      white-space: wrap;
       `;
     } else {
       return `

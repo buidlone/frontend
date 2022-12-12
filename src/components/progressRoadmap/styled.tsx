@@ -153,6 +153,7 @@ export const MProgressBar = styled.div<Props>`
   width: 7rem;
   height: 5px;
   position: relative;
+  background: rgba(0, 196, 255, 0.16);
   &:before,
   & > ${Progress} {
     content: "";
@@ -161,7 +162,6 @@ export const MProgressBar = styled.div<Props>`
     transform: translateY(-50%);
     height: 5px;
     width: 100%;
-    background: #0e7298 0% 0% no-repeat padding-box;
   }
 `;
 
