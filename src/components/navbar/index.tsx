@@ -40,13 +40,18 @@ const Navbar = () => {
               </NavLink>
             </Link>
           </NavItem>
-          <NavItem>
-            <Link href="/assets" passHref>
-              <NavLink className={router.pathname == "/assets" ? "active" : ""}>
-                Portfolio
-              </NavLink>
-            </Link>
-          </NavItem>
+
+          {address && (
+            <NavItem>
+              <Link href="/assets" passHref>
+                <NavLink
+                  className={router.pathname == "/assets" ? "active" : ""}
+                >
+                  Portfolio
+                </NavLink>
+              </Link>
+            </NavItem>
+          )}
         </NavMenu>
         {/* Address will not be displayed in the production version */}
         <ButtonWrapper>
@@ -58,3 +63,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

@@ -20,7 +20,7 @@ const AccordionContent = ({
 }: IAccordion) => {
   return (
     <>
-      <AccordionButton onClick={onClick}>
+      <AccordionButton isActive={isActive} onClick={onClick}>
         {itemName}
         <AccordionButtonIcon isActive={isActive} className="material-icons">
           expand_more

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import AccordionContent from "../accordionContent";
-import { AccordionContainer } from "../accordionContent/styled";
+import {
+  AccordionBorder,
+  AccordionContainer,
+} from "../accordionContent/styled";
 
 interface IAccordion {
   items: { name: string; content: any }[];
@@ -12,6 +15,7 @@ interface Size {
 
 const Accordion = ({ items }: IAccordion) => {
   const [active, setActive] = useState<string | null>();
+  const isOpen = active !== null && active !== undefined;
 
   // The size of the window
   const [size, setSize] = useState<Size>();
@@ -40,21 +44,27 @@ const Accordion = ({ items }: IAccordion) => {
     };
   }, []);
 
+ 
+
   return (
-    <AccordionContainer>
-      {items.map((item) => {
-        let isActive = active === item.name;
-        return (
-          <AccordionContent
-            onClick={() => handleClick(item.name)}
-            itemName={item.name}
-            itemContent={item.content}
-            isActive={isActive}
-          />
-        );
-      })}
-    </AccordionContainer>
+    <>
+      <AccordionBorder isActive={ isOpen ? true : false} />
+      <AccordionContainer>
+        {items.map((item) => {
+          let isActive = active === item.name;
+          return (
+            <AccordionContent
+              onClick={() => handleClick(item.name)}
+              itemName={item.name}
+              itemContent={item.content}
+              isActive={isActive}
+            />
+          );
+        })}
+      </AccordionContainer>
+    </>
   );
 };
 
 export default Accordion;
+

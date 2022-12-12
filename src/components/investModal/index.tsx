@@ -39,12 +39,13 @@ import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { invest } from "../../web3/invest";
 import { BigNumber, ethers } from "ethers";
+import UserInvesmentHistory from "../userInvestmentHistory";
 
 const items = [
   {
-    name: "Detailed project token stream",
-    content: <TokenStreamTable />,
-  },
+    name: "Investment details",
+    content: <UserInvesmentHistory />,
+},
 ];
 
 interface InputTypes {

@@ -23,7 +23,7 @@ const Assets = () => {
           <InvestStatus setIsShownInvest={setIsShownInvest} />
         ) : (
           <>
-            <AssetsHeader>My portfolio</AssetsHeader>
+            <AssetsHeader>Portfolio</AssetsHeader>
           </>
         )}
 

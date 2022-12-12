@@ -126,7 +126,6 @@ export const useLoadValues = () => {
           value: acceptedTokenDetails?.tokenSymbol,
           label: acceptedTokenDetails?.tokenSymbol,
           address: acceptedTokenAddress,
-
           decimals: acceptedTokenDetails?.tokenDecimals,
         });
 
@@ -206,3 +205,4 @@ export const useLoadValues = () => {
     milestonesInvestmentsListForFormula,
   };
 };
+
