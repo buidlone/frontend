@@ -139,7 +139,7 @@ const ProgressInfoBlock = ({
 
             <div>
               Your word has <span className="votingPower">{votingPower}%</span>{" "}
-              impact
+              power
             </div>
 
             <div onMouseOver={() => setOver(1)} onMouseOut={() => setOver(0)}>

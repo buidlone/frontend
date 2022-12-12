@@ -24,10 +24,7 @@ const Buidl1Header = () => {
     totalIndividualInvestedToProject,
     setTotalIndividualInvestedToProject,
   ] = useState<string>("0.0000");
-  const [
-    votingPower,
-    setVotingPower
-  ] = useState<number>(0);
+  const [votingPower, setVotingPower] = useState<number>(0);
 
   useEffect(() => {
     if (Web3Provider && address) {
@@ -40,7 +37,7 @@ const Buidl1Header = () => {
       });
 
       getVotingPower(web3Provider, address).then((data: any) => {
-        setVotingPower(data)
+        setVotingPower(data);
       });
     } else {
       setTotalIndividualInvestedToProject("0.0000");
@@ -68,7 +65,9 @@ const Buidl1Header = () => {
               <PersonalInfo className="reward">
                 Your reward: 0.0000 {currency.label}
               </PersonalInfo>
-              <PersonalInfo className="impact">Your impact {votingPower}%</PersonalInfo>
+              <PersonalInfo className="impact">
+                Voting power {votingPower}%
+              </PersonalInfo>
             </HeaderInline>
             <div className="lastLine">Project overview</div>
           </HeaderSection>
@@ -85,3 +84,4 @@ const Buidl1Header = () => {
 };
 
 export default Buidl1Header;
+
