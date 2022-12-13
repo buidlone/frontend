@@ -20,20 +20,16 @@ export const getActiveVotingTokens = async (
       );
 
       const investmentPoolId =
-        await contractGovernancePoolProvider.getInvestmentPoolId(
-          InvestmentPoolAddress
-        );
+        await contractGovernancePoolProvider.getInvestmentPoolId();
 
       const activeTokens =
         await contractGovernancePoolProvider.getActiveVotingTokensBalance(
-          InvestmentPoolAddress,
           currentMilestone,
           address
         );
 
       const usedTokens = await contractGovernancePoolProvider.getVotesAmount(
-        address,
-        investmentPoolId
+        address
       );
       const votesBalance = activeTokens - usedTokens;
 

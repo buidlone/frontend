@@ -18,11 +18,8 @@ export const getVotedAgainst = async () => {
       provider
     );
 
-    const totalVotesAmount = await contractGovernance.getTotalVotesAmount(
-      InvestmentPoolAddress
-    );
+    const totalVotesAmount = await contractGovernance.getTotalVotesAmount();
     const votedAgainst = await contractGovernance.votesAgainstPercentageCount(
-      InvestmentPoolAddress,
       totalVotesAmount
     );
 
@@ -31,4 +28,3 @@ export const getVotedAgainst = async () => {
     console.log("network error", error);
   }
 };
-
