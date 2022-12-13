@@ -37,7 +37,7 @@ interface IProgressRoadmap {
 }
 
 const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
-  const { milestones, currency, projectState, currentMilestone } =
+  const { milestones, currentMilestone, projectState } =
     useContext(LoadedValuesContext);
 
   const containerRef = React.createRef<HTMLElement>();

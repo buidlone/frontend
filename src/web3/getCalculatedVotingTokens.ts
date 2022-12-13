@@ -10,7 +10,7 @@ const provider = new ethers.providers.JsonRpcProvider(
   `https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`
 );
 
-export const getCalculatedTokens = async (amount: string) => {
+export const getCalculatedVotingTokens = async (amount: string) => {
   try {
     const contract = new ethers.Contract(
       InvestmentPoolAddress,

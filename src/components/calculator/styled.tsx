@@ -6,6 +6,7 @@ import { InlineWrapper } from "../timelineBlock/styled";
 
 interface Props {
   currency?: string;
+  row?: boolean;
 }
 
 export const CalculatorBlock = styled(BlockWrapper)`
@@ -25,14 +26,13 @@ export const CalculatorContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  //gap: 1rem;
   width: 100%;
   height: 100%;
   position: relative;
 
   .ctext {
     font-size: 16px;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.5);
   }
@@ -40,7 +40,7 @@ export const CalculatorContainer = styled.div`
   .blueText {
     font-size: 16px;
     font-weight: 500;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     color: #1eb5ff;
   }
 `;
@@ -59,7 +59,6 @@ export const SelectWrapper = styled.div<Props>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  //position: relative;
   gap: 1.219rem;
   margin-bottom: 5%;
 
@@ -161,7 +160,6 @@ export const PBWrapper = styled.div`
 
 export const IButton = styled(GreenButton)`
   width: 100%;
-
   height: 15%;
   margin-top: 1rem;
   background: transparent linear-gradient(168deg, #3aedc4 0%, #469898 100%) 0%
@@ -172,7 +170,6 @@ export const VotingRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
   padding: 0 3%;
 `;
 
@@ -180,7 +177,7 @@ export const VotingItem = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 12px;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 500;
 
   .text {
@@ -197,4 +194,11 @@ export const VotingItem = styled.div`
     font-size: 14px;
     color: #ffb100;
   }
+`;
+
+export const Positioning = styled.div<Props>`
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: ${(props) => (props?.row ? "row" : "column")};
 `;

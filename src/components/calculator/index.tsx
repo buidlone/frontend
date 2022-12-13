@@ -15,6 +15,7 @@ import {
   PBContainer,
   VotingRow,
   VotingItem,
+  Positioning,
 } from "./styled";
 import Slider from "../slider";
 import Modal from "../modal";
@@ -24,9 +25,10 @@ import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
 import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import { getCalculatedTokens } from "../../web3/getCalculatedTokens";
+import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
 import useCountdown from "../../hooks/useCountdown";
 import { ethers } from "ethers";
+import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
 
 const minStep = 0.0000001;
 
@@ -81,22 +83,40 @@ const Calculator = () => {
   };
 
   const inputSumChange = async () => {
-    const result = await getCalculatedTokens(amount || "0");
+    const resultVoting = await getCalculatedVotingTokens(amount || "0");
+    const resultTokens = await getCalculatedProjectTokens(amount || "0");
 
-    if (result) {
+    if (resultVoting) {
       setTickets(
-        result.votingTokensToMint.toString() != "0"
-          ? ethers.utils.formatEther(result.votingTokensToMint)
+        resultVoting.votingTokensToMint.toString() != "0"
+          ? ethers.utils.formatEther(resultVoting.votingTokensToMint)
           : "0"
       );
 
       const calculatedVotingTokens =
-        result.calculatedVotingTokens.toNumber() / 100;
+        resultVoting.calculatedVotingTokens.toNumber() / 100;
 
       setVoting(
         calculatedVotingTokens > 1
           ? Math.round(calculatedVotingTokens)
           : Number(calculatedVotingTokens.toFixed(2))
+      );
+    }
+
+    if (resultTokens) {
+      setTokens(
+        resultTokens.expectedTokensAllocation.toString() != "0"
+          ? ethers.utils.formatEther(resultTokens.expectedTokensAllocation)
+          : "0"
+      );
+
+      const calculatedProjectTokens =
+        resultTokens.projectTokensPercentage.toNumber() / 100;
+
+      setTokensPerMonth(
+        calculatedProjectTokens > 1
+          ? Math.round(calculatedProjectTokens)
+          : Number(calculatedProjectTokens.toFixed(2))
       );
     }
   };
@@ -178,7 +198,6 @@ const Calculator = () => {
           <PBContainer>
             <PBWrapper>
               <CircularProgressbarWithChildren
-                //maxValue={Number(((maxSum * 2) / 12).toFixed(4))}
                 value={tokensPerMonth ? tokensPerMonth : 0}
                 counterClockwise
                 styles={{
@@ -196,10 +215,6 @@ const Calculator = () => {
                   },
                 }}
               >
-                {/*
-          Width here needs to be (100 - 2 * strokeWidth)% 
-          in order to fit exactly inside the outer progressbar.
-        */}
                 <div style={{ width: "84%" }}>
                   <CircularProgressbarWithChildren
                     value={voting ? voting : 0}
@@ -220,9 +235,14 @@ const Calculator = () => {
                     }}
                   >
                     <div className="votingNumbers">
-                      {tokensPerMonth ? tokensPerMonth : 0}
+                      {`${
+                        Number(amount) == 0 || amount == ""
+                          ? "0"
+                          : tokensPerMonth > 1
+                          ? tokensPerMonth
+                          : "<1.00"
+                      }%`}
                     </div>
-                    <div className="smallBlue votingNumbers">(Per month)</div>
                     <div className="votingPercentage">
                       {" "}
                       {`${
@@ -237,17 +257,20 @@ const Calculator = () => {
                 </div>
               </CircularProgressbarWithChildren>
             </PBWrapper>
-            <VotingRow>
-              <VotingItem>
-                <div className="text">Project Tokens</div>
-                <div className="tokens">{tokens ? tokens : 0} Tokens</div>
-              </VotingItem>
-              <VotingItem>
-                <div className="text">Voting Power</div>
-                <div className="tickets">{tickets ? tickets : 0} Tickets</div>
-              </VotingItem>
-            </VotingRow>
-
+            <Positioning row={tokens == "0" && tickets == "0" ? true : false}>
+              <VotingRow>
+                <VotingItem>
+                  <div className="text">Rewards</div>
+                  <div className="tokens">{tokens ? tokens : 0} Tokens</div>
+                </VotingItem>
+              </VotingRow>
+              <VotingRow>
+                <VotingItem>
+                  <div className="text">Voting Power</div>
+                  <div className="tickets">{tickets ? tickets : 0} Tickets</div>
+                </VotingItem>
+              </VotingRow>
+            </Positioning>
             {web3Provider ? (
               <>
                 <IButton onClick={handleClick}>Invest</IButton>
