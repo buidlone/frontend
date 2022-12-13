@@ -13,7 +13,22 @@
       },
       {
         "internalType": "address",
-        "name": "_implementationContract",
+        "name": "_ipImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_gpImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_dpImplementation",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IVotingToken",
+        "name": "_votingToken",
         "type": "address"
       }
     ],
@@ -53,16 +68,6 @@
   {
     "inputs": [],
     "name": "InvestmentPoolFactory__GelatoOpsAddressIsZero",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvestmentPoolFactory__GovernancePoolAlreadyDefined",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvestmentPoolFactory__GovernancePoolNotDefined",
     "type": "error"
   },
   {
@@ -143,6 +148,11 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "InvestmentPoolFactory__SoftCapAndHardCapDifferenceIsTooLarge",
+    "type": "error"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint96",
@@ -159,6 +169,11 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "InvestmentPoolFactory__ThresholdPercentageIsGreaterThan100",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -170,7 +185,19 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "pool",
+        "name": "ipContract",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "gpContract",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "dpContract",
         "type": "address"
       },
       {
@@ -205,29 +232,46 @@
   {
     "inputs": [
       {
-        "internalType": "contract ISuperToken",
-        "name": "_acceptedToken",
-        "type": "address"
-      },
-      {
-        "internalType": "uint96",
-        "name": "_softCap",
-        "type": "uint96"
-      },
-      {
-        "internalType": "uint96",
-        "name": "_hardCap",
-        "type": "uint96"
-      },
-      {
-        "internalType": "uint48",
-        "name": "_fundraiserStartAt",
-        "type": "uint48"
-      },
-      {
-        "internalType": "uint48",
-        "name": "_fundraiserEndAt",
-        "type": "uint48"
+        "components": [
+          {
+            "internalType": "uint96",
+            "name": "softCap",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint96",
+            "name": "hardCap",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint48",
+            "name": "fundraiserStartAt",
+            "type": "uint48"
+          },
+          {
+            "internalType": "uint48",
+            "name": "fundraiserEndAt",
+            "type": "uint48"
+          },
+          {
+            "internalType": "contract ISuperToken",
+            "name": "acceptedToken",
+            "type": "address"
+          },
+          {
+            "internalType": "contract IERC20",
+            "name": "projectToken",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenRewards",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IInvestmentPoolFactory.ProjectDetails",
+        "name": "_projectDetails",
+        "type": "tuple"
       },
       {
         "internalType": "enum IInvestmentPoolFactory.ProxyType",
@@ -262,7 +306,7 @@
         "type": "tuple[]"
       }
     ],
-    "name": "createInvestmentPool",
+    "name": "createProjectPools",
     "outputs": [
       {
         "internalType": "address",
@@ -283,6 +327,19 @@
         "type": "uint48"
       }
     ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getDistributionPoolImplementation",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -296,7 +353,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -309,7 +366,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -340,7 +397,7 @@
   },
   {
     "inputs": [],
-    "name": "getGovernancePool",
+    "name": "getGovernancePoolImplementation",
     "outputs": [
       {
         "internalType": "address",
@@ -361,7 +418,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -387,7 +444,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -413,7 +470,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -426,7 +483,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -452,7 +509,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -476,6 +533,45 @@
         "internalType": "uint48",
         "name": "",
         "type": "uint48"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getVotesPercentageThreshold",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getVotesWithdrawPercentageFee",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getVotingToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -510,19 +606,6 @@
       }
     ],
     "name": "setGelatoFeeAllocation",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_governancePool",
-        "type": "address"
-      }
-    ],
-    "name": "setGovernancePool",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
