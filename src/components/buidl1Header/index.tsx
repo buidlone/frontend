@@ -4,6 +4,7 @@ import { Container } from "../../../styles/Container";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
+import { getInvestorRewards } from "../../web3/getInvestorRewards";
 import { getVotingPower } from "../../web3/getVotingPower";
 import {
   HeaderInfo,
@@ -25,6 +26,7 @@ const Buidl1Header = () => {
     setTotalIndividualInvestedToProject,
   ] = useState<string>("0.0000");
   const [votingPower, setVotingPower] = useState<number>(0);
+  const [investorRewards, setInvestorRewards] = useState<string>("0.0000");
 
   useEffect(() => {
     if (Web3Provider && address) {
@@ -36,11 +38,16 @@ const Buidl1Header = () => {
         );
       });
 
+      getInvestorRewards(web3Provider, address).then((data: any) => {
+        setInvestorRewards(data == "0.0" ? "0.0000" : data);
+      });
+
       getVotingPower(web3Provider, address).then((data: any) => {
         setVotingPower(data);
       });
     } else {
       setTotalIndividualInvestedToProject("0.0000");
+      setInvestorRewards("0.0000");
     }
   }, [web3Provider]);
 
@@ -63,7 +70,7 @@ const Buidl1Header = () => {
                 {currency.label}
               </PersonalInfo>
               <PersonalInfo className="reward">
-                Your reward: 0.0000 {currency.label}
+                Your reward: {investorRewards} {currency.label}
               </PersonalInfo>
               <PersonalInfo className="impact">
                 Voting power {votingPower}%
@@ -84,4 +91,3 @@ const Buidl1Header = () => {
 };
 
 export default Buidl1Header;
-
