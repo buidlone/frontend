@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import breakpoints from "../../../styles/constants";
 
 export const BackgroundBlur = styled.div`
@@ -8,6 +8,7 @@ export const BackgroundBlur = styled.div`
 
   @media screen and ${breakpoints.Device.mobile} {
     background-size: 100% 100%;
+    background-image: url("/background_mobile.png");
   }
 `;
 
@@ -41,7 +42,7 @@ export const HeaderSection = styled.div`
   }
 
   @media screen and ${breakpoints.Device.mobile} {
-    padding: 100px 15px;
+    padding: 120px 15px 30px;
     height: 95vh;
   }
 `;
@@ -77,6 +78,27 @@ export const HeaderInline = styled.div`
 
   @media screen and ${breakpoints.Device.mobile} {
     display: none;
+  }
+`;
+
+export const DemoButton = styled.button`
+  display: none;
+  width: 260px;
+  height: 115px;
+  background-color: #00c4ff;
+  border-radius: 5px;
+  color: black;
+  font-size: 20px;
+  padding: 4px;
+  border: none;
+  font-weight: 100;
+  font-family: "Space Grotesk";
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
   }
 `;
 
@@ -129,6 +151,7 @@ export const RoundSection = styled.div`
 `;
 
 export const RoundSectionMobile = styled(RoundSection)`
+  display: none;
   @media screen and ${breakpoints.Device.mobile} {
     display: flex;
     justify-content: center;

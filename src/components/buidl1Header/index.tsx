@@ -4,6 +4,7 @@ import { Container } from "../../../styles/Container";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
+import { getVotingPower } from "../../web3/getVotingPower";
 import {
   HeaderInfo,
   HeaderLabel,
@@ -15,6 +16,7 @@ import {
   Divider,
   BackgroundBlur,
   RoundSectionMobile,
+  DemoButton,
 } from "./styled";
 
 const Buidl1Header = () => {
@@ -24,6 +26,7 @@ const Buidl1Header = () => {
     totalIndividualInvestedToProject,
     setTotalIndividualInvestedToProject,
   ] = useState<string>("0.0000");
+  const [votingPower, setVotingPower] = useState<number>(0);
 
   useEffect(() => {
     if (Web3Provider && address) {
@@ -34,10 +37,15 @@ const Buidl1Header = () => {
             : data.totalAmountInvested
         );
       });
+
+      getVotingPower(web3Provider, address).then((data: any) => {
+        setVotingPower(data);
+      });
     } else {
       setTotalIndividualInvestedToProject("0.0000");
     }
   }, [web3Provider]);
+
   return (
     <>
       <BackgroundBlur>
@@ -51,6 +59,7 @@ const Buidl1Header = () => {
               transparent and provide reliable services, in hopes to create a
               prospering and supportive community.
             </HeaderInfo>
+            <DemoButton>BOOK A DEMO</DemoButton>
             <HeaderInline>
               <PersonalInfo className="investment">
                 Your investment: {totalIndividualInvestedToProject}{" "}
@@ -59,7 +68,9 @@ const Buidl1Header = () => {
               <PersonalInfo className="reward">
                 Your reward: 0.0000 {currency.label}
               </PersonalInfo>
-              <PersonalInfo className="impact">Your impact 0.00 %</PersonalInfo>
+              <PersonalInfo className="impact">
+                Voting power {votingPower}%
+              </PersonalInfo>
             </HeaderInline>
             <RoundSectionMobile>
               <Round>Active - Private Round</Round>

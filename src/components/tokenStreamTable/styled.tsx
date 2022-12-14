@@ -18,13 +18,27 @@ export const Table = styled.table<Props>`
     font-weight: 300;
   }
 
-  th,
+ tr {
+   border-top: 1px solid rgba(0, 196, 255, 0.2);
+ }
+
+ td {
+   padding: 10px;
+ }
+
   .phase {
     color: rgba(0, 196, 255, 0.5);
     font-family: "Barlow", sans-serif;
     font-weight: 300;
     font-size: 14px;
   }
+
+ 
+
+
+
+
+
 
   .fund {
     color: #00ffc4;

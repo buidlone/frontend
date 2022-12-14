@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from "styled-components";
 
 export const ListItem = styled.li`
   margin: 0 0 15px 0;
@@ -23,10 +23,10 @@ export const Tooltip = styled.div`
 
   font-size: 14px;
   color: rgba(255, 255, 255, 0.5);
-  font-family: 'Barlow', sans-serif;
+  font-family: "Barlow", sans-serif;
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     top: 100%;
     left: 50%;
@@ -38,10 +38,10 @@ export const Tooltip = styled.div`
 
   .completed {
     &::marker {
-      content: '✓   ';
+      content: "✓   ";
       color: rgba(0, 255, 196, 0.8);
       font-weight: 700;
-      font-family: 'Barlow', sans-serif;
+      font-family: "Barlow", sans-serif;
       font-size: 13px;
       opacity: 0.5;
     }
@@ -49,11 +49,12 @@ export const Tooltip = styled.div`
 
   .uncompleted {
     &::marker {
-      content: '-    ';
+      content: "-    ";
       color: rgba(255, 255, 255, 0.5);
       font-weight: 700;
-      font-family: 'Barlow', sans-serif;
+      font-family: "Barlow", sans-serif;
       font-size: 14px;
     }
   }
 `;
+

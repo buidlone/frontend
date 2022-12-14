@@ -1,5 +1,5 @@
-import Image from "next/image";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 export const FooterSectionWrapper = styled.div`
   width: 100%;
@@ -22,6 +22,10 @@ export const FooterSectionWrapper = styled.div`
   @media screen and (max-width: 1190px) {
     padding-left: 0;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    padding: 0px 20px;
+  }
 `;
 
 export const FooterHeader = styled.p`
@@ -43,6 +47,14 @@ export const FooterHeader = styled.p`
     width: 11px;
     height: 11px;
     position: absolute;
+    @media screen and ${breakpoints.Device.mobile} {
+      right: calc(100% + 0.8rem);
+      top: calc(100% - 1.3rem);
+    }
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    font-size: 28px;
   }
 `;
 
@@ -61,7 +73,7 @@ export const LogoWrapper = styled.div`
   display: flex;
   align-items: space-evenly;
   gap: 1rem;
-  padding-right: 6rem;
+  padding-left: 4rem;
 
   & > a {
     height: 1.5rem;
@@ -70,6 +82,10 @@ export const LogoWrapper = styled.div`
   & > a:first-child {
     margin-right: 0.5rem;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    padding-left: 0px;
+  }
 `;
 
 export const InputWrapper = styled.div`
@@ -77,6 +93,16 @@ export const InputWrapper = styled.div`
   align-items: space-between;
   justify-content: center;
   gap: 1.2rem;
+`;
+
+export const CommunityLink = styled.a`
+  font-size: 20px;
+  transition: 1s;
+  color: white;
+
+  &:hover {
+    color: rgba(0, 196, 255, 1);
+  }
 `;
 
 export const InputLine1 = styled.div`
@@ -116,3 +142,4 @@ export const ContactsLine = styled.div`
     }
   }
 `;
+

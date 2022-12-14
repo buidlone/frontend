@@ -1,6 +1,5 @@
 import { TopText, BottomText, InfoSec, Line } from "./styled";
 
-
 interface Iheader {
   text?: string;
   mainText?: string;
@@ -19,7 +18,14 @@ export default function ProjectsInfoSection({
 
       <Line />
 
-      <BottomText> CONNECT YOUR WALLET TO GET STARTED </BottomText>
+      <BottomText className="hideOnMobile">
+        CONNECT YOUR WALLET TO GET STARTED{" "}
+      </BottomText>
+
+      <BottomText className="hideOnDesktop">
+        CONNECT YOUR WALLET ON DESKTOP VERSION TO GET STARTED
+      </BottomText>
     </InfoSec>
   );
 }
+

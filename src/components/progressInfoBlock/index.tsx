@@ -24,6 +24,9 @@ import { stopProject } from "../../web3/stopProject";
 import { isStopAllowed } from "../../web3/isStopAllowed";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import { ethers } from "ethers";
+import { getVotingTokens } from "../../web3/getVotingTokens";
+import { getVotingPower } from "../../web3/getVotingPower";
+import { getVotedAgainst } from "../../web3/getVotedAgainst";
 
 const ProgressInfoBlock = ({
   wallets,
@@ -32,13 +35,8 @@ const ProgressInfoBlock = ({
   ...props
 }: IInvestorsProps) => {
   const featuredProject = useContext(ProjectContext);
-
   const { web3Provider, address } = useContext(Web3Context);
-
-  // TODO: get voting power
   const [votingPower, setVotingPower] = useState(0);
-  // TODO: get totalFundsForCuttingVotes
-  const [totalFundsForCuttingVotes, setTotalFundsForCuttingVotes] = useState(0);
   const {
     totalInvested,
     currency,
@@ -48,20 +46,9 @@ const ProgressInfoBlock = ({
   } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
+  const [votedAgainst, setVotedAgainst] = useState<number | undefined>(0);
   const [stopDisabled, setStopDisabled] = useState(false);
   const [over, setOver] = useState(0);
-
-  useEffect(() => {
-    if (web3Provider && web3Provider?.network.chainId === 5) {
-      // TODO: get voting power
-      // TODO: get totalFundsForCuttingVotes
-      setVotingPower(15);
-      setTotalFundsForCuttingVotes(7);
-    } else {
-      setVotingPower(0);
-      setTotalFundsForCuttingVotes(0);
-    }
-  }, [web3Provider, totalInvested._hex]);
 
   useEffect(() => {
     setStopDisabled(
@@ -83,6 +70,17 @@ const ProgressInfoBlock = ({
     }
   };
 
+  useEffect(() => {
+    getVotedAgainst().then((data: any) => {
+      setVotedAgainst(data);
+    });
+    if (web3Provider) {
+      getVotingPower(web3Provider, address).then((data: any) => {
+        setVotingPower(data);
+      });
+    }
+  }, [totalInvested._hex]);
+
   return (
     <DetailsCard>
       <DetailsInfoWrapper>
@@ -91,7 +89,7 @@ const ProgressInfoBlock = ({
         <Property>Participants</Property>
         <Property>Funds used</Property>
         <Property>Tokens reserved</Property>
-        <Property>Total votes for cutting funds</Property>
+        <Property>Voted against</Property>
         <Property>Project timeline</Property>
       </DetailsInfoWrapper>
 
@@ -121,7 +119,7 @@ const ProgressInfoBlock = ({
           DPP
         </Data>
 
-        <Data className="votes">{totalFundsForCuttingVotes}%</Data>
+        <Data className="votes">{votedAgainst}%</Data>
 
         <Data>
           {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S
@@ -140,8 +138,8 @@ const ProgressInfoBlock = ({
             />
 
             <div>
-              Your word have <span className="votingPower">{votingPower}%</span>{" "}
-              impact
+              Your word has <span className="votingPower">{votingPower}%</span>{" "}
+              power
             </div>
 
             <div onMouseOver={() => setOver(1)} onMouseOut={() => setOver(0)}>

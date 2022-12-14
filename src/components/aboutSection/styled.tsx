@@ -46,6 +46,20 @@ export const ButtonsWrapper = styled.div`
   @media screen and ${breakpoints.Device.mobile} {
     margin: 30px 0;
     gap: 1rem;
+    padding-right: 0rem;
+  }
+
+  .hideMobile {
+    @media screen and ${breakpoints.Device.mobile} {
+      display: none;
+    }
+  }
+
+  .hideDesktop {
+    display: none;
+    @media screen and ${breakpoints.Device.mobile} {
+      display: block;
+    }
   }
 `;
 
@@ -55,5 +69,9 @@ export const AboutSec = styled.section`
   justify-content: center;
   padding-bottom: 100px;
   flex-wrap: wrap;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    padding-bottom: 50px;
+  }
 `;
 

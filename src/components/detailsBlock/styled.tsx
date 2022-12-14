@@ -44,7 +44,7 @@ export const FlexItem = styled.div`
   @media screen and ${breakpoints.Device.mobile} {
     width: 100%;
     height: auto;
-    margin: 20px 15px;
+    margin: 25px 20px;
   }
 `;
 
@@ -53,6 +53,10 @@ export const MobileDivider = styled.div`
   height: 1px;
   background: rgb(255 255 255 / 50%);
   margin: 0px 15px;
+  display: none;
+  @media screen and ${breakpoints.Device.mobile} {
+    display: block;
+  }
 `;
 
 export const DetailsContentWrapper = styled.div`

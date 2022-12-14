@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { DetailsCard } from "../progressInfoBlock/styled";
 import { ProgressRoadmapWrapper } from "../progressRoadmap/styled";
 import breakpoints from "../../../styles/constants";

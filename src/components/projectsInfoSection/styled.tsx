@@ -12,6 +12,23 @@ export const InfoSec = styled.section`
   flex-direction: column;
   width: 100%;
   gap: 0.65rem;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    padding-top: 9rem;
+  }
+
+  .hideOnMobile {
+    @media screen and ${breakpoints.Device.mobile} {
+      display: none;
+    }
+  }
+
+  .hideOnDesktop {
+    display: none;
+    @media screen and ${breakpoints.Device.mobile} {
+      display: flex;
+    }
+  }
 `;
 
 export const TopText = styled.div`
@@ -55,12 +72,15 @@ export const BottomText = styled.div`
   }
 
   @media screen and ${breakpoints.Device.mobile} {
-    display: none;
+    font-size: 14px;
+    white-space: pre-wrap;
+    margin-left: 2.5rem;
+    opacity: 0.8;
   }
 `;
 
 export const Line = styled.div`
-  width: 55%;
+  width: 57%;
   height: 1px;
   border-bottom: 1px solid #00c4ff;
 

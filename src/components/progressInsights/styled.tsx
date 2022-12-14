@@ -75,7 +75,6 @@ export const SoftCapIndicator = styled.div<Props>`
   position: absolute;
   bottom: 15%;
   left: calc(${(props) => props?.softCapPosition}%);
-  z-index: 99999;
 
   &:before {
     content: "Soft cap";
@@ -99,7 +98,6 @@ export const HardCapIndicator = styled.div`
   position: absolute;
   bottom: 15%;
   left: 100%;
-  z-index: 99999;
 
   &:before {
     content: "Hard cap";

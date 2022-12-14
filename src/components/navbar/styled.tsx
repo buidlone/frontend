@@ -28,7 +28,7 @@ export const LogoWrapper = styled.div`
   position: relative;
   height: 31.8px;
   width: 31.8px;
-  top: 15px;
+  top: 20px;
 
   @media screen and ${breakpoints.Device.mobile} {
     height: 20px;

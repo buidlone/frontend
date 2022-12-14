@@ -1,4 +1,6 @@
-import styled, { css } from 'styled-components';
+import { Carousel } from "react-responsive-carousel";
+import styled from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 export const InfoCard = styled.div`
   background: #2e314d 0% 0% no-repeat padding-box;
@@ -35,8 +37,32 @@ export const Buidl1SectionWrapper = styled.div`
       flex-basis: 100%;
       justify-content: center;
       padding-right: 80px;
+
+      @media screen and ${breakpoints.Device.mobile} {
+        padding-right: 0px;
+      }
     }
-  } ;
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    padding: 0px;
+    display: block;
+    background: transparent;
+    width: 100%;
+    margin-bottom: 0px;
+  }
+`;
+
+export const CarouselStyle = styled(Carousel)`
+  height: 430px;
+  .carousel .control-dots .dot {
+    width: 13px;
+    height: 13px;
+  }
+
+  .carousel.carousel-slider {
+    height: 430px;
+  }
 `;
 
 export const TextWrapper = styled.div`
@@ -44,6 +70,12 @@ export const TextWrapper = styled.div`
   width: 90%;
   margin: 35px 50px;
   padding-right: 80px;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    padding: 20px !important;
+    margin: 0;
+    width: 100%;
+  }
 `;
 
 export const Title = styled.text`
@@ -51,29 +83,39 @@ export const Title = styled.text`
   text-align: left;
   font-size: 28px;
   color: #ffffff;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   margin: 0;
   opacity: 1;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    font-size: 22px;
+  }
 `;
 
 export const Text = styled.p`
   display: block;
   text-align: left;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 20px;
   color: #d6d6d6;
   margin: 1.438rem auto;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    font-size: 16px;
+    margin-bottom: 0px;
+  }
 `;
 
 export const AboutLink = styled.a`
   display: block;
   text-align: left;
   text-decoration: underline;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 20px;
   color: #00c4ff;
   opacity: 1;
   margin-bottom: 10px;
   cursor: pointer;
 `;
+

@@ -4,35 +4,35 @@ import { Footer, Table, Header, InvButton } from "./styled";
 
 const tokenStreamData = [
   {
-    phase: "phase 1",
+    phase: "Milestone 1",
     fundRelease: "1000",
     fundStream: "5000/2 mo",
     tokenRelease: "5 000",
     tokenStream: "15 000/2 mo",
   },
   {
-    phase: "phase 1",
+    phase: "Milestone 1",
     fundRelease: "1000",
     fundStream: "5000/2 mo",
     tokenRelease: "5 000",
     tokenStream: "15 000/2 mo",
   },
   {
-    phase: "phase 1",
+    phase: "Milestone 1",
     fundRelease: "1000",
     fundStream: "5000/2 mo",
     tokenRelease: "5 000",
     tokenStream: "15 000/2 mo",
   },
   {
-    phase: "phase 1",
+    phase: "Milestone 1",
     fundRelease: "1000",
     fundStream: "5000/2 mo",
     tokenRelease: "5 000",
     tokenStream: "15 000/2 mo",
   },
   {
-    phase: "phase 1",
+    phase: "Milestone 1",
     fundRelease: "1000",
     fundStream: "5000/2 mo",
     tokenRelease: "5 000",
@@ -58,10 +58,10 @@ const TokenStreamTable = ({ assets }: ITokenStreamTable) => {
       <Table assets={assets}>
         <thead>
           <th />
-          <th>Instant fund release ({currency.label})</th>
-          <th>Fund stream ({currency.label})</th>
-          <th>Token release (BDL1)</th>
-          <th>Token stream (BDL1)</th>
+          <th className="phase">Instant fund release ({currency.label})</th>
+          <th className="phase">Fund stream ({currency.label})</th>
+          <th className="phase">Token release (BDL1)</th>
+          <th className="phase">Token stream (BDL1)</th>
         </thead>
         <tbody>
           {tokenStreamData &&

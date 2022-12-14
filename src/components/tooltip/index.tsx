@@ -123,6 +123,7 @@ interface ITooltip {
   disabled?: number;
   delay?: number;
   nowrap?: boolean;
+  index?: number;
 }
 
 export interface IPosition {
@@ -140,6 +141,7 @@ const Tooltip = ({
   disabled = 0,
   delay,
   nowrap = false,
+index,
   ...props
 }: ITooltip) => {
   const [show, setShow] = useState(0);
@@ -178,11 +180,12 @@ const Tooltip = ({
             show={show}
             placement={placement}
             nowrap={nowrap}
+            fundsObject={fundsObject}
           >
             {milestonesArray && (
               <TooltipList milestonesArray={milestonesArray} />
             )}
-            {fundsObject && <TooltipList fundsObject={fundsObject} />}
+            {fundsObject && <TooltipList index={index} fundsObject={fundsObject} />}
             {text}
           </StyledTooltip>
         </Portal>

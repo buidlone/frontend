@@ -27,6 +27,13 @@ export const HideForMobile = styled.div`
   }
 `;
 
+export const HideForDesktop = styled.div`
+  display: none;
+  @media screen and ${breakpoints.Device.mobile} {
+    display: unset;
+  }
+`;
+
 export const BgImage = styled.div<Props>`
   pointer-events: none;
   ${(props) => {
