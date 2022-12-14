@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 export const InfoSec = styled.section`
   display: flex;
@@ -20,6 +21,12 @@ export const TopText = styled.div`
   opacity: 0.85;
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    font-size: 32px;
+    width: 100%;
+    padding: 0px 20px;
+  }
 `;
 
 export const BottomText = styled.div`
@@ -46,10 +53,19 @@ export const BottomText = styled.div`
     height: 0.85rem;
     position: absolute;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
+  }
 `;
 
 export const Line = styled.div`
   width: 55%;
   height: 1px;
   border-bottom: 1px solid #00c4ff;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
+  }
 `;
+

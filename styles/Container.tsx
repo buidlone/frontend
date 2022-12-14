@@ -1,5 +1,5 @@
-import Image from "next/image";
 import styled from "styled-components";
+import breakpoints from "./constants";
 
 interface Props {
   isFixed?: boolean;
@@ -17,7 +17,13 @@ export const Container = styled.div`
   position: relative;
 
   @media screen and (max-width: 991px) {
-    padding: 0 30px;
+    padding: 0 15px;
+  }
+`;
+
+export const HideForMobile = styled.div`
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
   }
 `;
 
@@ -66,3 +72,4 @@ export const BgImage = styled.div<Props>`
     }
   }};
 `;
+

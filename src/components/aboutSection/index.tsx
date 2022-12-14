@@ -4,6 +4,7 @@ import DetailsBlock from "../detailsBlock";
 import { AboutSec, ButtonsWrapper, AboutButton } from "./styled";
 import Buidl1Section from "../buidl1Section";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
+import { HideForMobile } from "../../../styles/Container";
 
 const AboutSection = ({ wallets, ...props }: IInvestorsProps) => {
   const [active, setActive] = useState("details");
@@ -23,12 +24,14 @@ const AboutSection = ({ wallets, ...props }: IInvestorsProps) => {
         >
           About the project
         </AboutButton>
-        <AboutButton
-          className={active == "history" ? "selected" : ""}
-          onClick={() => setActive("history")}
-        >
-          History
-        </AboutButton>
+        <HideForMobile>
+          <AboutButton
+            className={active == "history" ? "selected" : ""}
+            onClick={() => setActive("history")}
+          >
+            History
+          </AboutButton>
+        </HideForMobile>
       </ButtonsWrapper>
       {active === "details" && <DetailsBlock wallets={wallets} />}
       {active === "about" && <Buidl1Section />}
@@ -38,3 +41,4 @@ const AboutSection = ({ wallets, ...props }: IInvestorsProps) => {
 };
 
 export default AboutSection;
+

@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 import { BlockWrapper } from "../fundingBlock/styled";
+import breakpoints from "../../../styles/constants";
+import Image from "next/image";
 
 interface Props {
   active?: boolean;
@@ -15,6 +17,15 @@ export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    min-width: 200px;
+    width: 100%;
+    padding: 0rem;
+    gap: 0rem;
+    height: 360px;
+    margin-bottom: 50px;
+  }
 `;
 export const StateBubble = styled.div<Props>`
   ${(props) => {
@@ -50,7 +61,19 @@ export const FeaturedProjectLogo = styled.div`
   font-size: 26px;
   font-family: "Space Grotesk", sans-serif;
   font-weight: 500;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    height: 37px;
+    width: 37px;
+    padding: 9px;
+  }
 `;
+
+export const FeaturedProjectLogoInner = styled(Image)`
+  height: 32px;
+  width: 32px;
+`;
+
 export const FeaturedProjectHeader = styled.p`
   display: flex;
   flex-direction: row;
@@ -65,6 +88,10 @@ export const FeaturedProjectHeader = styled.p`
     margin-right: 1%;
     align-self: flex-start;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    padding: 1.1rem;
+  }
 `;
 
 export const FeaturedProjectName = styled.div`
@@ -72,6 +99,9 @@ export const FeaturedProjectName = styled.div`
   color: rgba(255, 255, 255, 1);
   font-family: "space Grotesk", sans-serif;
   font-weight: 400;
-`;
 
+  @media screen and ${breakpoints.Device.mobile} {
+    font-size: 18px;
+  }
+`;
 

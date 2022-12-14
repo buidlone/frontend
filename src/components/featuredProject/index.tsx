@@ -4,9 +4,9 @@ import FeaturedProjectInsights from "../featuredProjectInsights";
 import {
   FeaturedProjectHeader,
   FeaturedProjectLogo,
+  FeaturedProjectLogoInner,
   FeaturedProjectName,
   FeaturedProjectsBlockWrapper,
-
   StateBubble,
 } from "./styled";
 
@@ -19,12 +19,17 @@ const FeaturedProject = ({ project, ...props }: IFeaturedProject) => {
     <FeaturedProjectsBlockWrapper>
       <FeaturedProjectHeader>
         <FeaturedProjectLogo>
-          <Image src={logo} alt={"logo"} height={"32px"} width={"32px"} />
+          <FeaturedProjectLogoInner
+            src={logo}
+            alt={"logo"}
+            height={"32px"}
+            width={"32px"}
+          />
         </FeaturedProjectLogo>
         <FeaturedProjectName>Buidl1 - LCF protocol</FeaturedProjectName>
         <StateBubble active />
       </FeaturedProjectHeader>
-      <FeaturedProjectInsights project={project}/>
+      <FeaturedProjectInsights project={project} />
     </FeaturedProjectsBlockWrapper>
   ) : (
     <FeaturedProjectsBlockWrapper>
@@ -33,9 +38,10 @@ const FeaturedProject = ({ project, ...props }: IFeaturedProject) => {
         <FeaturedProjectName> Your project</FeaturedProjectName>
         <StateBubble />
       </FeaturedProjectHeader>
-      <FeaturedProjectInsights project={project}/>
+      <FeaturedProjectInsights project={project} />
     </FeaturedProjectsBlockWrapper>
   );
 };
 
 export default FeaturedProject;
+

@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 export const AboutButton = styled.button`
   border-color: transparent;
@@ -29,6 +30,10 @@ export const AboutButton = styled.button`
     color: #00c4ff;
     border-bottom: 1px solid #00c4ff;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    font-size: 16px;
+  }
 `;
 
 export const ButtonsWrapper = styled.div`
@@ -37,7 +42,11 @@ export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 3.5rem;
-  padding-right: 2rem; ;
+  padding-right: 2rem;
+  @media screen and ${breakpoints.Device.mobile} {
+    margin: 30px 0;
+    gap: 1rem;
+  }
 `;
 
 export const AboutSec = styled.section`
@@ -47,3 +56,4 @@ export const AboutSec = styled.section`
   padding-bottom: 100px;
   flex-wrap: wrap;
 `;
+

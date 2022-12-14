@@ -1,11 +1,15 @@
 import styled, { css } from "styled-components";
 import { DetailsCard } from "../progressInfoBlock/styled";
 import { ProgressRoadmapWrapper } from "../progressRoadmap/styled";
+import breakpoints from "../../../styles/constants";
 
 export const ProgressBlockWrapper = styled.div`
   background: #1f233c 0% 0% no-repeat padding-box;
   border-radius: 28px;
   opacity: 1;
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
+  }
 `;
 
 export const ProgressRoadmap = styled.div`
@@ -34,3 +38,4 @@ export const ProgressContentWrapper = styled.div`
     }
   } ;
 `;
+

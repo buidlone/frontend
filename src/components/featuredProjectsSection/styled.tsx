@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { BlockWrapper } from "../fundingBlock/styled";
+import breakpoints from "../../../styles/constants";
 
 export const FeatureTitle = styled.p`
   color: rgba(255, 255, 255, 1);
@@ -8,6 +8,9 @@ export const FeatureTitle = styled.p`
   margin: auto;
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 300;
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
+  }
 `;
 
 export const FeatureTextWrapper = styled.div`
@@ -25,3 +28,4 @@ export const FeaturesSec = styled.div`
     justify-content: center;
   }
 `;
+

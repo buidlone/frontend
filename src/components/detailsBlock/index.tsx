@@ -11,6 +11,7 @@ import {
   FlexItem1,
   DetailsBlockWrapper,
   DetailsContentWrapper,
+  MobileDivider,
 } from "./styled";
 
 export const featuredProject = {
@@ -77,7 +78,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
             </Data>
           </FlexItem1>
         </FlexItem>
-
+        <MobileDivider />
         <FlexItem>
           <FlexItem1>
             <Property className="bigger">Raised</Property>
@@ -129,3 +130,4 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
 };
 
 export default DetailsBlock;
+

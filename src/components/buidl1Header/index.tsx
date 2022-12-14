@@ -14,6 +14,7 @@ import {
   PersonalInfo,
   Divider,
   BackgroundBlur,
+  RoundSectionMobile,
 } from "./styled";
 
 const Buidl1Header = () => {
@@ -60,6 +61,9 @@ const Buidl1Header = () => {
               </PersonalInfo>
               <PersonalInfo className="impact">Your impact 0.00 %</PersonalInfo>
             </HeaderInline>
+            <RoundSectionMobile>
+              <Round>Active - Private Round</Round>
+            </RoundSectionMobile>
             <div className="lastLine">Project overview</div>
           </HeaderSection>
         </Container>
@@ -75,3 +79,4 @@ const Buidl1Header = () => {
 };
 
 export default Buidl1Header;
+

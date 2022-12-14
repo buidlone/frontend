@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { InlineWrapper } from "../timelineBlock/styled";
 
 interface isDisabled {
@@ -10,8 +10,7 @@ export const TableLink = styled.a`
   font-size: 11px;
   text-decoration: underline;
   text-align: left;
-  font-family: 'IBM Plex Sans', sans-serif;
-  
+  font-family: "IBM Plex Sans", sans-serif;
 `;
 
 export const TableButton = styled.button<isDisabled>`
@@ -200,3 +199,4 @@ export const Card = styled.div`
     transform: rotateY(180deg);
   }
 `;
+

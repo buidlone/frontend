@@ -2,7 +2,7 @@ import AboutSection from "../src/components/aboutSection";
 import ProgressSection from "../src/components/progressSection";
 import { FeaturesSec } from "../src/components/featuredProjectsSection/styled";
 import FundingBlock from "../src/components/fundingBlock";
-import { BgImage, Container } from "../styles/Container";
+import { BgImage, Container, HideForMobile } from "../styles/Container";
 import TimelineBlock from "../src/components/timelineBlock";
 import FooterSection from "../src/components/footerSection";
 import Calculator from "../src/components/calculator";
@@ -15,6 +15,7 @@ import StopStatus from "../src/components/statusNotification/stopStatus";
 import WrongStatus from "../src/components/statusNotification/wrongStatus";
 import InvestStatus from "../src/components/statusNotification/investStatus";
 import Buidl1Header from "../src/components/buidl1Header";
+import MobileFooter from "../src/components/mobileFooter";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
@@ -63,23 +64,27 @@ const Buidl1 = () => {
       ) : (
         <Buidl1Header />
       )}
+      <MobileFooter />
+
       <Container>
-        <FeaturesSec>
-          <FundingBlock
-            setIsShownInvest={setIsShownInvest}
+        <HideForMobile>
+          <FeaturesSec>
+            <FundingBlock
+              setIsShownInvest={setIsShownInvest}
+              setIsShownWrong={setIsShownWrong}
+            />
+            <TimelineBlock />
+          </FeaturesSec>
+          <ProgressSection
+            setIsShownStop={setIsShownStop}
             setIsShownWrong={setIsShownWrong}
+            wallets={wallets}
           />
-          <TimelineBlock />
-        </FeaturesSec>
-        <ProgressSection
-          setIsShownStop={setIsShownStop}
-          setIsShownWrong={setIsShownWrong}
-          wallets={wallets}
-        />
-        <FeaturesSec>
-          <Calculator />
-          <InvestorsBarChart wallets={wallets} />
-        </FeaturesSec>
+          <FeaturesSec>
+            <Calculator />
+            <InvestorsBarChart wallets={wallets} />
+          </FeaturesSec>
+        </HideForMobile>
         <AboutSection wallets={wallets} />
       </Container>
 
@@ -91,3 +96,4 @@ const Buidl1 = () => {
 };
 
 export default Buidl1;
+

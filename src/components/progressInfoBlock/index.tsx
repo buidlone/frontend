@@ -174,3 +174,4 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
+
