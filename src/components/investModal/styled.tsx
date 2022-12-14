@@ -98,12 +98,13 @@ export const OutputField = styled.div`
   }
   .voting2 {
     color: rgba(255, 177, 0, 1);
+    margin-left: 3px;
   }
 
   .voting1,
   .voting2 {
     text-align: left;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600;
     font-size: 14px;
     padding-left: 2px;
@@ -132,6 +133,7 @@ export const InputField = styled.input`
     width: 71.5%;
   }
 `;
+
 export const IModalFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -145,10 +147,10 @@ export const IModalFieldWrapper = styled.div`
     color: rgba(255, 255, 255, 0.5);
   }
 `;
+
 export const IModalInputSectionWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-
   padding: 2.5rem 0rem 0.6rem 0rem;
   gap: 4rem;
 
@@ -158,6 +160,11 @@ export const IModalInputSectionWrapper = styled.div`
   }
 `;
 
+export const InlineLabel = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
 export const CurrencyInline = styled.div`
   display: flex;
   justify-content: space-between;
@@ -179,7 +186,6 @@ export const BalanceBtn = styled.div`
   text-align: left;
   position: absolute;
   right: 0%;
-  //top: 0%;
 `;
 export const MaxBalanceBtn = styled.button`
   max-width: 2rem;
