@@ -2,32 +2,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract VotingToken",
-        "name": "_votingToken",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_investmentPoolFactory",
-        "type": "address"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_threshold",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_votestWithdrawFee",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
@@ -68,16 +42,6 @@
     "type": "error"
   },
   {
-    "inputs": [],
-    "name": "GovernancePool__InvestmentPoolAlreadyExists",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "GovernancePool__InvestmentPoolDoesNotExist",
-    "type": "error"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -105,12 +69,7 @@
   },
   {
     "inputs": [],
-    "name": "GovernancePool__NotInvestmentPoolFactory",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "GovernancePool__ThresholdNumberIsGreaterThan100",
+    "name": "GovernancePool__NotInvestmentPool",
     "type": "error"
   },
   {
@@ -140,25 +99,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "investmentPool",
-        "type": "address"
-      }
-    ],
-    "name": "ActivateInvestmentPool",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "investmentPool",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "investor",
         "type": "address"
       },
@@ -174,14 +114,7 @@
   },
   {
     "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "investmentPool",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "FinishVoting",
     "type": "event"
   },
@@ -189,11 +122,18 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "investmentPool",
-        "type": "address"
-      },
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "version",
+        "type": "uint8"
+      }
+    ],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       {
         "indexed": true,
         "internalType": "address",
@@ -213,12 +153,6 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "investmentPool",
-        "type": "address"
-      },
       {
         "indexed": true,
         "internalType": "address",
@@ -247,12 +181,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "investmentPool",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "investor",
         "type": "address"
       },
@@ -269,12 +197,6 @@
   {
     "anonymous": false,
     "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "investmentPool",
-        "type": "address"
-      },
       {
         "indexed": true,
         "internalType": "address",
@@ -303,12 +225,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "investmentPool",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "investor",
         "type": "address"
       },
@@ -321,19 +237,6 @@
     ],
     "name": "VoteAgainstProject",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      }
-    ],
-    "name": "activateInvestmentPool",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -355,30 +258,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_investmentPoolId",
-        "type": "uint256"
-      }
-    ],
-    "name": "doesInvestmentPoolExist",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      },
       {
         "internalType": "uint256",
         "name": "_milestoneId",
@@ -411,7 +290,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -429,7 +308,7 @@
   },
   {
     "inputs": [],
-    "name": "getInvestmentPoolFactoryAddress",
+    "name": "getInvestmentPool",
     "outputs": [
       {
         "internalType": "address",
@@ -441,13 +320,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "getInvestmentPoolId",
     "outputs": [
       {
@@ -456,7 +329,7 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -478,11 +351,6 @@
         "internalType": "address",
         "name": "_investor",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_investmentPoolId",
-        "type": "uint256"
       }
     ],
     "name": "getLockedAmount",
@@ -502,14 +370,9 @@
         "internalType": "address",
         "name": "_investor",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_investmentPoolId",
-        "type": "uint256"
       }
     ],
-    "name": "getMilestonesIdsInWhichInvestorInvested",
+    "name": "getMilestonesIdsInWhichBalanceChanged",
     "outputs": [
       {
         "internalType": "uint256[]",
@@ -542,11 +405,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "_investmentPoolId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_milestoneId",
         "type": "uint256"
       }
@@ -563,13 +421,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_investmentPoolId",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "getTotalLockedAmount",
     "outputs": [
       {
@@ -582,13 +434,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_investmentPoolId",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "getTotalVotesAmount",
     "outputs": [
       {
@@ -601,13 +447,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "getUnusedVotesAmount",
     "outputs": [
       {
@@ -625,11 +465,6 @@
         "internalType": "address",
         "name": "_investor",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_investmentPoolId",
-        "type": "uint256"
       }
     ],
     "name": "getVotesAmount",
@@ -686,11 +521,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_account",
         "type": "address"
       }
@@ -707,13 +537,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "getVotingTokensSupply",
     "outputs": [
       {
@@ -723,6 +547,34 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_votingToken",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IInvestmentPool",
+        "name": "_investmentPool",
+        "type": "address"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_threshold",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_votestWithdrawFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -829,11 +681,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_votes",
         "type": "uint256"
@@ -846,11 +693,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      },
       {
         "internalType": "uint256",
         "name": "_retractAmount",
@@ -885,11 +727,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_recipient",
         "type": "address"
       },
@@ -907,11 +744,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
@@ -924,11 +756,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      },
       {
         "internalType": "uint256",
         "name": "_votesAgainst",
@@ -948,11 +775,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investmentPool",
-        "type": "address"
-      },
       {
         "internalType": "uint256",
         "name": "_investorVotesCount",
