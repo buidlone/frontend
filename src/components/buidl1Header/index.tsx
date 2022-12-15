@@ -6,6 +6,7 @@ import Web3Context from "../../context/web3Context";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { getInvestorRewards } from "../../web3/getInvestorRewards";
 import { getVotingPower } from "../../web3/getVotingPower";
+import ProjectState, { StatusColor } from "../projectState";
 import {
   HeaderInfo,
   HeaderLabel,
@@ -80,7 +81,9 @@ const Buidl1Header = () => {
               </PersonalInfo>
             </HeaderInline>
             <RoundSectionMobile>
-              <Round>Active - Private Round</Round>
+              <Round statusColor={StatusColor}>
+                <ProjectState />
+              </Round>
             </RoundSectionMobile>
             <div className="lastLine">Project overview</div>
           </HeaderSection>
@@ -89,7 +92,9 @@ const Buidl1Header = () => {
       <Divider />
       <Container>
         <RoundSection>
-          <Round>Active - Private Round</Round>
+          <Round statusColor={StatusColor}>
+            <ProjectState />
+          </Round>
         </RoundSection>
       </Container>
     </>
@@ -97,4 +102,3 @@ const Buidl1Header = () => {
 };
 
 export default Buidl1Header;
-

@@ -17,10 +17,9 @@ export const DisclaimerWrapper = styled.div`
   margin-right: auto;
   margin-top: 20px;
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     width: 90%;
     height: auto;
     margin-top: 0px;
   }
 `;
-
