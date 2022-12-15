@@ -48,6 +48,12 @@ export const BgImage = styled.div<Props>`
       mix-blend-mode: color;
       opacity: 1;
       z-index: 11;
+
+      @media screen and ${breakpoints.Device.mobile} {
+        opacity: 0.8;
+        mix-blend-mode: overlay;
+
+      }
       `;
     } else if (props.isBottom) {
       return `

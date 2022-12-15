@@ -54,14 +54,14 @@ export const Buidl1SectionWrapper = styled.div`
 `;
 
 export const CarouselStyle = styled(Carousel)`
-  height: 430px;
+  height: 400px;
   .carousel .control-dots .dot {
     width: 13px;
     height: 13px;
   }
 
   .carousel.carousel-slider {
-    height: 430px;
+    height: 400px;
   }
 `;
 
@@ -104,6 +104,7 @@ export const Text = styled.p`
   @media screen and ${breakpoints.Device.mobile} {
     font-size: 16px;
     margin-bottom: 0px;
+    margin-top: 0.5px;
   }
 `;
 

@@ -202,6 +202,7 @@ export const BurgerIcon = styled.button`
     border: none;
     background: transparent;
     margin-left: auto;
+    padding: 0px;
   }
 `;
 

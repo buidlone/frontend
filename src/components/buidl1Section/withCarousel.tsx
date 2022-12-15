@@ -13,7 +13,12 @@ import {
 const Buidl1SectionCarousel = () => {
   return (
     <Buidl1SectionWrapper>
-      <CarouselStyle showArrows={false} showStatus={false}>
+      <CarouselStyle
+        showArrows={false}
+        showStatus={false}
+        swipeable={true}
+        showThumbs={false}
+      >
         <InfoCard className="longCard">
           <TextWrapper>
             <Title>Buidl 1</Title>
@@ -27,8 +32,8 @@ const Buidl1SectionCarousel = () => {
               before they receive any funding. <br />
               Our young team of passionate developers is constantly working on
               improvements and further project development - excited and burning
-              to share their knowledge with you. <br />
-              <b>Buidl on!</b>
+              to share their knowledge with you.
+              <b> Buidl on!</b>
             </Text>
           </TextWrapper>
         </InfoCard>
@@ -39,6 +44,7 @@ const Buidl1SectionCarousel = () => {
               To simply put it - we are a protocol and launchpad that secures
               invested capital in web3 projects. Read more on:
             </Text>
+            <br />
             <AboutLink target="_blank" href="https://docs.buidl.one/">
               WhitePaper
             </AboutLink>
