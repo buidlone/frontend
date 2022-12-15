@@ -64,7 +64,6 @@ const Buidl1 = () => {
       ) : (
         <Buidl1Header />
       )}
-      <MobileFooter />
 
       <Container>
         <HideForMobile>
@@ -87,6 +86,7 @@ const Buidl1 = () => {
         </HideForMobile>
         <AboutSection wallets={wallets} />
       </Container>
+      <MobileFooter />
 
       <FooterSection />
     </>

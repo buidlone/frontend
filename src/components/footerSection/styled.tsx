@@ -95,14 +95,10 @@ export const InputWrapper = styled.div`
   gap: 1.2rem;
 `;
 
-export const CommunityLink = styled.a`
+export const CommunityText = styled.p`
   font-size: 20px;
   transition: 1s;
   color: white;
-
-  &:hover {
-    color: rgba(0, 196, 255, 1);
-  }
 `;
 
 export const InputLine1 = styled.div`
