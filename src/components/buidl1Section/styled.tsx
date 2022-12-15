@@ -61,7 +61,7 @@ export const CarouselStyle = styled(Carousel)`
   }
 
   .carousel.carousel-slider {
-    height: 400px;
+    height: 420px;
   }
 `;
 
