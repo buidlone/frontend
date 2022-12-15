@@ -22,7 +22,7 @@ export default function ProjectsInfoSection({
 
       <Line />
       {web3Provider && address ? (
-        <div style={{ height: "44.6px", display: "block" }} />
+        <div style={{ height: "44.4px", display: "block" }} />
       ) : (
         <BottomText className="hideOnMobile">
           CONNECT YOUR WALLET TO GET STARTED
