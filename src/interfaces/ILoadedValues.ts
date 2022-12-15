@@ -27,7 +27,7 @@ export type Currency = {
 };
 
 export interface ILoadedValues {
-  seedFundingLimit: number;  //will be removed
+  seedFundingLimit: number; //will be removed
   softCap: SoftCap;
   hardCap: BigNumber;
   totalInvested: BigNumber;
@@ -49,3 +49,4 @@ export interface IMilestoneFundsAllocated {
   seedAllocated: string;
   totalFundsAllocated: string;
 }
+
