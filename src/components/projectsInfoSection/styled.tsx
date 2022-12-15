@@ -4,7 +4,7 @@ import breakpoints from "../../../styles/constants";
 export const InfoSec = styled.section`
   display: flex;
   align-items: start;
-  padding-top: 6rem;
+  padding-top: 5rem;
   justify-content: flex-start;
   padding-bottom: 8rem;
   flex-wrap: wrap;
