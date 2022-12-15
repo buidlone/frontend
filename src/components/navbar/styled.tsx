@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 export const Nav = styled.nav`
   height: 70px;
@@ -14,6 +15,25 @@ export const Nav = styled.nav`
 
   @media screen and (max-width: 991px) {
     transition: 0.8s all ease;
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    position: absolute;
+    width: 100%;
+    background: 100%;
+  }
+`;
+
+export const LogoWrapper = styled.div`
+  position: relative;
+  height: 31.8px;
+  width: 31.8px;
+  top: 20px;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    height: 20px;
+    width: 20px;
+    top: 22px;
   }
 `;
 
@@ -31,6 +51,31 @@ export const NavbarContainer = styled.div`
   }
 `;
 
+export const NavbarContainerMobile = styled.div`
+  height: 100vh;
+  display: block;
+  z-index: 5;
+  top: 0px;
+  width: 100%;
+  left: 0px;
+  position: fixed;
+  background-color: rgba(19, 19, 29, 1);
+`;
+
+export const NavMenuMobile = styled.ul`
+  display: none;
+  display: none;
+  justify-content: space-between;
+  height: 40px;
+  width: 100%;
+  padding: 0 0.6rem;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: flex;
+    margin-bottom: 100px;
+  }
+`;
+
 export const NavMenu = styled.ul`
   display: flex;
   align-items: center;
@@ -43,10 +88,15 @@ export const NavMenu = styled.ul`
     margin-right: 0px;
     gap: 2.5rem;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
+  }
 `;
 
 export const NavItem = styled.li`
   height: 80px;
+  list-style-type: none;
 `;
 
 export const NavLink = styled.a`
@@ -75,16 +125,27 @@ export const NavLink = styled.a`
     bottom: 1.75rem;
     left: 1px;
     border-bottom: 1px solid #00c4ff;
+
+    @media screen and ${breakpoints.Device.mobile} {
+      border-bottom: none;
+    }
   }
 
   @media screen and (max-width: 800px) {
     width: 100%;
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    justify-content: center;
   }
 `;
 
 export const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
+  }
 `;
 
 export const ConnectWalletBtn = styled.button`
@@ -130,6 +191,21 @@ export const ProjectHeader = styled.button`
   }
 `;
 
+export const BurgerIcon = styled.button`
+  display: none;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: block;
+    font-weight: bold;
+    color: #009dff;
+    font-size: 28px;
+    border: none;
+    background: transparent;
+    margin-left: auto;
+    padding: 0px;
+  }
+`;
+
 const rotate360 = keyframes`
   from {
     transform: rotate(0deg);
@@ -155,3 +231,4 @@ export const Spinner = styled.div`
   top: 50%;
   left: 48%; ;
 `;
+

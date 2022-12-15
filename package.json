@@ -19,6 +19,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.34.2",
     "react-indiana-drag-scroll": "^2.2.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-select": "^5.4.0",
     "react-slider": "^2.0.4",
     "react-toastify": "^9.0.8",

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 export const NumbersInsights = styled.div`
   display: flex;
@@ -14,10 +15,17 @@ export const NumbersSection = styled.div`
   .names {
     color: rgba(240, 240, 240, 0.5);
     font-size: 14px;
+
+    @media screen and ${breakpoints.Device.mobile} {
+      font-size: 12px;
+    }
   }
   .numbers {
     color: rgba(240, 240, 240, 1);
     font-size: 22px;
+    @media screen and ${breakpoints.Device.mobile} {
+      font-size: 14px;
+    }
   }
 `;
 
@@ -34,6 +42,10 @@ export const DescriptionSection = styled.div`
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     text-align: center;
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    color: rgba(255, 255, 255, 1);
   }
 `;
 
@@ -71,6 +83,12 @@ export const LinkButton = styled.a`
     border: 1px solid rgba(255, 255, 255, 1) !important;
     color: rgba(255, 255, 255, 1) !important;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    width: 120px;
+    height: 35px;
+    font-size: 16px;
+  }
 `;
 
 export const ProjectInfoWrapper = styled.div`
@@ -99,3 +117,4 @@ export const WhitepaperLink = styled.a`
   font-weight: 300;
   font-size: 14px;
 `;
+

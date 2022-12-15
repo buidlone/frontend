@@ -1,9 +1,5 @@
 import FeaturedProject from "../featuredProject";
-import {
-  FeatureTextWrapper,
-  FeatureTitle,
-  FeaturesSec,
-} from "./styled";
+import { FeatureTextWrapper, FeatureTitle, FeaturesSec } from "./styled";
 
 export const featuredProjects = [
   {
@@ -28,3 +24,4 @@ export default function FeaturedrojectsSection() {
     </>
   );
 }
+

@@ -1,3 +1,5 @@
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   Buidl1SectionWrapper,
   InfoCard,
@@ -5,6 +7,7 @@ import {
   TextWrapper,
   Title,
   AboutLink,
+  CarouselStyle,
 } from "./styled";
 
 const Buidl1Section = () => {
@@ -38,7 +41,9 @@ const Buidl1Section = () => {
           <AboutLink target="_blank" href="https://docs.buidl.one/">
             WhitePaper
           </AboutLink>
-          {/* <AboutLink>www.buidl.com</AboutLink> */}
+          <AboutLink target="_blank" href="https://buidl.one/">
+            www.buidl.com
+          </AboutLink>
           <AboutLink target="_blank" href="https://www.superhow.com/">
             superhow.com
           </AboutLink>
@@ -59,3 +64,4 @@ const Buidl1Section = () => {
 };
 
 export default Buidl1Section;
+

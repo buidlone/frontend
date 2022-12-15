@@ -16,6 +16,8 @@ import {
   PersonalInfo,
   Divider,
   BackgroundBlur,
+  RoundSectionMobile,
+  DemoButton,
 } from "./styled";
 
 const Buidl1Header = () => {
@@ -64,6 +66,7 @@ const Buidl1Header = () => {
               transparent and provide reliable services, in hopes to create a
               prospering and supportive community.
             </HeaderInfo>
+            <DemoButton>BOOK A DEMO</DemoButton>
             <HeaderInline>
               <PersonalInfo className="investment">
                 Your investment: {totalIndividualInvestedToProject}{" "}
@@ -76,6 +79,9 @@ const Buidl1Header = () => {
                 Voting power {votingPower}%
               </PersonalInfo>
             </HeaderInline>
+            <RoundSectionMobile>
+              <Round>Active - Private Round</Round>
+            </RoundSectionMobile>
             <div className="lastLine">Project overview</div>
           </HeaderSection>
         </Container>
