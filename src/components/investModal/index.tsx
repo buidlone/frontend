@@ -28,7 +28,7 @@ import BuidlLogo from "../../../public/BuidlLogo.png";
 import Accordion from "../accordion";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, KeyboardEvent } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Currency, mainnetCurrencies } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
@@ -217,6 +217,11 @@ const InvestModal = ({
     return true;
   };
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.target.value.charAt(0) == "0" && e.target.value.length == 20)
+      e.preventDefault();
+  };
+
   return (
     <IModalWrapper ref={domNode}>
       <IModalHeader>
@@ -263,6 +268,7 @@ const InvestModal = ({
                     ) || "Invested amount must be greater than 0",
                 },
               })}
+              onKeyPress={handleKeyPress}
             />
             <CurrencyInline>
               {networkError ? (
