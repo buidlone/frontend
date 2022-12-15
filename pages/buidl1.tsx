@@ -26,7 +26,7 @@ const Buidl1 = () => {
 
   useEffect(() => {
     getAllInvestments().then((data: any) =>
-      loadedValuesState.setAllInvestors((prev) => data.allInvestments)
+      loadedValuesState.setAllInvestors((prev) => data?.allInvestments)
     );
   }, [loadedValuesState.totalInvested._hex]);
 
@@ -96,4 +96,3 @@ const Buidl1 = () => {
 };
 
 export default Buidl1;
-
