@@ -27,7 +27,7 @@ export const loadedValuesInitialState: ILoadedValues = {
   fundraisingStartDate: "",
   fundraisingEndDate: "",
   milestones: [],
-  currentMilestone: -1,
+  currentMilestone: 0,
   hardCap: BigNumber.from(0),
   projectState: 0,
   currency: {
@@ -57,7 +57,7 @@ export const useLoadValues = () => {
   const [fundraisingStartDate, setFundraisingStartDate] = useState<string>("");
   const [fundraisingEndDate, setFundraisingEndDate] = useState<string>("");
   const [milestones, setMilestones] = useState<Milestone[]>([]);
-  const [currentMilestone, setCurrentMilestone] = useState<number>(-1);
+  const [currentMilestone, setCurrentMilestone] = useState<number>(0);
 
   const [projectState, setProjectState] = useState<number>(0);
   const [currency, setCurrency] = useState<Currency>({
@@ -142,7 +142,9 @@ export const useLoadValues = () => {
         setMilestonesInvestmentListForFormula(milestonesInvestmentsList);
 
         setPercentageDivider(percentageDivider);
+
         setCurrentMilestone(currentMilestone);
+
         for (let i = 0; i < milestoneCount; i++) {
           let milestone = await contract.getMilestone(i);
           let seedAmount = await contract.getMilestoneSeedAmount(i);
