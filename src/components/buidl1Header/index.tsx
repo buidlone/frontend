@@ -22,7 +22,7 @@ import {
 } from "./styled";
 
 const Buidl1Header = () => {
-  const { currency } = useContext(LoadedValuesContext);
+  const { currency, tokenCurrency } = useContext(LoadedValuesContext);
   const { web3Provider, address } = useContext(Web3Context);
   const [
     totalIndividualInvestedToProject,
@@ -74,7 +74,7 @@ const Buidl1Header = () => {
                 {currency.label}
               </PersonalInfo>
               <PersonalInfo className="reward">
-                Your reward: {investorRewards} {currency.label}
+                Your reward: {investorRewards} {tokenCurrency.label}
               </PersonalInfo>
               <PersonalInfo className="impact">
                 Voting power {votingPower}%
