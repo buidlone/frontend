@@ -97,4 +97,3 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
 };
 
 export default ActiveBlock;
-

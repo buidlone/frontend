@@ -1,6 +1,7 @@
 import Image from "next/image";
 import logo from "../../../public/brandmark_blue.svg";
 import FeaturedProjectInsights from "../featuredProjectInsights";
+import { StatusColor } from "../projectState";
 import {
   FeaturedProjectHeader,
   FeaturedProjectLogo,
@@ -27,7 +28,7 @@ const FeaturedProject = ({ project, ...props }: IFeaturedProject) => {
           />
         </FeaturedProjectLogo>
         <FeaturedProjectName>Buidl1 - LCF protocol</FeaturedProjectName>
-        <StateBubble active />
+        <StateBubble statusColor={StatusColor} />
       </FeaturedProjectHeader>
       <FeaturedProjectInsights project={project} />
     </FeaturedProjectsBlockWrapper>
@@ -36,7 +37,7 @@ const FeaturedProject = ({ project, ...props }: IFeaturedProject) => {
       <FeaturedProjectHeader>
         <FeaturedProjectLogo>?</FeaturedProjectLogo>
         <FeaturedProjectName> Your project</FeaturedProjectName>
-        <StateBubble />
+        <StateBubble statusColor={"#FFC400"} />
       </FeaturedProjectHeader>
       <FeaturedProjectInsights project={project} />
     </FeaturedProjectsBlockWrapper>
@@ -44,4 +45,3 @@ const FeaturedProject = ({ project, ...props }: IFeaturedProject) => {
 };
 
 export default FeaturedProject;
-

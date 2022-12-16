@@ -123,7 +123,7 @@ const ProgressRoadmapTimer = () => {
       return (
         <TextWrapper suspended>
           <text className="topText">Next milestone starts in</text>
-          <text className="daysLeft">Project was terminated by gelato</text>
+          <text className="daysLeft">Project terminated</text>
         </TextWrapper>
       );
     case 512:

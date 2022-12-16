@@ -31,7 +31,7 @@ export const AboutButton = styled.button`
     border-bottom: 1px solid #00c4ff;
   }
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     font-size: 16px;
   }
 `;
@@ -43,21 +43,21 @@ export const ButtonsWrapper = styled.div`
   justify-content: center;
   gap: 3.5rem;
   padding-right: 2rem;
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     margin: 30px 0;
     gap: 1rem;
     padding-right: 0rem;
   }
 
   .hideMobile {
-    @media screen and ${breakpoints.Device.mobile} {
+    @media screen and (${breakpoints.Device.mobile}) {
       display: none;
     }
   }
 
   .hideDesktop {
     display: none;
-    @media screen and ${breakpoints.Device.mobile} {
+    @media screen and (${breakpoints.Device.mobile}) {
       display: block;
     }
   }
@@ -70,8 +70,7 @@ export const AboutSec = styled.section`
   padding-bottom: 100px;
   flex-wrap: wrap;
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     padding-bottom: 50px;
   }
 `;
-

@@ -8,7 +8,7 @@ export const FeatureTitle = styled.p`
   margin: auto;
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 300;
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     display: none;
   }
 `;
@@ -28,4 +28,3 @@ export const FeaturesSec = styled.div`
     justify-content: center;
   }
 `;
-

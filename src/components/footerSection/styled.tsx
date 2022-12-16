@@ -23,7 +23,7 @@ export const FooterSectionWrapper = styled.div`
     padding-left: 0;
   }
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     padding: 0px 20px;
   }
 `;
@@ -47,13 +47,13 @@ export const FooterHeader = styled.p`
     width: 11px;
     height: 11px;
     position: absolute;
-    @media screen and ${breakpoints.Device.mobile} {
+    @media screen and (${breakpoints.Device.mobile}) {
       right: calc(100% + 0.8rem);
       top: calc(100% - 1.3rem);
     }
   }
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     font-size: 28px;
   }
 `;
@@ -83,7 +83,7 @@ export const LogoWrapper = styled.div`
     margin-right: 0.5rem;
   }
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     padding-left: 0px;
   }
 `;
@@ -138,4 +138,3 @@ export const ContactsLine = styled.div`
     }
   }
 `;
-

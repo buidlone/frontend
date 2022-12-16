@@ -4,7 +4,7 @@ import breakpoints from "../../../styles/constants";
 import Image from "next/image";
 
 interface Props {
-  active?: boolean;
+  statusColor?: any;
 }
 
 export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
@@ -18,7 +18,7 @@ export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
   flex-direction: column;
   gap: 1rem;
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     min-width: 200px;
     width: 100%;
     padding: 0rem;
@@ -28,21 +28,8 @@ export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
   }
 `;
 export const StateBubble = styled.div<Props>`
-  ${(props) => {
-    if (props.active) {
-      return `
-      background: #29F7DF 0% 0% no-repeat padding-box;
-box-shadow: 0px 0px 10px #FFED89;
-        
-      `;
-    } else {
-      return `
-      background: #FFC400 0% 0% no-repeat padding-box;
-box-shadow: 0px 0px 10px #FFC400;
-      `;
-    }
-  }}
-
+  background: ${(props) => props.statusColor};
+  box-shadow: 0px 0px 9px ${(props) => props.statusColor};
   opacity: 1;
   border-radius: 50%;
   width: 0.938rem;
@@ -62,7 +49,7 @@ export const FeaturedProjectLogo = styled.div`
   font-family: "Space Grotesk", sans-serif;
   font-weight: 500;
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     height: 37px;
     width: 37px;
     padding: 9px;
@@ -89,7 +76,7 @@ export const FeaturedProjectHeader = styled.p`
     align-self: flex-start;
   }
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     padding: 1.1rem;
   }
 `;
@@ -100,8 +87,7 @@ export const FeaturedProjectName = styled.div`
   font-family: "space Grotesk", sans-serif;
   font-weight: 400;
 
-  @media screen and ${breakpoints.Device.mobile} {
+  @media screen and (${breakpoints.Device.mobile}) {
     font-size: 18px;
   }
 `;
-
