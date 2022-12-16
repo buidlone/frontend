@@ -200,5 +200,6 @@ export const Positioning = styled.div<Props>`
   width: 100%;
   justify-content: space-between;
   display: flex;
-  flex-direction: ${(props) => (props?.row ? "row" : "column")};
+  //flex-direction: ${(props) => (props?.row ? "row" : "column")};
+  
 `;

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 interface Props {
   progress?: number;
@@ -30,6 +31,10 @@ export const FundsWrapper = styled.div`
 
   .total {
     color: #3aedc4;
+  }
+
+  @media screen and (${breakpoints.Device.mobile}) {
+    font-size: 12px;
   }
 `;
 
@@ -80,6 +85,9 @@ export const SoftCapIndicator = styled.div<Props>`
     right: 0.5rem;
     bottom: 60%;
     white-space: nowrap;
+    @media screen and (${breakpoints.Device.mobile}) {
+      font-size: 12px;
+    }
   }
 `;
 
@@ -100,5 +108,8 @@ export const HardCapIndicator = styled.div`
     right: 0.5rem;
     bottom: 60%;
     white-space: nowrap;
+    @media screen and (${breakpoints.Device.mobile}) {
+      font-size: 12px;
+    }
   }
 `;

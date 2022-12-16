@@ -1,9 +1,6 @@
 import FeaturedProject from "../featuredProject";
-import {
-  FeatureTextWrapper,
-  FeatureTitle,
-  FeaturesSec,
-} from "./styled";
+import MobileFooter from "../mobileFooter";
+import { FeatureTextWrapper, FeatureTitle, FeaturesSec } from "./styled";
 
 export const featuredProjects = [
   {
@@ -22,9 +19,13 @@ export default function FeaturedrojectsSection() {
       </FeatureTextWrapper>
       <FeaturesSec>
         {featuredProjects.map((el, index) => (
-          <FeaturedProject key={index} project={el.name} />
+          <>
+            <FeaturedProject key={index + el.name} project={el.name} />
+            {el.name === "?" && <MobileFooter />}
+          </>
         ))}
       </FeaturesSec>
     </>
   );
 }
+

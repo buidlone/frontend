@@ -1,9 +1,10 @@
 import styled, { css } from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 export const InfoSec = styled.section`
   display: flex;
   align-items: start;
-  padding-top: 6rem;
+  padding-top: 5rem;
   justify-content: flex-start;
   padding-bottom: 8rem;
   flex-wrap: wrap;
@@ -11,6 +12,23 @@ export const InfoSec = styled.section`
   flex-direction: column;
   width: 100%;
   gap: 0.65rem;
+
+  @media screen and (${breakpoints.Device.mobile}) {
+    padding-top: 9rem;
+  }
+
+  .hideOnMobile {
+    @media screen and (${breakpoints.Device.mobile}) {
+      display: none;
+    }
+  }
+
+  .hideOnDesktop {
+    display: none;
+    @media screen and (${breakpoints.Device.mobile}) {
+      display: flex;
+    }
+  }
 `;
 
 export const TopText = styled.div`
@@ -20,6 +38,12 @@ export const TopText = styled.div`
   opacity: 0.85;
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;
+
+  @media screen and (${breakpoints.Device.mobile}) {
+    font-size: 32px;
+    width: 100%;
+    padding: 0px 20px;
+  }
 `;
 
 export const BottomText = styled.div`
@@ -46,10 +70,21 @@ export const BottomText = styled.div`
     height: 0.85rem;
     position: absolute;
   }
+
+  @media screen and (${breakpoints.Device.mobile}) {
+    font-size: 14px;
+    white-space: pre-wrap;
+    margin-left: 2.5rem;
+    opacity: 0.8;
+  }
 `;
 
 export const Line = styled.div`
   width: 57%;
   height: 1px;
   border-bottom: 1px solid #00c4ff;
+
+  @media screen and (${breakpoints.Device.mobile}) {
+    display: none;
+  }
 `;

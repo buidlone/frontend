@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import {
   IModalHeader,
   IModalWrapper,
@@ -27,10 +26,9 @@ import {
 } from "./styled";
 import BuidlLogo from "../../../public/BuidlLogo.png";
 import Accordion from "../accordion";
-import TokenStreamTable from "../tokenStreamTable";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
-import React, { KeyboardEvent, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, KeyboardEvent } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Currency, mainnetCurrencies } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
@@ -40,15 +38,16 @@ import LoadedValuesContext from "../../context/loadedValuesContext";
 import { invest } from "../../web3/invest";
 import { BigNumber, ethers } from "ethers";
 import UserInvesmentHistory from "../userInvestmentHistory";
+import CalculatedInvestValues from "../calculatedInvestValues";
 
 const items = [
   {
     name: "Investment details",
     content: <UserInvesmentHistory />,
-},
+  },
 ];
 
-interface InputTypes {
+export interface InputTypes {
   amount: string;
   checkbox: boolean;
 }
@@ -84,7 +83,8 @@ const InvestModal = ({
     setValue,
     getValues,
     trigger,
-
+    watch,
+    control,
     formState: { errors, isValid },
   } = useForm<InputTypes>({
     mode: "onChange",
@@ -92,11 +92,6 @@ const InvestModal = ({
 
   const [buttonState, setButtonState] = useState(false);
   const [options, setOptions] = useState<Currency[]>([currency]);
-  const [receivedTokens, setReceivedTokens] = useState<number | undefined>(
-    undefined
-  );
-  const [receivedDAO, setReceivedDAO] = useState<number | undefined>(undefined);
-  const [votingPower, setVotingPower] = useState<number | undefined>(undefined);
   const [selectedCurrency, setSelectedCurrency] = useState<ICurrency>({
     label: currency.label,
     address: currency.address,
@@ -164,25 +159,14 @@ const InvestModal = ({
     onClose();
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      setReceivedTokens(24000);
-      setReceivedDAO(300);
-      setVotingPower(15);
-    }
-  };
-
   const handleSetAmount = () => {
     setValue("amount", balance);
     trigger("amount");
-    setReceivedTokens(24000);
-    setReceivedDAO(300);
-    setVotingPower(15);
   };
 
   const submitForm = async (data: InputTypes) => {
     const amount = getValues("amount");
+
     if (address) {
       setButtonState(true);
       const result = await invest(
@@ -233,6 +217,11 @@ const InvestModal = ({
     return true;
   };
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.target.value.charAt(0) == "0" && e.target.value.length == 20)
+      e.preventDefault();
+  };
+
   return (
     <IModalWrapper ref={domNode}>
       <IModalHeader>
@@ -260,7 +249,6 @@ const InvestModal = ({
             <InputField
               type="number"
               autoComplete="off"
-              onKeyDown={handleKeyDown}
               {...register("amount", {
                 required: "This field is required",
                 validate: {
@@ -280,6 +268,7 @@ const InvestModal = ({
                     ) || "Invested amount must be greater than 0",
                 },
               })}
+              onKeyPress={handleKeyPress}
             />
             <CurrencyInline>
               {networkError ? (
@@ -298,28 +287,7 @@ const InvestModal = ({
             />
           </IModalFieldWrapper>
 
-          <IModalFieldWrapper>
-            <InputLabel>You will receive (overall thru project)</InputLabel>
-            <OutputField>
-              <div>{receivedTokens?.toLocaleString().replace(/,/g, " ")}</div>
-              <div className="BDL1">BDL1</div>
-            </OutputField>
-            <div className="bottomText">Project token</div>
-          </IModalFieldWrapper>
-
-          <IModalFieldWrapper>
-            <InputLabel>You will receive</InputLabel>
-            <OutputField>
-              <div className="first">
-                {receivedDAO?.toLocaleString().replace(/,/g, " ")}
-              </div>
-              <div className="voting1">approx.</div>
-              <div className="voting2">
-                {votingPower?.toLocaleString().replace(/,/g, " ")} %
-              </div>
-            </OutputField>
-            <div className="bottomText">DAO token. Project voting power</div>
-          </IModalFieldWrapper>
+          <CalculatedInvestValues control={control} />
         </IModalInputSectionWrapper>
 
         <IModalFormConfirmSection>

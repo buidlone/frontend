@@ -1,5 +1,5 @@
-import Image from "next/image";
 import styled from "styled-components";
+import breakpoints from "./constants";
 
 interface Props {
   isFixed?: boolean;
@@ -17,7 +17,20 @@ export const Container = styled.div`
   position: relative;
 
   @media screen and (max-width: 991px) {
-    padding: 0 30px;
+    padding: 0 15px;
+  }
+`;
+
+export const HideForMobile = styled.div`
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
+  }
+`;
+
+export const HideForDesktop = styled.div`
+  display: none;
+  @media screen and ${breakpoints.Device.mobile} {
+    display: unset;
   }
 `;
 
@@ -35,6 +48,12 @@ export const BgImage = styled.div<Props>`
       mix-blend-mode: color;
       opacity: 1;
       z-index: 11;
+
+      @media screen and ${breakpoints.Device.mobile} {
+        opacity: 0.8;
+        mix-blend-mode: overlay;
+
+      }
       `;
     } else if (props.isBottom) {
       return `
@@ -66,3 +85,4 @@ export const BgImage = styled.div<Props>`
     }
   }};
 `;
+

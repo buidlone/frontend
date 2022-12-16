@@ -2,17 +2,18 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Barlow', sans-serif;;
-  background: #13131D;
+  font-family: "Barlow", sans-serif;
+  background: #13131d;
   font-weight: 100;
-  overflow: scroll;
-  overflow-x: hidden;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-
+  overflow: unset;
+  /* overflow-x: hidden; */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
-.web3modal-modal-lightbox { z-index: 9999 !important; }
+.web3modal-modal-lightbox {
+  z-index: 9999 !important;
+}
 
 body::-webkit-scrollbar {
   width: 0 !important;
@@ -21,7 +22,6 @@ body::-webkit-scrollbar {
 button {
   font-family: "Space Grotesk", sans-serif;
   font-weight: 500;
-
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -32,10 +32,9 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
-
 
 a {
   color: inherit;
@@ -57,7 +56,7 @@ a {
   }
 }
 
-
 #portal {
   z-index: 9999;
 }
+

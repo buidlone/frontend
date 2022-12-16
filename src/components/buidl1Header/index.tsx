@@ -6,6 +6,7 @@ import Web3Context from "../../context/web3Context";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { getInvestorRewards } from "../../web3/getInvestorRewards";
 import { getVotingPower } from "../../web3/getVotingPower";
+import ProjectState, { StatusColor } from "../projectState";
 import {
   HeaderInfo,
   HeaderLabel,
@@ -16,6 +17,8 @@ import {
   PersonalInfo,
   Divider,
   BackgroundBlur,
+  RoundSectionMobile,
+  DemoButton,
 } from "./styled";
 
 const Buidl1Header = () => {
@@ -64,18 +67,31 @@ const Buidl1Header = () => {
               transparent and provide reliable services, in hopes to create a
               prospering and supportive community.
             </HeaderInfo>
+            <DemoButton>BOOK A DEMO</DemoButton>
             <HeaderInline>
               <PersonalInfo className="investment">
                 Your investment: {totalIndividualInvestedToProject}{" "}
                 {currency.label}
               </PersonalInfo>
               <PersonalInfo className="reward">
-                Your reward: {investorRewards} {currency.label}
+                Your reward:{" "}
+                {Number(investorRewards) >= 0.0001
+                  ? Number(investorRewards).toFixed(4)
+                  : Number(investorRewards) < 0.0001 &&
+                    Number(investorRewards) > 0
+                  ? "≈ 0.0001"
+                  : "0.0000"}{" "}
+                {currency.label}
               </PersonalInfo>
               <PersonalInfo className="impact">
                 Voting power {votingPower}%
               </PersonalInfo>
             </HeaderInline>
+            <RoundSectionMobile>
+              <Round statusColor={StatusColor}>
+                <ProjectState />
+              </Round>
+            </RoundSectionMobile>
             <div className="lastLine">Project overview</div>
           </HeaderSection>
         </Container>
@@ -83,7 +99,9 @@ const Buidl1Header = () => {
       <Divider />
       <Container>
         <RoundSection>
-          <Round>Active - Private Round</Round>
+          <Round statusColor={StatusColor}>
+            <ProjectState />
+          </Round>
         </RoundSection>
       </Container>
     </>

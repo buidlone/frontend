@@ -10,6 +10,7 @@ import {
   FlexItem1,
   DetailsBlockWrapper,
   DetailsContentWrapper,
+  MobileDivider,
 } from "./styled";
 
 const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
@@ -55,14 +56,14 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
             </Data>
           </FlexItem1>
         </FlexItem>
-
+        <MobileDivider />
         <FlexItem>
           <FlexItem1>
             <Property className="bigger">Token name</Property>
             <Property className="medium">Ticker</Property>
             <Property>Network</Property>
-            <Property>Initial token supply</Property>
-            <Property>Total supply</Property>
+            <Property>Initial circulating supply</Property>
+            <Property>Total token supply</Property>
             <Property>Token price</Property>
           </FlexItem1>
           <FlexItem1>
@@ -72,9 +73,9 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
 
             <Data>Goerli Testnet</Data>
 
-            <Data className="medium">..</Data>
+            <Data className="medium">53.20 %</Data>
 
-            <Data className="smaller">...</Data>
+            <Data className="smaller">150 000 000</Data>
 
             <Data className="smaller">-</Data>
           </FlexItem1>

@@ -31,10 +31,10 @@ export default function FundingRoadmap() {
 
   useEffect(() => {
     setHardCapProgress(
-      totalInvested.mul(BigNumber.from(100)).div(hardCap).toNumber()
+      Number(totalInvested.mul(BigNumber.from(100)).div(hardCap))
     );
     setSoftCapProgress(
-      totalInvested.mul(BigNumber.from(100)).div(softCap.amount).toNumber()
+      Number(totalInvested.mul(BigNumber.from(100)).div(softCap.amount))
     );
   }, [totalInvested._hex]);
 
