@@ -20,14 +20,14 @@ export type SoftCap = {
 };
 
 export type Currency = {
-  value: string;
+  name: string;
   label: string;
   address: string;
   decimals: number;
 };
 
 export interface ILoadedValues {
-  seedFundingLimit: number;  //will be removed
+  seedFundingLimit: number; //will be removed
   softCap: SoftCap;
   hardCap: BigNumber;
   totalInvested: BigNumber;
@@ -42,6 +42,8 @@ export interface ILoadedValues {
   setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   percentageDivider: BigNumber;
   milestonesInvestmentsListForFormula: BigNumber[];
+  tokensReserved: string;
+  tokenCurrency: Currency;
 }
 
 export interface IMilestoneFundsAllocated {

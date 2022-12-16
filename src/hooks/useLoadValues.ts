@@ -2,13 +2,20 @@ import { useEffect, useState } from "react";
 import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
+  DistributionPoolAddress,
   InvestmentPoolAddress,
   NEXT_PUBLIC_INFURA_ID,
 } from "../constants/contractAddresses";
 import InvestmentPoolABI from "../web3/abi/InvestmentPool.json";
+import DistributionPoolABI from "../web3/abi/DistributionPool.json";
 import { formatTime } from "../utils/formatTime";
-import { ILoadedValues, Milestone, SoftCap } from "../interfaces/ILoadedValues";
-import { Currency } from "../constants/currencies";
+import {
+  Currency,
+  ILoadedValues,
+  Milestone,
+  SoftCap,
+} from "../interfaces/ILoadedValues";
+
 import ERC20TokenABI from "../web3/abi/ERC20Token.json";
 import { IInvestor } from "../interfaces/IInvestors";
 import { getAllInvestments } from "../web3/getAllInvestments";
@@ -31,7 +38,7 @@ export const loadedValuesInitialState: ILoadedValues = {
   hardCap: BigNumber.from(0),
   projectState: 0,
   currency: {
-    value: "",
+    name: "",
 
     label: "",
     address: "",
@@ -42,9 +49,23 @@ export const loadedValuesInitialState: ILoadedValues = {
   setAllInvestors: () => {},
   percentageDivider: BigNumber.from(0),
   milestonesInvestmentsListForFormula: [],
+  tokensReserved: "0",
+  tokenCurrency: {
+    name: "",
+    label: "",
+    address: "",
+    decimals: 0,
+  },
 };
 
 export const useLoadValues = () => {
+  const [tokensReserved, setTokensReserved] = useState<string>("0");
+  const [tokenCurrency, setTokenCurrency] = useState<Currency>({
+    name: "",
+    label: "",
+    address: "",
+    decimals: 0,
+  });
   const [seedFundingLimit, setSeedFundingLimit] = useState<number>(0);
   const [softCap, setSoftCap] = useState<SoftCap>({
     amount: BigNumber.from(0),
@@ -61,7 +82,7 @@ export const useLoadValues = () => {
 
   const [projectState, setProjectState] = useState<number>(0);
   const [currency, setCurrency] = useState<Currency>({
-    value: "",
+    name: "",
     label: "",
     address: "",
     decimals: 0,
@@ -87,7 +108,8 @@ export const useLoadValues = () => {
         );
         const tokenDecimals = await tokenContract.decimals();
         const tokenSymbol = await tokenContract.symbol();
-        return { tokenSymbol, tokenDecimals };
+        const tokenName = await tokenContract.name();
+        return { tokenSymbol, tokenDecimals, tokenName };
       } catch (error) {
         console.log(error);
         toast.error(
@@ -106,7 +128,25 @@ export const useLoadValues = () => {
           provider
         );
 
-        //const seedFundingLimit = await contract.getSeedFundingLimit();
+        const distributionContract = new ethers.Contract(
+          DistributionPoolAddress,
+          DistributionPoolABI,
+          provider
+        );
+
+        const tokensReserved = await distributionContract.getLockedTokens();
+        const reservedTokenAddress = await distributionContract.getToken();
+        const reservedTokenDetails = await getAvailableCurrencies(
+          reservedTokenAddress
+        );
+
+        setTokenCurrency({
+          name: reservedTokenDetails?.tokenName,
+          label: reservedTokenDetails?.tokenSymbol,
+          address: reservedTokenAddress,
+          decimals: reservedTokenDetails?.tokenDecimals,
+        });
+
         const totalInvested = await contract.getTotalInvestedAmount();
         const softCap = await contract.getSoftCap();
         const hardCap = await contract.getHardCap();
@@ -123,7 +163,7 @@ export const useLoadValues = () => {
         );
 
         setCurrency({
-          value: acceptedTokenDetails?.tokenSymbol,
+          name: acceptedTokenDetails?.tokenName,
           label: acceptedTokenDetails?.tokenSymbol,
           address: acceptedTokenAddress,
           decimals: acceptedTokenDetails?.tokenDecimals,
@@ -163,7 +203,7 @@ export const useLoadValues = () => {
           ]);
         }
 
-        //setSeedFundingLimit(Number(ethers.utils.formatEther(seedFundingLimit)));
+        setTokensReserved(ethers.utils.formatEther(tokensReserved));
         setTotalInvested(totalInvested);
         setSoftCap({
           amount: softCap,
@@ -203,6 +243,7 @@ export const useLoadValues = () => {
     setAllInvestors,
     percentageDivider,
     milestonesInvestmentsListForFormula,
+    tokensReserved,
+    tokenCurrency,
   };
 };
-

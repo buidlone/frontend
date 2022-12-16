@@ -24,7 +24,6 @@ import { stopProject } from "../../web3/stopProject";
 import { isStopAllowed } from "../../web3/isStopAllowed";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import { ethers } from "ethers";
-import { getVotingTokens } from "../../web3/getVotingTokens";
 import { getVotingPower } from "../../web3/getVotingPower";
 import { getVotedAgainst } from "../../web3/getVotedAgainst";
 
@@ -43,6 +42,8 @@ const ProgressInfoBlock = ({
     milestones,
     currentMilestone,
     projectState,
+    tokensReserved,
+    tokenCurrency,
   } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
@@ -115,8 +116,7 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {featuredProject?.tokensReserved?.toLocaleString().replace(/,/g, " ")}{" "}
-          DPP
+          {tokensReserved.replace(/,/g, " ")} {tokenCurrency.label}
         </Data>
 
         <Data className="votes">{votedAgainst}%</Data>
@@ -172,4 +172,3 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
-
