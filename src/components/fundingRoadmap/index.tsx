@@ -28,7 +28,6 @@ export default function FundingRoadmap() {
   );
 
   const [over, setOver] = useState(0);
-  console.log(softCapProgress);
 
   useEffect(() => {
     setHardCapProgress(

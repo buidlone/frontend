@@ -96,11 +96,7 @@ const Calculator = () => {
       const calculatedVotingTokens =
         resultVoting.calculatedVotingTokens.toNumber() / 100;
 
-      setVoting(
-        calculatedVotingTokens > 1
-          ? Math.round(calculatedVotingTokens)
-          : Number(calculatedVotingTokens.toFixed(2))
-      );
+      setVoting(calculatedVotingTokens);
     }
 
     if (resultTokens) {
@@ -113,11 +109,7 @@ const Calculator = () => {
       const calculatedProjectTokens =
         resultTokens.projectTokensPercentage.toNumber() / 100;
 
-      setTokensPerMonth(
-        calculatedProjectTokens > 1
-          ? Math.round(calculatedProjectTokens)
-          : Number(calculatedProjectTokens.toFixed(2))
-      );
+      setTokensPerMonth(calculatedProjectTokens);
     }
   };
 
@@ -236,38 +228,53 @@ const Calculator = () => {
                   >
                     <div className="votingNumbers">
                       {`${
-                        Number(amount) == 0 || amount == ""
-                          ? "0"
-                          : tokensPerMonth > 1
-                          ? tokensPerMonth
-                          : "<1.00"
+                        tokensPerMonth > 1
+                          ? tokensPerMonth.toFixed(2)
+                          : Number(tokens) > 0 && tokensPerMonth < 1
+                          ? "<1.00"
+                          : "0"
                       }%`}
                     </div>
+
                     <div className="votingPercentage">
                       {" "}
                       {`${
-                        Number(amount) == 0 || amount == ""
-                          ? "0"
-                          : voting > 1
-                          ? voting
-                          : "<1.00"
+                        voting > 1
+                          ? voting.toFixed(2)
+                          : Number(tickets) > 0 && voting < 1
+                          ? "<1.00"
+                          : "0"
                       }%`}
                     </div>
                   </CircularProgressbarWithChildren>
                 </div>
               </CircularProgressbarWithChildren>
             </PBWrapper>
-            <Positioning row={tokens == "0" && tickets == "0" ? true : false}>
+            <Positioning>
               <VotingRow>
                 <VotingItem>
                   <div className="text">Rewards</div>
-                  <div className="tokens">{tokens ? tokens : 0} Tokens</div>
+                  <div className="tokens">
+                    {Number(tokens) >= 0.0001
+                      ? Number(tokens).toFixed(4)
+                      : Number(tokens) < 0.0001 && Number(tokens) > 0
+                      ? "≈ 0.0001"
+                      : "0"}{" "}
+                    Tokens
+                  </div>
                 </VotingItem>
               </VotingRow>
               <VotingRow>
                 <VotingItem>
                   <div className="text">Voting Power</div>
-                  <div className="tickets">{tickets ? tickets : 0} Tickets</div>
+                  <div className="tickets">
+                    {Number(tickets) >= 0.0001
+                      ? Number(tickets).toFixed(4)
+                      : Number(tickets) < 0.0001 && Number(tickets) > 0
+                      ? "≈ 0.0001"
+                      : "0"}{" "}
+                    Tickets
+                  </div>
                 </VotingItem>
               </VotingRow>
             </Positioning>

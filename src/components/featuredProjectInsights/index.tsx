@@ -66,7 +66,12 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
             height={"26px"}
             width={"26px"}
           />
-          <TableLink>Project discussion</TableLink>
+          <TableLink
+            href="https://discord.com/channels/998519974714941480/998519974714941483"
+            target="_blank"
+          >
+            Project discussion
+          </TableLink>
         </LinkWrapper>
 
         <Link href="/buidl1" passHref>
