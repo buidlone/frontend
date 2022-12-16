@@ -93,8 +93,6 @@ const Calculator = () => {
           : "0"
       );
 
-    
-
       const calculatedVotingTokens =
         resultVoting.calculatedVotingTokens.toNumber() / 100;
 
@@ -260,7 +258,7 @@ const Calculator = () => {
                     {Number(tokens) >= 0.0001
                       ? Number(tokens).toFixed(4)
                       : Number(tokens) < 0.0001 && Number(tokens) > 0
-                      ? "~0.0001"
+                      ? "≈ 0.0001"
                       : "0"}{" "}
                     Tokens
                   </div>
@@ -273,7 +271,7 @@ const Calculator = () => {
                     {Number(tickets) >= 0.0001
                       ? Number(tickets).toFixed(4)
                       : Number(tickets) < 0.0001 && Number(tickets) > 0
-                      ? "~0.0001"
+                      ? "≈ 0.0001"
                       : "0"}{" "}
                     Tickets
                   </div>

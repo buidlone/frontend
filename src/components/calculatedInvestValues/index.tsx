@@ -89,7 +89,7 @@ const CalculatedInvestValues = ({
             {Number(tokens) >= 0.0001
               ? Number(tokens).toFixed(4)
               : Number(tokens) < 0.0001 && Number(tokens) > 0
-              ? "~0.0001"
+              ? "≈ 0.0001"
               : "0"}
           </div>
           <div className="BDL1">BDL1</div>
@@ -104,7 +104,7 @@ const CalculatedInvestValues = ({
             {Number(tickets) >= 0.0001
               ? Number(tickets).toFixed(4)
               : Number(tickets) < 0.0001 && Number(tickets) > 0
-              ? "~0.0001"
+              ? "≈ 0.0001"
               : "0"}
           </div>
           <div className="voting1">approx.</div>

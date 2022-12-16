@@ -79,7 +79,7 @@ const Buidl1Header = () => {
                   ? Number(investorRewards).toFixed(4)
                   : Number(investorRewards) < 0.0001 &&
                     Number(investorRewards) > 0
-                  ? "~0.0001"
+                  ? "≈ 0.0001"
                   : "0.0000"}{" "}
                 {currency.label}
               </PersonalInfo>
