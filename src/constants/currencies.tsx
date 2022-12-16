@@ -1,7 +1,7 @@
 //export type AvailableCurrencies = "USDC" | "USDT" | "fDAI" | "fUSDC";
 
 export interface Currency {
-  value: string;
+  name: string;
   label: string;
   address: string;
   decimals: number;
@@ -9,13 +9,13 @@ export interface Currency {
 
 export const mainnetCurrencies: Currency[] = [
   {
-    value: "USDT",
+    name: "USDT",
     label: "USDT",
     address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
     decimals: 6,
   },
   {
-    value: "USDC",
+    name: "USDC",
     label: "USDC",
     address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     decimals: 6,
@@ -24,17 +24,15 @@ export const mainnetCurrencies: Currency[] = [
 
 export const goerliCurrencies: Currency[] = [
   {
-    value: "fDAI",
+    name: "fDAI",
     label: "fDAI",
     address: "0x88271d333C72e51516B67f5567c728E702b3eeE8",
     decimals: 18,
   },
   {
-    value: "fUSDC",
+    name: "fUSDC",
     label: "fUSDC",
     address: "0xc94dd466416A7dFE166aB2cF916D3875C049EBB7",
     decimals: 18,
   },
 ];
-
-
