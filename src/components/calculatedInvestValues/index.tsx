@@ -85,7 +85,13 @@ const CalculatedInvestValues = ({
       <IModalFieldWrapper>
         <InputLabel>You will receive (overall thru project)</InputLabel>
         <OutputField>
-          <div>{tokens}</div>
+          <div>
+            {Number(tokens) >= 0.0001
+              ? Number(tokens).toFixed(4)
+              : Number(tokens) < 0.0001 && Number(tokens) > 0
+              ? "~0.0001"
+              : "0"}
+          </div>
           <div className="BDL1">BDL1</div>
         </OutputField>
         <div className="bottomText">Project token</div>
@@ -94,7 +100,13 @@ const CalculatedInvestValues = ({
       <IModalFieldWrapper>
         <InputLabel>You will receive</InputLabel>
         <OutputField>
-          <div className="first">{tickets}</div>
+          <div className="first">
+            {Number(tickets) >= 0.0001
+              ? Number(tickets).toFixed(4)
+              : Number(tickets) < 0.0001 && Number(tickets) > 0
+              ? "~0.0001"
+              : "0"}
+          </div>
           <div className="voting1">approx.</div>
           <div className="voting2">{voting} %</div>
         </OutputField>

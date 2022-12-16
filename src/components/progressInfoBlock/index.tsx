@@ -164,7 +164,12 @@ const ProgressInfoBlock = ({
             height={"26px"}
             width={"26px"}
           />
-          <TableLink>Project discussion</TableLink>
+          <TableLink
+            href="https://discord.com/channels/998519974714941480/998519974714941483"
+            target="_blank"
+          >
+            Project discussion
+          </TableLink>
         </InlineBlock>
       </BottomBlock>
     </DetailsCard>
@@ -172,4 +177,3 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
-
