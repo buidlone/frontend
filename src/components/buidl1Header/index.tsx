@@ -74,7 +74,14 @@ const Buidl1Header = () => {
                 {currency.label}
               </PersonalInfo>
               <PersonalInfo className="reward">
-                Your reward: {investorRewards} {tokenCurrency.label}
+                Your reward:{" "}
+                {Number(investorRewards) >= 0.0001
+                  ? Number(investorRewards).toFixed(4)
+                  : Number(investorRewards) < 0.0001 &&
+                    Number(investorRewards) > 0
+                  ? "≈ 0.0001"
+                  : "0.0000"}{" "}
+                {tokenCurrency.label}
               </PersonalInfo>
               <PersonalInfo className="impact">
                 Voting power {votingPower}%
