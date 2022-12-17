@@ -7,7 +7,7 @@ export const ProgressBlockWrapper = styled.div`
   background: #1f233c 0% 0% no-repeat padding-box;
   border-radius: 28px;
   opacity: 1;
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: none;
   }
 `;
@@ -38,3 +38,4 @@ export const ProgressContentWrapper = styled.div`
     }
   } ;
 `;
+

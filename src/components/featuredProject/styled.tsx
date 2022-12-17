@@ -18,7 +18,7 @@ export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
   flex-direction: column;
   gap: 1rem;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     min-width: 200px;
     width: 100%;
     padding: 0rem;
@@ -49,7 +49,7 @@ export const FeaturedProjectLogo = styled.div`
   font-family: "Space Grotesk", sans-serif;
   font-weight: 500;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     height: 37px;
     width: 37px;
     padding: 9px;
@@ -76,7 +76,7 @@ export const FeaturedProjectHeader = styled.p`
     align-self: flex-start;
   }
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     padding: 1.1rem;
   }
 `;
@@ -87,7 +87,8 @@ export const FeaturedProjectName = styled.div`
   font-family: "space Grotesk", sans-serif;
   font-weight: 400;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     font-size: 18px;
   }
 `;
+

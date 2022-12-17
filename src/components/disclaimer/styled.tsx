@@ -18,7 +18,7 @@ export const DisclaimerWrapper = styled.div`
   margin-top: 20px;
   gap: 20px;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     width: 90%;
     height: auto;
     margin-top: 0px;
@@ -37,3 +37,4 @@ export const SocialsWrapper = styled.div`
     justify-content: space-evenly;
   }
 `;
+
