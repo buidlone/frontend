@@ -17,7 +17,8 @@ export const MobileFooterWrapper = styled.div`
   z-index: 20;
   position: sticky;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: block;
   }
 `;
+

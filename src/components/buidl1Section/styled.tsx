@@ -38,13 +38,13 @@ export const Buidl1SectionWrapper = styled.div`
       justify-content: center;
       padding-right: 80px;
 
-      @media screen and (${breakpoints.Device.mobile}) {
+      @media screen and ${breakpoints.Device.mobile} {
         padding-right: 0px;
       }
     }
   }
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     padding: 0px;
     display: block;
     background: transparent;
@@ -71,7 +71,7 @@ export const TextWrapper = styled.div`
   margin: 35px 50px;
   padding-right: 80px;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     padding: 20px !important;
     margin: 0;
     width: 100%;
@@ -88,7 +88,7 @@ export const Title = styled.text`
   margin: 0;
   opacity: 1;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     font-size: 22px;
   }
 `;
@@ -101,7 +101,7 @@ export const Text = styled.p`
   color: #d6d6d6;
   margin: 1.438rem auto;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     font-size: 16px;
     margin-bottom: 0px;
     margin-top: 0.5px;
@@ -119,3 +119,4 @@ export const AboutLink = styled.a`
   margin-bottom: 10px;
   cursor: pointer;
 `;
+

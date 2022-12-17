@@ -10,7 +10,7 @@ export const BackgroundBlur = styled.div`
   background-size: 103% 150%;
   background-repeat: no-repeat;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     background-size: 100% 100%;
     background-image: url("/background_mobile.png");
   }
@@ -40,12 +40,12 @@ export const HeaderSection = styled.div`
     font-weight: 400;
     padding-top: 5.5%;
 
-    @media screen and (${breakpoints.Device.mobile}) {
+    @media screen and ${breakpoints.Device.mobile} {
       display: none;
     }
   }
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     padding: 120px 15px 30px;
     height: 95vh;
   }
@@ -59,7 +59,7 @@ export const HeaderLabel = styled.div`
   margin-bottom: 0.8rem;
   margin-left: -2.6px;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     font-size: 52px;
   }
 `;
@@ -70,7 +70,7 @@ export const HeaderInfo = styled.div`
   max-width: 744px;
   margin-bottom: 1.7rem;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     font-size: 14px;
   }
 `;
@@ -80,7 +80,7 @@ export const HeaderInline = styled.div`
   flex-direction: row;
   gap: 2.015rem;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: none;
   }
 `;
@@ -98,7 +98,7 @@ export const DemoButton = styled.button`
   font-weight: 100;
   font-family: "Space Grotesk";
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -134,7 +134,7 @@ export const PersonalInfo = styled.div`
     font-size: 1rem;
   }
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     margin-top: 20px;
   }
 `;
@@ -149,14 +149,14 @@ export const RoundSection = styled.div`
   align-items: center;
   margin-bottom: 1.6rem;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: none;
   }
 `;
 
 export const RoundSectionMobile = styled(RoundSection)`
   display: none;
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: flex;
     justify-content: center;
     height: 100%;
@@ -188,3 +188,4 @@ export const Round = styled.div<Props>`
     position: absolute;
   }
 `;
+
