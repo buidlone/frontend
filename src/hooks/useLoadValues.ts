@@ -42,6 +42,7 @@ export const loadedValuesInitialState: ILoadedValues = {
   setAllInvestors: () => {},
   percentageDivider: BigNumber.from(0),
   milestonesInvestmentsListForFormula: [],
+  isMilestoneOngoing: false,
 };
 
 export const useLoadValues = () => {
@@ -58,6 +59,7 @@ export const useLoadValues = () => {
   const [fundraisingEndDate, setFundraisingEndDate] = useState<string>("");
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [currentMilestone, setCurrentMilestone] = useState<number>(0);
+  const [isMilestoneOngoing, setIsMilestoneOngoing] = useState<boolean>(false);
 
   const [projectState, setProjectState] = useState<number>(0);
   const [currency, setCurrency] = useState<Currency>({
@@ -116,6 +118,7 @@ export const useLoadValues = () => {
         const fundraisingEndAt = await contract.getFundraiserEndTime();
         const fundraisingEndDate = formatTime(fundraisingEndAt);
         const projectState = await contract.getProjectStateByteValue();
+        const isMilestoneOngoing = await contract.isAnyMilestoneOngoing();
 
         const acceptedTokenAddress = await contract.getAcceptedToken();
         const acceptedTokenDetails = await getAvailableCurrencies(
@@ -174,6 +177,7 @@ export const useLoadValues = () => {
         setHardCap(hardCap);
         setFundraisingStartDate(fundraisingStartDate);
         setFundraisingEndDate(fundraisingEndDate);
+        setIsMilestoneOngoing(isMilestoneOngoing);
 
         setProjectState(parseInt(projectState, 10));
         allInvestors !== undefined &&
@@ -205,6 +209,7 @@ export const useLoadValues = () => {
     setAllInvestors,
     percentageDivider,
     milestonesInvestmentsListForFormula,
+    isMilestoneOngoing,
   };
 };
 

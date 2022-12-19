@@ -14,8 +14,13 @@ import {
 } from "./styled";
 
 const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
-  const { currency, milestones, currentMilestone, hardCap } =
-    useContext(LoadedValuesContext);
+  const {
+    currency,
+    milestones,
+    currentMilestone,
+    hardCap,
+    isMilestoneOngoing,
+  } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds } = useCountdown(
     milestones[milestones.length - 1].endDate
   );
@@ -25,7 +30,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
       <DetailsContentWrapper>
         <FlexItem>
           <FlexItem1>
-            <Property className="bigger">Round</Property>
+            <Property className="bigger">Project State</Property>
             <Property className="medium">Milestones completed</Property>
             <Property className="medium">Participants</Property>
             <Property>Hard cap</Property>
@@ -35,7 +40,15 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
           <FlexItem1>
             <Data>Seed</Data>
             <Data>
-              {currentMilestone}/{milestones.length}
+              {isMilestoneOngoing ? (
+                <>
+                  {currentMilestone + 1}/{milestones.length}{" "}
+                </>
+              ) : (
+                <>
+                  {currentMilestone}/{milestones.length}{" "}
+                </>
+              )}
             </Data>
 
             <Data>

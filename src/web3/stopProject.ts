@@ -62,7 +62,7 @@ export const stopProject = async (
       const usedTokens = await contractGovernancePoolProvider.getVotesAmount(
         address
       );
-      const votesBalance = activeTokens.sub(usedTokens).div(BigNumber.from(15));
+      const votesBalance = activeTokens.sub(usedTokens);
 
       const isApprovedPromise = contractVotingToken.isApprovedForAll(
         address,
@@ -128,3 +128,4 @@ export const stopProject = async (
     toast.error("Could not connect to the provider");
   }
 };
+

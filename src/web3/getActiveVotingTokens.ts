@@ -24,8 +24,6 @@ export const getActiveVotingTokens = async (
       const investmentPoolId =
         await contractGovernancePoolProvider.getInvestmentPoolId();
 
-      console.log(currentMilestone + " current milestone");
-
       const activeTokens =
         await contractGovernancePoolProvider.getActiveVotingTokensBalance(
           currentMilestone,
