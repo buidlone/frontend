@@ -17,7 +17,7 @@ export const Nav = styled.nav`
     transition: 0.8s all ease;
   }
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     position: absolute;
     width: 100%;
     background: 100%;
@@ -30,7 +30,7 @@ export const LogoWrapper = styled.div`
   width: 31.8px;
   top: 20px;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     height: 20px;
     width: 20px;
     top: 22px;
@@ -70,7 +70,7 @@ export const NavMenuMobile = styled.ul`
   width: 100%;
   padding: 0 0.6rem;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: flex;
     margin-bottom: 100px;
   }
@@ -89,7 +89,7 @@ export const NavMenu = styled.ul`
     gap: 2.5rem;
   }
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: none;
   }
 `;
@@ -126,7 +126,7 @@ export const NavLink = styled.a`
     left: 1px;
     border-bottom: 1px solid #00c4ff;
 
-    @media screen and (${breakpoints.Device.mobile}) {
+    @media screen and ${breakpoints.Device.mobile} {
       border-bottom: none;
     }
   }
@@ -135,7 +135,7 @@ export const NavLink = styled.a`
     width: 100%;
   }
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     justify-content: center;
   }
 `;
@@ -143,7 +143,7 @@ export const NavLink = styled.a`
 export const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: none;
   }
 `;
@@ -194,7 +194,7 @@ export const ProjectHeader = styled.button`
 export const BurgerIcon = styled.button`
   display: none;
 
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: block;
     font-weight: bold;
     color: #009dff;
@@ -231,3 +231,4 @@ export const Spinner = styled.div`
   top: 50%;
   left: 48%; ;
 `;
+

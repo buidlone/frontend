@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
   GovernancePoolAddress,
@@ -47,28 +47,23 @@ export const stopProject = async (
         VotingTokenABI,
         signer
       );
+
       const votingTokenBalance =
-        await contractGovernancePoolProvider.getVotingTokenBalance(
-          InvestmentPoolAddress,
-          address
-        );
+        await contractGovernancePoolProvider.getVotingTokenBalance(address);
       const investmentPoolId =
-        await contractGovernancePoolProvider.getInvestmentPoolId(
-          InvestmentPoolAddress
-        );
+        await contractGovernancePoolProvider.getInvestmentPoolId();
       const currentMilestone =
         await contractInvestmentPoolProvider.getCurrentMilestoneId();
       const activeTokens =
         await contractGovernancePoolProvider.getActiveVotingTokensBalance(
-          InvestmentPoolAddress,
           currentMilestone,
           address
         );
       const usedTokens = await contractGovernancePoolProvider.getVotesAmount(
-        address,
-        investmentPoolId
+        address
       );
-      const votesBalance = (activeTokens - usedTokens) / 15;
+      const votesBalance = activeTokens.sub(usedTokens).div(BigNumber.from(15));
+
       const isApprovedPromise = contractVotingToken.isApprovedForAll(
         address,
         GovernancePoolAddress
@@ -89,7 +84,6 @@ export const stopProject = async (
       if (isApproved) {
         try {
           const voteTx = await contractGovernancePoolSigner.voteAgainst(
-            InvestmentPoolAddress,
             votesBalance
           );
           const voteReceipt = await toast.promise(voteTx.wait(), {
@@ -105,6 +99,8 @@ export const stopProject = async (
           const revertData = err.error.data.originalError.data;
           const decodedError =
             contractGovernancePoolSigner.interface.parseError(revertData);
+          console.log(decodedError);
+          console.log(err);
 
           if (decodedError.name === VoteAgainstErrorEnum.AMOUNT_ZERO) {
             toast.error("Voting token amount must be greater than zero");
@@ -125,6 +121,7 @@ export const stopProject = async (
         }
       }
     } catch (err: any) {
+      console.log(err);
       return false;
     }
   } else {

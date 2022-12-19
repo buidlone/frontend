@@ -16,14 +16,14 @@ export const NumbersSection = styled.div`
     color: rgba(240, 240, 240, 0.5);
     font-size: 14px;
 
-    @media screen and ((${breakpoints.Device.mobile})) {
+    @media screen and ${breakpoints.Device.mobile} {
       font-size: 12px;
     }
   }
   .numbers {
     color: rgba(240, 240, 240, 1);
     font-size: 22px;
-    @media screen and ((${breakpoints.Device.mobile})) {
+    @media screen and ${breakpoints.Device.mobile} {
       font-size: 14px;
     }
   }
@@ -44,7 +44,7 @@ export const DescriptionSection = styled.div`
     text-align: center;
   }
 
-  @media screen and ((${breakpoints.Device.mobile})) {
+  @media screen and ${breakpoints.Device.mobile} {
     color: rgba(255, 255, 255, 1);
   }
 `;
@@ -84,7 +84,7 @@ export const LinkButton = styled.a`
     color: rgba(255, 255, 255, 1) !important;
   }
 
-  @media screen and ((${breakpoints.Device.mobile})) {
+  @media screen and ${breakpoints.Device.mobile} {
     width: 120px;
     height: 35px;
     font-size: 16px;
@@ -117,3 +117,4 @@ export const WhitepaperLink = styled.a`
   font-weight: 300;
   font-size: 14px;
 `;
+

@@ -12,21 +12,21 @@ export const DetailsBlockWrapper = styled.div`
 
   .bigger {
     font-size: 21px;
-    @media screen and (${breakpoints.Device.mobile}) {
+    @media screen and ${breakpoints.Device.mobile} {
       font-size: 14px;
     }
   }
 
   .medium {
     font-size: 19px;
-    @media screen and (${breakpoints.Device.mobile}) {
+    @media screen and ${breakpoints.Device.mobile} {
       font-size: 14px;
     }
   }
 
   .smaller {
     font-size: 18px;
-    @media screen and (${breakpoints.Device.mobile}) {
+    @media screen and ${breakpoints.Device.mobile} {
       font-size: 14px;
     }
   }
@@ -41,7 +41,7 @@ export const FlexItem = styled.div`
   width: 36%;
   height: 344px;
   margin: 18px 41px;
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     width: 100%;
     height: auto;
     margin: 25px 20px;
@@ -54,7 +54,7 @@ export const MobileDivider = styled.div`
   background: rgb(255 255 255 / 50%);
   margin: 0px 15px;
   display: none;
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     display: block;
   }
 `;
@@ -115,7 +115,7 @@ export const Property = styled.p`
   font-size: 20px;
   text-align: left;
   opacity: 0.5;
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     font-size: 14px;
   }
 `;
@@ -126,7 +126,8 @@ export const Data = styled.p`
   font-size: 20px;
   text-align: right;
   opacity: 0.5;
-  @media screen and (${breakpoints.Device.mobile}) {
+  @media screen and ${breakpoints.Device.mobile} {
     font-size: 14px;
   }
 `;
+

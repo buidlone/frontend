@@ -41,14 +41,6 @@ const Buidl1 = () => {
 
   return loadedValuesState.fundraisingStartDate !== "" ? (
     <>
-      {!isShownStop || !isShownWrong || !isShownInvest ? (
-        <BgImage isFixed />
-      ) : (
-        ""
-      )}
-
-      {/* <InvestStatus /> */}
-
       {isShownStop ? (
         <Container>
           <StopStatus setIsShownStop={setIsShownStop} />
@@ -62,7 +54,10 @@ const Buidl1 = () => {
           <InvestStatus setIsShownInvest={setIsShownInvest} />{" "}
         </Container>
       ) : (
-        <Buidl1Header />
+        <>
+          <BgImage isFixed />
+          <Buidl1Header />
+        </>
       )}
 
       <Container>
@@ -96,3 +91,4 @@ const Buidl1 = () => {
 };
 
 export default Buidl1;
+

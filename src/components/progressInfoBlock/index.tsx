@@ -52,15 +52,17 @@ const ProgressInfoBlock = ({
   const [over, setOver] = useState(0);
 
   useEffect(() => {
-    setStopDisabled(
-      isStopAllowed(projectState, currentMilestone, address, web3Provider)
+    isStopAllowed(projectState, currentMilestone, address, web3Provider).then(
+      (data: any) => {
+        setStopDisabled(data);
+      }
     );
     if (web3Provider) {
       setStopDisabled(false);
     } else {
       setStopDisabled(true);
     }
-  }, [web3Provider]);
+  }, [web3Provider, totalInvested._hex]);
 
   const handleStop = async () => {
     if (web3Provider) {

@@ -18,6 +18,7 @@ const items = [
 ];
 
 const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
+
   const {
     projectState,
     totalInvested,
@@ -27,7 +28,9 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     tokenCurrency,
     currency,
   } = useContext(LoadedValuesContext);
-  const [stopDisabled, setStopDisabled] = useState(false);
+ 
+  const [stopDisabled, setStopDisabled] = useState(true);
+
   const [votedAgainst, setVotedAgainst] = useState<number>(0);
   const [isAllowed, setIsAllowed] = useState(true);
   const milestonePercentage = (currentMilestone * 100) / milestones.length;
@@ -43,24 +46,26 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     }
   };
 
-  useEffect(() => {
+ useEffect(() => {
     setIsAllowed(isInvestingAllowed(projectState, hardCap, totalInvested));
-    setStopDisabled(
-      isStopAllowed(projectState, currentMilestone, address, web3Provider)
-    );
-
     getVotedAgainst().then((data: any) => {
       setVotedAgainst(data);
     });
   }, []);
 
   useEffect(() => {
+    isStopAllowed(projectState, currentMilestone, address, web3Provider).then(
+      (data: any) => {
+        setStopDisabled(data);
+      }
+    );
     if (web3Provider) {
       setStopDisabled(false);
     } else {
       setStopDisabled(true);
     }
-  }, [web3Provider]);
+  }, [web3Provider, totalInvested._hex]);
+
 
   return (
     <>
@@ -78,6 +83,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         </td>
         <td>
           <p>Received / Reserved</p>
+
           <p className="blueText">
             34 000 {tokenCurrency.label} / 15 000 {tokenCurrency.label}
           </p>
@@ -85,6 +91,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         <td>
           <p>Refund if failed</p>
           <p className="blueText">50 000 000 {currency.label}</p>
+
         </td>
         <td>
           <TableButton disabled className="redeemBtn">
@@ -100,7 +107,9 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         </td>
         <td>
           <p>Used investments</p>
+
           <p className="greenText">544 {currency.label}</p>
+
         </td>
 
         <td>
@@ -128,3 +137,5 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
 };
 
 export default DetailedPortfolio;
+
+

@@ -51,3 +51,4 @@ export interface IMilestoneFundsAllocated {
   seedAllocated: string;
   totalFundsAllocated: string;
 }
+
