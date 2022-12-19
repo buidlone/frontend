@@ -1,4 +1,3 @@
-import { log } from "console";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
@@ -24,8 +23,6 @@ export const getActiveVotingTokens = async (
       const investmentPoolId =
         await contractGovernancePoolProvider.getInvestmentPoolId();
 
-      console.log(currentMilestone + " current milestone");
-
       const activeTokens =
         await contractGovernancePoolProvider.getActiveVotingTokensBalance(
           currentMilestone,
@@ -45,4 +42,3 @@ export const getActiveVotingTokens = async (
     }
   }
 };
-

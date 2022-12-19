@@ -1,6 +1,8 @@
-import Image from "next/image";
+import { useContext } from "react";
 import logo from "../../../public/brandmark_blue.svg";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 import FeaturedProjectInsights from "../featuredProjectInsights";
+import { Spinner } from "../navbar/styled";
 import { StatusColor } from "../projectState";
 import {
   FeaturedProjectHeader,
@@ -16,6 +18,8 @@ interface IFeaturedProject {
 }
 
 const FeaturedProject = ({ project, ...props }: IFeaturedProject) => {
+  const { projectState } = useContext(LoadedValuesContext);
+
   return project == "Buidl1" ? (
     <FeaturedProjectsBlockWrapper>
       <FeaturedProjectHeader>
@@ -28,7 +32,7 @@ const FeaturedProject = ({ project, ...props }: IFeaturedProject) => {
           />
         </FeaturedProjectLogo>
         <FeaturedProjectName>Buidl1 - LCF protocol</FeaturedProjectName>
-        <StateBubble statusColor={StatusColor} />
+        {projectState ? <StateBubble statusColor={StatusColor} /> : <Spinner />}
       </FeaturedProjectHeader>
       <FeaturedProjectInsights project={project} />
     </FeaturedProjectsBlockWrapper>

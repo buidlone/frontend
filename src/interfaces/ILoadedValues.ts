@@ -44,6 +44,7 @@ export interface ILoadedValues {
   milestonesInvestmentsListForFormula: BigNumber[];
   tokensReserved: string;
   tokenCurrency: Currency;
+  fundsUsedByCreator: string;
 }
 
 export interface IMilestoneFundsAllocated {
