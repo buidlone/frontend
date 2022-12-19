@@ -20,6 +20,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
     currentMilestone,
     hardCap,
     isMilestoneOngoing,
+    tokenCurrency,
   } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds } = useCountdown(
     milestones[milestones.length - 1].endDate
@@ -80,9 +81,9 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
             <Property>Token price</Property>
           </FlexItem1>
           <FlexItem1>
-            <Data>BUIDL1</Data>
+            <Data>{tokenCurrency.name}</Data>
 
-            <Data>BDL1</Data>
+            <Data>{tokenCurrency.label}</Data>
 
             <Data>Goerli Testnet</Data>
 

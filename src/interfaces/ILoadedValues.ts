@@ -20,7 +20,7 @@ export type SoftCap = {
 };
 
 export type Currency = {
-  value: string;
+  name: string;
   label: string;
   address: string;
   decimals: number;
@@ -43,6 +43,8 @@ export interface ILoadedValues {
   percentageDivider: BigNumber;
   milestonesInvestmentsListForFormula: BigNumber[];
   isMilestoneOngoing: boolean;
+  tokensReserved: string;
+  tokenCurrency: Currency;
 }
 
 export interface IMilestoneFundsAllocated {

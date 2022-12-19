@@ -28,8 +28,12 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     milestones,
     currentMilestone,
     isMilestoneOngoing,
+    tokenCurrency,
+    currency,
   } = useContext(LoadedValuesContext);
+
   const [stopDisabled, setStopDisabled] = useState(true);
+
   const [votedAgainst, setVotedAgainst] = useState<number>(0);
   const [isAllowed, setIsAllowed] = useState(true);
   const [allocatedTokens, setAllocatedTokens] = useState<number>(0);
@@ -122,11 +126,15 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         </td>
         <td>
           <p>Reserved</p>
-          <p className="blueText">{allocatedTokens} BDL</p>
+          <p className="blueText">
+            {allocatedTokens} {tokenCurrency.label}
+          </p>
         </td>
         <td>
           <p>Refund if failed</p>
-          <p className="blueText">{refundable} ETHx</p>
+          <p className="blueText">
+            {refundable} {currency.label}
+          </p>
         </td>
         <td>
           <TableButton disabled className="redeemBtn">
@@ -142,7 +150,9 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         </td>
         <td>
           <p>Used investments</p>
-          <p className="greenText">{usedInvestments} ETHx</p>
+          <p className="greenText">
+            {usedInvestments} {currency.label}
+          </p>
         </td>
 
         <td>

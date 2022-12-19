@@ -43,6 +43,8 @@ const ProgressInfoBlock = ({
     currentMilestone,
     projectState,
     isMilestoneOngoing,
+    tokensReserved,
+    tokenCurrency,
   } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
@@ -125,8 +127,7 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {featuredProject?.tokensReserved?.toLocaleString().replace(/,/g, " ")}{" "}
-          DPP
+          {tokensReserved.replace(/,/g, " ")} {tokenCurrency.label}
         </Data>
 
         <Data className="votes">{votedAgainst}%</Data>
