@@ -20,7 +20,7 @@ export type SoftCap = {
 };
 
 export type Currency = {
-  value: string;
+  name: string;
   label: string;
   address: string;
   decimals: number;
@@ -42,6 +42,8 @@ export interface ILoadedValues {
   setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   percentageDivider: BigNumber;
   milestonesInvestmentsListForFormula: BigNumber[];
+  tokensReserved: string;
+  tokenCurrency: Currency;
 }
 
 export interface IMilestoneFundsAllocated {

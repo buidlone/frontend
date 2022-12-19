@@ -18,9 +18,19 @@ const items = [
 ];
 
 const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
-  const { projectState, totalInvested, hardCap, milestones, currentMilestone } =
-    useContext(LoadedValuesContext);
+
+  const {
+    projectState,
+    totalInvested,
+    hardCap,
+    milestones,
+    currentMilestone,
+    tokenCurrency,
+    currency,
+  } = useContext(LoadedValuesContext);
+ 
   const [stopDisabled, setStopDisabled] = useState(true);
+
   const [votedAgainst, setVotedAgainst] = useState<number>(0);
   const [isAllowed, setIsAllowed] = useState(true);
   const milestonePercentage = (currentMilestone * 100) / milestones.length;
@@ -36,7 +46,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     }
   };
 
-  useEffect(() => {
+ useEffect(() => {
     setIsAllowed(isInvestingAllowed(projectState, hardCap, totalInvested));
     getVotedAgainst().then((data: any) => {
       setVotedAgainst(data);
@@ -56,6 +66,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     }
   }, [web3Provider, totalInvested._hex]);
 
+
   return (
     <>
       <tr>
@@ -72,11 +83,15 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         </td>
         <td>
           <p>Received / Reserved</p>
-          <p className="blueText">34 000 BDL / 15 000 BDL</p>
+
+          <p className="blueText">
+            34 000 {tokenCurrency.label} / 15 000 {tokenCurrency.label}
+          </p>
         </td>
         <td>
           <p>Refund if failed</p>
-          <p className="blueText">50 000 000 BDL</p>
+          <p className="blueText">50 000 000 {currency.label}</p>
+
         </td>
         <td>
           <TableButton disabled className="redeemBtn">
@@ -92,7 +107,9 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         </td>
         <td>
           <p>Used investments</p>
-          <p className="greenText">544 USDT</p>
+
+          <p className="greenText">544 {currency.label}</p>
+
         </td>
 
         <td>
@@ -120,4 +137,5 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
 };
 
 export default DetailedPortfolio;
+
 
