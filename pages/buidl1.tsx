@@ -9,7 +9,7 @@ import Calculator from "../src/components/calculator";
 import InvestorsBarChart from "../src/components/investorsBarChart";
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../src/context/loadedValuesContext";
-import { Spinner } from "../src/components/navbar/styled";
+import { Spinner, SpinnerText } from "../src/components/navbar/styled";
 import { getAllInvestments } from "../src/web3/getAllInvestments";
 import StopStatus from "../src/components/statusNotification/stopStatus";
 import WrongStatus from "../src/components/statusNotification/wrongStatus";
@@ -88,7 +88,13 @@ const Buidl1 = () => {
       <FooterSection />
     </>
   ) : (
-    <Spinner />
+    <>
+      <Spinner />
+      <SpinnerText>
+        Thank you for your patience. Slow slow slow, we know that. We are
+        improving, to be fast as fuck boi ⚡
+      </SpinnerText>
+    </>
   );
 };
 
