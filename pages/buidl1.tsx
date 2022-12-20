@@ -56,9 +56,8 @@ const Buidl1 = () => {
         </Container>
       ) : (
         <>
-          <BgImage isFixed />
-          <Disclaimer hideMobile={true} />
           <Buidl1Header />
+          {/* <BgImage isFixed /> */}
         </>
       )}
 
@@ -90,10 +89,7 @@ const Buidl1 = () => {
   ) : (
     <>
       <Spinner />
-      <SpinnerText>
-        Thank you for your patience. Slow slow slow, we know that. We are
-        improving, to be fast as fuck boi ⚡
-      </SpinnerText>
+      <SpinnerText>Grabbing extra minions...</SpinnerText>
     </>
   );
 };

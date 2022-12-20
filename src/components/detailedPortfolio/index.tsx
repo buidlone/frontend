@@ -59,8 +59,6 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         getSeconds();
       }
     }, 1000);
-    console.log("hey");
-    console.log(today);
     return () => clearInterval(interval);
   }, []);
 
@@ -76,7 +74,9 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     const milestoneStart = new Date(milestones[currentMilestone].startDate);
     const seconds = Math.abs(milestoneStart.getTime() - today.getTime()) / 1000;
 
-    if (web3Provider) {
+    if (!isMilestoneOngoing) {
+      setUsedInvestments(0);
+    } else if (web3Provider) {
       getUsedInvestments(web3Provider, address, seconds).then((data: any) => {
         setUsedInvestments(data.toFixed(12));
       });

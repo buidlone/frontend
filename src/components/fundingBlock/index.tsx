@@ -53,7 +53,12 @@ export default function FundingBlock({
         <FContainer>
           <FundingRoadmap />
           <BottomWrapper>
-            <StyledA>Learn about ROI and how it works</StyledA>
+            <StyledA
+              href="https://docs.buidl.one/whitepaper/how-it-works"
+              target="_blank"
+            >
+              Learn about Investment process
+            </StyledA>
             {web3Provider ? (
               <>
                 <GreenButton onClick={handleClick}>Invest</GreenButton> <br />
@@ -78,3 +83,4 @@ export default function FundingBlock({
     </>
   );
 }
+
