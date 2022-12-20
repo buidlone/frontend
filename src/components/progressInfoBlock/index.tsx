@@ -155,7 +155,9 @@ const ProgressInfoBlock = ({
             </div>
 
             <div onMouseOver={() => setOver(1)} onMouseOut={() => setOver(0)}>
-              <Tooltip nowrap text={"Information about voting"}>
+              <Tooltip
+                text={`Voting power represents how much your vote have impact in stoping the funding process. If 51% investors votes to "STOP cash flow", investments will refunded and project will be terminated irreversible`}
+              >
                 <Image
                   src={over === 1 ? infoBubble : infoBubbleWhite}
                   alt="information"

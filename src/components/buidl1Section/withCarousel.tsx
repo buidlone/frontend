@@ -46,13 +46,13 @@ const Buidl1SectionCarousel = () => {
             </Text>
             <br />
             <AboutLink target="_blank" href="https://docs.buidl.one/">
-              WhitePaper
+              Whitepaper
             </AboutLink>
             <AboutLink target="_blank" href="">
-              www.buidl.com
+              buidl.one
             </AboutLink>
             <AboutLink target="_blank" href="https://www.superhow.com/">
-              superhow.com
+              Super How?
             </AboutLink>
           </TextWrapper>
         </InfoCard>

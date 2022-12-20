@@ -122,6 +122,7 @@ const InvestModal = ({
       if (web3Provider?.network.chainId === 1) {
         setOptions(mainnetCurrencies);
         setNetwork("Ethereum Mainnet");
+        setNetworkError("Please connect to Goerli Testnet");
         setSelectedCurrency({
           label: mainnetCurrencies[0].label,
           address: mainnetCurrencies[0].address,
@@ -136,10 +137,7 @@ const InvestModal = ({
           decimals: currency.decimals,
         });
       } else {
-        setNetworkError("Please connect to Ethereum Mainnet or Goerli Tesnet");
-        toast.error(
-          `Please connect to Ethereum Mainnet or Goerli Testnet network`
-        );
+        setNetworkError("Please connect to Goerli Testnet");
       }
     }
   }, []);
@@ -226,6 +224,10 @@ const InvestModal = ({
       e.preventDefault();
   };
 
+  const isGoerli = () => {
+    return web3Provider?.network.chainId === 5;
+  };
+
   return (
     <IModalWrapper ref={domNode}>
       <IModalHeader>
@@ -260,6 +262,7 @@ const InvestModal = ({
               {...register("amount", {
                 required: "This field is required",
                 validate: {
+                  network: isGoerli || "",
                   errorBN: (value) =>
                     handleAmountChange(value) || "Unable to invest below 1 WEI",
                   belowHardCap: (value) =>

@@ -39,13 +39,13 @@ const Buidl1Section = () => {
             invested capital in web3 projects. Read more on:
           </Text>
           <AboutLink target="_blank" href="https://docs.buidl.one/">
-            WhitePaper
+            Whitepaper
           </AboutLink>
           <AboutLink target="_blank" href="https://buidl.one/">
-            www.buidl.com
+            buidl.one
           </AboutLink>
           <AboutLink target="_blank" href="https://www.superhow.com/">
-            superhow.com
+            Super How?
           </AboutLink>
         </TextWrapper>
       </InfoCard>
@@ -64,4 +64,3 @@ const Buidl1Section = () => {
 };
 
 export default Buidl1Section;
-

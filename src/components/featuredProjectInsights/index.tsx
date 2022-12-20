@@ -54,7 +54,7 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
         To simply put it - we are a protocol and launchpad that secures invested
         capital in web3 projects. Read more on{" "}
         <WhitepaperLink target="_blank" href="https://docs.buidl.one/">
-          WhitePaper
+          Whitepaper
         </WhitepaperLink>
         .
       </DescriptionSection>

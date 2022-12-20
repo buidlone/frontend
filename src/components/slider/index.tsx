@@ -33,11 +33,11 @@ const Track = (props: any, state: any) => (
 const SumTrack = (props: any, state: any) => {
   return (
     <>
-      <SoftCapIndicator
+      {/* <SoftCapIndicator
         funds={props.prop.softCap}
         currency={props.prop.currency}
         softCapPosition={props.prop.softCapPosition}
-      />
+      /> */}
 
       <HardCapIndicator
         funds={props.prop.hardCap}
@@ -70,15 +70,16 @@ const Slider = ({
   timeline,
   step,
 }: ISlider) => {
-  const { softCap, hardCap, currency } = useContext(LoadedValuesContext);
+  const { softCap, hardCap, currency, totalInvested } =
+    useContext(LoadedValuesContext);
 
   const prop = {
     softCap: ethers.utils.formatEther(softCap.amount),
     hardCap: ethers.utils.formatEther(hardCap),
     currency: currency.label,
-    softCapPosition: Number(
-      softCap.amount.mul(BigNumber.from(100)).div(hardCap)
-    ),
+    // softCapPosition: Number(
+    //   softCap.amount.mul(BigNumber.from(100)).div(hardCap.sub(totalInvested))
+    // ),
   };
 
   return (

@@ -27,7 +27,7 @@ import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
 import useCountdown from "../../hooks/useCountdown";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
 import infoBubble from "../../../public/info_bubble.svg";
 import infoBubbleWhite from "../../../public/info_bubble_white.svg";
@@ -181,8 +181,10 @@ const Calculator = () => {
           <Slider
             value={sum}
             onChange={handleSumChange}
-            min={"0"}
-            max={ethers.utils.formatEther(hardCap)}
+            min={0}
+            max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
+            //max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
+            //max={0.02}
             step={minStep}
           />
 
