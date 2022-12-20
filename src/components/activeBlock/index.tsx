@@ -49,7 +49,7 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
         </thead>
         <tbody>
           <tr style={{ background: "rgba(46, 49, 77, 0.1)" }}>
-            <td className="underlined blue bigger flex">
+            <td className="blue bigger flex">
               <RoundImgWrapper>
                 <StatusBubble color={StatusColor} />
                 <Image
@@ -61,7 +61,11 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
               </RoundImgWrapper>
               Buidl1 protocol
             </td>
-            <td className="underlined blue bigger ">buidl.one</td>
+            <td className="underlined blue bigger ">
+              <a href="https://buidl.one/" target="_blank">
+                buidl.one
+              </a>
+            </td>
             <td className="greenText bigger">
               {totalIndividualInvestedToProject} {currency.label}
             </td>
@@ -97,3 +101,4 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
 };
 
 export default ActiveBlock;
+

@@ -89,6 +89,11 @@ export const FeaturedProjectHeader = styled.p`
 
   @media screen and ${breakpoints.Device.mobile} {
     padding: 1.1rem;
+
+    & > ${Spinner} {
+      left: 90.5%;
+      top: 15%;
+    }
   }
 `;
 
@@ -102,3 +107,4 @@ export const FeaturedProjectName = styled.div`
     font-size: 18px;
   }
 `;
+

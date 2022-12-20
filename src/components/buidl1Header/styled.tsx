@@ -85,7 +85,7 @@ export const HeaderInline = styled.div`
   }
 `;
 
-export const DemoButton = styled.button`
+export const DemoButton = styled.a`
   display: none;
   width: 260px;
   height: 115px;
@@ -94,6 +94,7 @@ export const DemoButton = styled.button`
   color: black;
   font-size: 20px;
   padding: 4px;
+  text-align: center;
   border: none;
   font-weight: 100;
   font-family: "Space Grotesk";

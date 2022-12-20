@@ -54,6 +54,12 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
             rel="stylesheet"
           />
+          <link
+            rel="shortcut icon"
+            href="/favicon.ico"
+            type="image/x-icon"
+          ></link>
+          <link rel="icon" href="/favicon.ico" type="image/x-icon"></link>
         </Head>
         <body>
           <Main />
@@ -64,3 +70,4 @@ export default class MyDocument extends Document {
     );
   }
 }
+

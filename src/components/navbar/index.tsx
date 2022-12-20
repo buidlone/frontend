@@ -28,7 +28,9 @@ const Navbar = () => {
     <Nav>
       <NavbarContainer>
         <LogoWrapper>
-          <Image src={logo} alt={"logo"} layout="fill" objectFit="cover" />
+          <a href="http://localhost:3000/projects">
+            <Image src={logo} alt={"logo"} layout="fill" objectFit="cover" />
+          </a>
         </LogoWrapper>
         <NavMenu>
           <NavItem>

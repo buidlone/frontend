@@ -105,6 +105,7 @@ export const Text = styled.p`
     font-size: 16px;
     margin-bottom: 0px;
     margin-top: 0.5px;
+    text-align: justify;
   }
 `;
 
