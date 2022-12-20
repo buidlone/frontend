@@ -13,10 +13,14 @@ import Tooltip from "../tooltip";
 import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { dateDiff } from "../../utils/getDateDifference";
+import infoBubble from "../../../public/info_bubble.svg";
+import infoBubbleWhite from "../../../public/info_bubble_white.svg";
+import Image from "next/image";
 
 const TimelineBlock = () => {
   const [active, setActive] = useState(1);
   const [status, setStatus] = useState(3);
+  const [over, setOver] = useState(0);
   const { fundraisingStartDate, fundraisingEndDate, milestones } =
     useContext(LoadedValuesContext);
 
@@ -59,12 +63,6 @@ const TimelineBlock = () => {
           >
             x1
           </XButton>
-          {/* <XButton
-            className={active === 2 ? "selected" : ""}
-            onClick={() => setActive(2)}
-          >
-            x2
-          </XButton> */}
           <XButton
             disabled={status === 2 ? true : false}
             className={`${active === 3 ? "selected" : ""} ${
@@ -78,20 +76,25 @@ const TimelineBlock = () => {
       </TopWrapper>
 
       {active === 1 && <TimelineGraph scale={1} />}
-      {/* {active === 2 && <TimelineGraph scale={2} />} */}
       {active === 3 && <TimelineGraph scale={3} />}
 
       <BottomWrapper>
         <BottomPartWrapper>
           <InlineWrapper>
             <div className="period">Soft cap reservation period</div>
-            <Tooltip
-              text={
-                "You will be able to claim back your cash if Soft Cap is not reached during expected period"
-              }
-            >
-              <InfoIcon />
-            </Tooltip>
+            <div onMouseOver={() => setOver(1)} onMouseOut={() => setOver(0)}>
+              <Tooltip
+                text={
+                  "You will be able to claim back your cash if Soft Cap is not reached during expected period"
+                }
+              >
+                <Image
+                  src={over === 1 ? infoBubble : infoBubbleWhite}
+                  alt="information"
+                  height={"14px"}
+                />
+              </Tooltip>
+            </div>
           </InlineWrapper>
           <div className="dateNum">
             {fundraisingStartDate?.slice(0, 7)} -{" "}

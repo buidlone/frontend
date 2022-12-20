@@ -89,11 +89,6 @@
     "type": "error"
   },
   {
-    "inputs": [],
-    "name": "GovernancePool__TotalSupplyIsZero",
-    "type": "error"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {

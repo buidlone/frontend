@@ -880,6 +880,19 @@
   },
   {
     "inputs": [],
+    "name": "getFundsUsed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getGelato",
     "outputs": [
       {
@@ -1406,12 +1419,12 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "alreadyAllocated",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "allocationFlowRate",
         "type": "uint256"
       }
     ],
@@ -1731,6 +1744,19 @@
   {
     "inputs": [],
     "name": "isSoftCapReached",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "isStateAnyMilestoneOngoing",
     "outputs": [
       {
         "internalType": "bool",

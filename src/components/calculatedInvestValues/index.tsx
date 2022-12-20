@@ -16,7 +16,8 @@ const CalculatedInvestValues = ({
 }: {
   control: Control<InputTypes>;
 }) => {
-  const { totalInvested, hardCap } = useContext(LoadedValuesContext);
+  const { totalInvested, hardCap, tokenCurrency } =
+    useContext(LoadedValuesContext);
   const amount = useWatch({
     control,
     name: "amount",
@@ -92,7 +93,7 @@ const CalculatedInvestValues = ({
               ? "≈ 0.0001"
               : "0"}
           </div>
-          <div className="BDL1">BDL1</div>
+          <div className="BDL1">{tokenCurrency.label}</div>
         </OutputField>
         <div className="bottomText">Project token</div>
       </IModalFieldWrapper>

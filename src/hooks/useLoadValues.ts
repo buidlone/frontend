@@ -57,6 +57,7 @@ export const loadedValuesInitialState: ILoadedValues = {
     address: "",
     decimals: 0,
   },
+  fundsUsedByCreator: "0",
 };
 
 export const useLoadValues = () => {
@@ -99,6 +100,8 @@ export const useLoadValues = () => {
     milestonesInvestmentsListForFormula,
     setMilestonesInvestmentListForFormula,
   ] = useState<BigNumber[]>([]);
+
+  const [fundsUsedByCreator, setFundsUsedByCreator] = useState<string>("0");
 
   const getAvailableCurrencies = async (tokenAddress: string) => {
     if (provider) {
@@ -174,6 +177,8 @@ export const useLoadValues = () => {
 
         const allInvestors = await getAllInvestments();
 
+        const fundsUsedByCreator = await contract.getFundsUsed();
+
         const milestoneCount = (await contract.getMilestonesCount()).toNumber();
         const currentMilestone = (
           await contract.getCurrentMilestoneId()
@@ -185,9 +190,7 @@ export const useLoadValues = () => {
         setMilestonesInvestmentListForFormula(milestonesInvestmentsList);
 
         setPercentageDivider(percentageDivider);
-
         setCurrentMilestone(currentMilestone);
-
         for (let i = 0; i < milestoneCount; i++) {
           let milestone = await contract.getMilestone(i);
           let seedAmount = await contract.getMilestoneSeedAmount(i);
@@ -218,6 +221,8 @@ export const useLoadValues = () => {
         setFundraisingStartDate(fundraisingStartDate);
         setFundraisingEndDate(fundraisingEndDate);
         setIsMilestoneOngoing(isMilestoneOngoing);
+        setFundsUsedByCreator(ethers.utils.formatEther(fundsUsedByCreator));
+
 
         setProjectState(parseInt(projectState, 10));
         allInvestors !== undefined &&
@@ -252,6 +257,7 @@ export const useLoadValues = () => {
     isMilestoneOngoing,
     tokensReserved,
     tokenCurrency,
+    fundsUsedByCreator,
   };
 };
 

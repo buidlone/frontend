@@ -8,7 +8,7 @@ import {
   FundsBar,
   FundsWrapper,
   SoftCapIndicator,
-  HardCapIndicator
+  HardCapIndicator,
 } from "./styled";
 
 const ProgressInsights = () => {
@@ -28,7 +28,7 @@ const ProgressInsights = () => {
         softCap.amount.mul(BigNumber.from(100)).div(hardCap).toNumber()
       );
     }
-  }, [totalInvested._hex]);
+  }, [totalInvested._hex, softCap]);
 
   return (
     <FProgressWrapper>

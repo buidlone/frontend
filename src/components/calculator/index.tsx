@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, KeyboardEvent } from "react";
-import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
+import { InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -29,6 +29,9 @@ import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens"
 import useCountdown from "../../hooks/useCountdown";
 import { ethers } from "ethers";
 import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
+import infoBubble from "../../../public/info_bubble.svg";
+import infoBubbleWhite from "../../../public/info_bubble_white.svg";
+import Image from "next/image";
 
 const minStep = 0.0000001;
 
@@ -44,7 +47,7 @@ const Calculator = () => {
   const [tokensPerMonth, setTokensPerMonth] = useState<number>(0);
   const [voting, setVoting] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
-  const [maxSum, setMaxSum] = useState(hardCap);
+  const [over, setOver] = useState(0);
   const maxDays = useCountdown(
     milestones[milestones.length - 1]?.endDate,
     milestones[0]?.startDate
@@ -138,14 +141,19 @@ const Calculator = () => {
         <CalculationWrapper>
           <InlineWrapper>
             <div className="ctext">Calculator</div>
-
-            <Tooltip
-              text={
-                "The results of your calculations are estimates based on information you provide and may not reflect actual results"
-              }
-            >
-              <InfoIcon style={{ paddingLeft: "1px" }} />
-            </Tooltip>
+            <div onMouseOver={() => setOver(1)} onMouseOut={() => setOver(0)}>
+              <Tooltip
+                text={
+                  "The results of your calculations are estimates based on information you provide and may not reflect actual results"
+                }
+              >
+                <Image
+                  src={over === 1 ? infoBubble : infoBubbleWhite}
+                  alt="information"
+                  height={"14px"}
+                />
+              </Tooltip>
+            </div>
           </InlineWrapper>
 
           <SelectWrapper

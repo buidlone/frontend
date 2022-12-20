@@ -24,6 +24,9 @@ import {
   BalanceBtn,
   MaxBalanceBtn,
 } from "./styled";
+import logo from "../../../public/brandmark_blue.svg";
+import infoBubble from "../../../public/info_bubble.svg";
+import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import BuidlLogo from "../../../public/BuidlLogo.png";
 import Accordion from "../accordion";
 import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
@@ -104,6 +107,7 @@ const InvestModal = ({
   const [networkError, setNetworkError] = useState<string | undefined>(
     undefined
   );
+  const [over, setOver] = useState(0);
 
   const handleCurrencyChange = (selectedOption: any) => {
     setSelectedCurrency({
@@ -330,13 +334,22 @@ const InvestModal = ({
             <BottomPartWrapper>
               <InlineWrapper>
                 <div className="period">Soft cap reservation period</div>
-                <Tooltip
-                  text={
-                    "You will be able to claim back your cash if Soft Cap is not reached during expected period"
-                  }
+                <div
+                  onMouseOver={() => setOver(1)}
+                  onMouseOut={() => setOver(0)}
                 >
-                  <InfoIcon />
-                </Tooltip>
+                  <Tooltip
+                    text={
+                      "You will be able to claim back your cash if Soft Cap is not reached during expected period"
+                    }
+                  >
+                    <Image
+                      src={over === 1 ? infoBubble : infoBubbleWhite}
+                      alt="information"
+                      height={"14px"}
+                    />
+                  </Tooltip>
+                </div>
               </InlineWrapper>
               <div className="dateNum">
                 {fundraisingStartDate?.slice(0, 7)} -{" "}

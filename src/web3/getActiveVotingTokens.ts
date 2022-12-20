@@ -1,4 +1,3 @@
-import { log } from "console";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
@@ -43,4 +42,3 @@ export const getActiveVotingTokens = async (
     }
   }
 };
-

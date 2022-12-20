@@ -45,6 +45,7 @@ export interface ILoadedValues {
   isMilestoneOngoing: boolean;
   tokensReserved: string;
   tokenCurrency: Currency;
+  fundsUsedByCreator: string;
 }
 
 export interface IMilestoneFundsAllocated {

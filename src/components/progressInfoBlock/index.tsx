@@ -45,6 +45,7 @@ const ProgressInfoBlock = ({
     isMilestoneOngoing,
     tokensReserved,
     tokenCurrency,
+    fundsUsedByCreator,
   } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endDate);
@@ -121,9 +122,7 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {featuredProject?.fundsReleased?.toLocaleString().replace(/,/g, " ")}{" "}
-          / {featuredProject?.funds?.toLocaleString().replace(/,/g, " ")}{" "}
-          {currency.label}
+          {fundsUsedByCreator.replace(/,/g, " ")} {currency.label}
         </Data>
 
         <Data>
@@ -149,7 +148,10 @@ const ProgressInfoBlock = ({
             />
 
             <div>
-              Your word has <span className="votingPower">{votingPower}%</span>{" "}
+              Your word has{" "}
+              <span className="votingPower">
+                {votingPower ? votingPower : 0}%
+              </span>{" "}
               power
             </div>
 
@@ -175,7 +177,7 @@ const ProgressInfoBlock = ({
             height={"26px"}
             width={"26px"}
           />
-          <TableLink
+            <TableLink
             href="https://discord.com/channels/998519974714941480/998519974714941483"
             target="_blank"
           >

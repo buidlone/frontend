@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import { BlockWrapper } from "../fundingBlock/styled";
 import breakpoints from "../../../styles/constants";
 import Image from "next/image";
+import { Spinner } from "../navbar/styled";
 
 interface Props {
   statusColor?: any;
@@ -68,6 +69,16 @@ export const FeaturedProjectHeader = styled.p`
   align-items: center;
   margin: 0;
   gap: 1.375rem;
+  position: relative;
+
+  & > ${Spinner} {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    position: absolute;
+    left: 95.5%;
+    top: 6%;
+  }
 
   & > ${StateBubble} {
     margin-left: auto;
@@ -91,4 +102,3 @@ export const FeaturedProjectName = styled.div`
     font-size: 18px;
   }
 `;
-

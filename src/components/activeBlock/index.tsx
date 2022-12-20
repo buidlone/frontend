@@ -67,7 +67,7 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
             </td>
 
             <td className="flexGap yellowText bigger">
-              {votingPower} %
+              {votingPower ? votingPower : 0} %
               <AccordionButtonIcon
                 style={{
                   color: "white",
