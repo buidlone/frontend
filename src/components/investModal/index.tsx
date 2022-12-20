@@ -230,8 +230,12 @@ const InvestModal = ({
     <IModalWrapper ref={domNode}>
       <IModalHeader>
         <LogoWrapper>
-          <Image className="logo" src={BuidlLogo} />
-          <div>Buidl 1</div>
+          <Image
+            className="logo"
+            src={BuidlLogo}
+            height={"25px"}
+            width={"25px"}
+          />
         </LogoWrapper>
         <a href="#" onClick={handleClose}>
           <CloseButton />
@@ -366,3 +370,4 @@ const InvestModal = ({
 };
 
 export default InvestModal;
+

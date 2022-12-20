@@ -34,16 +34,16 @@ export default function FooterSection() {
             href="https://discord.com/channels/998519974714941480/998519974714941483"
             target="_blank"
           >
-            <Image src={DiscordLogo} />
+            <Image src={DiscordLogo} height="24px" />
           </a>
           <a href="https://twitter.com/buidlone" target="_blank">
-            <Image src={TwitterLogo} />
+            <Image src={TwitterLogo} height="24px" />
           </a>
           <a href="https://www.linkedin.com/company/buidl1" target="_blank">
-            <Image src={LinkedinLogo} />
+            <Image src={LinkedinLogo} height="24px" />
           </a>
           <a href="https://www.instagram.com/buidl1/" target="_blank">
-            <Image src={InstagramLogo} />
+            <Image src={InstagramLogo} height="24px" />
           </a>
         </LogoWrapper>
       </ContactsLine>

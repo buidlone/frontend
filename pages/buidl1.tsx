@@ -16,6 +16,7 @@ import WrongStatus from "../src/components/statusNotification/wrongStatus";
 import InvestStatus from "../src/components/statusNotification/investStatus";
 import Buidl1Header from "../src/components/buidl1Header";
 import MobileFooter from "../src/components/mobileFooter";
+import Disclaimer from "../src/components/disclaimer";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
@@ -56,6 +57,7 @@ const Buidl1 = () => {
       ) : (
         <>
           <BgImage isFixed />
+          <Disclaimer hideMobile={true} />
           <Buidl1Header />
         </>
       )}

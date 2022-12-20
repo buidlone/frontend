@@ -68,7 +68,12 @@ const Buidl1Header = () => {
               transparent and provide reliable services, in hopes to create a
               prospering and supportive community.
             </HeaderInfo>
-            <DemoButton>BOOK A DEMO</DemoButton>
+            <DemoButton
+              target="_blank"
+              href="https://meetings-eu1.hubspot.com/matas-v/"
+            >
+              <p>BOOK A DEMO</p>
+            </DemoButton>
             <HeaderInline>
               <PersonalInfo className="investment">
                 Your investment:{" "}
@@ -124,3 +129,4 @@ const Buidl1Header = () => {
 };
 
 export default Buidl1Header;
+

@@ -42,7 +42,8 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     totalIndividualInvestedToProject,
     setTotalIndividualInvestedToProject,
   ] = useState(0);
-
+  const { web3Provider, address } = useContext(Web3Context);
+  let today = new Date();
   let milestonePercentage = 0;
 
   if (isMilestoneOngoing) {
@@ -52,30 +53,37 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   }
 
   useEffect(() => {
-    if (milestones[currentMilestone]) {
-      getSeconds();
+    const interval = setInterval(() => {
+      today = new Date();
+      if (milestones[currentMilestone]) {
+        getSeconds();
+      }
+    }, 1000);
+    console.log("hey");
+    console.log(today);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (web3Provider) {
+      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
+        setTotalIndividualInvestedToProject(data.totalAmountInvested);
+      });
     }
-  }, [milestones[currentMilestone]]);
+  }, [totalInvested]);
 
   function getSeconds() {
     const milestoneStart = new Date(milestones[currentMilestone].startDate);
-    const today = new Date();
-
     const seconds = Math.abs(milestoneStart.getTime() - today.getTime()) / 1000;
+
     if (web3Provider) {
       getUsedInvestments(web3Provider, address, seconds).then((data: any) => {
-        setUsedInvestments(Number(data.toFixed(10)));
-      });
-
-      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        setTotalIndividualInvestedToProject(data.totalAmountInvested);
+        setUsedInvestments(data.toFixed(12));
       });
     }
   }
 
   const refundable = totalIndividualInvestedToProject - usedInvestments;
-
-  const { web3Provider, address } = useContext(Web3Context);
 
   const handleStop = async () => {
     if (web3Provider) {
@@ -127,13 +135,21 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         <td>
           <p>Reserved</p>
           <p className="blueText">
-            {allocatedTokens} {tokenCurrency.label}
+            {allocatedTokens >= 0.0001 && allocatedTokens <= 4
+              ? allocatedTokens
+              : allocatedTokens >= 0.0001 && allocatedTokens > 4
+              ? `≈ ${Number(allocatedTokens).toFixed(4)} `
+              : allocatedTokens < 0.0001 && allocatedTokens > 0
+              ? "≈ 0.0001"
+              : "0.0000"}{" "}
+            {tokenCurrency.label}
           </p>
         </td>
         <td>
           <p>Refund if failed</p>
           <p className="blueText">
-            {refundable} {currency.label}
+            {refundable === 0 ? refundable : `≈ ${refundable.toFixed(12)}`}{" "}
+            {currency.label}
           </p>
         </td>
         <td>
@@ -151,7 +167,10 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         <td>
           <p>Used investments</p>
           <p className="greenText">
-            {usedInvestments} {currency.label}
+            {usedInvestments === 0
+              ? usedInvestments
+              : `≈ ${Number(usedInvestments).toFixed(12)}`}{" "}
+            {currency.label}
           </p>
         </td>
 

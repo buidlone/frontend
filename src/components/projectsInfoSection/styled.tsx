@@ -15,6 +15,7 @@ export const InfoSec = styled.section`
 
   @media screen and ${breakpoints.Device.mobile} {
     padding-top: 9rem;
+    padding-bottom: 6rem;
   }
 
   .hideOnMobile {
@@ -88,3 +89,4 @@ export const Line = styled.div`
     display: none;
   }
 `;
+

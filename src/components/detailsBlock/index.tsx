@@ -36,7 +36,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
             <Property className="medium">Participants</Property>
             <Property>Hard cap</Property>
             <Property>Project start</Property>
-            <Property>Project ends in</Property>
+            <Property>Project ends</Property>
           </FlexItem1>
           <FlexItem1>
             <Data>Seed</Data>
@@ -66,7 +66,8 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
             <Data className="medium">{milestones[0].startDate}</Data>
 
             <Data className="smaller">
-              {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S
+              {/* {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S */}
+              {milestones[9].endDate}
             </Data>
           </FlexItem1>
         </FlexItem>
