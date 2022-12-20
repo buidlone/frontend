@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import { useWatch, Control } from "react-hook-form";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import Web3Context from "../../context/web3Context";
 import { countDecimals } from "../../utils/countDecimals";
 import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
 import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
@@ -19,6 +20,7 @@ const CalculatedInvestValues = ({
 }) => {
   const { totalInvested, hardCap, tokenCurrency } =
     useContext(LoadedValuesContext);
+  const { web3Provider } = useContext(Web3Context);
   const amount = useWatch({
     control,
     name: "amount",
@@ -56,30 +58,32 @@ const CalculatedInvestValues = ({
           ? ethers.utils.formatEther(resultTokens.expectedTokensAllocation)
           : "0"
       );
-
-      const calculatedProjectTokens =
-        resultTokens.projectTokensPercentage.toNumber() / 100;
     }
   };
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (
-        ethers.utils
-          .parseEther(amount || "0")
-          .add(totalInvested)
-          .gt(hardCap)
-      ) {
-        setTokens("0");
-        setVoting(0);
-        setTickets("0");
-        return;
+    if (web3Provider) {
+      if (web3Provider?.network.chainId === 5) {
+        const delayDebounceFn = setTimeout(() => {
+          if (
+            ethers.utils
+              .parseEther(amount || "0")
+              .add(totalInvested)
+              .gt(hardCap)
+          ) {
+            setTokens("0");
+            setVoting(0);
+            setTickets("0");
+            return;
+          }
+
+          inputSumChange();
+        }, 100);
+
+        return () => clearTimeout(delayDebounceFn);
+      } else {
       }
-
-      inputSumChange();
-    }, 100);
-
-    return () => clearTimeout(delayDebounceFn);
+    }
   }, [amount]);
 
   return (

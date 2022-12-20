@@ -61,7 +61,8 @@ export const HardCapIndicator = styled.div<Props>`
   left: 98.3%;
   z-index: 99999;
   &:after {
-    content: "${(props) => props?.funds} ${(props) => props?.currency}";
+    //content: "${(props) => props?.funds} ${(props) => props?.currency}";
+    content: "";
     position: absolute;
     font-size: 14px;
     font-family: "IBM Plex Sans", sans-serif;
@@ -79,6 +80,7 @@ export const HardCapIndicator = styled.div<Props>`
     color: rgba(255, 255, 255, 0.42);
     left: -27.5px;
     bottom: 160%;
+    bottom: 120%;
     white-space: nowrap;
   }
 `;
