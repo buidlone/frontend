@@ -206,7 +206,7 @@ export const BurgerIcon = styled.button`
   }
 `;
 
-const rotate360 = keyframes`
+export const rotate360 = keyframes`
   from {
     transform: rotate(0deg);
   }
@@ -231,4 +231,3 @@ export const Spinner = styled.div`
   top: 50%;
   left: 48%; ;
 `;
-
