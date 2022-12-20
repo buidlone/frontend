@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Container } from "../../../styles/Container";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
+import { countDecimals } from "../../utils/countDecimals";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { getInvestorRewards } from "../../web3/getInvestorRewards";
 import { getVotingPower } from "../../web3/getVotingPower";
@@ -70,11 +71,31 @@ const Buidl1Header = () => {
             <DemoButton>BOOK A DEMO</DemoButton>
             <HeaderInline>
               <PersonalInfo className="investment">
-                Your investment: {totalIndividualInvestedToProject}{" "}
+                Your investment:{" "}
+                {Number(totalIndividualInvestedToProject) >= 0.0001 &&
+                countDecimals(totalIndividualInvestedToProject) <= 4
+                  ? totalIndividualInvestedToProject
+                  : Number(totalIndividualInvestedToProject) >= 0.0001 &&
+                    countDecimals(totalIndividualInvestedToProject) > 4
+                  ? `≈ ${Number(totalIndividualInvestedToProject).toFixed(4)}`
+                  : Number(totalIndividualInvestedToProject) < 0.0001 &&
+                    Number(totalIndividualInvestedToProject) > 0
+                  ? "≈ 0.0001"
+                  : "0.0000"}{" "}
                 {currency.label}
               </PersonalInfo>
               <PersonalInfo className="reward">
-                Your reward: {investorRewards ? investorRewards : "0.0000"}{" "}
+                Your reward:{" "}
+                {Number(investorRewards) >= 0.0001 &&
+                countDecimals(investorRewards) <= 4
+                  ? totalIndividualInvestedToProject
+                  : Number(investorRewards) >= 0.0001 &&
+                    countDecimals(investorRewards) > 4
+                  ? `≈ ${Number(investorRewards).toFixed(4)}`
+                  : Number(investorRewards) < 0.0001 &&
+                    Number(investorRewards) > 0
+                  ? "≈ 0.0001"
+                  : "0.0000"}{" "}
                 {tokenCurrency.label}
               </PersonalInfo>
               <PersonalInfo className="impact">

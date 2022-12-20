@@ -49,7 +49,7 @@ export const invest = async (
 
         const investmentTransaction = await investmentPoolContract.invest(
           ethers.utils.parseEther(amount),
-          true
+          false
         );
 
         const investmentReceipt = await toast.promise(
@@ -67,7 +67,7 @@ export const invest = async (
       } else {
         const investmentTransaction = await investmentPoolContract.invest(
           ethers.utils.parseEther(amount),
-          true
+          false
         );
 
         const investmentReceipt = await toast.promise(

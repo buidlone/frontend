@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import { useWatch, Control } from "react-hook-form";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { countDecimals } from "../../utils/countDecimals";
 import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
 import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
 import { InputTypes } from "../investModal";
@@ -87,8 +88,10 @@ const CalculatedInvestValues = ({
         <InputLabel>You will receive (overall thru project)</InputLabel>
         <OutputField>
           <div>
-            {Number(tokens) >= 0.0001
-              ? Number(tokens).toFixed(4)
+            {Number(tokens) >= 0.0001 && countDecimals(tokens) <= 4
+              ? tokens
+              : Number(tokens) >= 0.0001 && countDecimals(tokens) > 4
+              ? `≈ ${Number(tokens).toFixed(4)}`
               : Number(tokens) < 0.0001 && Number(tokens) > 0
               ? "≈ 0.0001"
               : "0"}
@@ -102,8 +105,10 @@ const CalculatedInvestValues = ({
         <InputLabel>You will receive</InputLabel>
         <OutputField>
           <div className="first">
-            {Number(tickets) >= 0.0001
-              ? Number(tickets).toFixed(4)
+            {Number(tickets) >= 0.0001 && countDecimals(tickets) <= 4
+              ? tickets
+              : Number(tickets) >= 0.0001 && countDecimals(tickets) > 4
+              ? `≈ ${Number(tickets).toFixed(4)}`
               : Number(tickets) < 0.0001 && Number(tickets) > 0
               ? "≈ 0.0001"
               : "0"}
