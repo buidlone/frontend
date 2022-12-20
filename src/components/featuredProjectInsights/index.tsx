@@ -88,10 +88,7 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
         This could be us but you playin
       </DescriptionSection>
       <BottomSection>
-        <LinkButton
-          href="https://discord.com/channels/998519974714941480/998519974714941483"
-          target="_blank"
-        >
+        <LinkButton href="mailto:info@buidl.one" target="_blank">
           Contact us
         </LinkButton>
       </BottomSection>
@@ -100,3 +97,4 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
 };
 
 export default FeaturedProjectInsights;
+

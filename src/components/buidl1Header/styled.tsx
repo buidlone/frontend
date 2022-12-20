@@ -8,11 +8,13 @@ interface Props {
 export const BackgroundBlur = styled.div`
   background-image: url("/header_blur.png");
   background-size: 103% 150%;
+  height: 450px;
   background-repeat: no-repeat;
 
   @media screen and ${breakpoints.Device.mobile} {
     background-size: 100% 100%;
     background-image: url("/background_mobile.png");
+    height: unset;
   }
 `;
 
@@ -51,7 +53,7 @@ export const HeaderSection = styled.div`
   }
 `;
 export const HeaderLabel = styled.div`
-  padding-top: 5%;
+  padding-top: 3%;
   text-align: left;
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;
@@ -61,6 +63,7 @@ export const HeaderLabel = styled.div`
 
   @media screen and ${breakpoints.Device.mobile} {
     font-size: 52px;
+    padding-top: 5%;
   }
 `;
 export const HeaderInfo = styled.div`

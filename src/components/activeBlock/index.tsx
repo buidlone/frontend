@@ -14,6 +14,7 @@ import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
 import DetailedPortfolio from "../detailedPortfolio";
 import { getVotingPower } from "../../web3/getVotingPower";
+import { countDecimals } from "../../utils/countDecimals";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
   const [
@@ -67,7 +68,17 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
               </a>
             </td>
             <td className="greenText bigger">
-              {totalIndividualInvestedToProject} {currency.label}
+              {Number(totalIndividualInvestedToProject) >= 0.0001 &&
+              countDecimals(String(totalIndividualInvestedToProject)) <= 4
+                ? totalIndividualInvestedToProject
+                : Number(totalIndividualInvestedToProject) >= 0.0001 &&
+                  countDecimals(String(totalIndividualInvestedToProject)) > 4
+                ? `≈ ${Number(totalIndividualInvestedToProject).toFixed(4)}`
+                : Number(totalIndividualInvestedToProject) < 0.0001 &&
+                  Number(totalIndividualInvestedToProject) > 0
+                ? "≈ 0.0001"
+                : "0.0000"}{" "}
+              {currency.label}
             </td>
 
             <td className="flexGap yellowText bigger">

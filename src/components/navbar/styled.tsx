@@ -235,16 +235,18 @@ export const Spinner = styled.div`
 export const SpinnerText = styled.p`
   color: white;
   position: absolute;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 500px;
+  // left: 0;
+  // right: 0;
+  // margin-left: auto;
+  // margin-right: auto;
+  left: 46%;
+  width: 180px;
   top: 55%;
   text-align: center;
 
   @media screen and ${breakpoints.Device.mobile} {
     width: 90%;
+    top: 57%;
   }
 `;
 

@@ -9,9 +9,18 @@ import Image from "next/image";
 const Disclaimer = ({ hideMobile }: any) => {
   if (hideMobile) {
     return (
-      <HideForMobile>
+      <HideForMobile style={{ width: "100%" }}>
         <DisclaimerWrapper>
-          Test our protocol while we're preparing for mainnet. Keep updated:
+          <p>
+            Test our protocol while we're preparing for mainnet. Make sure to{" "}
+            <a
+              target="_blank"
+              href="https://app.superfluid.finance/wrap?upgrade"
+            >
+              wrap
+            </a>{" "}
+            your ETH tokens. Keep updated:
+          </p>
           <SocialsWrapper>
             <a
               href="https://discord.com/channels/998519974714941480/998519974714941483"
