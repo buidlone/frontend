@@ -22,11 +22,19 @@ import discord from "../../assets/discord.svg";
 import instagram from "../../assets/Instagram.svg";
 import linkedin from "../../assets/linkedin.svg";
 import twitter from "../../assets/Twitter.svg";
+import { useEffect, useState } from "react";
+import { getVotedAgainst } from "../../web3/getVotedAgainst";
 
 const StopStatus = ({ setIsShownStop }: any) => {
   const handleClose = () => {
     setIsShownStop(false);
   };
+  const [votedAgainst, setVotedAgainst] = useState<number>(0);
+  useEffect(() => {
+    getVotedAgainst().then((data: any) => {
+      setVotedAgainst(data);
+    });
+  }, []);
 
   return (
     <Block color="#00C4FF">
@@ -40,7 +48,8 @@ const StopStatus = ({ setIsShownStop }: any) => {
           <BigExlamation>!</BigExlamation>
           <Box>
             <TextWrapper>
-              <TitleBoxText>40% have voted against</TitleBoxText> <br />
+              <TitleBoxText>{votedAgainst} % has voted against</TitleBoxText>{" "}
+              <br />
               <BoxText>
                 Go ahead and share on{" "}
                 <LogoWrapper
@@ -77,3 +86,4 @@ const StopStatus = ({ setIsShownStop }: any) => {
 };
 
 export default StopStatus;
+

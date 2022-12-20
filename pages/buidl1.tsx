@@ -51,7 +51,7 @@ const Buidl1 = () => {
         </Container>
       ) : isShownInvest ? (
         <Container>
-          <InvestStatus setIsShownInvest={setIsShownInvest} />{" "}
+          <InvestStatus setIsShownInvest={setIsShownInvest} wallets={wallets} />{" "}
         </Container>
       ) : (
         <>

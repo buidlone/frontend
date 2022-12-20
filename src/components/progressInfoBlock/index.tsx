@@ -42,6 +42,7 @@ const ProgressInfoBlock = ({
     milestones,
     currentMilestone,
     projectState,
+    isMilestoneOngoing,
     tokensReserved,
     tokenCurrency,
     fundsUsedByCreator,
@@ -103,7 +104,15 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {currentMilestone}/{milestones.length}
+          {isMilestoneOngoing ? (
+            <>
+              {currentMilestone + 1}/{milestones.length}{" "}
+            </>
+          ) : (
+            <>
+              {currentMilestone}/{milestones.length}{" "}
+            </>
+          )}
         </Data>
 
         <Data>
@@ -181,3 +190,4 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
+

@@ -1,8 +1,8 @@
 enum Responsive {
-  mobile = "450px",
+  mobile = "750px",
 }
 enum ScreenWidth {
-  mobile = 450,
+  mobile = 750,
 }
 
 const Device = {

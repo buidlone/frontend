@@ -25,7 +25,7 @@ import instagram from "../../assets/Instagram.svg";
 import linkedin from "../../assets/linkedin.svg";
 import twitter from "../../assets/Twitter.svg";
 
-const InvestStatus = ({ setIsShownInvest }: any) => {
+const InvestStatus = ({ setIsShownInvest, wallets }: any) => {
   const handleClose = () => {
     setIsShownInvest(false);
   };
@@ -46,7 +46,8 @@ const InvestStatus = ({ setIsShownInvest }: any) => {
             <BigExlamation>!</BigExlamation>
             <Box>
               <TextWrapper>
-                <TitleBoxText>You are the 330th BUIDLER</TitleBoxText> <br />
+                <TitleBoxText>You are {wallets.length} BUIDLER</TitleBoxText>{" "}
+                <br />
                 <BoxText>
                   Go ahead and share on{" "}
                   <LogoWrapper
@@ -92,3 +93,4 @@ const InvestStatus = ({ setIsShownInvest }: any) => {
 };
 
 export default InvestStatus;
+

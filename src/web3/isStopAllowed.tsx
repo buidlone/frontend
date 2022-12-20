@@ -12,11 +12,13 @@ export const isStopAllowed = async (
     currentMilestone
   );
 
+  console.log(activeTokens);
+
   if (address === undefined) {
     return true;
   } else if (projectState !== 4 && projectState !== 32) {
     return true;
-  } else if (activeTokens === 0) {
+  } else if (activeTokens === undefined || activeTokens <= 0) {
     return true;
   } else return false;
 };

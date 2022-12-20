@@ -42,6 +42,7 @@ export interface ILoadedValues {
   setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   percentageDivider: BigNumber;
   milestonesInvestmentsListForFormula: BigNumber[];
+  isMilestoneOngoing: boolean;
   tokensReserved: string;
   tokenCurrency: Currency;
   fundsUsedByCreator: string;
