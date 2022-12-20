@@ -88,7 +88,12 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
         This could be us but you playin
       </DescriptionSection>
       <BottomSection>
-        <LinkButton>Contact us</LinkButton>
+        <LinkButton
+          href="https://discord.com/channels/998519974714941480/998519974714941483"
+          target="_blank"
+        >
+          Contact us
+        </LinkButton>
       </BottomSection>
     </ProjectInfoWrapper>
   );

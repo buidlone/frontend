@@ -32,6 +32,7 @@ import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectToken
 import infoBubble from "../../../public/info_bubble.svg";
 import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import Image from "next/image";
+import { countDecimals } from "../../utils/countDecimals";
 
 const minStep = 0.0000001;
 
@@ -263,8 +264,10 @@ const Calculator = () => {
                 <VotingItem>
                   <div className="text">Rewards</div>
                   <div className="tokens">
-                    {Number(tokens) >= 0.0001
-                      ? Number(tokens).toFixed(4)
+                    {Number(tokens) >= 0.0001 && countDecimals(tokens) <= 4
+                      ? tokens
+                      : Number(tokens) >= 0.0001 && countDecimals(tokens) > 4
+                      ? `≈ ${Number(tokens).toFixed(4)}`
                       : Number(tokens) < 0.0001 && Number(tokens) > 0
                       ? "≈ 0.0001"
                       : "0"}{" "}
@@ -276,8 +279,10 @@ const Calculator = () => {
                 <VotingItem>
                   <div className="text">Voting Power</div>
                   <div className="tickets">
-                    {Number(tickets) >= 0.0001
-                      ? Number(tickets).toFixed(4)
+                    {Number(tickets) >= 0.0001 && countDecimals(tickets) <= 4
+                      ? tickets
+                      : Number(tickets) >= 0.0001 && countDecimals(tickets) > 4
+                      ? `≈ ${Number(tickets).toFixed(4)}`
                       : Number(tickets) < 0.0001 && Number(tickets) > 0
                       ? "≈ 0.0001"
                       : "0"}{" "}

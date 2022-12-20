@@ -56,7 +56,7 @@ export const BottomText = styled.div`
   text-align: left;
   white-space: nowrap;
   position: relative;
-  text-decoration: underline;
+  text-decoration: none;
 
   &:before {
     content: "";
@@ -88,4 +88,3 @@ export const Line = styled.div`
     display: none;
   }
 `;
-

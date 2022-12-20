@@ -7,6 +7,7 @@ import MobileFooter from "../src/components/mobileFooter";
 import Disclaimer from "../src/components/disclaimer";
 
 const Projects = () => {
+
   return (
     <>
       <Disclaimer hideMobile={true} />
@@ -14,7 +15,7 @@ const Projects = () => {
       <BgImage isFixed />
 
       <Container>
-        <ProjectsInfoSection text={"Yes. Buidl1 also needs to be build"} />
+        <ProjectsInfoSection text={"Yes. Buidl1 also needs to be built"} />
         <Disclaimer hideMobile={false} />
         <FeaturedProjectsSection />
       </Container>
@@ -25,4 +26,3 @@ const Projects = () => {
 };
 
 export default Projects;
-

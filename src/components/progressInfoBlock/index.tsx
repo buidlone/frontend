@@ -33,7 +33,6 @@ const ProgressInfoBlock = ({
   setIsShownWrong,
   ...props
 }: IInvestorsProps) => {
-  const featuredProject = useContext(ProjectContext);
   const { web3Provider, address } = useContext(Web3Context);
   const [votingPower, setVotingPower] = useState(0);
   const {
@@ -177,7 +176,7 @@ const ProgressInfoBlock = ({
             height={"26px"}
             width={"26px"}
           />
-            <TableLink
+          <TableLink
             href="https://discord.com/channels/998519974714941480/998519974714941483"
             target="_blank"
           >
@@ -190,4 +189,3 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
-
