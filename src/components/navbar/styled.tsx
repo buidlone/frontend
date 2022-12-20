@@ -240,7 +240,7 @@ export const SpinnerText = styled.p`
   margin-left: auto;
   margin-right: auto;
   width: 500px;
-  top: 54%;
+  top: 55%;
   text-align: center;
 
   @media screen and ${breakpoints.Device.mobile} {
