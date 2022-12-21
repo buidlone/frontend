@@ -1,12 +1,13 @@
 export const GovernancePoolAddress =
-  "0xFa0d71138Ee0438fDce971211DdcA29d85eE50a7";
+  "0x9e36632a4059a612cD213979E1be2E72fa5aD89c";
 export const InvestmentPoolAddress =
-  "0xd8C14199d2A1A7691B0824050c5b6399f6F0bdba";
+  "0x192Ed82F6F408a4FbfcE92B639e47F98fB6c2476";
 export const InvestmentPoolFactoryAddress =
-  "0x349FD2Cc03CBaD3252061fe70d329Dc47aE8cDa4";
-export const VotingTokenAddress = "0x2D913Ce52F5B2fD29E21f7f08ec8E3Dd8aBD42eD";
+  "0xD53124C3d78b589C1484B7b165Ae814bEaFfFFe9";
+export const VotingTokenAddress = "0x1F19A22658654Ef8f1E783A0F41044A19d71003a";
 export const DistributionPoolAddress =
-  "0x2160BcAA69D4e26C2ECc6E9f24EBb4B814740755";
+  "0x2b4981EF9A987628db0b140734b51c0702dEC3eB";
+
 
 //later will be added to .env.local
 export const NEXT_PUBLIC_INFURA_ID = "124e8573221d41399c3157557e962d98";
