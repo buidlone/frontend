@@ -41,15 +41,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
           <FlexItem1>
             <Data>Seed</Data>
             <Data>
-              {isMilestoneOngoing ? (
-                <>
-                  {currentMilestone + 1}/{milestones.length}{" "}
-                </>
-              ) : (
-                <>
-                  {currentMilestone}/{milestones.length}{" "}
-                </>
-              )}
+              {currentMilestone}/{milestones.length}
             </Data>
 
             <Data>

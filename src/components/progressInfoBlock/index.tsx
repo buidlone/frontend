@@ -103,15 +103,7 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {isMilestoneOngoing ? (
-            <>
-              {currentMilestone + 1}/{milestones.length}{" "}
-            </>
-          ) : (
-            <>
-              {currentMilestone}/{milestones.length}{" "}
-            </>
-          )}
+          {currentMilestone}/{milestones.length}
         </Data>
 
         <Data>
@@ -191,3 +183,4 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
+

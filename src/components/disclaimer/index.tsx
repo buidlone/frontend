@@ -26,17 +26,17 @@ const Disclaimer = ({ hideMobile }: any) => {
               href="https://discord.com/channels/998519974714941480/998519974714941483"
               target="_blank"
             >
-              <Image src={DiscordLogo} height="20px" />
+              <Image src={DiscordLogo} height="18px" />
             </a>
 
             <a href="https://www.linkedin.com/company/buidl1" target="_blank">
-              <Image src={LinkedinLogo} height="20px" />
+              <Image src={LinkedinLogo} height="18px" />
             </a>
             <a href="https://twitter.com/buidlone" target="_blank">
-              <Image src={TwitterLogo} height="20px" />
+              <Image src={TwitterLogo} height="18px" />
             </a>
             <a href="https://www.instagram.com/buidl1/" target="_blank">
-              <Image src={InstagramLogo} height="20px" />
+              <Image src={InstagramLogo} height="18px" />
             </a>
           </SocialsWrapper>
         </DisclaimerWrapper>
