@@ -17,6 +17,7 @@ import InvestStatus from "../src/components/statusNotification/investStatus";
 import Buidl1Header from "../src/components/buidl1Header";
 import MobileFooter from "../src/components/mobileFooter";
 import Disclaimer from "../src/components/disclaimer";
+import Head from "next/head";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
@@ -60,7 +61,9 @@ const Buidl1 = () => {
           {/* <BgImage isFixed /> */}
         </>
       )}
-
+      <Head>
+        <title>Buidl1</title>
+      </Head>
       <Container>
         <HideForMobile>
           <FeaturesSec>

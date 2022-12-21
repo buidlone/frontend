@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState } from "react";
 import AssetsSection from "../src/components/assetsSection";
 import { AssetsHeader } from "../src/components/assetsSection/styled";
@@ -13,6 +14,9 @@ const Assets = () => {
 
   return (
     <>
+      <Head>
+        <title>Buidl1 | Portfolio</title>
+      </Head>
       {!isShownStop || !isShownWrong || (!isShownInvest && <BgImage isFixed />)}
       <Container>
         {isShownStop ? (
@@ -38,3 +42,4 @@ const Assets = () => {
 };
 
 export default Assets;
+
