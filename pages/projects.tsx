@@ -7,10 +7,11 @@ import MobileFooter from "../src/components/mobileFooter";
 import Disclaimer from "../src/components/disclaimer";
 
 const Projects = () => {
-
   return (
     <>
-      <Disclaimer hideMobile={true} />
+      <div style={{ marginTop: "-27px" }}>
+        <Disclaimer hideMobile={true} />
+      </div>
 
       <BgImage isFixed />
 
@@ -26,3 +27,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

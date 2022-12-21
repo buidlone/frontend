@@ -229,17 +229,27 @@ export const Spinner = styled.div`
   border-radius: 50%;
   position: absolute;
   top: 50%;
-  left: 48%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 export const SpinnerText = styled.p`
   color: white;
   position: absolute;
-  // left: 0;
-  // right: 0;
-  // margin-left: auto;
-  // margin-right: auto;
-  left: 46%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  // left: 46%;
   width: 180px;
   top: 55%;
   text-align: center;
@@ -247,6 +257,10 @@ export const SpinnerText = styled.p`
   @media screen and ${breakpoints.Device.mobile} {
     width: 90%;
     top: 57%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
