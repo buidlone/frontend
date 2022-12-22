@@ -13,6 +13,8 @@ import {
   TimelineScroll,
 } from "./styled";
 import useCountdown from "../../hooks/useCountdown";
+import MilestoneDetails from "../milestoneDetails";
+import ProjectState from "../projectState";
 
 interface ITimeline {
   scale: number;
@@ -20,8 +22,11 @@ interface ITimeline {
 
 const TimelineGraph = ({ scale }: ITimeline) => {
   const [active, setActive] = useState(false);
-  const { milestones, projectState, currentMilestone } =
-    useContext(LoadedValuesContext);
+  const { milestones } = useContext(LoadedValuesContext);
+  console.log(milestones);
+
+  const projectState = 32;
+  const currentMilestone = 2;
 
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
@@ -77,9 +82,11 @@ const TimelineGraph = ({ scale }: ITimeline) => {
     ) {
       containerRef.current.scrollTo({
         left:
-          activeStageRef.current.offsetLeft -
-          containerRef.current.offsetWidth / 2.6,
-
+          scale === 3
+            ? activeStageRef.current.offsetLeft -
+              containerRef.current.offsetWidth / 10.3
+            : activeStageRef.current.offsetLeft -
+              containerRef.current.offsetWidth / 2.6,
         behavior: "smooth",
       });
     }
@@ -93,7 +100,7 @@ const TimelineGraph = ({ scale }: ITimeline) => {
   };
 
   return (
-    <TimelineContainer
+    <TimelineContainer 
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
@@ -101,7 +108,7 @@ const TimelineGraph = ({ scale }: ITimeline) => {
         innerRef={containerRef}
         hideScrollbars={active ? false : true}
       >
-        <TimelineBar>
+        <TimelineBar scale={scale}>
           <TProgress progress={getTimelineProgress()} />
           {milestones &&
             milestones.map((milestone) => {
@@ -117,25 +124,41 @@ const TimelineGraph = ({ scale }: ITimeline) => {
               ).active;
               const itemProps = active ? { ref: activeStageRef } : {};
               return (
-                <TimelineStep
-                  scale={scale}
-                  key={milestone.id}
-                  stage={`Milestone ${milestone.id + 1}`}
-                  completed={completed}
-                  current={active}
-                  {...itemProps}
-                />
+                <>
+                  <TimelineStep
+                    scale={scale}
+                    key={milestone.id}
+                    stage={`Milestone ${milestone.id + 1}`}
+                    completed={completed}
+                    current={active}
+                    {...itemProps}
+                  >
+                    {scale === 3 && (
+                      <MilestoneDetails
+                        milestone={milestone}
+                        date={getDate(milestone.endDate, milestone.startDate)}
+                      />
+                    )}
+                  </TimelineStep>
+                </>
               );
             })}
         </TimelineBar>
 
-        <DateBar>
+        <DateBar scale={scale}>
           {milestones &&
             milestones.map((milestone) => (
               <DateStep
                 key={milestone.id}
                 scale={scale}
-                date={getDate(milestone.endDate, milestone.startDate)}
+                date={
+                  scale === 3
+                    ? `${milestone.startDate.slice(
+                        0,
+                        10
+                      )} - ${milestone.endDate.slice(0, 10)}`
+                    : getDate(milestone.endDate, milestone.startDate)
+                }
               />
             ))}
         </DateBar>

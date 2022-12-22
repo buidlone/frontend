@@ -38,7 +38,7 @@ const useCountdown = (
         setTimerseconds(seconds);
       }
     } else if (progress) {
-      const currentDate = new Date().getTime();
+      const currentDate = new Date("2023 08 18").getTime();
       const startDate = new Date(<string>dateFrom).getTime();
 
       const distance = currentDate - startDate;

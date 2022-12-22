@@ -27,6 +27,8 @@ const pulse = keyframes`
 export const TimelineScroll = styled(ScrollContainer)`
   padding-top: 2.3%;
   cursor: grab;
+  position: relative;
+  width: 100%;
 
   &::-webkit-scrollbar {
     height: 0.625rem;
@@ -50,6 +52,8 @@ export const TimelineScroll = styled(ScrollContainer)`
 export const TimelineContainer = styled.div`
   display: flex;
   flex-direction: column;
+  position: relative;
+  width: 100%;
 `;
 
 export const TProgress = styled.div<Props>`
@@ -58,7 +62,6 @@ export const TProgress = styled.div<Props>`
   position: relative;
   max-width: 100%;
   width: ${(props) => (props.progress ? props.progress : 0)}% !important;
-
   transition: 0.3s;
   opacity: 1 !important;
 
@@ -73,13 +76,15 @@ export const TProgress = styled.div<Props>`
   }
 `;
 
-export const TimelineBar = styled.div`
+export const TimelineBar = styled.div<Props>`
+  width: 100%;
   min-width: max-content;
+
   margin: 12.2rem 0rem 0rem 0rem;
   position: relative;
   display: inline-flex;
-  gap: 3px;
-  width: 100%;
+  gap: ${(props) => (props.scale === 3 ? "5.5%" : " 3px")};
+
   justify-content: space-between;
 
   &:before,
@@ -92,7 +97,6 @@ export const TimelineBar = styled.div`
     width: 100%;
     background-color: #00c4ff8f;
     opacity: 0.5;
-    margin-left: 0.02rem;
   }
 `;
 
@@ -105,7 +109,10 @@ export const TimelineStep = styled.div<Props>`
       `;
     } else if (props.scale === 3) {
       return `
-      min-width: 10.063rem;
+     
+      min-width: 80%;
+      
+    
       `;
     } else {
       return `
@@ -114,7 +121,6 @@ export const TimelineStep = styled.div<Props>`
     }
   }};
 
-  height: 0px;
   display: flex;
   justify-content: space-evenly;
   position: relative;
@@ -131,7 +137,7 @@ export const TimelineStep = styled.div<Props>`
 `;
       } else {
         return `
-        content: "${props.stage}";
+        content: "";
       `;
       }
     }};
@@ -149,7 +155,6 @@ export const TimelineStep = styled.div<Props>`
   &:after {
     content: "";
     position: absolute;
-    bottom: 0;
     width: 100%;
     height: 168px;
     bottom: calc(100% + 0.2rem);
@@ -191,11 +196,15 @@ export const DateStep = styled.div<Props>`
       `;
     } else if (props.scale === 3) {
       return `
-      min-width: 10.063rem;
+     
+      min-width: 80%;
+      
+     
+
       `;
     } else {
       return `
-      //width: 100%;
+    
       min-width: 1.438rem;
       `;
     }
@@ -227,18 +236,18 @@ export const DateStep = styled.div<Props>`
     position: absolute;
     font-size: 10px;
     font-family: "Barlow", sans-serif;
-    color: #e2e2e2;
+    color: ${(props) => (props.scale === 3 ? "#F0F0F0" : "#e2e2e2")};
     white-space: nowrap;
   }
 `;
 
-export const DateBar = styled.div`
+export const DateBar = styled.div<Props>`
   width: 100%;
   margin: 0.644rem 0rem 1.7rem 0rem;
   display: inline-flex;
   justify-content: space-between;
   position: relative;
-  gap: 3px;
+  gap: ${(props) => (props.scale === 3 ? "5.5%" : " 3px")};
 
   justify-content: space-between;
 
