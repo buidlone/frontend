@@ -7,7 +7,7 @@ export type Milestone = {
   endDate: string;
   paid: boolean;
   totalMilestoneTokenAllocation?: number;
-  seedAmount: number | string;
+  seedAmount: BigNumber;
   seedAmountPaid: boolean;
   streamOngoing: boolean;
   intervalSeedPortion: BigNumber;
@@ -53,4 +53,3 @@ export interface IMilestoneFundsAllocated {
   seedAllocated: string;
   totalFundsAllocated: string;
 }
-
