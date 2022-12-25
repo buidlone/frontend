@@ -27,8 +27,6 @@ const pulse = keyframes`
 export const TimelineScroll = styled(ScrollContainer)`
   padding-top: 2.3%;
   cursor: grab;
-  position: relative;
-  width: 100%;
 
   &::-webkit-scrollbar {
     height: 0.625rem;
@@ -52,8 +50,6 @@ export const TimelineScroll = styled(ScrollContainer)`
 export const TimelineContainer = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
-  width: 100%;
 `;
 
 export const TProgress = styled.div<Props>`
@@ -77,14 +73,12 @@ export const TProgress = styled.div<Props>`
 `;
 
 export const TimelineBar = styled.div<Props>`
-  width: 100%;
   min-width: max-content;
-
   margin: 12.2rem 0rem 0rem 0rem;
   position: relative;
   display: inline-flex;
-  gap: ${(props) => (props.scale === 3 ? "5.5%" : " 3px")};
-
+  gap: ${(props) => (props.scale === 3 ? "1.813rem" : " 0.188rem")};
+  width: 100%;
   justify-content: space-between;
 
   &:before,
@@ -109,10 +103,7 @@ export const TimelineStep = styled.div<Props>`
       `;
     } else if (props.scale === 3) {
       return `
-     
-      min-width: 80%;
-      
-    
+      min-width: 27.938rem;
       `;
     } else {
       return `
@@ -196,11 +187,7 @@ export const DateStep = styled.div<Props>`
       `;
     } else if (props.scale === 3) {
       return `
-     
-      min-width: 80%;
-      
-     
-
+      min-width: 27.938rem;
       `;
     } else {
       return `
@@ -247,7 +234,7 @@ export const DateBar = styled.div<Props>`
   display: inline-flex;
   justify-content: space-between;
   position: relative;
-  gap: ${(props) => (props.scale === 3 ? "5.5%" : " 3px")};
+  gap: ${(props) => (props.scale === 3 ? "1.813rem" : " 0.188rem")};
 
   justify-content: space-between;
 

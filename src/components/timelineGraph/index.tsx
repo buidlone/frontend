@@ -22,11 +22,8 @@ interface ITimeline {
 
 const TimelineGraph = ({ scale }: ITimeline) => {
   const [active, setActive] = useState(false);
-  const { milestones } = useContext(LoadedValuesContext);
-  console.log(milestones);
-
-  const projectState = 32;
-  const currentMilestone = 2;
+  const { milestones, projectState, currentMilestone } =
+    useContext(LoadedValuesContext);
 
   const containerRef = React.createRef<HTMLElement>();
   const activeStageRef = React.createRef<HTMLElement>();
@@ -100,7 +97,7 @@ const TimelineGraph = ({ scale }: ITimeline) => {
   };
 
   return (
-    <TimelineContainer 
+    <TimelineContainer
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
