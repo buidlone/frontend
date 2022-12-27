@@ -202,7 +202,7 @@ export const useLoadValues = () => {
               startDate: formatTime(milestone?.startDate),
               endDate: formatTime(milestone?.endDate),
               paid: milestone?.paid,
-              seedAmount: seedAmount.toNumber(),
+              seedAmount: seedAmount,
               seedAmountPaid: milestone?.seedAmountPaid,
               streamOngoing: milestone?.streamOngoing,
               intervalSeedPortion: milestone?.intervalSeedPortion,
@@ -222,7 +222,6 @@ export const useLoadValues = () => {
         setFundraisingEndDate(fundraisingEndDate);
         setIsMilestoneOngoing(isMilestoneOngoing);
         setFundsUsedByCreator(ethers.utils.formatEther(fundsUsedByCreator));
-
 
         setProjectState(parseInt(projectState, 10));
         allInvestors !== undefined &&
@@ -260,4 +259,3 @@ export const useLoadValues = () => {
     fundsUsedByCreator,
   };
 };
-
