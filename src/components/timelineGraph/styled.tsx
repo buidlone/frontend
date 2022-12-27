@@ -58,7 +58,6 @@ export const TProgress = styled.div<Props>`
   position: relative;
   max-width: 100%;
   width: ${(props) => (props.progress ? props.progress : 0)}% !important;
-
   transition: 0.3s;
   opacity: 1 !important;
 
@@ -73,12 +72,12 @@ export const TProgress = styled.div<Props>`
   }
 `;
 
-export const TimelineBar = styled.div`
+export const TimelineBar = styled.div<Props>`
   min-width: max-content;
   margin: 12.2rem 0rem 0rem 0rem;
   position: relative;
   display: inline-flex;
-  gap: 3px;
+  gap: ${(props) => (props.scale === 3 ? "1.813rem" : " 0.188rem")};
   width: 100%;
   justify-content: space-between;
 
@@ -92,7 +91,6 @@ export const TimelineBar = styled.div`
     width: 100%;
     background-color: #00c4ff8f;
     opacity: 0.5;
-    margin-left: 0.02rem;
   }
 `;
 
@@ -105,7 +103,7 @@ export const TimelineStep = styled.div<Props>`
       `;
     } else if (props.scale === 3) {
       return `
-      min-width: 10.063rem;
+      min-width: 27.938rem;
       `;
     } else {
       return `
@@ -114,7 +112,6 @@ export const TimelineStep = styled.div<Props>`
     }
   }};
 
-  height: 0px;
   display: flex;
   justify-content: space-evenly;
   position: relative;
@@ -131,7 +128,7 @@ export const TimelineStep = styled.div<Props>`
 `;
       } else {
         return `
-        content: "${props.stage}";
+        content: "";
       `;
       }
     }};
@@ -149,7 +146,6 @@ export const TimelineStep = styled.div<Props>`
   &:after {
     content: "";
     position: absolute;
-    bottom: 0;
     width: 100%;
     height: 168px;
     bottom: calc(100% + 0.2rem);
@@ -191,11 +187,11 @@ export const DateStep = styled.div<Props>`
       `;
     } else if (props.scale === 3) {
       return `
-      min-width: 10.063rem;
+      min-width: 27.938rem;
       `;
     } else {
       return `
-      //width: 100%;
+    
       min-width: 1.438rem;
       `;
     }
@@ -227,18 +223,18 @@ export const DateStep = styled.div<Props>`
     position: absolute;
     font-size: 10px;
     font-family: "Barlow", sans-serif;
-    color: #e2e2e2;
+    color: ${(props) => (props.scale === 3 ? "#F0F0F0" : "#e2e2e2")};
     white-space: nowrap;
   }
 `;
 
-export const DateBar = styled.div`
+export const DateBar = styled.div<Props>`
   width: 100%;
   margin: 0.644rem 0rem 1.7rem 0rem;
   display: inline-flex;
   justify-content: space-between;
   position: relative;
-  gap: 3px;
+  gap: ${(props) => (props.scale === 3 ? "1.813rem" : " 0.188rem")};
 
   justify-content: space-between;
 

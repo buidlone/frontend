@@ -15,6 +15,7 @@ const ProgressInsights = () => {
   const { softCap, hardCap, totalInvested, currency } =
     useContext(LoadedValuesContext);
 
+
   const [progress, setProgress] = useState<number>(0);
 
   const [softCapPosition, setSoftCapPosition] = useState<number>(0);
@@ -33,7 +34,9 @@ const ProgressInsights = () => {
   return (
     <FProgressWrapper>
       <FundsBar>
-        <SoftCapIndicator softCapPosition={softCapPosition} />
+        {softCap.amount.toString() !== "0" && (
+          <SoftCapIndicator softCapPosition={softCapPosition} />
+        )}
         <HardCapIndicator />
         <FProgress progress={progress ? progress : 0} />
       </FundsBar>
