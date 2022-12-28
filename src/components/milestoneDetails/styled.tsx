@@ -22,6 +22,12 @@ export const MilestoneDetailsWrapper = styled.div`
   .description {
     color: rgba(0, 196, 255, 1);
     font-size: 11px;
+    overflow-y: auto;
+    z-index: 1;
+
+    ::-webkit-scrollbar {
+      width: 0 !important;
+    }
   }
 `;
 
