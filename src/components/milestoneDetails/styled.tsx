@@ -8,8 +8,7 @@ export const MilestoneDetailsWrapper = styled.div`
   height: 168px;
   display: flex;
   flex-direction: column;
-
-  padding: 2.8% 7% 4% 7%;
+  padding: 2.8% 8.1% 4% 8.1%;
   font-family: "Barlow", sans-serif;
 
   .taskTitle {

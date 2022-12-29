@@ -103,7 +103,7 @@ export const TimelineStep = styled.div<Props>`
       `;
     } else if (props.scale === 3) {
       return `
-      min-width: 27.938rem;
+      min-width: 28.1rem;
       `;
     } else {
       return `
@@ -139,7 +139,6 @@ export const TimelineStep = styled.div<Props>`
     font-family: "Barlow", sans-serif;
     color: #e3e3e3;
     text-align: left;
-    max-width: 3rem;
     white-space: nowrap;
   }
 
@@ -187,7 +186,7 @@ export const DateStep = styled.div<Props>`
       `;
     } else if (props.scale === 3) {
       return `
-      min-width: 27.938rem;
+      min-width: 28.1rem;
       `;
     } else {
       return `
