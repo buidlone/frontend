@@ -33,8 +33,6 @@ export const getUsedInvestments = async (
       return realTimeAmount;
     } catch (error) {
       console.log(error);
-      toast.error("Error occurred while retrieving data from blockchain");
     }
   }
 };
-

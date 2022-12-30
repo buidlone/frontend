@@ -78,7 +78,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
       setUsedInvestments(0);
     } else if (web3Provider) {
       getUsedInvestments(web3Provider, address, seconds).then((data: any) => {
-        setUsedInvestments(data.toFixed(12));
+        setUsedInvestments(data ? data?.toFixed(12) : 0);
       });
     }
   }
@@ -199,4 +199,3 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
 };
 
 export default DetailedPortfolio;
-
