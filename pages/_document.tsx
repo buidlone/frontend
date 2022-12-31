@@ -60,6 +60,10 @@ export default class MyDocument extends Document {
             type="image/x-icon"
           ></link>
           <link rel="icon" href="/favicon.ico" type="image/x-icon"></link>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-89XBBLS7D9"
+          ></script>
         </Head>
         <body>
           <Main />
