@@ -72,7 +72,7 @@ const Buidl1Header = () => {
             </HeaderInfo>
             <DemoButton
               target="_blank"
-              href="https://meetings-eu1.hubspot.com/matas-v/"
+              href="https://calendly.com/buidl1/30min"
             >
               <p>BOOK A DEMO</p>
             </DemoButton>
