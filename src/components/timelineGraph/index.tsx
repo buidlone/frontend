@@ -81,7 +81,7 @@ const TimelineGraph = ({ scale }: ITimeline) => {
         left:
           scale === 3
             ? activeStageRef.current.offsetLeft -
-              containerRef.current.offsetWidth / 10.3
+              containerRef.current.offsetWidth / 9
             : activeStageRef.current.offsetLeft -
               containerRef.current.offsetWidth / 2.6,
         behavior: "smooth",

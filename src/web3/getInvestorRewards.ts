@@ -1,7 +1,6 @@
 import { ethers } from "ethers";
 import DistributionPoolABI from "./abi/DistributionPool.json";
 import { DistributionPoolAddress } from "../constants/contractAddresses";
-import { toast } from "react-toastify";
 
 export const getInvestorRewards = async (
   provider: any,
@@ -21,6 +20,5 @@ export const getInvestorRewards = async (
     return investorRewards;
   } catch (error) {
     console.log("network error", error);
-    toast.error("Error occurred while retrieving data from blockchain");
   }
 };
