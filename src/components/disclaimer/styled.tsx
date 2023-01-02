@@ -22,6 +22,7 @@ export const DisclaimerWrapper = styled.div`
   margin-right: auto;
   margin-top: 28px;
   gap: 20px;
+  z-index: 13;
 
   p {
     display: block;
@@ -54,4 +55,3 @@ export const SocialsWrapper = styled.div`
     justify-content: space-evenly;
   }
 `;
-

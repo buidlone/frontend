@@ -57,8 +57,8 @@ const Buidl1 = () => {
         </Container>
       ) : (
         <>
+          <BgImage isFixed />
           <Buidl1Header />
-          {/* <BgImage isFixed /> */}
         </>
       )}
       <Head>
@@ -98,4 +98,3 @@ const Buidl1 = () => {
 };
 
 export default Buidl1;
-
