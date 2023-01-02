@@ -1,10 +1,6 @@
 import { ethers } from "ethers";
-import { toast } from "react-toastify";
-import {
-  GovernancePoolAddress,
-  InvestmentPoolAddress,
-} from "../constants/contractAddresses";
-import GovernancePoolABI from "./abi/GovernancePool.json";
+import { InvestmentPoolAddress } from "../constants/contractAddresses";
+
 import InvestmentPoolABI from "./abi/InvestmentPool.json";
 
 export const getUsedInvestments = async (
@@ -21,12 +17,9 @@ export const getUsedInvestments = async (
       );
 
       const usedInvestments = await contract.getUsedInvestmentsData(address);
-
       const usedInvestmentsEth1 = ethers.utils.formatEther(usedInvestments[0]);
       const usedInvestmentsEth2 = ethers.utils.formatEther(usedInvestments[1]);
-
       const realTimeAmountMultiplied = seconds * Number(usedInvestmentsEth2);
-
       const realTimeAmount =
         realTimeAmountMultiplied + Number(usedInvestmentsEth1);
 

@@ -15,7 +15,6 @@ import DiscordImg from "../../../public/DiscordSmall.png";
 import OrangeLock from "../../../public/yellow_lock.svg";
 import { TableLink } from "../activeBlock/styled";
 import { useContext, useEffect, useState } from "react";
-import ProjectContext from "../../context/projectContext";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
 import Web3Context from "../../context/web3Context";
@@ -26,6 +25,7 @@ import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import { ethers } from "ethers";
 import { getVotingPower } from "../../web3/getVotingPower";
 import { getVotedAgainst } from "../../web3/getVotedAgainst";
+import { roundPrecise } from "../../utils/roundValue";
 
 const ProgressInfoBlock = ({
   wallets,
@@ -41,7 +41,6 @@ const ProgressInfoBlock = ({
     milestones,
     currentMilestone,
     projectState,
-    isMilestoneOngoing,
     tokensReserved,
     tokenCurrency,
     fundsUsedByCreator,
@@ -99,7 +98,11 @@ const ProgressInfoBlock = ({
 
       <DetailsInfoWrapper>
         <Data>
-          {ethers.utils.formatEther(totalInvested)} {currency.label}
+          {roundPrecise(ethers.utils.formatEther(totalInvested)).replace(
+            /,/g,
+            " "
+          )}{" "}
+          {currency.label}
         </Data>
 
         <Data>
@@ -113,11 +116,12 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {fundsUsedByCreator.replace(/,/g, " ")} {currency.label}
+          {roundPrecise(fundsUsedByCreator).replace(/,/g, " ")} {currency.label}
         </Data>
 
         <Data>
-          {tokensReserved.replace(/,/g, " ")} {tokenCurrency.label}
+          {roundPrecise(tokensReserved).replace(/,/g, " ")}{" "}
+          {tokenCurrency.label}
         </Data>
 
         <Data className="votes">{votedAgainst}%</Data>
@@ -183,4 +187,3 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
-

@@ -15,6 +15,7 @@ import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { BigNumber, ethers } from "ethers";
 import Tooltip from "../tooltip";
+import { roundPrecise } from "../../utils/roundValue";
 
 export default function FundingRoadmap() {
   const { softCap, hardCap, totalInvested, currency } =
@@ -67,7 +68,10 @@ export default function FundingRoadmap() {
         <FundsWrapper>
           <div className="total">
             {" "}
-            {ethers.utils.formatEther(totalInvested).replace(/,/g, " ")}{" "}
+            {roundPrecise(ethers.utils.formatEther(totalInvested)).replace(
+              /,/g,
+              " "
+            )}{" "}
             {currency.label}
           </div>
           <div className="required">
@@ -104,7 +108,10 @@ export default function FundingRoadmap() {
         </FundsBar>
         <FundsWrapper>
           <div className="total">
-            {ethers.utils.formatEther(totalInvested).replace(/,/g, " ")}{" "}
+            {roundPrecise(ethers.utils.formatEther(totalInvested)).replace(
+              /,/g,
+              " "
+            )}{" "}
             {currency.label}
           </div>
           <div className="required">

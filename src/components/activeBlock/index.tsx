@@ -14,13 +14,13 @@ import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
 import DetailedPortfolio from "../detailedPortfolio";
 import { getVotingPower } from "../../web3/getVotingPower";
-import { countDecimals } from "../../utils/countDecimals";
+import { roundApprox } from "../../utils/roundValue";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
   const [
     totalIndividualInvestedToProject,
     setTotalIndividualInvestedToProject,
-  ] = useState(0);
+  ] = useState("0");
   const { currency } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
   const [votingPower, setVotingPower] = useState("0");
@@ -35,7 +35,7 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
         setVotingPower(data);
       });
     } else {
-      setTotalIndividualInvestedToProject(0);
+      setTotalIndividualInvestedToProject("0");
     }
   });
 
@@ -68,17 +68,7 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
               </a>
             </td>
             <td className="greenText bigger">
-              {Number(totalIndividualInvestedToProject) >= 0.0001 &&
-              countDecimals(String(totalIndividualInvestedToProject)) <= 4
-                ? totalIndividualInvestedToProject
-                : Number(totalIndividualInvestedToProject) >= 0.0001 &&
-                  countDecimals(String(totalIndividualInvestedToProject)) > 4
-                ? `≈ ${Number(totalIndividualInvestedToProject).toFixed(4)}`
-                : Number(totalIndividualInvestedToProject) < 0.0001 &&
-                  Number(totalIndividualInvestedToProject) > 0
-                ? "≈ 0.0001"
-                : "0.0000"}{" "}
-              {currency.label}
+              {roundApprox(totalIndividualInvestedToProject)} {currency.label}
             </td>
 
             <td className="flexGap yellowText bigger">
@@ -112,4 +102,3 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
 };
 
 export default ActiveBlock;
-

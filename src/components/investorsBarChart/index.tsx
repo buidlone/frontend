@@ -2,6 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
+import { roundPrecise } from "../../utils/roundValue";
 import {
   BarChartBlock,
   BarChartColumn,
@@ -92,7 +93,10 @@ const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
             <div className="text">Lowest</div>
             <div className="amount">
               {min.gte(BigNumber.from(0)) &&
-                ethers.utils.formatEther(min).replace(/,/g, " ")}{" "}
+                roundPrecise(ethers.utils.formatEther(min)).replace(
+                  /,/g,
+                  " "
+                )}{" "}
               {currency.label}
             </div>
           </InvFooterItem>
@@ -100,7 +104,10 @@ const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
             <div className="text">Highest</div>
             <div className="amount">
               {max.gte(BigNumber.from(0)) &&
-                ethers.utils.formatEther(max).replace(/,/g, " ")}{" "}
+                roundPrecise(ethers.utils.formatEther(max)).replace(
+                  /,/g,
+                  " "
+                )}{" "}
               {currency.label}
             </div>
           </InvFooterItem>

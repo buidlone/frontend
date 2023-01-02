@@ -12,6 +12,7 @@ import { getVotedAgainst } from "../../web3/getVotedAgainst";
 import { getAllocatedTokens } from "../../web3/getAllocatedTokens";
 import { getUsedInvestments } from "../../web3/getUsedInvestments";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
+import { roundApprox } from "../../utils/roundValue";
 
 const items = [
   {
@@ -36,7 +37,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
 
   const [votedAgainst, setVotedAgainst] = useState<number>(0);
   const [isAllowed, setIsAllowed] = useState(true);
-  const [allocatedTokens, setAllocatedTokens] = useState<number>(0);
+  const [allocatedTokens, setAllocatedTokens] = useState<string>("0");
   const [usedInvestments, setUsedInvestments] = useState<number>(0);
   const [
     totalIndividualInvestedToProject,
@@ -68,7 +69,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         setTotalIndividualInvestedToProject(data.totalAmountInvested);
       });
     }
-  }, [totalInvested]);
+  }, [totalInvested._hex]);
 
   function getSeconds() {
     const milestoneStart = new Date(milestones[currentMilestone].startDate);
@@ -135,14 +136,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         <td>
           <p>Reserved</p>
           <p className="blueText">
-            {allocatedTokens >= 0.0001 && allocatedTokens <= 4
-              ? allocatedTokens
-              : allocatedTokens >= 0.0001 && allocatedTokens > 4
-              ? `≈ ${Number(allocatedTokens).toFixed(4)} `
-              : allocatedTokens < 0.0001 && allocatedTokens > 0
-              ? "≈ 0.0001"
-              : "0.0000"}{" "}
-            {tokenCurrency.label}
+            {roundApprox(allocatedTokens)} {tokenCurrency.label}
           </p>
         </td>
         <td>
