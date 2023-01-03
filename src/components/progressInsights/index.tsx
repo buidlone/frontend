@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { roundPrecise } from "../../utils/roundValue";
 
 import {
   FProgress,
@@ -43,7 +44,7 @@ const ProgressInsights = () => {
       <FundsWrapper>
         <div className="total">
           {" "}
-          {ethers.utils.formatEther(totalInvested).replace(/,/g, " ")}{" "}
+          {roundPrecise(ethers.utils.formatEther(totalInvested)).replace(/,/g, " ")}{" "}
           {currency.label}
         </div>
         <div className="required">

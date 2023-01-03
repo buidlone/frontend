@@ -1,7 +1,6 @@
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import Web3Context from "../../context/web3Context";
 import { getHistoryTable } from "../../web3/historyTable";
 import { BarChartContainer, BarChartScroll } from "../investorsBarChart/styled";
 import { Table } from "../tokenStreamTable/styled";

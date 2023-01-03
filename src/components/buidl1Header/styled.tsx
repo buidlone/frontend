@@ -10,7 +10,8 @@ export const BackgroundBlur = styled.div`
   background-size: 103% 150%;
   height: 450px;
   background-repeat: no-repeat;
-
+  z-index: 11;
+  position: relative;
   @media screen and ${breakpoints.Device.mobile} {
     background-size: 100% 100%;
     background-image: url("/background_mobile.png");
@@ -27,14 +28,12 @@ export const HeaderSection = styled.div`
   padding-left: 0.2%;
   padding-bottom: 0.457rem;
   height: 26.188rem;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   cursor: default;
   position: relative;
-
   color: #f0f0f0;
 
   .lastLine {
@@ -192,4 +191,3 @@ export const Round = styled.div<Props>`
     position: absolute;
   }
 `;
-

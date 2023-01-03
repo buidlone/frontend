@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { IMilestoneFundsAllocated } from "../../interfaces/ILoadedValues";
+import { roundPrecise } from "../../utils/roundValue";
 import {
   FundsBubble,
   FundsPlaceholder,
@@ -46,10 +47,9 @@ const MilestoneFundsSection = ({
             (milestone, index) =>
               milestone.id == currentMilestone && (
                 <FundsPlaceholder>
-                  {Number(milestoneFunds[index]?.totalFundsAllocated)
-                    .toFixed(4)
-                    .toString()
-                    .replace(/,/g, " ")}{" "}
+                  {roundPrecise(
+                    milestoneFunds[index]?.totalFundsAllocated
+                  ).replace(/,/g, " ")}{" "}
                   {currency.label}
                 </FundsPlaceholder>
               )
@@ -67,10 +67,9 @@ const MilestoneFundsSection = ({
             (milestone, index) =>
               milestone.id == currentMilestone && (
                 <FundsPlaceholder suspended>
-                  {Number(milestoneFunds[index]?.totalFundsAllocated)
-                    .toFixed(4)
-                    .toString()
-                    .replace(/,/g, " ")}{" "}
+                  {roundPrecise(
+                    milestoneFunds[index]?.totalFundsAllocated
+                  ).replace(/,/g, " ")}{" "}
                   {currency.label}
                 </FundsPlaceholder>
               )
