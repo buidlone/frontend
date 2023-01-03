@@ -95,7 +95,7 @@ const Buidl1Header = () => {
                 Your reward:{" "}
                 {Number(investorRewards) >= 0.0001 &&
                 countDecimals(investorRewards) <= 4
-                  ? totalIndividualInvestedToProject
+                  ? investorRewards
                   : Number(investorRewards) >= 0.0001 &&
                     countDecimals(investorRewards) > 4
                   ? `≈ ${Number(investorRewards).toFixed(4)}`
@@ -131,4 +131,3 @@ const Buidl1Header = () => {
 };
 
 export default Buidl1Header;
-
