@@ -60,10 +60,21 @@ export default class MyDocument extends Document {
             type="image/x-icon"
           ></link>
           <link rel="icon" href="/favicon.ico" type="image/x-icon"></link>
+          {/* Google tag (gtag.js) */}
           <script
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-89XBBLS7D9"
           ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-89XBBLS7D9');
+          `,
+            }}
+          />
         </Head>
         <body>
           <Main />
@@ -74,4 +85,3 @@ export default class MyDocument extends Document {
     );
   }
 }
-
