@@ -4,9 +4,9 @@ import breakpoints from "../../../styles/constants";
 export const InfoSec = styled.section`
   display: flex;
   align-items: start;
-  padding-top: 5rem;
+  padding-top: 2.875rem;
   justify-content: flex-start;
-  padding-bottom: 8rem;
+  padding-bottom: 6.5rem;
   flex-wrap: wrap;
 
   flex-direction: column;
@@ -36,8 +36,7 @@ export const TopText = styled.div`
   width: 50%;
   font-size: 61px;
   color: rgba(255, 255, 255, 1);
-  opacity: 0.85;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 400;
 
   @media screen and ${breakpoints.Device.mobile} {
@@ -90,3 +89,22 @@ export const Line = styled.div`
   }
 `;
 
+export const DemoButton = styled.a`
+  margin-top: 3.938rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16.375rem;
+  height: 2.5rem;
+  background-color: transparent;
+  border: 1px solid #00c4ff;
+  border-radius: 12px;
+  color: #00c4ff;
+  font-size: 20px;
+  text-align: center;
+  font-family: "Space Grotesk";
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: none;
+  }
+`;

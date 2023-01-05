@@ -10,8 +10,8 @@ interface isDisabled {
 export const DetailsCard = styled.div`
   display: block;
   background: #2e314d 0% 0% no-repeat padding-box;
-  box-shadow: 0px 0px 10px #00000029;
   border-radius: 10px;
+  box-shadow: 0px 0px 10px #00000029;
   opacity: 1;
   width: 31.063rem;
   height: 368px;

@@ -4,22 +4,27 @@ export const SwitchButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 13.563rem;
-  height: 1.4rem;
-  border-radius: 6px;
+  width: 15.813rem;
+  height: 1.875rem;
   background: transparent;
   color: white;
   border: 1px solid white;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   transition: all 250ms ease-in;
   transform: translateX(0);
-  font-family: "Barlow", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
+  box-shadow: 0px 0px 2px #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 22px;
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    color: #00c4ff;
-    border: 1px solid #00c4ff;
+    color: white;
+    background: rgba(244, 244, 244, 0.37) 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 2px #ffffff;
+    border: none;
+    border-radius: 22px;
   }
 `;

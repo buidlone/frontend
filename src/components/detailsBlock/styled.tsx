@@ -3,9 +3,9 @@ import { BlockWrapper } from "../fundingBlock/styled";
 import breakpoints from "../../../styles/constants";
 
 export const DetailsBlockWrapper = styled.div`
-  background: #1f233c 0% 0% no-repeat padding-box;
   border: 1px solid #157fc1;
-  border-radius: 27px;
+  background: #1F233C 0% 0% no-repeat padding-box;
+border-radius: 20px;
   opacity: 1;
   width: 100%;
   opacity: 0.85;
@@ -130,4 +130,3 @@ export const Data = styled.p`
     font-size: 14px;
   }
 `;
-

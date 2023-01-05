@@ -94,7 +94,7 @@ export const LinkButton = styled.a`
 export const ProjectInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #2e314d;
+  background: #2e314d 0% 0% no-repeat padding-box;
   border-radius: 20px;
   height: 80%;
   width: 100%;
@@ -117,4 +117,3 @@ export const WhitepaperLink = styled.a`
   font-weight: 300;
   font-size: 14px;
 `;
-

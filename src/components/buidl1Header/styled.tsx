@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import breakpoints from "../../../styles/constants";
+import { DesktopDisclaimerContainer } from "../disclaimer/styled";
 
 interface Props {
   statusColor?: any;
@@ -8,10 +9,11 @@ interface Props {
 export const BackgroundBlur = styled.div`
   background-image: url("/header_blur.png");
   background-size: 103% 150%;
-  height: 450px;
+  height: 30.563rem;
   background-repeat: no-repeat;
   z-index: 11;
   position: relative;
+
   @media screen and ${breakpoints.Device.mobile} {
     background-size: 100% 100%;
     background-image: url("/background_mobile.png");

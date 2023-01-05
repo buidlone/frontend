@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 
 export const BlockWrapper = styled.div`
-  background: #202337;
+  background: #1f233c 0% 0% no-repeat padding-box;
   border-radius: 20px;
   height: 23.5rem;
-  width: 49%;
-  min-width: 39.063rem;
+  width: 48.8%;
+  min-width: 37.563rem;
   padding: 30px;
   position: relative;
 `;
