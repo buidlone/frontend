@@ -1,8 +1,8 @@
 import { HideForDesktop, HideForMobile } from "../../../styles/Container";
 import {
-  DisclaimerBtn,
+  BtnImage,
   DisclaimerWrapper,
-  ExpandDisclaimerBtn,
+  ExpandDisclaimer,
   MiddleItems,
   SocialsWrapper,
 } from "./styled";
@@ -15,26 +15,28 @@ import { useContext, useState } from "react";
 import Web3Context from "../../context/web3Context";
 import SwitchNetworkDisclaimer from "../switchNetworkDisclaimer";
 import Warning from "../../../public/icon_warning.svg";
+import DisclaimerContext from "../../context/disclaimerContext";
 
 const Disclaimer = ({ hideMobile }: any) => {
   const { web3Provider } = useContext(Web3Context);
-  const [showDisclaimer, setShowDisclaimer] = useState(true);
-  const [isVisible, setIsVisible] = useState(!showDisclaimer);
+  const { showDisclaimer, setShowDisclaimer } = useContext(DisclaimerContext);
 
   if (hideMobile) {
     return (
       <HideForMobile style={{ width: "100%" }}>
         {web3Provider && web3Provider?.network.chainId !== 5 ? (
           <SwitchNetworkDisclaimer />
-        ) : showDisclaimer ? (
+        ) : (
           <>
-            <DisclaimerWrapper
-              style={{
-                opacity: isVisible ? "0" : "1",
-                transition: "all 0.8s",
-                visibility: isVisible ? "hidden" : "visible",
-              }}
-            >
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <ExpandDisclaimer expanded={showDisclaimer}>
+                <BtnImage
+                  expanded={showDisclaimer}
+                  onClick={() => setShowDisclaimer(!showDisclaimer)}
+                />
+              </ExpandDisclaimer>
+            </div>
+            <DisclaimerWrapper expanded={showDisclaimer}>
               <Image src={Warning} />
               <MiddleItems>
                 <p>
@@ -70,17 +72,8 @@ const Disclaimer = ({ hideMobile }: any) => {
                   </a>
                 </SocialsWrapper>{" "}
               </MiddleItems>
-              <DisclaimerBtn
-                onClick={() => setShowDisclaimer(!showDisclaimer)}
-              />
             </DisclaimerWrapper>{" "}
           </>
-        ) : (
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <ExpandDisclaimerBtn
-              onClick={() => setShowDisclaimer(!showDisclaimer)}
-            />
-          </div>
         )}
       </HideForMobile>
     );

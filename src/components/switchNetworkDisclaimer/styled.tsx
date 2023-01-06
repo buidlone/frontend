@@ -1,4 +1,44 @@
 import styled, { css } from "styled-components";
+import breakpoints from "../../../styles/constants";
+
+export const SwitchNetworkDisclaimerWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 51.25rem;
+  margin: 0 auto;
+  height: 2.75rem;
+  background: #00c4ff 0% 0% no-repeat padding-box;
+  border-radius: 22px;
+  color: white;
+  font-size: 16px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  padding: 0.688rem 1.3rem;
+  gap: 1rem;
+  z-index: 13;
+
+  p {
+    display: block;
+    margin-top: auto !important;
+    margin-bottom: auto;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    width: 90%;
+    height: auto;
+
+    margin: 0 auto;
+    display: block;
+    padding: 15px 20px;
+  }
+`;
 
 export const SwitchButton = styled.button`
   display: flex;

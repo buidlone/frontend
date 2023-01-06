@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Web3ContextProvider } from "../src/context/web3Context";
 import { LoadedValuesContextProvider } from "../src/context/loadedValuesContext";
+import { DisclaimerContextProdvider } from "../src/context/disclaimerContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,15 +15,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       <LoadedValuesContextProvider>
         <Web3ContextProvider>
           <ProjectContextProdvider>
-            <SafeHydrate>
-              <Navbar />
-              <Component {...pageProps} />
-              <ToastContainer
-                hideProgressBar
-                position="bottom-right"
-                autoClose={2000}
-              />
-            </SafeHydrate>
+            <DisclaimerContextProdvider>
+              <SafeHydrate>
+                <Navbar />
+                <Component {...pageProps} />
+                <ToastContainer
+                  hideProgressBar
+                  position="bottom-right"
+                  autoClose={2000}
+                />
+              </SafeHydrate>
+            </DisclaimerContextProdvider>
           </ProjectContextProdvider>
         </Web3ContextProvider>
       </LoadedValuesContextProvider>
