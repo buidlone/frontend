@@ -7,13 +7,11 @@ interface Props {
 }
 
 export const Container = styled.div`
-  z-index: 1;
   width: 100%;
   max-width: 1400px;
-  /* max-width: 1233px; */
   margin-left: auto;
   margin-right: auto;
-  padding: 0 3rem; // 50px
+  padding: 0 3rem;
   position: relative;
 
   @media screen and (max-width: 991px) {

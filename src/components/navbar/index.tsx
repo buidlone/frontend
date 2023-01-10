@@ -8,6 +8,7 @@ import {
   ButtonWrapper,
   BurgerIcon,
   LogoWrapper,
+  Network,
 } from "./styled";
 import logo from "../../../public/brandmark_blue.svg";
 import burgerIcon from "../../assets/burgerMenu.svg";
@@ -21,7 +22,8 @@ import Mobile from "./mobile";
 
 const Navbar = () => {
   const router = useRouter();
-  const { address } = useContext(Web3Context);
+
+  const { address, web3Provider } = useContext(Web3Context);
   const [showMobile, setShowMobile] = useState(false);
 
   return (
@@ -32,7 +34,7 @@ const Navbar = () => {
             <Image src={logo} alt={"logo"} layout="fill" objectFit="cover" />
           </a>
         </LogoWrapper>
-        <NavMenu>
+        <NavMenu connected={web3Provider ? true : false}>
           <NavItem>
             <Link href="/projects" passHref>
               <NavLink
@@ -62,7 +64,7 @@ const Navbar = () => {
             </NavItem>
           )}
         </NavMenu>
-        {/* Address will not be displayed in the production version */}
+
         <BurgerIcon onClick={() => setShowMobile(!showMobile)}>
           <Image
             src={burgerIcon}
@@ -75,6 +77,11 @@ const Navbar = () => {
         <Mobile isVisible={showMobile} setShowMobile={setShowMobile} />
 
         <ButtonWrapper>
+          <Network
+            connected={web3Provider && web3Provider.network.chainId === 5}
+          >
+            Goerli testnet
+          </Network>
           <Web3Button />
         </ButtonWrapper>
       </NavbarContainer>
@@ -83,4 +90,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

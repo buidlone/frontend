@@ -3,17 +3,17 @@ import styled from "styled-components";
 import breakpoints from "../../../styles/constants";
 
 export const InfoCard = styled.div`
-  background: #2e314d 0% 0% no-repeat padding-box;
+  background: #2E314D 0% 0% no-repeat padding-box;
   box-shadow: 0px 0px 10px #00000029;
-  border-radius: 13px;
+  border-radius: 20px;
   opacity: 1;
   flex-basis: 48.5%;
   min-height: 291px;
 `;
 
 export const Buidl1SectionWrapper = styled.div`
-  background: #1f233c 0% 0% no-repeat padding-box;
-  border-radius: 27px;
+  background: #1F233C 0% 0% no-repeat padding-box;
+border-radius: 20px;
   opacity: 1;
   display: flex;
   justify-content: space-between;

@@ -8,6 +8,7 @@ import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmo
 import { getInvestorRewards } from "../../web3/getInvestorRewards";
 import { getVotingPower } from "../../web3/getVotingPower";
 import Disclaimer from "../disclaimer";
+import { DesktopDisclaimerContainer } from "../disclaimer/styled";
 import ProjectState, { StatusColor } from "../projectState";
 import {
   HeaderInfo,
@@ -59,9 +60,12 @@ const Buidl1Header = () => {
   return (
     <>
       <BackgroundBlur>
+        
         <Container>
+          <DesktopDisclaimerContainer>
+          <Disclaimer hideMobile={true} />
+        </DesktopDisclaimerContainer>
           <HeaderSection>
-            <Disclaimer hideMobile={true} />
             <HeaderLabel>Buidl1 - LCF protocol</HeaderLabel>
             <HeaderInfo>
               In order to help investors choose and connect with upcoming

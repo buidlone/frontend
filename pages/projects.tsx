@@ -6,6 +6,7 @@ import FooterSection from "../src/components/footerSection";
 import MobileFooter from "../src/components/mobileFooter";
 import Disclaimer from "../src/components/disclaimer";
 import Head from "next/head";
+import { DesktopDisclaimerContainer } from "../src/components/disclaimer/styled";
 
 const Projects = () => {
   return (
@@ -13,13 +14,13 @@ const Projects = () => {
       <Head>
         <title>Buidl1 | Home</title>
       </Head>
-      <div style={{ marginTop: "-27px" }}>
-        <Disclaimer hideMobile={true} />
-      </div>
 
       <BgImage isFixed />
 
       <Container>
+        <DesktopDisclaimerContainer>
+          <Disclaimer hideMobile={true} />
+        </DesktopDisclaimerContainer>
         <ProjectsInfoSection text={"Yes. Buidl1 also needs to be built"} />
         <Disclaimer hideMobile={false} />
         <FeaturedProjectsSection />
@@ -31,4 +32,3 @@ const Projects = () => {
 };
 
 export default Projects;
-

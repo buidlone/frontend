@@ -12,9 +12,7 @@ export const FeaturedProjectsBlockWrapper = styled(BlockWrapper)`
   height: 29.125rem;
   width: 35%;
   padding: 1.1rem;
-  background: rgba(34, 34, 53, 1) 0% 0% no-repeat padding-box;
   opacity: 0.85;
-  margin-bottom: 35%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -107,4 +105,3 @@ export const FeaturedProjectName = styled.div`
     font-size: 18px;
   }
 `;
-

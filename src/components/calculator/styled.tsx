@@ -10,13 +10,11 @@ interface Props {
 }
 
 export const CalculatorBlock = styled(BlockWrapper)`
-  width: 72%;
-  min-width: 39.063rem;
-  min-width: 17.688rem;
+  width: 100%;
+
   max-width: 60.063rem;
   height: 23.938rem;
-  background: #1f233c;
-  border-radius: 12px;
+
   padding: 0;
   @media screen and (max-width: 1394px) {
     width: 100%;
@@ -201,5 +199,4 @@ export const Positioning = styled.div<Props>`
   justify-content: space-between;
   display: flex;
   //flex-direction: ${(props) => (props?.row ? "row" : "column")};
-  
 `;

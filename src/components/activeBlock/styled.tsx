@@ -43,7 +43,7 @@ export const ActiveBlockWrapper = styled.div`
   width: 100%;
   // min-height: 16.75rem;
   background-color: rgb(46 49 77 / 50%);
-  border-radius: 23px;
+  border-radius: 20px;
   z-index: 9999;
   position: relative;
 

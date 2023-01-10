@@ -2,6 +2,8 @@ import Head from "next/head";
 import { useState } from "react";
 import AssetsSection from "../src/components/assetsSection";
 import { AssetsHeader } from "../src/components/assetsSection/styled";
+import Disclaimer from "../src/components/disclaimer";
+import { DesktopDisclaimerContainer } from "../src/components/disclaimer/styled";
 import InvestStatus from "../src/components/statusNotification/investStatus";
 import StopStatus from "../src/components/statusNotification/stopStatus";
 import WrongStatus from "../src/components/statusNotification/wrongStatus";
@@ -27,6 +29,9 @@ const Assets = () => {
           <InvestStatus setIsShownInvest={setIsShownInvest} />
         ) : (
           <>
+            <DesktopDisclaimerContainer>
+              <Disclaimer hideMobile={true} />
+            </DesktopDisclaimerContainer>
             <AssetsHeader>Portfolio</AssetsHeader>
           </>
         )}
@@ -42,4 +47,3 @@ const Assets = () => {
 };
 
 export default Assets;
-

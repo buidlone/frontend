@@ -1,7 +1,8 @@
-import { DisclaimerWrapper } from "../disclaimer/styled";
-import { SwitchButton } from "./styled";
+import { SwitchNetworkDisclaimerWrapper, SwitchButton } from "./styled";
 import { useContext } from "react";
 import Web3Context from "../../context/web3Context";
+import Warning from "../../../public/icon_warning.svg";
+import Image from "next/image";
 
 const changeNetwork = async (provider: any) => {
   try {
@@ -25,13 +26,14 @@ const SwitchNetworkDisclaimer = () => {
 
   return (
     <>
-      <DisclaimerWrapper>
+      <SwitchNetworkDisclaimerWrapper>
+        <Image src={Warning} />
         <p>Test our protocol while we're preparing for mainnet. </p>
 
         <SwitchButton onClick={() => handleNetworkSwitch()}>
           Switch to Goerli Testnet
         </SwitchButton>
-      </DisclaimerWrapper>
+      </SwitchNetworkDisclaimerWrapper>
     </>
   );
 };
