@@ -33,6 +33,7 @@ import infoBubble from "../../../public/info_bubble.svg";
 import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import Image from "next/image";
 import { roundApprox } from "../../utils/roundValue";
+import TimelineSlider from "../timelineSlider";
 
 const minStep = 0.0000001;
 
@@ -44,16 +45,12 @@ const Calculator = () => {
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState<string>("0");
   const [sum, setSum] = useState<string>("");
+  const [timelineValue, setTimelineValue] = useState();
   const [tokens, setTokens] = useState<string>("");
   const [tokensPerMonth, setTokensPerMonth] = useState<number>(0);
   const [voting, setVoting] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
   const [over, setOver] = useState(0);
-  const maxDays = useCountdown(
-    milestones[milestones.length - 1]?.endDate,
-    milestones[0]?.startDate
-  );
-  const currentDays = useCountdown(undefined, milestones[0]?.startDate, true);
 
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -74,6 +71,10 @@ const Calculator = () => {
     } else {
       toast.info(getProjectState(projectState));
     }
+  };
+
+  const handleTimelineChange = (value: any) => {
+    setTimelineValue(value);
   };
 
   const handleSumChange = (value: string) => {
@@ -183,18 +184,14 @@ const Calculator = () => {
             onChange={handleSumChange}
             min={0}
             max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
-            //max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
-            //max={0.02}
             step={minStep}
           />
 
           <div className="blueText">Timeline:</div>
 
-          <Slider
-            min={0}
-            max={maxDays.timerDays}
-            value={currentDays.timerDays}
-            timeline
+          <TimelineSlider
+            value={timelineValue}
+            onChange={handleTimelineChange}
           />
         </CalculationWrapper>
         <VotingWrapper>
@@ -264,7 +261,7 @@ const Calculator = () => {
             <Positioning>
               <VotingRow>
                 <VotingItem>
-                  <div className="text">Rewards</div>
+                  <div className="text">Project Tokens</div>
                   <div className="tokens">
                     {roundApprox(tokens) == "0.0000"
                       ? "0"
@@ -287,7 +284,12 @@ const Calculator = () => {
             </Positioning>
             {web3Provider ? (
               <>
-                <IButton onClick={handleClick}>Invest</IButton>
+                <IButton
+                  //disabled={timelineValue === totalInvested}
+                  onClick={handleClick}
+                >
+                  Invest
+                </IButton>
               </>
             ) : (
               <>
