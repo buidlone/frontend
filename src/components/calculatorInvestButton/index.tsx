@@ -14,10 +14,6 @@ const CalculatorInvestButton = ({
 }: IButton) => {
   const { web3Provider } = useContext(Web3Context);
 
-  useEffect(() => {
-    console.log(current);
-  }, [current]);
-
   return (
     <>
       {web3Provider ? (
