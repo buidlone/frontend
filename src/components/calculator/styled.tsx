@@ -1,8 +1,8 @@
-import Select from "react-select";
-import styled, { css, keyframes } from "styled-components";
+import styled from "styled-components";
 import { BlockWrapper, GreenButton } from "../fundingBlock/styled";
 import "react-circular-progressbar/dist/styles.css";
 import { InlineWrapper } from "../timelineBlock/styled";
+import breakpoints from "../../../styles/constants";
 
 interface Props {
   currency?: string;
@@ -18,6 +18,10 @@ export const CalculatorBlock = styled(BlockWrapper)`
   padding: 0;
   @media screen and (max-width: 1394px) {
     width: 100%;
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    height: auto;
   }
 `;
 export const CalculatorContainer = styled.div`
@@ -41,6 +45,11 @@ export const CalculatorContainer = styled.div`
     font-family: "IBM Plex Sans", sans-serif;
     color: #1eb5ff;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const CalculationWrapper = styled.div`
@@ -50,6 +59,10 @@ export const CalculationWrapper = styled.div`
   justify-content: flex-start;
   gap: 2.156rem;
   padding: 1.25rem 1.875rem;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    order: 2;
+  }
 `;
 
 export const SelectWrapper = styled.div<Props>`
@@ -134,6 +147,10 @@ export const VotingWrapper = styled.div`
     font-size: 11px;
     margin-top: -9px;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    order: 1;
+  }
 `;
 
 export const PBContainer = styled.div`
@@ -200,3 +217,4 @@ export const Positioning = styled.div<Props>`
   display: flex;
   //flex-direction: ${(props) => (props?.row ? "row" : "column")};
 `;
+

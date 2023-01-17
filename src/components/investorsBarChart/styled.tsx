@@ -1,6 +1,7 @@
 import ScrollContainer from "react-indiana-drag-scroll";
 import styled, { css, keyframes } from "styled-components";
 import { BlockWrapper } from "../fundingBlock/styled";
+import breakpoints from "../../../styles/constants";
 
 interface Props {
   amount?: number;
@@ -20,6 +21,11 @@ export const BarChartBlock = styled(BlockWrapper)`
   height: 23.938rem;
 
   padding: 1rem 1.845rem;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    width: 100%;
+    margin-top: 50px;
+  }
 `;
 
 export const BarChartScroll = styled(ScrollContainer)`
@@ -114,3 +120,4 @@ export const InvFooterItem = styled.div`
     color: #00ffc4;
   }
 `;
+

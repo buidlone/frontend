@@ -49,8 +49,8 @@ export const HeaderSection = styled.div`
   }
 
   @media screen and ${breakpoints.Device.mobile} {
-    padding: 120px 15px 30px;
-    height: 95vh;
+    padding: 90px 15px 30px;
+    height: 90vh;
   }
 `;
 export const HeaderLabel = styled.div`
@@ -85,7 +85,8 @@ export const HeaderInline = styled.div`
   gap: 2.015rem;
 
   @media screen and ${breakpoints.Device.mobile} {
-    display: none;
+    display: block;
+    width: 100%;
   }
 `;
 
@@ -118,6 +119,9 @@ export const PersonalInfo = styled.div`
   font-weight: 500;
   font-size: 1.188rem;
   padding: 0.3rem 1.3rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
 
   &.investment {
     border-color: #3aedc4;
@@ -193,3 +197,4 @@ export const Round = styled.div<Props>`
     position: absolute;
   }
 `;
+

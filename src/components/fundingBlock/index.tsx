@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { HideForDesktop, HideForMobile } from "../../../styles/Container";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
 import { getProjectState } from "../../utils/getProjectState";
@@ -52,32 +53,56 @@ export default function FundingBlock({
         <Title>Funding</Title>
         <FContainer>
           <FundingRoadmap />
-          <BottomWrapper>
-            <StyledA
-              href="https://docs.buidl.one/whitepaper/how-it-works"
-              target="_blank"
-            >
-              Learn about Investment process
-            </StyledA>
-            {web3Provider ? (
-              <>
-                <GreenButton onClick={handleClick}>Invest</GreenButton> <br />
-              </>
-            ) : (
-              <>
-                <GreenButton onClick={handleConnectClick}>Invest</GreenButton>{" "}
-                <br />
-              </>
-            )}
+          <HideForMobile>
+            <BottomWrapper>
+              <StyledA
+                href="https://docs.buidl.one/whitepaper/how-it-works"
+                target="_blank"
+              >
+                Learn about Investment process
+              </StyledA>
+              {web3Provider ? (
+                <>
+                  <GreenButton onClick={handleClick}>Invest</GreenButton> <br />
+                </>
+              ) : (
+                <>
+                  <GreenButton onClick={handleConnectClick}>Invest</GreenButton>{" "}
+                  <br />
+                </>
+              )}
 
-            <Modal show={showModal}>
-              <InvestModal
-                setIsShownInvest={setIsShownInvest}
-                setIsShownWrong={setIsShownWrong}
-                onClose={() => setShowModal(false)}
-              />
-            </Modal>
-          </BottomWrapper>
+              <Modal show={showModal}>
+                <InvestModal
+                  setIsShownInvest={setIsShownInvest}
+                  setIsShownWrong={setIsShownWrong}
+                  onClose={() => setShowModal(false)}
+                />
+              </Modal>
+            </BottomWrapper>
+          </HideForMobile>
+
+          <HideForDesktop>
+            <BottomWrapper>
+              {web3Provider ? (
+                <>
+                  <GreenButton onClick={handleClick}>Invest</GreenButton> <br />
+                </>
+              ) : (
+                <>
+                  <GreenButton onClick={handleConnectClick}>Invest</GreenButton>{" "}
+                  <br />
+                </>
+              )}
+
+              <StyledA
+                href="https://docs.buidl.one/whitepaper/how-it-works"
+                target="_blank"
+              >
+                Learn about Investment process
+              </StyledA>
+            </BottomWrapper>
+          </HideForDesktop>
         </FContainer>
       </BlockWrapper>
     </>

@@ -167,7 +167,7 @@ const ProgressInfoBlock = ({
             STOP cash flow
           </OrangeButton>
         </InlineBlock>
-        <InlineBlock>
+        <InlineBlock className="discord">
           <Image
             src={DiscordImg}
             alt={"Discord logo"}
@@ -187,3 +187,4 @@ const ProgressInfoBlock = ({
 };
 
 export default ProgressInfoBlock;
+

@@ -35,4 +35,9 @@ export const FeaturesSec = styled.div`
   @media screen and (max-width: 1394px) {
     justify-content: center;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    gap: 0px;
+  }
 `;
+

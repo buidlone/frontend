@@ -1,6 +1,7 @@
 import ScrollContainer from "react-indiana-drag-scroll";
 import styled, { css, keyframes } from "styled-components";
 import { Tooltip } from "../milestonesTooltip/styled";
+import breakpoints from "../../../styles/constants";
 
 //Passed props
 interface Props {
@@ -64,6 +65,10 @@ export const ProgressRoadmapWrapper = styled.div`
   margin-top: 0px;
   flex: 1;
   position: relative;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    margin: 15px;
+  }
 `;
 
 export const Title = styled.text`
@@ -292,3 +297,4 @@ export const PBWrapper = styled.div`
 `;
 
 export const PBContainer = styled.div``;
+

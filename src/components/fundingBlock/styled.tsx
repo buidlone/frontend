@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import breakpoints from "../../../styles/constants";
 
 export const BlockWrapper = styled.div`
   background: #1f233c 0% 0% no-repeat padding-box;
@@ -8,6 +9,13 @@ export const BlockWrapper = styled.div`
   min-width: 37.563rem;
   padding: 30px;
   position: relative;
+  @media screen and ${breakpoints.Device.mobile} {
+    min-width: 100%;
+    width: 100%;
+    margin-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 export const FContainer = styled.div`
   display: flex;
@@ -19,6 +27,12 @@ export const FContainer = styled.div`
   gap: 30%;
   padding-top: 22%;
   padding-bottom: 4%;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    gap: 15%;
+    padding-top: 0px;
+    padding-bottom: 30px;
+  }
 `;
 
 export const Title = styled.text`
@@ -33,6 +47,12 @@ export const StyledA = styled.a`
   font-size: 11px;
   text-decoration: underline;
   text-align: center;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 export const GreenButton = styled.button`
@@ -57,6 +77,15 @@ export const GreenButton = styled.button`
     background: transparent linear-gradient(168deg, #3a8372 0%, #00ffc4 100%) 0%
       0% no-repeat padding-box;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    width: 100%;
+    margin-top: 10px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
 `;
 
 export const BottomWrapper = styled.div`
@@ -65,4 +94,9 @@ export const BottomWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: block;
+  }
 `;
+

@@ -1,7 +1,7 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { TableLink } from "../activeBlock/styled";
 import { Property, Data, FlexItem1 } from "../detailsBlock/styled";
-import { InfoIcon } from "../timelineBlock/styled";
+import breakpoints from "../../../styles/constants";
 
 interface isDisabled {
   disabled?: boolean;
@@ -23,6 +23,14 @@ export const DetailsCard = styled.div`
   .votes {
     color: #ffc400;
     opacity: 1 !important;
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    margin-top: 17px;
+    margin-right: 15px;
+    margin-left: 15px;
+    padding: 25px 15px;
+    height: auto;
   }
 `;
 export const UpperBlock = styled.div`
@@ -86,6 +94,14 @@ export const OrangeButton = styled.button<isDisabled>`
   @media screen and (max-width: 800px) {
     font-size: 0.8rem;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 15px;
+  }
 `;
 
 export const VotingWrapper = styled.div`
@@ -103,6 +119,10 @@ export const VotingWrapper = styled.div`
   .votingPower {
     font-weight: 600;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    justify-content: center;
+  }
 `;
 
 export const BottomBlock = styled.div`
@@ -111,6 +131,16 @@ export const BottomBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 35%;
+
+  .discord {
+    @media screen and ${breakpoints.Device.mobile} {
+      margin-top: 15px;
+    }
+  }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    height: auto;
+  }
 `;
 
 export const InlineBlock = styled.div`
@@ -125,4 +155,10 @@ export const InlineBlock = styled.div`
     margin-left: 0.5rem;
     padding-top: 0.3rem;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    display: block;
+    text-align: center;
+  }
 `;
+

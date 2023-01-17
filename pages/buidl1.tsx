@@ -65,24 +65,24 @@ const Buidl1 = () => {
         <title>Buidl1</title>
       </Head>
       <Container>
-        <HideForMobile>
-          <FeaturesSec>
-            <FundingBlock
-              setIsShownInvest={setIsShownInvest}
-              setIsShownWrong={setIsShownWrong}
-            />
-            <TimelineBlock />
-          </FeaturesSec>
-          <ProgressSection
-            setIsShownStop={setIsShownStop}
+        <FeaturesSec>
+          <FundingBlock
+            setIsShownInvest={setIsShownInvest}
             setIsShownWrong={setIsShownWrong}
-            wallets={wallets}
           />
-          <FeaturesSec>
-            <Calculator />
-            <InvestorsBarChart wallets={wallets} />
-          </FeaturesSec>
-        </HideForMobile>
+          <TimelineBlock />
+        </FeaturesSec>
+        <ProgressSection
+          setIsShownStop={setIsShownStop}
+          setIsShownWrong={setIsShownWrong}
+          wallets={wallets}
+        />
+
+        <FeaturesSec>
+          <Calculator />
+          <InvestorsBarChart wallets={wallets} />
+        </FeaturesSec>
+
         <AboutSection wallets={wallets} />
       </Container>
       <MobileFooter />
@@ -98,3 +98,4 @@ const Buidl1 = () => {
 };
 
 export default Buidl1;
+

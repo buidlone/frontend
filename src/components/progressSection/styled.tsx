@@ -7,9 +7,6 @@ export const ProgressBlockWrapper = styled.div`
   background: #1f233c 0% 0% no-repeat padding-box;
   border-radius: 20px;
   opacity: 1;
-  @media screen and ${breakpoints.Device.mobile} {
-    display: none;
-  }
 `;
 
 export const ProgressRoadmap = styled.div`
@@ -27,6 +24,10 @@ export const ProgressContentWrapper = styled.div`
   flex-wrap: wrap;
   margin: 30px 0;
 
+  @media screen and ${breakpoints.Device.mobile} {
+    margin: 50px 0px 0px 0px;
+  }
+
   @media screen and (max-width: 991px) {
     & > ${ProgressRoadmap}, & > ${DetailsCard} {
       max-width: 100%;
@@ -38,3 +39,4 @@ export const ProgressContentWrapper = styled.div`
     }
   } ;
 `;
+

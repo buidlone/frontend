@@ -55,3 +55,4 @@ const ProgressSection = ({
 };
 
 export default ProgressSection;
+

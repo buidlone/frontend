@@ -60,11 +60,10 @@ const Buidl1Header = () => {
   return (
     <>
       <BackgroundBlur>
-        
         <Container>
           <DesktopDisclaimerContainer>
-          <Disclaimer hideMobile={true} />
-        </DesktopDisclaimerContainer>
+            <Disclaimer hideMobile={true} />
+          </DesktopDisclaimerContainer>
           <HeaderSection>
             <HeaderLabel>Buidl1 - LCF protocol</HeaderLabel>
             <HeaderInfo>
@@ -74,23 +73,24 @@ const Buidl1Header = () => {
               transparent and provide reliable services, in hopes to create a
               prospering and supportive community.
             </HeaderInfo>
-            <DemoButton
-              target="_blank"
-              href="https://calendly.com/buidl1/30min"
-            >
-              <p>BOOK A DEMO</p>
-            </DemoButton>
+
             <HeaderInline>
               <PersonalInfo className="investment">
-                Your investment: {roundApprox(totalIndividualInvestedToProject)}{" "}
-                {currency.label}
+                Your investment:{" "}
+                <span>
+                  {roundApprox(totalIndividualInvestedToProject)}{" "}
+                  {currency.label}
+                </span>
               </PersonalInfo>
               <PersonalInfo className="reward">
-                Your reward: {roundApprox(investorRewards)}{" "}
-                {tokenCurrency.label}
+                Your reward:{" "}
+                <span>
+                  {" "}
+                  {roundApprox(investorRewards)} {tokenCurrency.label}
+                </span>
               </PersonalInfo>
               <PersonalInfo className="impact">
-                Voting power: {votingPower ? votingPower : 0}%
+                Voting power: <span> {votingPower ? votingPower : 0}%</span>
               </PersonalInfo>
             </HeaderInline>
             <RoundSectionMobile>
@@ -115,3 +115,4 @@ const Buidl1Header = () => {
 };
 
 export default Buidl1Header;
+

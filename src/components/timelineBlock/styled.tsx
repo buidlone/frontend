@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { BlockWrapper } from "../fundingBlock/styled";
+import breakpoints from "../../../styles/constants";
 
 export const TopWrapper = styled.div`
   width: 100%;
@@ -75,6 +76,13 @@ export const BottomWrapper = styled.div`
   .centerItems {
     align-items: end;
   }
+
+  @media screen and ${breakpoints.Device.mobile} {
+    max-width: 450px !important;
+    width: 90%;
+    gap: 15px;
+    justify-content: space-between;
+  }
 `;
 
 export const BottomPartWrapper = styled.div`
@@ -96,6 +104,9 @@ export const BottomPartWrapper = styled.div`
   }
   .period {
     color: #c7c7c7;
+  }
+  @media screen and ${breakpoints.Device.mobile} {
+    width: 200px;
   }
 `;
 
@@ -132,3 +143,4 @@ export const InfoIcon = styled.span`
     opacity: 1;
   }
 `;
+
