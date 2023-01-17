@@ -26,7 +26,6 @@ import { toast } from "react-toastify";
 import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
-import useCountdown from "../../hooks/useCountdown";
 import { BigNumber, ethers } from "ethers";
 import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
 import infoBubble from "../../../public/info_bubble.svg";
@@ -34,6 +33,7 @@ import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import Image from "next/image";
 import { roundApprox } from "../../utils/roundValue";
 import TimelineSlider from "../timelineSlider";
+import CalculatorInvestButton from "../calculatorInvestButton";
 
 const minStep = 0.0000001;
 
@@ -45,12 +45,18 @@ const Calculator = () => {
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState<string>("0");
   const [sum, setSum] = useState<string>("");
-  const [timelineValue, setTimelineValue] = useState();
   const [tokens, setTokens] = useState<string>("");
   const [tokensPerMonth, setTokensPerMonth] = useState<number>(0);
   const [voting, setVoting] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
   const [over, setOver] = useState(0);
+  const [current, setCurrent] = useState<boolean>(true);
+  const [timelineValue, setTimelineValue] = useState(
+    Number(totalInvested.mul(BigNumber.from(100)).div(hardCap))
+  );
+  const [markerValue, setMarkerValue] = useState(
+    Number(totalInvested.mul(BigNumber.from(100)).div(hardCap))
+  );
 
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -75,6 +81,7 @@ const Calculator = () => {
 
   const handleTimelineChange = (value: any) => {
     setTimelineValue(value);
+    setCurrent(value === markerValue ? true : false);
   };
 
   const handleSumChange = (value: string) => {
@@ -192,6 +199,7 @@ const Calculator = () => {
           <TimelineSlider
             value={timelineValue}
             onChange={handleTimelineChange}
+            markerValue={markerValue}
           />
         </CalculationWrapper>
         <VotingWrapper>
@@ -282,12 +290,14 @@ const Calculator = () => {
                 </VotingItem>
               </VotingRow>
             </Positioning>
-            {web3Provider ? (
+            <CalculatorInvestButton
+              current={current}
+              handleClick={handleClick}
+              handleConnectClick={handleConnectClick}
+            />
+            {/* {web3Provider ? (
               <>
-                <IButton
-                  //disabled={timelineValue === totalInvested}
-                  onClick={handleClick}
-                >
+                <IButton disabled={!current} onClick={handleClick}>
                   Invest
                 </IButton>
               </>
@@ -295,7 +305,7 @@ const Calculator = () => {
               <>
                 <IButton onClick={handleConnectClick}>Invest</IButton>
               </>
-            )}
+            )} */}
             <Modal show={showModal}>
               <InvestModal onClose={() => setShowModal(false)} />
             </Modal>

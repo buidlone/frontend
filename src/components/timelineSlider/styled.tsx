@@ -71,6 +71,7 @@ export const StyledTimelineSlider = styled(StyledSlider)`
       left: 50%;
       bottom: -130%;
       white-space: nowrap;
+      cursor: default;
     }
 
     &:after {
@@ -81,6 +82,7 @@ export const StyledTimelineSlider = styled(StyledSlider)`
       position: absolute;
       top: 100%;
       left: 50%;
+      cursor: default;
     }
   }
 `;

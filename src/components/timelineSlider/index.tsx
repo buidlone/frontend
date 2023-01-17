@@ -1,7 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { BigNumber } from "ethers";
-import React, { useContext } from "react";
+import { stat } from "fs";
+import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { ISlider } from "../../interfaces/ISlider";
 import { StyledThumb, StyledTrack } from "../slider/styled";
@@ -28,31 +29,37 @@ const Track = (props: any, state: any) => {
   );
 };
 
-const TimelineSlider = ({ onChange, value }: ISlider) => {
-  const { softCap, hardCap, totalInvested } = useContext(LoadedValuesContext);
+interface ITimeline {
+  markerValue: number;
+}
+type Props = ISlider & ITimeline;
+
+const TimelineSlider = ({ onChange, value, markerValue }: Props) => {
+  const { softCap, hardCap } = useContext(LoadedValuesContext);
+  const [softCapPosition, setSoftCapPosition] = useState(
+    Number(softCap.amount.mul(BigNumber.from(100)).div(hardCap))
+  );
 
   const prop = {
-    softCapPosition: Number(
-      softCap.amount.mul(BigNumber.from(100)).div(hardCap)
-    ),
+    softCapPosition: softCapPosition,
   };
 
   return (
     <>
       <StyledTimelineSlider
-        defaultValue={totalInvested}
-        value={value ? value : totalInvested}
+        defaultValue={markerValue}
+        value={value ? value : markerValue}
         renderTrack={(props, state) => (
-          <Track {...props} prop={prop} index={state.index} />
+          <Track {...props} prop={prop} index={state.index}></Track>
         )}
         renderThumb={Thumb}
         min={0}
-        max={hardCap}
+        max={100}
         onChange={onChange}
         markClassName="example-mark"
-        marks={[totalInvested]}
+        marks={[markerValue]}
         step={1}
-        renderMark={(props) => <div data-label="current" {...props} />}
+        renderMark={(props) => <div data-label="current" {...props}></div>}
       />
     </>
   );

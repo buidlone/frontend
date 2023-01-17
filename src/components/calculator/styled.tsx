@@ -7,6 +7,7 @@ import { InlineWrapper } from "../timelineBlock/styled";
 interface Props {
   currency?: string;
   row?: boolean;
+  disabled?: boolean;
 }
 
 export const CalculatorBlock = styled(BlockWrapper)`
@@ -157,16 +158,17 @@ export const PBWrapper = styled.div`
   margin-bottom: 0.669rem;
 `;
 
-export const IButton = styled(GreenButton)`
+export const IButton = styled(GreenButton)<Props>`
   width: 100%;
   max-width: 15.375rem;
   min-height: 2.5rem;
   margin-top: 1rem;
-
   background: transparent linear-gradient(168deg, #3aedc4 0%, #469898 100%) 0%
     0% no-repeat padding-box;
   border: 1px solid #00ffc4;
   border-radius: 12px;
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  transition: none;
 `;
 
 export const VotingRow = styled.div`
