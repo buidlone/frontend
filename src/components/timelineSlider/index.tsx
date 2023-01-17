@@ -48,7 +48,7 @@ const TimelineSlider = ({ onChange, value, markerValue }: Props) => {
     <>
       <StyledTimelineSlider
         defaultValue={markerValue}
-        value={value ? value : markerValue}
+        value={value}
         renderTrack={(props, state) => (
           <Track {...props} prop={prop} index={state.index}></Track>
         )}
