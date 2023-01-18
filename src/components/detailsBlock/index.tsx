@@ -53,7 +53,9 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
 
             <Data className="medium">{milestones[0].startDate}</Data>
 
-            <Data className="smaller">{milestones[9].endDate}</Data>
+            <Data className="smaller">
+              {milestones[milestones.length - 1].endDate}
+            </Data>
           </FlexItem1>
         </FlexItem>
         <MobileDivider />

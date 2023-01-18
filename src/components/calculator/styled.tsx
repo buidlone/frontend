@@ -7,6 +7,7 @@ import { InlineWrapper } from "../timelineBlock/styled";
 interface Props {
   currency?: string;
   row?: boolean;
+  disabled?: boolean;
 }
 
 export const CalculatorBlock = styled(BlockWrapper)`
@@ -58,7 +59,7 @@ export const SelectWrapper = styled.div<Props>`
   flex-direction: column;
   width: 100%;
   gap: 1.219rem;
-  margin-bottom: 5%;
+  margin-bottom: 0.5rem;
 
   &:before {
     content: "${(props) => props?.currency}";
@@ -139,29 +140,35 @@ export const VotingWrapper = styled.div`
 export const PBContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
   height: 90%;
-  border-radius: 13px;
-  box-shadow: inset 0px 0px 20px #404a8c;
+  background: #2e314d 0% 0% no-repeat padding-box;
+  border-radius: 20px;
   opacity: 1;
   position: relative;
   display: flex;
-  padding: 2rem 1.5rem;
+  padding: 1.419rem 1.5rem 1.875rem 1.5rem;
 `;
 
 export const PBWrapper = styled.div`
-  width: 11.548rem;
-  height: 13.433rem;
+  width: 11.182rem;
+  height: 11.182rem;
+  margin-bottom: 0.669rem;
 `;
 
-export const IButton = styled(GreenButton)`
+export const IButton = styled(GreenButton)<Props>`
   width: 100%;
-  height: 15%;
+  max-width: 15.375rem;
+  min-height: 2.5rem;
   margin-top: 1rem;
   background: transparent linear-gradient(168deg, #3aedc4 0%, #469898 100%) 0%
     0% no-repeat padding-box;
+  border: 1px solid #00ffc4;
+  border-radius: 12px;
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  transition: none;
 `;
 
 export const VotingRow = styled.div`
@@ -181,6 +188,7 @@ export const VotingItem = styled.div`
   .text {
     font-size: 12px;
     color: rgba(255, 255, 255, 0.5);
+    font-weight: 200;
   }
 
   .tokens {

@@ -12,8 +12,6 @@ export const isStopAllowed = async (
     currentMilestone
   );
 
-  console.log(activeTokens);
-
   if (address === undefined) {
     return true;
   } else if (projectState !== 4 && projectState !== 32) {
@@ -22,4 +20,3 @@ export const isStopAllowed = async (
     return true;
   } else return false;
 };
-

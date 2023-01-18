@@ -26,13 +26,14 @@ import { toast } from "react-toastify";
 import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
-import useCountdown from "../../hooks/useCountdown";
 import { BigNumber, ethers } from "ethers";
 import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
 import infoBubble from "../../../public/info_bubble.svg";
 import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import Image from "next/image";
 import { roundApprox } from "../../utils/roundValue";
+import TimelineSlider from "../timelineSlider";
+import CalculatorInvestButton from "../calculatorInvestButton";
 
 const minStep = 0.0000001;
 
@@ -49,11 +50,13 @@ const Calculator = () => {
   const [voting, setVoting] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
   const [over, setOver] = useState(0);
-  const maxDays = useCountdown(
-    milestones[milestones.length - 1]?.endDate,
-    milestones[0]?.startDate
+  const [current, setCurrent] = useState<boolean>(true);
+  const [timelineValue, setTimelineValue] = useState(
+    Number(totalInvested.mul(BigNumber.from(100)).div(hardCap))
   );
-  const currentDays = useCountdown(undefined, milestones[0]?.startDate, true);
+  const [markerValue, setMarkerValue] = useState(
+    Number(totalInvested.mul(BigNumber.from(100)).div(hardCap))
+  );
 
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -74,6 +77,11 @@ const Calculator = () => {
     } else {
       toast.info(getProjectState(projectState));
     }
+  };
+
+  const handleTimelineChange = (value: any) => {
+    setTimelineValue(value);
+    setCurrent(value === markerValue ? true : false);
   };
 
   const handleSumChange = (value: string) => {
@@ -182,19 +190,16 @@ const Calculator = () => {
             value={sum}
             onChange={handleSumChange}
             min={0}
-            max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
-            //max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
-            //max={0.02}
+            max={Number(ethers.utils.formatEther(hardCap.sub(totalInvested)))}
             step={minStep}
           />
 
           <div className="blueText">Timeline:</div>
 
-          <Slider
-            min={0}
-            max={maxDays.timerDays}
-            value={currentDays.timerDays}
-            timeline
+          <TimelineSlider
+            value={timelineValue}
+            onChange={handleTimelineChange}
+            markerValue={markerValue}
           />
         </CalculationWrapper>
         <VotingWrapper>
@@ -264,7 +269,7 @@ const Calculator = () => {
             <Positioning>
               <VotingRow>
                 <VotingItem>
-                  <div className="text">Rewards</div>
+                  <div className="text">Project Tokens</div>
                   <div className="tokens">
                     {roundApprox(tokens) == "0.0000"
                       ? "0"
@@ -285,15 +290,11 @@ const Calculator = () => {
                 </VotingItem>
               </VotingRow>
             </Positioning>
-            {web3Provider ? (
-              <>
-                <IButton onClick={handleClick}>Invest</IButton>
-              </>
-            ) : (
-              <>
-                <IButton onClick={handleConnectClick}>Invest</IButton>
-              </>
-            )}
+            <CalculatorInvestButton
+              current={current}
+              handleClick={handleClick}
+              handleConnectClick={handleConnectClick}
+            />
             <Modal show={showModal}>
               <InvestModal onClose={() => setShowModal(false)} />
             </Modal>
