@@ -4,8 +4,8 @@ import { IButton } from "../calculator/styled";
 
 interface IButton {
   current: boolean | undefined;
-  handleClick: any;
-  handleConnectClick: any;
+  handleClick: () => void;
+  handleConnectClick: () => void;
 }
 const CalculatorInvestButton = ({
   current,

@@ -190,7 +190,7 @@ const Calculator = () => {
             value={sum}
             onChange={handleSumChange}
             min={0}
-            max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
+            max={Number(ethers.utils.formatEther(hardCap.sub(totalInvested)))}
             step={minStep}
           />
 
@@ -295,17 +295,6 @@ const Calculator = () => {
               handleClick={handleClick}
               handleConnectClick={handleConnectClick}
             />
-            {/* {web3Provider ? (
-              <>
-                <IButton disabled={!current} onClick={handleClick}>
-                  Invest
-                </IButton>
-              </>
-            ) : (
-              <>
-                <IButton onClick={handleConnectClick}>Invest</IButton>
-              </>
-            )} */}
             <Modal show={showModal}>
               <InvestModal onClose={() => setShowModal(false)} />
             </Modal>
