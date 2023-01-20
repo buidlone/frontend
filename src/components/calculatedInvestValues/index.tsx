@@ -4,7 +4,6 @@ import { useWatch, Control } from "react-hook-form";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
 import { roundApprox } from "../../utils/roundValue";
-import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
 import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
 import { InputTypes } from "../investModal";
 import {
@@ -18,7 +17,7 @@ const CalculatedInvestValues = ({
 }: {
   control: Control<InputTypes>;
 }) => {
-  const { totalInvested, hardCap, tokenCurrency } =
+  const { totalInvested, hardCap, tokenCurrency, softCap } =
     useContext(LoadedValuesContext);
   const { web3Provider } = useContext(Web3Context);
   const amount = useWatch({
@@ -28,34 +27,37 @@ const CalculatedInvestValues = ({
   });
 
   const [tokens, setTokens] = useState<string>("");
-  const [voting, setVoting] = useState<number>(0);
+  const [minVotingPower, setMinVotingPower] = useState<number>(0);
+  const [maxVotingPower, setMaxVotingPower] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
 
   const inputSumChange = async () => {
-    const resultVoting = await getCalculatedVotingTokens(amount || "0");
-    const resultTokens = await getCalculatedProjectTokens(amount || "0");
+    const result = await getCalculatedVotingTokens(
+      ethers.utils.parseEther(amount || "0"),
+      softCap.amount,
+      hardCap,
+      totalInvested
+    );
 
-    if (resultVoting) {
+    if (result) {
       setTickets(
-        resultVoting.votingTokensToMint.toString() != "0"
-          ? ethers.utils.formatEther(resultVoting.votingTokensToMint)
+        result.votingTickets.toString() != "0"
+          ? ethers.utils.formatEther(result.votingTickets)
           : "0"
       );
 
-      const calculatedVotingTokens =
-        resultVoting.calculatedVotingTokens.toNumber() / 100;
+      const calculatedMaxVotingPower = result.maxVotingPower.toNumber() / 100;
+      const calculatedMinVotingPower = result.minVotingPower.toNumber() / 100;
 
-      setVoting(
-        calculatedVotingTokens > 1
-          ? Math.round(calculatedVotingTokens)
-          : Number(calculatedVotingTokens.toFixed(2))
+      setMaxVotingPower(
+        calculatedMaxVotingPower > 1
+          ? Math.round(calculatedMaxVotingPower)
+          : Number(calculatedMaxVotingPower.toFixed(2))
       );
-    }
 
-    if (resultTokens) {
       setTokens(
-        resultTokens.expectedTokensAllocation.toString() != "0"
-          ? ethers.utils.formatEther(resultTokens.expectedTokensAllocation)
+        result.expectedTokenAllocation.toString() != "0"
+          ? ethers.utils.formatEther(result.expectedTokenAllocation)
           : "0"
       );
     }
@@ -72,7 +74,7 @@ const CalculatedInvestValues = ({
               .gt(hardCap)
           ) {
             setTokens("0");
-            setVoting(0);
+            setMaxVotingPower(0);
             setTickets("0");
             return;
           }
@@ -102,7 +104,7 @@ const CalculatedInvestValues = ({
         <OutputField>
           <div className="first">{roundApprox(tickets)}</div>
           <div className="voting1">approx.</div>
-          <div className="voting2">{voting} %</div>
+          <div className="voting2">{maxVotingPower} %</div>
         </OutputField>
 
         <div className="bottomText tickets">

@@ -1,20 +1,20 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { BigNumber } from "ethers";
-import { stat } from "fs";
+import { BigNumber, ethers } from "ethers";
+
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { ISlider } from "../../interfaces/ISlider";
 import { StyledThumb, StyledTrack } from "../slider/styled";
+
 import {
+  CurrentIndicator,
   HardCapIndicator,
   SoftCapIndicator,
   StyledTimelineSlider,
 } from "./styled";
 
-//Timeline Slider is still in progress
 const Thumb = (props: any, state: any) => {
-  return <StyledThumb {...props}></StyledThumb>;
+  return <StyledThumb blue {...props} />;
 };
 
 const Track = (props: any, state: any) => {
@@ -24,18 +24,29 @@ const Track = (props: any, state: any) => {
 
       <HardCapIndicator />
 
-      <StyledTrack {...props} index={props.index}></StyledTrack>
+      <StyledTrack blue {...props} index={props.index}></StyledTrack>
     </>
   );
 };
 
 interface ITimeline {
-  markerValue: number;
+  markerValue: string;
+  setTimelineValue: React.Dispatch<React.SetStateAction<string>>;
+  setClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  clicked: boolean;
 }
 type Props = ISlider & ITimeline;
 
-const TimelineSlider = ({ onChange, value, markerValue }: Props) => {
-  const { softCap, hardCap } = useContext(LoadedValuesContext);
+const TimelineSlider = ({
+  onChange,
+  value,
+  markerValue,
+  step,
+  setTimelineValue,
+  setClicked,
+  clicked,
+}: Props) => {
+  const { softCap, hardCap, projectState } = useContext(LoadedValuesContext);
   const [softCapPosition, setSoftCapPosition] = useState(
     Number(softCap.amount.mul(BigNumber.from(100)).div(hardCap))
   );
@@ -47,19 +58,25 @@ const TimelineSlider = ({ onChange, value, markerValue }: Props) => {
   return (
     <>
       <StyledTimelineSlider
-        defaultValue={markerValue}
-        value={value}
+        defaultValue={[Number(markerValue)]}
+        value={Number(value).toFixed(4)}
         renderTrack={(props, state) => (
           <Track {...props} prop={prop} index={state.index}></Track>
         )}
         renderThumb={Thumb}
         min={0}
-        max={100}
+        max={ethers.utils.formatEther(hardCap)}
         onChange={onChange}
-        markClassName="example-mark"
         marks={[markerValue]}
-        step={1}
-        renderMark={(props) => <div data-label="current" {...props}></div>}
+        step={step}
+        onClick={(e) => handleClick(e)}
+        renderMark={(props) => (
+          <CurrentIndicator
+            started={[4, 16, 32, 64, 128].includes(projectState)}
+            data-label="current"
+            {...props}
+          ></CurrentIndicator>
+        )}
       />
     </>
   );

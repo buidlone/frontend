@@ -11,7 +11,6 @@ import {
   VotingWrapper,
   InputField,
   PBWrapper,
-  IButton,
   PBContainer,
   VotingRow,
   VotingItem,
@@ -26,8 +25,7 @@ import { toast } from "react-toastify";
 import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
-import { BigNumber, ethers } from "ethers";
-import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
+import { ethers } from "ethers";
 import infoBubble from "../../../public/info_bubble.svg";
 import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import Image from "next/image";
@@ -35,11 +33,11 @@ import { roundApprox } from "../../utils/roundValue";
 import TimelineSlider from "../timelineSlider";
 import CalculatorInvestButton from "../calculatorInvestButton";
 
-const minStep = 0.0000001;
+const minStep = 0.0000000000000000001;
 
 const Calculator = () => {
   const { web3Provider, connect } = useContext(Web3Context);
-  const { totalInvested, hardCap, currency, milestones, projectState } =
+  const { totalInvested, hardCap, currency, projectState, softCap } =
     useContext(LoadedValuesContext);
 
   const [showModal, setShowModal] = useState(false);
@@ -47,16 +45,21 @@ const Calculator = () => {
   const [sum, setSum] = useState<string>("");
   const [tokens, setTokens] = useState<string>("");
   const [tokensPerMonth, setTokensPerMonth] = useState<number>(0);
-  const [voting, setVoting] = useState<number>(0);
+  const [minVotingPower, setMinVotingPower] = useState<number>(0);
+  const [maxVotingPower, setMaxVotingPower] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
   const [over, setOver] = useState(0);
   const [current, setCurrent] = useState<boolean>(true);
   const [timelineValue, setTimelineValue] = useState(
-    Number(totalInvested.mul(BigNumber.from(100)).div(hardCap))
+    ethers.utils.formatEther(hardCap.sub(totalInvested))
   );
   const [markerValue, setMarkerValue] = useState(
-    Number(totalInvested.mul(BigNumber.from(100)).div(hardCap))
+    ethers.utils.formatEther(hardCap.sub(totalInvested))
   );
+  const [maxAmount, setMaxAmount] = useState(
+    ethers.utils.formatEther(hardCap.sub(totalInvested))
+  );
+  const [clicked, setClicked] = useState(false);
 
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -79,9 +82,25 @@ const Calculator = () => {
     }
   };
 
-  const handleTimelineChange = (value: any) => {
-    setTimelineValue(value);
-    setCurrent(value === markerValue ? true : false);
+  const handleTimelineChange = (value: string) => {
+    if (Number(value).toFixed(3) === Number(markerValue).toFixed(3)) {
+      setTimelineValue(markerValue);
+
+      setMaxAmount(
+        ethers.utils.formatEther(
+          hardCap.sub(ethers.utils.parseEther(markerValue))
+        )
+      );
+      setCurrent(true);
+    } else {
+      setTimelineValue(value.toString());
+      setMaxAmount(
+        ethers.utils.formatEther(
+          hardCap.sub(ethers.utils.parseEther(value.toString()))
+        )
+      );
+      setCurrent(value.toString() === markerValue ? true : false);
+    }
   };
 
   const handleSumChange = (value: string) => {
@@ -95,31 +114,36 @@ const Calculator = () => {
   };
 
   const inputSumChange = async () => {
-    const resultVoting = await getCalculatedVotingTokens(amount || "0");
-    const resultTokens = await getCalculatedProjectTokens(amount || "0");
+    const result = await getCalculatedVotingTokens(
+      ethers.utils.parseEther(amount || "0"),
+      softCap.amount,
+      hardCap,
+      ethers.utils.parseEther(timelineValue)
+    );
 
-    if (resultVoting) {
+    if (result) {
       setTickets(
-        resultVoting.votingTokensToMint.toString() != "0"
-          ? ethers.utils.formatEther(resultVoting.votingTokensToMint)
+        result.votingTickets.toString() != "0"
+          ? ethers.utils.formatEther(result.votingTickets)
           : "0"
       );
 
-      const calculatedVotingTokens =
-        resultVoting.calculatedVotingTokens.toNumber() / 100;
+      const calculatedMaxVotingPower = result.maxVotingPower.toNumber() / 100;
 
-      setVoting(calculatedVotingTokens);
-    }
+      setMaxVotingPower(calculatedMaxVotingPower);
 
-    if (resultTokens) {
+      const calculatedMinVotingPower = result.minVotingPower.toNumber() / 100;
+
+      setMinVotingPower(calculatedMinVotingPower);
+
       setTokens(
-        resultTokens.expectedTokensAllocation.toString() != "0"
-          ? ethers.utils.formatEther(resultTokens.expectedTokensAllocation)
+        result.expectedTokenAllocation.toString() != "0"
+          ? ethers.utils.formatEther(result.expectedTokenAllocation)
           : "0"
       );
 
       const calculatedProjectTokens =
-        resultTokens.projectTokensPercentage.toNumber() / 100;
+        result.expectedTokenAllocationPercentage.toNumber() / 100;
 
       setTokensPerMonth(calculatedProjectTokens);
     }
@@ -130,11 +154,19 @@ const Calculator = () => {
       if (
         ethers.utils
           .parseEther(amount || "0")
-          .add(totalInvested)
+          .add(ethers.utils.parseEther(timelineValue))
           .gt(hardCap)
       ) {
-        setSum(ethers.utils.formatEther(hardCap.sub(totalInvested)));
-        setAmount(ethers.utils.formatEther(hardCap.sub(totalInvested)));
+        setSum(
+          ethers.utils.formatEther(
+            hardCap.sub(ethers.utils.parseEther(timelineValue))
+          )
+        );
+        setAmount(
+          ethers.utils.formatEther(
+            hardCap.sub(ethers.utils.parseEther(timelineValue))
+          )
+        );
         return;
       }
       setSum(amount);
@@ -142,7 +174,7 @@ const Calculator = () => {
     }, 200);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [amount, totalInvested._hex]);
+  }, [amount, timelineValue, totalInvested._hex]);
 
   return (
     <CalculatorBlock>
@@ -190,7 +222,7 @@ const Calculator = () => {
             value={sum}
             onChange={handleSumChange}
             min={0}
-            max={Number(ethers.utils.formatEther(hardCap.sub(totalInvested)))}
+            max={Number(maxAmount)}
             step={minStep}
           />
 
@@ -200,6 +232,10 @@ const Calculator = () => {
             value={timelineValue}
             onChange={handleTimelineChange}
             markerValue={markerValue}
+            step={minStep}
+            setTimelineValue={setTimelineValue}
+            setClicked={setClicked}
+            clicked={clicked}
           />
         </CalculationWrapper>
         <VotingWrapper>
@@ -225,7 +261,7 @@ const Calculator = () => {
               >
                 <div style={{ width: "84%" }}>
                   <CircularProgressbarWithChildren
-                    value={voting ? voting : 0}
+                    value={maxVotingPower ? maxVotingPower : 0}
                     counterClockwise
                     styles={{
                       path: {
@@ -253,14 +289,18 @@ const Calculator = () => {
                     </div>
 
                     <div className="votingPercentage">
-                      {" "}
-                      {`${
-                        voting > 1
-                          ? voting.toFixed(2)
-                          : Number(tickets) > 0 && voting < 1
-                          ? "<1.00"
-                          : "0"
-                      }%`}
+                      {maxVotingPower > 1 ? (
+                        <>
+                          <span className="sign">≤</span>
+
+                          <span>{maxVotingPower.toFixed(2)}</span>
+                        </>
+                      ) : Number(tickets) > 0 && maxVotingPower < 1 ? (
+                        "<1.00"
+                      ) : (
+                        "0"
+                      )}
+                      %
                     </div>
                   </CircularProgressbarWithChildren>
                 </div>

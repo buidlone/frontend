@@ -110,8 +110,9 @@ export const VotingWrapper = styled.div`
   width: 33%;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-right: 2%;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 500;
   font-family: "Space Grotesk", sans-serif;
 
@@ -123,6 +124,15 @@ export const VotingWrapper = styled.div`
     color: #ffb100;
     text-shadow: 0px 0px 6px #ffb1008c;
     opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .sign {
+      font-size: 15px;
+      margin-right: 2%;
+      font-weight: bold;
+    }
   }
 
   .votingNumbers {
