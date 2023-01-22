@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, KeyboardEvent } from "react";
+import React, { useState, useContext, useEffect, KeyboardEvent } from "react";
 import { InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
@@ -59,7 +59,6 @@ const Calculator = () => {
   const [maxAmount, setMaxAmount] = useState(
     ethers.utils.formatEther(hardCap.sub(totalInvested))
   );
-  const [clicked, setClicked] = useState(false);
 
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -85,7 +84,6 @@ const Calculator = () => {
   const handleTimelineChange = (value: string) => {
     if (Number(value).toFixed(3) === Number(markerValue).toFixed(3)) {
       setTimelineValue(markerValue);
-
       setMaxAmount(
         ethers.utils.formatEther(
           hardCap.sub(ethers.utils.parseEther(markerValue))
@@ -101,6 +99,11 @@ const Calculator = () => {
       );
       setCurrent(value.toString() === markerValue ? true : false);
     }
+  };
+
+  const handleMarkerClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    handleTimelineChange(markerValue);
   };
 
   const handleSumChange = (value: string) => {
@@ -233,9 +236,7 @@ const Calculator = () => {
             onChange={handleTimelineChange}
             markerValue={markerValue}
             step={minStep}
-            setTimelineValue={setTimelineValue}
-            setClicked={setClicked}
-            clicked={clicked}
+            handleMarkerClick={handleMarkerClick}
           />
         </CalculationWrapper>
         <VotingWrapper>
