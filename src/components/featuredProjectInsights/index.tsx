@@ -29,8 +29,8 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
   const { softCap, hardCap, currency, milestones } =
     useContext(LoadedValuesContext);
   const projectDays = useCountdown(
-    milestones[milestones.length - 1]?.endDate,
-    milestones[0]?.startDate
+    milestones[milestones.length - 1]?.endTime,
+    milestones[0]?.startTime
   );
   return project == "Buidl1" ? (
     <ProjectInfoWrapper>

@@ -8,10 +8,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { Web3ContextProvider } from "../src/context/web3Context";
 import { LoadedValuesContextProvider } from "../src/context/loadedValuesContext";
 import { DisclaimerContextProdvider } from "../src/context/disclaimerContext";
+import { ApolloProvider } from "@apollo/client";
+import client from "../lib/apolloClient";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <ApolloProvider client={client}>
       <LoadedValuesContextProvider>
         <Web3ContextProvider>
           <ProjectContextProdvider>
@@ -29,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </ProjectContextProdvider>
         </Web3ContextProvider>
       </LoadedValuesContextProvider>
-    </>
+    </ApolloProvider>
   );
 }
 

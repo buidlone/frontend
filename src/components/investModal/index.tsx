@@ -24,19 +24,17 @@ import {
   BalanceBtn,
   MaxBalanceBtn,
 } from "./styled";
-import logo from "../../../public/brandmark_blue.svg";
 import infoBubble from "../../../public/info_bubble.svg";
 import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import BuidlLogo from "../../../public/BuidlLogo.png";
 import Accordion from "../accordion";
-import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
+import { InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import React, { useContext, useEffect, useState, KeyboardEvent } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Currency, mainnetCurrencies } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
 import { getTokenBalance } from "../../web3/getTokenBalance";
-import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { invest } from "../../web3/invest";
 import { BigNumber, ethers } from "ethers";
@@ -177,9 +175,7 @@ const InvestModal = ({
         amount,
         address
       );
-      result !== undefined &&
-        setTotalInvested !== null &&
-        setTotalInvested(result);
+      result && setTotalInvested && setTotalInvested(result);
 
       if (result !== undefined) {
         setIsShownInvest(true);
@@ -373,4 +369,3 @@ const InvestModal = ({
 };
 
 export default InvestModal;
-

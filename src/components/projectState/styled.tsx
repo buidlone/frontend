@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StateTextGreen = styled.text`
+export const StateTextGreen = styled.span`
   color: rgb(0, 255, 196);
   font-size: 18px;
 `;

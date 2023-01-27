@@ -16,7 +16,6 @@ import WrongStatus from "../src/components/statusNotification/wrongStatus";
 import InvestStatus from "../src/components/statusNotification/investStatus";
 import Buidl1Header from "../src/components/buidl1Header";
 import MobileFooter from "../src/components/mobileFooter";
-import Disclaimer from "../src/components/disclaimer";
 import Head from "next/head";
 
 const Buidl1 = () => {
@@ -41,7 +40,8 @@ const Buidl1 = () => {
     setWallets((prev) => uniqueInv);
   }, [loadedValuesState.allInvestors]);
 
-  return loadedValuesState.fundraisingStartDate !== "" ? (
+  return loadedValuesState.fundraisingStartDate !== "" &&
+    !!loadedValuesState.milestones[0] ? (
     <>
       {isShownStop ? (
         <Container>
@@ -96,5 +96,23 @@ const Buidl1 = () => {
     </>
   );
 };
+
+// export async function getStaticProps() {
+//   const { data } = await client.query({
+//     query: gql`
+//       query Milestones {
+//         milestones {
+//           milestoneId
+//         }
+//       }
+//     `,
+//   });
+
+//   return {
+//     props: {
+//       milestones: data.milestones,
+//     },
+//   };
+// }
 
 export default Buidl1;

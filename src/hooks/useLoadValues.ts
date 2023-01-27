@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
@@ -16,16 +16,16 @@ import {
   SoftCap,
 } from "../interfaces/ILoadedValues";
 
-import ERC20TokenABI from "../web3/abi/ERC20Token.json";
 import { IInvestor } from "../interfaces/IInvestors";
 import { getAllInvestments } from "../web3/getAllInvestments";
+import client from "../../lib/apolloClient";
+import { GET_SUBGRAPH_DATA } from "../../lib/queries";
 
 const provider = new ethers.providers.JsonRpcProvider(
   `https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`
 );
 
 export const loadedValuesInitialState: ILoadedValues = {
-  seedFundingLimit: 0,
   softCap: {
     amount: BigNumber.from(0),
     isReached: false,
@@ -39,7 +39,6 @@ export const loadedValuesInitialState: ILoadedValues = {
   projectState: 0,
   currency: {
     name: "",
-
     label: "",
     address: "",
     decimals: 0,
@@ -47,7 +46,7 @@ export const loadedValuesInitialState: ILoadedValues = {
   setTotalInvested: () => {},
   allInvestors: [],
   setAllInvestors: () => {},
-  percentageDivider: BigNumber.from(0),
+  percentageDivider: "0",
   milestonesInvestmentsListForFormula: [],
   isMilestoneOngoing: false,
   tokensReserved: "0",
@@ -68,7 +67,7 @@ export const useLoadValues = () => {
     address: "",
     decimals: 0,
   });
-  const [seedFundingLimit, setSeedFundingLimit] = useState<number>(0);
+
   const [softCap, setSoftCap] = useState<SoftCap>({
     amount: BigNumber.from(0),
     isReached: false,
@@ -93,9 +92,7 @@ export const useLoadValues = () => {
   const [allInvestors, setAllInvestors] = useState<IInvestor[]>([
     { caller: "", amount: BigNumber.from(0) },
   ]);
-  const [percentageDivider, setPercentageDivider] = useState<BigNumber>(
-    BigNumber.from(0)
-  );
+  const [percentageDivider, setPercentageDivider] = useState<string>("0");
   const [
     milestonesInvestmentsListForFormula,
     setMilestonesInvestmentListForFormula,
@@ -103,24 +100,32 @@ export const useLoadValues = () => {
 
   const [fundsUsedByCreator, setFundsUsedByCreator] = useState<string>("0");
 
-  const getAvailableCurrencies = async (tokenAddress: string) => {
-    if (provider) {
-      try {
-        const tokenContract = new ethers.Contract(
-          tokenAddress,
-          ERC20TokenABI,
-          provider
-        );
-        const tokenDecimals = await tokenContract.decimals();
-        const tokenSymbol = await tokenContract.symbol();
-        const tokenName = await tokenContract.name();
-        return { tokenSymbol, tokenDecimals, tokenName };
-      } catch (error) {
-        console.log(error);
-        toast.error(
-          "Error occurred while retrieving currency data from blockchain"
-        );
-      }
+  const getValuesFromSubgraph = async () => {
+    try {
+      const { data, error } = await client.query({ query: GET_SUBGRAPH_DATA });
+      const modifiedData = data.milestones.map((milestone: any) => {
+        const modifiedMilestone = { ...milestone };
+        modifiedMilestone.startTime = formatTime(milestone?.startTime);
+        modifiedMilestone.endTime = formatTime(milestone?.endTime);
+        return modifiedMilestone;
+      });
+      setMilestones(modifiedData);
+      setPercentageDivider(data.projects[0].percentageDivider);
+      setCurrency({
+        name: data.acceptedSuperTokens[0].name,
+        label: data.acceptedSuperTokens[0].symbol,
+        address: data.acceptedSuperTokens[0].id,
+        decimals: data.acceptedSuperTokens[0].decimals,
+      });
+      setTokenCurrency({
+        name: data.projectTokens[0].name,
+        label: data.projectTokens[0].symbol,
+        address: data.projectTokens[0].id,
+        decimals: data.projectTokens[0].decimals,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error occured while fetching data from the subgraph");
     }
   };
 
@@ -140,18 +145,6 @@ export const useLoadValues = () => {
         );
 
         const tokensReserved = await distributionContract.getLockedTokens();
-        const reservedTokenAddress = await distributionContract.getToken();
-        const reservedTokenDetails = await getAvailableCurrencies(
-          reservedTokenAddress
-        );
-
-        setTokenCurrency({
-          name: reservedTokenDetails?.tokenName,
-          label: reservedTokenDetails?.tokenSymbol,
-          address: reservedTokenAddress,
-          decimals: reservedTokenDetails?.tokenDecimals,
-        });
-
         const totalInvested = await contract.getTotalInvestedAmount();
         const softCap = await contract.getSoftCap();
         const hardCap = await contract.getHardCap();
@@ -162,54 +155,17 @@ export const useLoadValues = () => {
         const fundraisingEndDate = formatTime(fundraisingEndAt);
         const projectState = await contract.getProjectStateByteValue();
         const isMilestoneOngoing = await contract.isAnyMilestoneOngoing();
-
-        const acceptedTokenAddress = await contract.getAcceptedToken();
-        const acceptedTokenDetails = await getAvailableCurrencies(
-          acceptedTokenAddress
-        );
-
-        setCurrency({
-          name: acceptedTokenDetails?.tokenName,
-          label: acceptedTokenDetails?.tokenSymbol,
-          address: acceptedTokenAddress,
-          decimals: acceptedTokenDetails?.tokenDecimals,
-        });
-
         const allInvestors = await getAllInvestments();
-
         const fundsUsedByCreator = await contract.getFundsUsed();
-
-        const milestoneCount = (await contract.getMilestonesCount()).toNumber();
         const currentMilestone = (
           await contract.getCurrentMilestoneId()
         ).toNumber();
 
-        const percentageDivider = await contract.getPercentageDivider();
         const milestonesInvestmentsList =
           await contract.getMilestonesInvestmentsListForFormula();
         setMilestonesInvestmentListForFormula(milestonesInvestmentsList);
 
-        setPercentageDivider(percentageDivider);
         setCurrentMilestone(currentMilestone);
-        for (let i = 0; i < milestoneCount; i++) {
-          let milestone = await contract.getMilestone(i);
-          let seedAmount = await contract.getMilestoneSeedAmount(i);
-
-          setMilestones((prevData) => [
-            ...prevData,
-            {
-              id: i,
-              startDate: formatTime(milestone?.startDate),
-              endDate: formatTime(milestone?.endDate),
-              paid: milestone?.paid,
-              seedAmount: seedAmount,
-              seedAmountPaid: milestone?.seedAmountPaid,
-              streamOngoing: milestone?.streamOngoing,
-              intervalSeedPortion: milestone?.intervalSeedPortion,
-              intervalStreamingPortion: milestone?.intervalStreamingPortion,
-            },
-          ]);
-        }
 
         setTokensReserved(ethers.utils.formatEther(tokensReserved));
         setTotalInvested(totalInvested);
@@ -235,10 +191,10 @@ export const useLoadValues = () => {
 
   useEffect(() => {
     getValuesFromInvestmentPool();
+    getValuesFromSubgraph();
   }, []);
 
   return {
-    seedFundingLimit,
     totalInvested,
     softCap,
     hardCap,

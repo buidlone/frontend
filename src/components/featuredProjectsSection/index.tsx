@@ -1,6 +1,12 @@
+import React from "react";
 import FeaturedProject from "../featuredProject";
 import MobileFooter from "../mobileFooter";
-import { FeatureTextWrapper, FeatureTitle, FeaturesSec, FeaturedProjectsSectionContainer } from "./styled";
+import {
+  FeatureTextWrapper,
+  FeatureTitle,
+  FeaturesSec,
+  FeaturedProjectsSectionContainer,
+} from "./styled";
 
 export const featuredProjects = [
   {
@@ -17,12 +23,12 @@ export default function FeaturedrojectsSection() {
       <FeatureTextWrapper>
         <FeatureTitle>Featured projects</FeatureTitle>
       </FeatureTextWrapper>
-      <FeaturesSec >
+      <FeaturesSec>
         {featuredProjects.map((el, index) => (
-          <>
+          <React.Fragment key={index + el.name}>
             <FeaturedProject key={index + el.name} project={el.name} />
             {el.name === "?" && <MobileFooter />}
-          </>
+          </React.Fragment>
         ))}
       </FeaturesSec>
     </FeaturedProjectsSectionContainer>

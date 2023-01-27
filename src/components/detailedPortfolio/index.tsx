@@ -44,6 +44,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     setTotalIndividualInvestedToProject,
   ] = useState(0);
   const { web3Provider, address } = useContext(Web3Context);
+  const statusColor = StatusColor();
   let today = new Date();
   let milestonePercentage = 0;
 
@@ -72,7 +73,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   }, [totalInvested._hex]);
 
   function getSeconds() {
-    const milestoneStart = new Date(milestones[currentMilestone].startDate);
+    const milestoneStart = new Date(milestones[currentMilestone].startTime);
     const seconds = Math.abs(milestoneStart.getTime() - today.getTime()) / 1000;
 
     if (!isMilestoneOngoing) {
@@ -123,15 +124,15 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     <>
       <tr>
         <td>
-          <p>Status</p>
-          <p className="greenText flex" style={{ gap: "10px" }}>
+          <span>Status</span>
+          <div className="greenText flex" style={{ gap: "10px" }}>
             {" "}
             <StatusBubble
-              color={StatusColor}
+              color={statusColor && statusColor}
               style={{ position: "unset" }}
             />{" "}
             <ProjectState />
-          </p>
+          </div>
         </td>
         <td>
           <p>Reserved</p>
@@ -156,7 +157,12 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
       <tr>
         <td>
           <p>Completed</p>
-          <p className="greenText">{milestonePercentage} %</p>
+          <p className="greenText">
+            {milestonePercentage && milestonePercentage !== Infinity
+              ? milestonePercentage
+              : 0}{" "}
+            %
+          </p>
         </td>
         <td>
           <p>Used investments</p>

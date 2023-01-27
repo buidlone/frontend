@@ -214,7 +214,7 @@ const Calculator = () => {
               autoComplete="off"
               name="amount"
               placeholder=""
-              defaultValue={"0"}
+              //defaultValue={"0"}
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               onKeyPress={handleKeyPress}

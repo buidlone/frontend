@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { IMilestoneFundsAllocated } from "../../interfaces/ILoadedValues";
-import { calculateFundsAllocation } from "../../web3/calculateFundsAllocation";
+//import { calculateFundsAllocation } from "../../web3/calculateFundsAllocation";
 import ProgressInfoBlock from "../progressInfoBlock";
 
 import ProgressRoadmap from "../progressRoadmap";
@@ -32,12 +32,12 @@ const ProgressSection = ({
   ]);
 
   useEffect(() => {
-    let result = calculateFundsAllocation(
-      loadedValuesState.milestones,
-      loadedValuesState.milestonesInvestmentsListForFormula,
-      loadedValuesState.percentageDivider
-    );
-    result && setMilestoneFundsAllocated(result);
+    // let result = calculateFundsAllocation(
+    //   loadedValuesState.milestones,
+    //   loadedValuesState.milestonesInvestmentsListForFormula,
+    //   loadedValuesState.percentageDivider
+    // );
+    // result && setMilestoneFundsAllocated(result);
   }, []);
 
   return (

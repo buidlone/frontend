@@ -60,7 +60,7 @@ export const FeaturedProjectLogoInner = styled(Image)`
   width: 32px;
 `;
 
-export const FeaturedProjectHeader = styled.p`
+export const FeaturedProjectHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

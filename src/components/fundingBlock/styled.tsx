@@ -21,7 +21,7 @@ export const FContainer = styled.div`
   padding-bottom: 4%;
 `;
 
-export const Title = styled.text`
+export const Title = styled.div`
   color: rgb(255 255 255 / 50%);
   font-size: 12px;
   font-family: "IBM Plex Sans", sans-serif;

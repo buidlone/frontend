@@ -107,13 +107,6 @@ export const ActiveBlockWrapper = styled.div`
     border: 1px solid rgba(58, 237, 196, 1);
     color: rgba(58, 237, 196, 1);
   }
-
-
-  
-
-
-
-
 `;
 
 export const Table = styled.table`
@@ -131,22 +124,15 @@ export const Table = styled.table`
     height: 50px;
   }
 
-  
   padding: 5px;
 
   .colored {
-    background: rgba(46, 49, 77, 0.5)
+    background: rgba(46, 49, 77, 0.5);
   }
 
   thead {
     border-bottom: 1px solid black;
   }
-  
-
- 
-
-
-
 
   td,
   th {
@@ -162,8 +148,6 @@ export const Table = styled.table`
     .tokenSpan {
       right: -3%;
     }
-
-   
   }
 
   th {
@@ -180,24 +164,29 @@ export const Table = styled.table`
       align-items: center;
     }
 
-
     p {
-     margin-bottom: 0px;
-     margin-top: 0px;
+      margin-bottom: 0px;
+      margin-top: 0px;
     }
     .flexGap {
-    //   display: flex;
-    //  justify-content: space-between;
+      //   display: flex;
+      //  justify-content: space-between;
     }
 
     .greenText {
       color: rgba(58, 237, 196, 1);
     }
     .blueText {
-      color: rgba(0, 196, 255, 1)
+      color: rgba(0, 196, 255, 1);
     }
     .yellowText {
-      color: rgba(255, 196, 0, 1)
+      color: rgba(255, 196, 0, 1);
+    }
+
+    &.none {
+      height: 0;
+      background: none;
+      border: none;
     }
   }
 
@@ -205,15 +194,11 @@ export const Table = styled.table`
     // padding: 1.625rem 2.516rem 0rem 2.516rem;
     white-space: nowrap;
     border-top: 1px solid black;
-  
   }
 
- 
-
-  th:nth-child(3){
-  margin-right: 1rem;
+  th:nth-child(3) {
+    margin-right: 1rem;
   }
-  
 
   tr:nth-child(2) td {
     // padding: 0rem 2.516rem 0.5rem 2.516rem;
@@ -260,29 +245,29 @@ export const ButtonsWrapper = styled.div`
 export const Footer = styled.div`
   display: flex;
   flex-direction: column;
-  background: #2E314D;
+  background: #2e314d;
   border-radius: 0px 0px 20px 20px;
 `;
 
 export const RoundImgWrapper = styled.div`
-width: 45px;
-height: 45px; 
-background: rgba(19, 19, 29, 1);
-border-radius: 50%;
-padding: 12px;
-position: relative;
+  width: 45px;
+  height: 45px;
+  background: rgba(19, 19, 29, 1);
+  border-radius: 50%;
+  padding: 12px;
+  position: relative;
 `;
 
 export const StatusBubble = styled.div<statusColor>`
-width: 10px;
-height: 10px; 
-background: ${statusColor => statusColor.color};
-border-radius: 50%;
-box-shadow: 0px 0px 9px ${statusColor => statusColor.color};
-position: absolute;
-top: 5px;
-right: 0;
-align-items: center;
+  width: 10px;
+  height: 10px;
+  background: ${(statusColor) => statusColor.color};
+  border-radius: 50%;
+  box-shadow: 0px 0px 9px ${(statusColor) => statusColor.color};
+  position: absolute;
+  top: 5px;
+  right: 0;
+  align-items: center;
 `;
 
 export const Card = styled.div`
@@ -310,4 +295,3 @@ export const Card = styled.div`
     transform: rotateY(180deg);
   }
 `;
-

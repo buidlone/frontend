@@ -44,16 +44,15 @@ const Accordion = ({ items }: IAccordion) => {
     };
   }, []);
 
- 
-
   return (
     <>
-      <AccordionBorder isActive={ isOpen ? true : false} />
+      <AccordionBorder isActive={isOpen ? true : false} />
       <AccordionContainer>
-        {items.map((item) => {
+        {items.map((item, index) => {
           let isActive = active === item.name;
           return (
             <AccordionContent
+              key={index}
               onClick={() => handleClick(item.name)}
               itemName={item.name}
               itemContent={item.content}
@@ -67,4 +66,3 @@ const Accordion = ({ items }: IAccordion) => {
 };
 
 export default Accordion;
-

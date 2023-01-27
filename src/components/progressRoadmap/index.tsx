@@ -44,19 +44,19 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
   const activeStageRef = React.createRef<HTMLElement>();
 
   const maxProjectDays = useCountdown(
-    milestones[milestones.length - 1]?.endDate,
-    milestones[0]?.startDate
+    milestones[milestones.length - 1]?.endTime,
+    milestones[0]?.startTime
   );
-  const daysPassed = useCountdown(undefined, milestones[0]?.startDate, true);
+  const daysPassed = useCountdown(undefined, milestones[0]?.startTime, true);
 
   const maxDays = useCountdown(
-    milestones[currentMilestone]?.endDate,
-    milestones[currentMilestone]?.startDate
+    milestones[currentMilestone]?.endTime,
+    milestones[currentMilestone]?.startTime
   );
 
   const currentDays = useCountdown(
     undefined,
-    milestones[currentMilestone]?.startDate,
+    milestones[currentMilestone]?.startTime,
     true
   );
   const getFullProjectProgress = () => {
@@ -93,183 +93,174 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
   }, []);
 
   return (
-    <>
-      <ProgressRoadmapWrapper>
-        <Title>Project progress</Title>
-        <ScrollableContainerWrapper>
-          <ScrollableContainer
-            innerRef={containerRef}
-            horizontal
-            vertical={false}
-          >
-            <ProgressBar>
-              {milestones &&
-                milestones.map((milestone) => {
-                  const completed = getMilestoneState(
-                    projectState,
-                    currentMilestone,
-                    milestone.id
-                  ).completed;
-                  const active = getMilestoneState(
-                    projectState,
-                    currentMilestone,
-                    milestone.id
-                  ).active;
-                  const suspended = getMilestoneState(
-                    projectState,
-                    currentMilestone,
-                    milestone.id
-                  ).suspended;
+    <ProgressRoadmapWrapper>
+      <Title>Project progress</Title>
+      <ScrollableContainerWrapper>
+        <ScrollableContainer
+          innerRef={containerRef}
+          horizontal
+          vertical={false}
+        >
+          <ProgressBar>
+            {milestones &&
+              milestones.map((milestone) => {
+                const completed = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).completed;
+                const active = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).active;
+                const suspended = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).suspended;
 
-                  const itemProps =
-                    active || suspended ? { ref: activeStageRef } : {};
-                  return (
-                    <MilestoneProgressWrapper key={milestone.id} {...itemProps}>
-                      {/* <Tooltip milestonesArray={milestones}> */}
-                      {/* <Tooltip
-                        key={milestone.id}
-                        text={"Information about milestone"}
-                      > */}
-                      <ProgressStep
-                        stage={`M${milestone.id + 1}`}
-                        completed={completed}
-                        active={active}
-                        suspended={suspended}
-                        {...itemProps}
-                      >
-                        {completed && <CheckMark />}
-                        {active && <DashedCircle />}
-                      </ProgressStep>
-                      {/* </Tooltip> */}
-                      {milestone.id !==
-                        milestones[milestones.length - 1].id && (
-                        <MProgressBar>
-                          <Progress
-                            progress={
-                              active
-                                ? getMilestoneProgress()
-                                : completed
-                                ? 100
-                                : 0
-                            }
-                          />
-                        </MProgressBar>
-                      )}
-                    </MilestoneProgressWrapper>
-                  );
-                })}
-
-              <PBContainer>
-                <PBWrapper>
-                  <CircularProgressbarWithChildren
-                    value={
-                      projectState === 512
-                        ? 100
-                        : // : currentMilestone ===
-                        //   milestones[milestones.length - 1].id
-                        projectState === 32 || projectState === 64
-                        ? getFullProjectProgress()
-                        : 0
-                    }
-                    strokeWidth={6}
-                    styles={buildStyles({
-                      strokeLinecap: "round",
-                      pathTransitionDuration: 0.5,
-                      pathColor: `#00C4FF`,
-                      trailColor: "#1C2B3A",
-                      backgroundColor: "#1C2B3A",
-                    })}
+                const itemProps =
+                  active || suspended ? { ref: activeStageRef } : {};
+                return (
+                  <MilestoneProgressWrapper
+                    key={milestone.milestoneId}
+                    {...itemProps}
                   >
-                    {projectState === 512 ? (
-                      <CheckMark className="lastMilestone" />
-                    ) : (
-                      <div className="lastMilestoneProgress">
-                        {projectState === 32 || projectState === 64
-                          ? getFullProjectProgress().toFixed(1)
-                          : 0}
-                        %
-                      </div>
+                    <ProgressStep
+                      stage={`M${milestone.milestoneId + 1}`}
+                      completed={completed}
+                      active={active}
+                      suspended={suspended}
+                      {...itemProps}
+                    >
+                      {completed && <CheckMark />}
+                      {active && <DashedCircle />}
+                    </ProgressStep>
+                    {/* </Tooltip> */}
+                    {milestone.milestoneId !==
+                      milestones[milestones.length - 1].milestoneId && (
+                      <MProgressBar>
+                        <Progress
+                          // key={milestone.milestoneId}
+                          progress={
+                            active
+                              ? getMilestoneProgress()
+                              : completed
+                              ? 100
+                              : 0
+                          }
+                        />
+                      </MProgressBar>
                     )}
-                  </CircularProgressbarWithChildren>
-                </PBWrapper>
-              </PBContainer>
-            </ProgressBar>
+                  </MilestoneProgressWrapper>
+                );
+              })}
 
-            <LockBar>
-              {milestones &&
-                milestones.map((milestone, index) => {
-                  const completed = getMilestoneState(
-                    projectState,
-                    currentMilestone,
-                    milestone.id
-                  ).completed;
-                  const active = getMilestoneState(
-                    projectState,
-                    currentMilestone,
-                    milestone.id
-                  ).active;
-                  const suspended = getMilestoneState(
-                    projectState,
-                    currentMilestone,
-                    milestone.id
-                  ).suspended;
-
-                  return milestoneFunds[index]?.totalFundsAllocated !==
-                    undefined ? (
-                    <>
-                      <Tooltip
-                        key={milestone.id}
-                        index={index + 1}
-                        fundsObject={milestoneFunds[index]}
-                      >
-                        <Lock
-                          unlocked={completed || active}
-                          active={active}
-                          suspended={suspended}
-                        >
-                          {active && !suspended ? (
-                            <Image
-                              src={unlockedLock}
-                              alt="unlocked lock"
-                              height={15}
-                            />
-                          ) : completed ? (
-                            <CheckMark />
-                          ) : (
-                            <Image
-                              src={lockedLock}
-                              alt="locked lock"
-                              height={15}
-                            />
-                          )}
-                        </Lock>
-                      </Tooltip>
-                    </>
+            <PBContainer>
+              <PBWrapper>
+                <CircularProgressbarWithChildren
+                  value={
+                    projectState === 512
+                      ? 100
+                      : projectState === 32 || projectState === 64
+                      ? getFullProjectProgress()
+                      : 0
+                  }
+                  strokeWidth={6}
+                  styles={buildStyles({
+                    strokeLinecap: "round",
+                    pathTransitionDuration: 0.5,
+                    pathColor: `#00C4FF`,
+                    trailColor: "#1C2B3A",
+                    backgroundColor: "#1C2B3A",
+                  })}
+                >
+                  {projectState === 512 ? (
+                    <CheckMark className="lastMilestone" />
                   ) : (
+                    <div className="lastMilestoneProgress">
+                      {projectState === 32 || projectState === 64
+                        ? getFullProjectProgress().toFixed(1)
+                        : 0}
+                      %
+                    </div>
+                  )}
+                </CircularProgressbarWithChildren>
+              </PBWrapper>
+            </PBContainer>
+          </ProgressBar>
+
+          <LockBar>
+            {milestones &&
+              milestones.map((milestone, index) => {
+                const completed = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).completed;
+                const active = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).active;
+                const suspended = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).suspended;
+
+                return milestoneFunds[index]?.totalFundsAllocated !==
+                  undefined ? (
+                  <Tooltip
+                    key={milestone.milestoneId}
+                    index={index + 1}
+                    fundsObject={milestoneFunds[index]}
+                  >
                     <Lock
+                      key={milestone.milestoneId}
                       unlocked={completed || active}
                       active={active}
                       suspended={suspended}
                     >
-                      {completed || (active && !suspended) ? (
+                      {active && !suspended ? (
                         <Image
                           src={unlockedLock}
                           alt="unlocked lock"
                           height={15}
                         />
+                      ) : completed ? (
+                        <CheckMark />
                       ) : (
                         <Image src={lockedLock} alt="locked lock" height={15} />
-                      )}{" "}
+                      )}
                     </Lock>
-                  );
-                })}
-            </LockBar>
-          </ScrollableContainer>
-          <MilestoneFundsSection milestoneFunds={milestoneFunds} />
-        </ScrollableContainerWrapper>
-        <ProgressRoadmapTimer />
-      </ProgressRoadmapWrapper>
-    </>
+                  </Tooltip>
+                ) : (
+                  <Lock
+                    key={milestone.milestoneId}
+                    unlocked={completed || active}
+                    active={active}
+                    suspended={suspended}
+                  >
+                    {completed || (active && !suspended) ? (
+                      <Image
+                        src={unlockedLock}
+                        alt="unlocked lock"
+                        height={15}
+                      />
+                    ) : (
+                      <Image src={lockedLock} alt="locked lock" height={15} />
+                    )}{" "}
+                  </Lock>
+                );
+              })}
+          </LockBar>
+        </ScrollableContainer>
+        <MilestoneFundsSection milestoneFunds={milestoneFunds} />
+      </ScrollableContainerWrapper>
+      <ProgressRoadmapTimer />
+    </ProgressRoadmapWrapper>
   );
 };
 

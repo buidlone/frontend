@@ -51,10 +51,10 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
               {ethers.utils.formatEther(hardCap)} {currency.label}
             </Data>
 
-            <Data className="medium">{milestones[0].startDate}</Data>
+            <Data className="medium">{milestones[0].startTime}</Data>
 
             <Data className="smaller">
-              {milestones[milestones.length - 1].endDate}
+              {milestones[milestones.length - 1].endTime}
             </Data>
           </FlexItem1>
         </FlexItem>

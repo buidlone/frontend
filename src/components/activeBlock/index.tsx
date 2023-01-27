@@ -26,6 +26,8 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
   const [votingPower, setVotingPower] = useState("0");
   const { web3Provider, address } = useContext(Web3Context);
 
+  const statusColor = StatusColor();
+
   useEffect(() => {
     if (web3Provider) {
       getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
@@ -43,16 +45,18 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
     <ActiveBlockWrapper>
       <Table id="main" cellSpacing="0" className="colored">
         <thead>
-          <th>Project</th>
-          <th>Launchpad</th>
-          <th>Invested</th>
-          <th>Voting power</th>
+          <tr className="none">
+            <th>Project</th>
+            <th>Launchpad</th>
+            <th>Invested</th>
+            <th>Voting power</th>
+          </tr>
         </thead>
         <tbody>
           <tr style={{ background: "rgba(46, 49, 77, 0.1)" }}>
             <td className="blue bigger flex">
               <RoundImgWrapper>
-                <StatusBubble color={StatusColor} />
+                <StatusBubble color={statusColor && statusColor} />
                 <Image
                   src={LogoBuidl}
                   alt="buidl logo"

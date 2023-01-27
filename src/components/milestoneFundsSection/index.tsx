@@ -23,7 +23,7 @@ const MilestoneFundsSection = ({
 
   switch (projectState) {
     case 1:
-      return <FundsSection></FundsSection>;
+      return <FundsSection />;
     case 2:
     case 4:
     case 16:
@@ -45,8 +45,8 @@ const MilestoneFundsSection = ({
           <FundsBubble active />
           {milestones.map(
             (milestone, index) =>
-              milestone.id == currentMilestone && (
-                <FundsPlaceholder>
+              milestone.milestoneId == currentMilestone && (
+                <FundsPlaceholder key={milestone.milestoneId}>
                   {roundPrecise(
                     milestoneFunds[index]?.totalFundsAllocated
                   ).replace(/,/g, " ")}{" "}
@@ -65,8 +65,8 @@ const MilestoneFundsSection = ({
           <FundsBubble active />
           {milestones.map(
             (milestone, index) =>
-              milestone.id == currentMilestone && (
-                <FundsPlaceholder suspended>
+              milestone.milestoneId == currentMilestone && (
+                <FundsPlaceholder key={milestone.milestoneId} suspended>
                   {roundPrecise(
                     milestoneFunds[index]?.totalFundsAllocated
                   ).replace(/,/g, " ")}{" "}
@@ -77,7 +77,7 @@ const MilestoneFundsSection = ({
         </FundsSection>
       );
     case 256:
-      return <FundsSection></FundsSection>;
+      return <FundsSection />;
     case 512:
       return (
         <FundsSection>
@@ -85,9 +85,9 @@ const MilestoneFundsSection = ({
         </FundsSection>
       );
     case 1024:
-      return <FundsSection></FundsSection>;
+      return <FundsSection />;
     default:
-      return <FundsSection></FundsSection>;
+      return <FundsSection />;
   }
 };
 

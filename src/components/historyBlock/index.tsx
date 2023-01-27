@@ -28,13 +28,16 @@ const HistoryBlock = () => {
           <BarChartScroll hideScrollbars={false} vertical={true}>
             <Table>
               <thead>
-                <th>Address</th>
-                <th>Amount</th>
-                <th>Transaction Hash</th>
+                <tr className="none">
+                  <th>Address</th>
+                  <th>Amount</th>
+                  <th>Transaction Hash</th>
+                </tr>
               </thead>
+
               <tbody>
-                {history.map((item: any) => (
-                  <tr>
+                {history.map((item: any, index) => (
+                  <tr key={index}>
                     <td data-label={`Address`} className="token">
                       {item.address}
                     </td>
@@ -62,9 +65,11 @@ const HistoryBlock = () => {
     <HistoryTable style={{ color: "white" }}>
       <Table>
         <thead>
-          <th>Address</th>
-          <th>Amount</th>
-          <th>Transaction Hash</th>
+          <tr className="none">
+            <th>Address</th>
+            <th>Amount</th>
+            <th>Transaction Hash</th>
+          </tr>
         </thead>
         <tbody></tbody>
       </Table>
