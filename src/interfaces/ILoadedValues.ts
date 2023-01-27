@@ -2,16 +2,16 @@ import { BigNumber } from "ethers";
 import { IInvestor } from "./IInvestors";
 
 export type Milestone = {
-  id: number;
-  startDate: string;
-  endDate: string;
-  paid: boolean;
-  totalMilestoneTokenAllocation?: number;
-  seedAmount: BigNumber;
-  seedAmountPaid: boolean;
-  streamOngoing: boolean;
-  intervalSeedPortion: BigNumber;
-  intervalStreamingPortion: BigNumber;
+  milestoneId: number;
+  startTime: string;
+  endTime: string;
+  isStreamOngoing: boolean;
+  isSeedAllocationPaid: boolean;
+  //paid: boolean;
+  //totalMilestoneTokenAllocation?: number;
+  //seedAmount: BigNumber;
+  //intervalSeedPortion: BigNumber;
+  //intervalStreamingPortion: BigNumber;
 };
 
 export type SoftCap = {
@@ -27,7 +27,6 @@ export type Currency = {
 };
 
 export interface ILoadedValues {
-  seedFundingLimit: number; //will be removed
   softCap: SoftCap;
   hardCap: BigNumber;
   totalInvested: BigNumber;
@@ -40,7 +39,7 @@ export interface ILoadedValues {
   setTotalInvested: React.Dispatch<React.SetStateAction<BigNumber>>;
   allInvestors: IInvestor[];
   setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
-  percentageDivider: BigNumber;
+  percentageDivider: string;
   milestonesInvestmentsListForFormula: BigNumber[];
   isMilestoneOngoing: boolean;
   tokensReserved: string;
@@ -53,4 +52,3 @@ export interface IMilestoneFundsAllocated {
   seedAllocated: string;
   totalFundsAllocated: string;
 }
-

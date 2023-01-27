@@ -63,8 +63,8 @@ const Buidl1Header = () => {
         
         <Container>
           <DesktopDisclaimerContainer>
-          <Disclaimer hideMobile={true} />
-        </DesktopDisclaimerContainer>
+            <Disclaimer hideMobile={true} />
+          </DesktopDisclaimerContainer>
           <HeaderSection>
             <HeaderLabel>Buidl1 - LCF protocol</HeaderLabel>
             <HeaderInfo>

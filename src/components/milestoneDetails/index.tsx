@@ -13,20 +13,20 @@ const MilestoneDetails = ({ milestone, date }: IMilestoneDetailsProps) => {
   return (
     <MilestoneDetailsWrapper>
       <InlineRow>
-        <div className="stage">Milestone {milestone.id + 1}</div>
+        <div className="stage">Milestone {milestone.milestoneId + 1}</div>
         <div className="date">{date}</div>
       </InlineRow>
       <div className="taskTitle">
         {
           milestoneDetailsFromIPFS.find(
-            (element) => element.milestoneId == milestone.id
+            (element) => element.milestoneId == milestone.milestoneId
           )?.title
         }
       </div>
       <div className="description">
         {
           milestoneDetailsFromIPFS.find(
-            (element) => element.milestoneId == milestone.id
+            (element) => element.milestoneId == milestone.milestoneId
           )?.description
         }
       </div>

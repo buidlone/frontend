@@ -8,7 +8,7 @@ export const VotingTokenAddress = "0x1F19A22658654Ef8f1E783A0F41044A19d71003a";
 export const DistributionPoolAddress =
   "0x2b4981EF9A987628db0b140734b51c0702dEC3eB";
 
-
 //later will be added to .env.local
 export const NEXT_PUBLIC_INFURA_ID = "124e8573221d41399c3157557e962d98";
-
+export const GRAPHQL_ENDPOINT =
+  "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.1";

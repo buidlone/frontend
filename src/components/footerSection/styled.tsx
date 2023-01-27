@@ -7,7 +7,6 @@ export const FooterSectionWrapper = styled.div`
   background: #132744;
   padding-bottom: 6rem;
   display: flex;
-  padding-left: 6rem;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -138,4 +137,3 @@ export const ContactsLine = styled.div`
     }
   }
 `;
-

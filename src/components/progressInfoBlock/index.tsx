@@ -46,7 +46,7 @@ const ProgressInfoBlock = ({
     fundsUsedByCreator,
   } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
-    useCountdown(milestones[milestones.length - 1].endDate);
+    useCountdown(milestones[milestones.length - 1].endTime);
   const [votedAgainst, setVotedAgainst] = useState<number | undefined>(0);
   const [stopDisabled, setStopDisabled] = useState(false);
   const [over, setOver] = useState(0);

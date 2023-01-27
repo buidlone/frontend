@@ -3,7 +3,7 @@ import styled from "styled-components";
 import breakpoints from "../../../styles/constants";
 
 export const InfoCard = styled.div`
-  background: #2E314D 0% 0% no-repeat padding-box;
+  background: #2e314d 0% 0% no-repeat padding-box;
   box-shadow: 0px 0px 10px #00000029;
   border-radius: 20px;
   opacity: 1;
@@ -12,8 +12,8 @@ export const InfoCard = styled.div`
 `;
 
 export const Buidl1SectionWrapper = styled.div`
-  background: #1F233C 0% 0% no-repeat padding-box;
-border-radius: 20px;
+  background: #1f233c 0% 0% no-repeat padding-box;
+  border-radius: 20px;
   opacity: 1;
   display: flex;
   justify-content: space-between;
@@ -78,7 +78,7 @@ export const TextWrapper = styled.div`
   }
 `;
 
-export const Title = styled.text`
+export const Title = styled.span`
   display: inline-block;
   text-align: left;
   font-size: 28px;
@@ -120,4 +120,3 @@ export const AboutLink = styled.a`
   margin-bottom: 10px;
   cursor: pointer;
 `;
-
