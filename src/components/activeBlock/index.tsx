@@ -56,7 +56,7 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
           <tr style={{ background: "rgba(46, 49, 77, 0.1)" }}>
             <td className="blue bigger flex">
               <RoundImgWrapper>
-                <StatusBubble color={statusColor ? statusColor : ""} />
+                <StatusBubble color={statusColor && statusColor} />
                 <Image
                   src={LogoBuidl}
                   alt="buidl logo"

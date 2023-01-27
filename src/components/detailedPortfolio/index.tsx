@@ -128,7 +128,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
           <div className="greenText flex" style={{ gap: "10px" }}>
             {" "}
             <StatusBubble
-              color={statusColor ? statusColor : ""}
+              color={statusColor && statusColor}
               style={{ position: "unset" }}
             />{" "}
             <ProjectState />

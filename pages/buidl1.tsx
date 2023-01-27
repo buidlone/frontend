@@ -41,7 +41,7 @@ const Buidl1 = () => {
   }, [loadedValuesState.allInvestors]);
 
   return loadedValuesState.fundraisingStartDate !== "" &&
-    loadedValuesState.milestones[0] !== undefined ? (
+    !!loadedValuesState.milestones[0] ? (
     <>
       {isShownStop ? (
         <Container>

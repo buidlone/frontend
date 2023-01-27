@@ -175,9 +175,7 @@ const InvestModal = ({
         amount,
         address
       );
-      result !== undefined &&
-      setTotalInvested !== null &&
-      setTotalInvested(result);
+      result && setTotalInvested && setTotalInvested(result);
 
       if (result !== undefined) {
         setIsShownInvest(true);
@@ -371,4 +369,3 @@ const InvestModal = ({
 };
 
 export default InvestModal;
-
