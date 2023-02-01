@@ -3,7 +3,7 @@ import { getActiveVotingTokens } from "./getActiveVotingTokens";
 export const isStopAllowed = async (
   projectState: number,
   currentMilestone: number,
-  address: string | undefined,
+  address: string | null | undefined,
   web3Provider: any
 ) => {
   const activeTokens = await getActiveVotingTokens(

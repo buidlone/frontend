@@ -18,13 +18,13 @@ import Warning from "../../../public/icon_warning.svg";
 import DisclaimerContext from "../../context/disclaimerContext";
 
 const Disclaimer = ({ hideMobile }: any) => {
-  const { web3Provider } = useContext(Web3Context);
+  const { web3Provider, chainId } = useContext(Web3Context);
   const { showDisclaimer, setShowDisclaimer } = useContext(DisclaimerContext);
 
   if (hideMobile) {
     return (
       <HideForMobile style={{ width: "100%" }}>
-        {web3Provider && web3Provider?.network.chainId !== 5 ? (
+        {web3Provider && chainId !== 5 ? (
           <SwitchNetworkDisclaimer />
         ) : (
           <>

@@ -31,7 +31,7 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
   useEffect(() => {
     if (web3Provider) {
       getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        setTotalIndividualInvestedToProject(data.totalAmountInvested);
+        setTotalIndividualInvestedToProject(data?.totalAmountInvested);
       });
       getVotingPower(web3Provider, address).then((data: any) => {
         setVotingPower(data);

@@ -19,7 +19,7 @@ import {
 import Slider from "../slider";
 import Modal from "../modal";
 import InvestModal from "../investModal";
-import Web3Context from "../../context/web3Context";
+
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
 import { getProjectState } from "../../utils/getProjectState";
@@ -32,11 +32,12 @@ import Image from "next/image";
 import { roundApprox } from "../../utils/roundValue";
 import TimelineSlider from "../timelineSlider";
 import CalculatorInvestButton from "../calculatorInvestButton";
+import Web3Context from "../../context/web3Context";
 
 const minStep = 0.0000000000000000001;
 
 const Calculator = () => {
-  const { web3Provider, connect } = useContext(Web3Context);
+  const { web3Provider, login } = useContext(Web3Context);
   const { totalInvested, hardCap, currency, projectState, softCap } =
     useContext(LoadedValuesContext);
 
@@ -72,8 +73,8 @@ const Calculator = () => {
   const handleConnectClick = async () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
     if (isAllowed) {
-      if (connect) {
-        const isConnected = await connect();
+      if (login) {
+        const isConnected = await login();
         typeof isConnected !== "boolean" && setShowModal(true);
       }
     } else {

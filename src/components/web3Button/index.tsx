@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Web3Context from "../../context/web3Context";
 import { ConnectWalletBtn } from "./styled";
 
 interface ConnectProps {
-  connect: (() => Promise<void>) | null;
+  connect: (() => Promise<void | boolean>) | null;
 }
 const ConnectButton = ({ connect }: ConnectProps) => {
   return connect ? (
@@ -19,18 +19,37 @@ interface DisconnectProps {
 
 const DisconnectButton = ({ disconnect }: DisconnectProps) => {
   return disconnect ? (
-    <ConnectWalletBtn onClick={disconnect}>Disconnect wallet</ConnectWalletBtn>
+    <>
+      <ConnectWalletBtn onClick={disconnect}>
+        Disconnect wallet
+      </ConnectWalletBtn>
+    </>
   ) : (
     <ConnectWalletBtn>Loading...</ConnectWalletBtn>
   );
 };
 
 export function Web3Button() {
-  const { web3Provider, connect, disconnect } = useContext(Web3Context);
+  const a = useContext(Web3Context);
 
-  return web3Provider ? (
-    <DisconnectButton disconnect={disconnect} />
+  useEffect(() => {
+    console.log(a);
+  });
+
+  return a.web3Provider ? (
+    <>
+      <DisconnectButton disconnect={a.logout} />
+
+      <>
+        <div>
+          <button className="card">{a.chainId}</button>
+        </div>
+        <div>
+          <button className="card">{a.address}</button>
+        </div>
+      </>
+    </>
   ) : (
-    <ConnectButton connect={connect} />
+    <ConnectButton connect={a.login} />
   );
 }

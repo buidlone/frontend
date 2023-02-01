@@ -11,4 +11,4 @@ export const DistributionPoolAddress =
 //later will be added to .env.local
 export const NEXT_PUBLIC_INFURA_ID = "124e8573221d41399c3157557e962d98";
 export const GRAPHQL_ENDPOINT =
-  "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.1";
+  "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.2";

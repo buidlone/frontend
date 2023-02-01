@@ -15,15 +15,14 @@ import burgerIcon from "../../assets/burgerMenu.svg";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 
-import Web3Context from "../../context/web3Context";
 import { Web3Button } from "../web3Button";
 import Image from "next/image";
 import Mobile from "./mobile";
+import Web3Context from "../../context/web3Context";
 
 const Navbar = () => {
   const router = useRouter();
-
-  const { address, web3Provider } = useContext(Web3Context);
+  const { web3Provider, address, chainId } = useContext(Web3Context);
   const [showMobile, setShowMobile] = useState(false);
 
   return (
@@ -77,9 +76,7 @@ const Navbar = () => {
         <Mobile isVisible={showMobile} setShowMobile={setShowMobile} />
 
         <ButtonWrapper>
-          <Network
-            connected={web3Provider && web3Provider.network.chainId === 5}
-          >
+          <Network connected={web3Provider && chainId === 5}>
             Goerli testnet
           </Network>
           <Web3Button />

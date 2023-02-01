@@ -1,8 +1,14 @@
 import { SwitchNetworkDisclaimerWrapper, SwitchButton } from "./styled";
 import { useContext } from "react";
-import Web3Context from "../../context/web3Context";
 import Warning from "../../../public/icon_warning.svg";
 import Image from "next/image";
+import Web3Context from "../../context/web3Context";
+
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
 
 const changeNetwork = async (provider: any) => {
   try {

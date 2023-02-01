@@ -143,7 +143,11 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         <td>
           <p>Refund if failed</p>
           <p className="blueText">
-            {refundable === 0 ? refundable : `≈ ${refundable.toFixed(12)}`}{" "}
+            {refundable
+              ? refundable === 0
+                ? refundable
+                : `≈ ${refundable.toFixed(12)}`
+              : 0}{" "}
             {currency.label}
           </p>
         </td>

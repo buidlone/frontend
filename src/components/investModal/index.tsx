@@ -99,7 +99,7 @@ const InvestModal = ({
     decimals: currency.decimals,
   });
 
-  const { web3Provider, address } = useContext(Web3Context);
+  const { web3Provider, address, chainId } = useContext(Web3Context);
   const [balance, setBalance] = useState<string>("0");
   const [network, setNetwork] = useState<string | undefined>(undefined);
   const [networkError, setNetworkError] = useState<string | undefined>(
@@ -221,7 +221,7 @@ const InvestModal = ({
   };
 
   const isGoerli = () => {
-    return web3Provider?.network.chainId === 5;
+    return chainId === 5;
   };
 
   return (
