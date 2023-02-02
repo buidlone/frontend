@@ -8,7 +8,9 @@ import {
 import RPC from "../web3/ethersRPC";
 import { NEXT_PUBLIC_INFURA_ID } from "../constants/contractAddresses";
 import { subscribeAuthEvents } from "../web3/subscribeAuthEvents";
+import { ADAPTER_EVENTS, CONNECTED_EVENT_DATA } from "@web3auth/base";
 import { ethers } from "ethers";
+import { LOGIN_MODAL_EVENTS } from "@web3auth/ui";
 
 const clientId =
   "BNRwqjC6-H_d1xf64PyLKW7zTtvwca7GT-V4XUDgXBS0X8iyCU8r-y_f_F8MnSKUjyPTQvTzcq0IHdok8j8YU50"; // get from https://dashboard.web3auth.io
@@ -40,58 +42,134 @@ export const useWeb3Auth = () => {
           },
         });
 
+        subscribeAuthEvents(web3auth);
         setWeb3auth(web3auth);
 
-        await web3auth.initModal({
-          modalConfig: {
-            [WALLET_ADAPTERS.OPENLOGIN]: {
-              label: "openlogin",
-              loginMethods: {
-                reddit: {
-                  name: "reddit Login",
-                  showOnModal: false,
-                },
-                twitch: {
-                  name: "Twitch Login",
-                  showOnModal: false,
-                },
-                apple: {
-                  name: "apple Login",
-                  showOnModal: false,
-                },
-                line: {
-                  name: "line Login",
-                  showOnModal: false,
-                },
-                github: {
-                  name: "github Login",
-                  showOnModal: false,
-                },
-                kakao: {
-                  name: "kakao Login",
-                  showOnModal: false,
-                },
-                weibo: {
-                  name: "weibo Login",
-                  showOnModal: false,
-                },
-                wechat: {
-                  name: "wechat Login",
-                  showOnModal: false,
-                },
-              },
-              showOnModal: true,
-            },
-          },
-        });
+        await web3auth
+          .initModal
+          //   {
+          //   modalConfig: {
+          //     [WALLET_ADAPTERS.OPENLOGIN]: {
+          //       label: "openlogin",
+          //       loginMethods: {
+          //         reddit: {
+          //           name: "reddit Login",
+          //           showOnModal: false,
+          //         },
+          //         twitch: {
+          //           name: "Twitch Login",
+          //           showOnModal: false,
+          //         },
+          //         apple: {
+          //           name: "apple Login",
+          //           showOnModal: false,
+          //         },
+          //         line: {
+          //           name: "line Login",
+          //           showOnModal: false,
+          //         },
+          //         github: {
+          //           name: "github Login",
+          //           showOnModal: false,
+          //         },
+          //         kakao: {
+          //           name: "kakao Login",
+          //           showOnModal: false,
+          //         },
+          //         weibo: {
+          //           name: "weibo Login",
+          //           showOnModal: false,
+          //         },
+          //         wechat: {
+          //           name: "wechat Login",
+          //           showOnModal: false,
+          //         },
+          //       },
+          //       showOnModal: true,
+          //     },
+          //   },
+          // }
+          ();
 
-        setProvider(web3auth.provider);
-        console.log(web3auth.provider);
-
-        subscribeAuthEvents(web3auth);
+        //subscribeAuthEvents(web3auth);
       } catch (error) {
         console.error(error);
       }
+    };
+    const subscribeAuthEvents = (web3auth: Web3Auth) => {
+      web3auth.on(ADAPTER_EVENTS.READY, () => {
+        console.log("ready");
+      });
+      web3auth.on(ADAPTER_EVENTS.NOT_READY, () => {
+        console.log("not ready");
+      });
+      web3auth.on(ADAPTER_EVENTS.CONNECTED, (data: CONNECTED_EVENT_DATA) => {
+        console.log("connected to wallet", data);
+        // web3auth.provider will be available here after user is connected
+        setProvider(web3auth.provider);
+      });
+      web3auth.on(ADAPTER_EVENTS.CONNECTING, async () => {
+        console.log("connecting");
+        console.log(web3auth);
+        console.log(web3auth.provider);
+        // if (
+        //   web3auth.provider === null &&
+        //   web3auth.cachedAdapter == "metamask" &&
+        //   web3auth.connectedAdapterName == null
+        // ) {
+        //   window.location.reload()
+        // }
+        console.log(web3auth.cachedAdapter);
+        console.log(web3auth.connectedAdapterName);
+        //console.log(window.ethereum);
+
+        // if (
+        //   (web3auth.cachedAdapter == "metamask" ||
+        //     web3auth.cachedAdapter == null) &&
+        //   web3auth.connectedAdapterName == null
+        // ) {
+        //   if (window.ethereum) {
+        //     try {
+        //       const accounts = await window.ethereum.request({
+        //         method: "eth_requestAccounts",
+        //       });
+        //       //setAddress(accounts);
+        //       console.log(accounts);
+        //     } catch (error: any) {
+        //       if (error.code === 4001) {
+        //         // User rejected request
+        //       }
+
+        //       //setError(error);
+        //     }
+        //   }
+        // }
+
+        // if (web3auth.connectedAdapterName === null && window.ethereum) {
+        //   const res = await window.ethereum.request({ method: "eth_requestAccounts" })
+        //   console.log(res);
+        // } else {
+        //   console.log("no metamask");
+        // }
+
+        // console.log(window.ethereum.request({method:'eth_requestAccounts'})
+        // .then(res=>{
+        //         // Return the address of the wallet
+        //         console.log(res)
+        // }));
+      });
+      web3auth.on(ADAPTER_EVENTS.ADAPTER_DATA_UPDATED, (data: any) => {
+        console.log("updated", data);
+      });
+      web3auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
+        console.log("disconnected");
+      });
+      web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
+        console.log("error", error);
+      });
+      web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
+        console.log("error", error);
+      });
     };
 
     init();
@@ -116,6 +194,9 @@ export const useWeb3Auth = () => {
     const signer = web3Provider.getSigner();
     const address = await signer.getAddress();
     const network = await web3Provider.getNetwork();
+    const user = await web3auth.getUserInfo();
+    console.log(user);
+
     setAddress(address);
     setChainId(network.chainId);
     setIsConnected(true);
@@ -162,7 +243,7 @@ export const useWeb3Auth = () => {
     const rpc = new RPC(provider);
     const chainId = await rpc.getChainId();
     console.log(chainId);
-    return chainId;
+    setChainId(chainId);
   };
   const getAccounts = async () => {
     if (!provider) {
@@ -172,7 +253,7 @@ export const useWeb3Auth = () => {
     const rpc = new RPC(provider);
     const address = await rpc.getAccounts();
     console.log(address);
-    return address;
+    setAddress(address);
   };
 
   const getBalance = async () => {
@@ -216,6 +297,8 @@ export const useWeb3Auth = () => {
   };
 
   useEffect(() => {
+    console.log(isConnected);
+
     if (!provider || !isConnected) {
       console.log("provider not initialized yet");
       return;

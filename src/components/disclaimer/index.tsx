@@ -11,20 +11,26 @@ import TwitterLogo from "../../../public/twitter_logo_white.svg";
 import LinkedinLogo from "../../../public/linkedin_logo_white.svg";
 import DiscordLogo from "../../../public/discord_logo_white.svg";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Web3Context from "../../context/web3Context";
 import SwitchNetworkDisclaimer from "../switchNetworkDisclaimer";
 import Warning from "../../../public/icon_warning.svg";
 import DisclaimerContext from "../../context/disclaimerContext";
 
 const Disclaimer = ({ hideMobile }: any) => {
-  const { web3Provider, chainId } = useContext(Web3Context);
+  const { web3Provider, chainId, address } = useContext(Web3Context);
   const { showDisclaimer, setShowDisclaimer } = useContext(DisclaimerContext);
+
+  useEffect(() => {
+    console.log(web3Provider);
+    console.log(chainId);
+    console.log(typeof chainId);
+  }, [chainId]);
 
   if (hideMobile) {
     return (
       <HideForMobile style={{ width: "100%" }}>
-        {web3Provider && chainId !== 5 ? (
+        {web3Provider && address && chainId !== 5 ? (
           <SwitchNetworkDisclaimer />
         ) : (
           <>

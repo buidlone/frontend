@@ -34,9 +34,9 @@ export function Web3Button() {
 
   useEffect(() => {
     console.log(a);
-  });
+  }, [a.address, a.chainId]);
 
-  return a.web3Provider ? (
+  return a.web3Provider && a.address ? (
     <>
       <DisconnectButton disconnect={a.logout} />
 
