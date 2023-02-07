@@ -22,21 +22,15 @@ import React, { useContext, useEffect } from "react";
 import Tooltip from "../tooltip";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getMilestoneState } from "../../utils/getMilestoneState";
-import { IMilestoneFundsAllocated } from "../../interfaces/ILoadedValues";
 import ProgressRoadmapTimer from "../progressRoadmapTimer";
 import useCountdown from "../../hooks/useCountdown";
-
 import MilestoneFundsSection from "../milestoneFundsSection";
 import {
   buildStyles,
   CircularProgressbarWithChildren,
 } from "react-circular-progressbar";
 
-interface IProgressRoadmap {
-  milestoneFunds: IMilestoneFundsAllocated[];
-}
-
-const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
+const ProgressRoadmap = () => {
   const { milestones, currentMilestone, projectState } =
     useContext(LoadedValuesContext);
 
@@ -210,12 +204,11 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
                   milestone.milestoneId
                 ).suspended;
 
-                return milestoneFunds[index]?.totalFundsAllocated !==
-                  undefined ? (
+                return active ? (
                   <Tooltip
                     key={milestone.milestoneId}
                     index={index + 1}
-                    fundsObject={milestoneFunds[index]}
+                    fundsObject={milestone.fundsAllocated}
                   >
                     <Lock
                       key={milestone.milestoneId}
@@ -257,7 +250,7 @@ const ProgressRoadmap = ({ milestoneFunds, ...props }: IProgressRoadmap) => {
               })}
           </LockBar>
         </ScrollableContainer>
-        <MilestoneFundsSection milestoneFunds={milestoneFunds} />
+        <MilestoneFundsSection />
       </ScrollableContainerWrapper>
       <ProgressRoadmapTimer />
     </ProgressRoadmapWrapper>

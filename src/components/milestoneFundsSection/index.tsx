@@ -9,13 +9,7 @@ import {
   MilestonePlaceholder,
 } from "./styled";
 
-interface IMilestoneFunds {
-  milestoneFunds: IMilestoneFundsAllocated[];
-}
-const MilestoneFundsSection = ({
-  milestoneFunds,
-  ...props
-}: IMilestoneFunds) => {
+const MilestoneFundsSection = () => {
   const { milestones, currentMilestone, currency, projectState } =
     useContext(LoadedValuesContext);
 
@@ -48,7 +42,7 @@ const MilestoneFundsSection = ({
               milestone.milestoneId == currentMilestone && (
                 <FundsPlaceholder key={milestone.milestoneId}>
                   {roundPrecise(
-                    milestoneFunds[index]?.totalFundsAllocated
+                    milestone.fundsAllocated.totalFundsAllocated
                   ).replace(/,/g, " ")}{" "}
                   {currency.label}
                 </FundsPlaceholder>
@@ -68,7 +62,7 @@ const MilestoneFundsSection = ({
               milestone.milestoneId == currentMilestone && (
                 <FundsPlaceholder key={milestone.milestoneId} suspended>
                   {roundPrecise(
-                    milestoneFunds[index]?.totalFundsAllocated
+                    milestone.fundsAllocated.totalFundsAllocated
                   ).replace(/,/g, " ")}{" "}
                   {currency.label}
                 </FundsPlaceholder>
