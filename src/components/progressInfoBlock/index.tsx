@@ -62,7 +62,7 @@ const ProgressInfoBlock = ({
     } else {
       setStopDisabled(true);
     }
-  }, [web3Provider, totalInvested._hex]);
+  }, [web3Provider, totalInvested._hex, address]);
 
   const handleStop = async () => {
     if (web3Provider) {

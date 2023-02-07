@@ -12,7 +12,7 @@ export const isStopAllowed = async (
     currentMilestone
   );
 
-  if (address === undefined) {
+  if (address === undefined || address === null) {
     return true;
   } else if (projectState !== 4 && projectState !== 32) {
     return true;
