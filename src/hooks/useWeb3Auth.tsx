@@ -43,6 +43,7 @@ export const useWeb3Auth = () => {
 
         subscribeAuthEvents(web3auth);
         setWeb3auth(web3auth);
+       
 
         await web3auth.initModal({
           modalConfig: {
@@ -86,7 +87,6 @@ export const useWeb3Auth = () => {
             },
           },
         });
-      
       } catch (error) {
         console.error(error);
       }
@@ -99,10 +99,10 @@ export const useWeb3Auth = () => {
         console.log("not ready");
       });
       web3auth.on(ADAPTER_EVENTS.CONNECTED, (data: CONNECTED_EVENT_DATA) => {
-          console.log("connected to wallet", data);
+        console.log("connected to wallet", data);
+        setProvider(web3auth.provider);
       });
-      web3auth.on(ADAPTER_EVENTS.CONNECTING, async () => {
-              });
+      web3auth.on(ADAPTER_EVENTS.CONNECTING, async () => {});
       web3auth.on(ADAPTER_EVENTS.ADAPTER_DATA_UPDATED, (data: any) => {
         console.log("updated", data);
       });
@@ -133,7 +133,7 @@ export const useWeb3Auth = () => {
     const web3Provider = new ethers.providers.Web3Provider(
       web3authProvider as any
     );
-    // console.log(web3Provider);
+
     setWeb3Provider(web3Provider);
     const signer = web3Provider.getSigner();
     const address = await signer.getAddress();
@@ -161,7 +161,7 @@ export const useWeb3Auth = () => {
 
   useEffect(() => {
     if (!provider || !isConnected) {
-      console.log("provider not initialized yet");
+       console.log("provider not initialized yet");
       return;
     }
     const handleAccountsChanged = async (accounts: string) => {
