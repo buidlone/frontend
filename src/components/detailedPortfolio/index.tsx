@@ -9,10 +9,10 @@ import { isStopAllowed } from "../../web3/isStopAllowed";
 import UserInvesmentHistory from "../userInvestmentHistory";
 import { StatusBubble, TableButton } from "../activeBlock/styled";
 import { getVotedAgainst } from "../../web3/getVotedAgainst";
-import { getAllocatedTokens } from "../../web3/getAllocatedTokens";
 import { getUsedInvestments } from "../../web3/getUsedInvestments";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { roundApprox } from "../../utils/roundValue";
+import { getIndividualValues } from "../../web3/getIndividualValues";
 
 const items = [
   {
@@ -110,8 +110,8 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
       }
     );
     if (web3Provider) {
-      getAllocatedTokens(web3Provider, address).then((data: any) => {
-        setAllocatedTokens(data);
+      getIndividualValues(address).then((data: any) => {
+        setAllocatedTokens(data.allocatedProjectTokens);
       });
 
       setStopDisabled(false);

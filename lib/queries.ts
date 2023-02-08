@@ -40,20 +40,11 @@ export const GET_INITIAL_DATA = gql`
   }
 `;
 
-export const GET_INDIVIDUAL_INVESTMENT = gql`
-  query UserInvestment($id: ID!, $investor: Bytes!) {
+export const GET_INDIVIDUAL_VALUES = gql`
+  query IndividualValues($id: ID!, $investor: Bytes!) {
     project(id: $id) {
       investments(where: { investor: $investor }) {
         investedAmount
-      }
-    }
-  }
-`;
-
-export const GET_INDIVIDUAL_REWARDS = gql`
-  query Rewards($id: ID!, $investor: Bytes!) {
-    project(id: $id) {
-      investments(where: { investor: $investor }) {
         allocatedProjectTokens
       }
     }

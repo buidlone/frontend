@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {
   InvestmentPoolAddress,
   NEXT_PUBLIC_INFURA_ID,
+  PROJECT_ID,
 } from "../constants/contractAddresses";
 import InvestmentPoolABI from "../web3/abi/InvestmentPool.json";
 import { formatTime } from "../utils/formatTime";
@@ -99,7 +100,7 @@ export const useLoadValues = () => {
       const { data, loading, error } = await client.query({
         query: GET_INITIAL_DATA,
         variables: {
-          id: "0x192ed82f6f408a4fbfce92b639e47f98fb6c2476",
+          id: PROJECT_ID,
         },
       });
       const formattedMilestones = data.project.milestones.map(
