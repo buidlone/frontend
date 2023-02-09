@@ -36,6 +36,14 @@ export const GET_INITIAL_DATA = gql`
       currentMilestone {
         milestoneId
       }
+      softCapMultiplier
+      hardCapMultiplier
+      maximumWeightDivisor
+      governancePool {
+        votingToken {
+          supplyCap
+        }
+      }
     }
   }
 `;
@@ -50,3 +58,11 @@ export const GET_INDIVIDUAL_VALUES = gql`
     }
   }
 `;
+
+// export const SUBSCRIBE_TO_UPDATES = gql`
+//   subscription UpdatedData($id: ID!) {
+//     project(id: $id) {
+//       totalInvested
+//     }
+//   }
+// `;

@@ -14,7 +14,6 @@ import {
   Milestone,
   SoftCap,
 } from "../interfaces/ILoadedValues";
-
 import { IInvestor } from "../interfaces/IInvestors";
 import { getAllInvestments } from "../web3/getAllInvestments";
 import client from "../../lib/apolloClient";
@@ -47,7 +46,7 @@ export const loadedValuesInitialState: ILoadedValues = {
   setAllInvestors: () => {},
   percentageDivider: "0",
   isMilestoneOngoing: false,
-  tokensReserved: "0",
+  tokensReserved: BigNumber.from(0),
   tokenCurrency: {
     name: "",
     label: "",
@@ -56,10 +55,16 @@ export const loadedValuesInitialState: ILoadedValues = {
   },
   fundsUsedByCreator: "0",
   isSoftCapReached: false,
+  softCapMultiplier: BigNumber.from(0),
+  hardCapMultiplier: BigNumber.from(0),
+  maximumWeightDivisor: BigNumber.from(0),
+  supplyCap: BigNumber.from(0),
 };
 
 export const useLoadValues = () => {
-  const [tokensReserved, setTokensReserved] = useState<string>("0");
+  const [tokensReserved, setTokensReserved] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
   const [tokenCurrency, setTokenCurrency] = useState<Currency>({
     name: "",
     label: "",
@@ -94,6 +99,17 @@ export const useLoadValues = () => {
   ]);
   const [percentageDivider, setPercentageDivider] = useState<string>("0");
   const [fundsUsedByCreator, setFundsUsedByCreator] = useState<string>("0");
+
+  const [softCapMultiplier, setSoftCapMultiplier] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
+  const [hardCapMultiplier, setHardCapMultiplier] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
+  const [maximumWeightDivisor, setMaximumWeightDivisor] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
+  const [supplyCap, setSupplyCap] = useState<BigNumber>(BigNumber.from(0));
 
   const getValuesFromSubgraph = async () => {
     try {
@@ -130,9 +146,7 @@ export const useLoadValues = () => {
       setCurrentMilestone(data.project.currentMilestone.milestoneId);
       setPercentageDivider(data.project.percentageDivider);
       setTokensReserved(
-        ethers.utils.formatEther(
-          data.project.distributionPool.lockedTokensForRewards
-        )
+        BigNumber.from(data.project.distributionPool.lockedTokensForRewards)
       );
       setCurrency({
         name: data.project.acceptedToken.name,
@@ -155,6 +169,14 @@ export const useLoadValues = () => {
       setHardCap(BigNumber.from(data.project.hardCap));
       setFundraisingStartDate(formatTime(data.project.fundraiserStartTime));
       setFundraisingEndDate(formatTime(data.project.fundraiserEndTime));
+      setSoftCapMultiplier(BigNumber.from(data.project.softCapMultiplier));
+      setHardCapMultiplier(BigNumber.from(data.project.hardCapMultiplier));
+      setMaximumWeightDivisor(
+        BigNumber.from(data.project.maximumWeightDivisor)
+      );
+      setSupplyCap(
+        BigNumber.from(data.project.governancePool.votingToken.supplyCap)
+      );
     } catch (error) {
       console.log(error);
       toast.error("Error occured while fetching data from the subgraph");
@@ -192,6 +214,23 @@ export const useLoadValues = () => {
     getValuesFromSubgraph();
   }, []);
 
+  // useEffect(() => {
+  //   const subscription = client
+  //     .subscribe({
+  //       query: SUBSCRIBE_TO_UPDATES,
+  //       variables: {
+  //         id: PROJECT_ID,
+  //       },
+  //     })
+  //     .subscribe({
+  //       next: ({ data }) => {
+  //         console.log(data);
+  //       },
+  //     });
+
+  //   return () => subscription.unsubscribe();
+  // }, []);
+
   return {
     totalInvested,
     softCap,
@@ -211,5 +250,9 @@ export const useLoadValues = () => {
     tokenCurrency,
     fundsUsedByCreator,
     isSoftCapReached,
+    softCapMultiplier,
+    hardCapMultiplier,
+    maximumWeightDivisor,
+    supplyCap,
   };
 };

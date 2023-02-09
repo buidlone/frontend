@@ -37,8 +37,19 @@ const minStep = 0.0000000000000000001;
 
 const Calculator = () => {
   const { web3Provider, connect } = useContext(Web3Context);
-  const { totalInvested, hardCap, currency, projectState, softCap } =
-    useContext(LoadedValuesContext);
+  const {
+    totalInvested,
+    hardCap,
+    currency,
+    projectState,
+    softCap,
+    softCapMultiplier,
+    hardCapMultiplier,
+    tokensReserved,
+    maximumWeightDivisor,
+    supplyCap,
+    
+  } = useContext(LoadedValuesContext);
 
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState<string>("0");
@@ -116,12 +127,17 @@ const Calculator = () => {
       e.preventDefault();
   };
 
-  const inputSumChange = async () => {
-    const result = await getCalculatedVotingTokens(
+  const inputSumChange = () => {
+    const result = getCalculatedVotingTokens(
       ethers.utils.parseEther(amount || "0"),
       softCap.amount,
       hardCap,
-      ethers.utils.parseEther(timelineValue)
+      ethers.utils.parseEther(timelineValue),
+      softCapMultiplier,
+      hardCapMultiplier,
+      maximumWeightDivisor,
+      tokensReserved,
+      supplyCap,
     );
 
     if (result) {

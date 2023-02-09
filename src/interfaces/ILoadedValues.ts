@@ -37,10 +37,14 @@ export interface ILoadedValues {
   setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   percentageDivider: string;
   isMilestoneOngoing: boolean;
-  tokensReserved: string;
+  tokensReserved: BigNumber;
   tokenCurrency: Currency;
   fundsUsedByCreator: string;
   isSoftCapReached: boolean;
+  softCapMultiplier: BigNumber;
+  hardCapMultiplier: BigNumber;
+  maximumWeightDivisor: BigNumber;
+  supplyCap: BigNumber;
 }
 
 export interface IMilestoneFundsAllocated {
