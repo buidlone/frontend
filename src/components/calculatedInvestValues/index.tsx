@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import { useWatch, Control } from "react-hook-form";
 import LoadedValuesContext from "../../context/loadedValuesContext";
@@ -17,8 +17,17 @@ const CalculatedInvestValues = ({
 }: {
   control: Control<InputTypes>;
 }) => {
-  const { totalInvested, hardCap, tokenCurrency, softCap } =
-    useContext(LoadedValuesContext);
+  const {
+    totalInvested,
+    hardCap,
+    tokenCurrency,
+    softCap,
+    softCapMultiplier,
+    hardCapMultiplier,
+    maximumWeightDivisor,
+    tokensReserved,
+    supplyCap,
+  } = useContext(LoadedValuesContext);
   const { web3Provider } = useContext(Web3Context);
   const amount = useWatch({
     control,
@@ -27,16 +36,20 @@ const CalculatedInvestValues = ({
   });
 
   const [tokens, setTokens] = useState<string>("");
-  const [minVotingPower, setMinVotingPower] = useState<number>(0);
   const [maxVotingPower, setMaxVotingPower] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
 
-  const inputSumChange = async () => {
-    const result = await getCalculatedVotingTokens(
+  const inputSumChange = () => {
+    const result = getCalculatedVotingTokens(
       ethers.utils.parseEther(amount || "0"),
       softCap.amount,
       hardCap,
-      totalInvested
+      totalInvested,
+      softCapMultiplier,
+      hardCapMultiplier,
+      maximumWeightDivisor,
+      tokensReserved,
+      supplyCap
     );
 
     if (result) {

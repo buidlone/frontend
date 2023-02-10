@@ -29,11 +29,11 @@ const UserInvesmentHistory = () => {
       <BarChartScroll hideScrollbars={false} vertical={true}>
         <Table>
           <thead>
-           <tr className="none">
-            <th className="phase">Address</th>
-            <th className="phase">Amount</th>
-            <th className="phase">Transaction Hash</th>
-          </tr>
+            <tr className="none">
+              <th className="phase">Address</th>
+              <th className="phase">Amount</th>
+              <th className="phase">Transaction Hash</th>
+            </tr>
           </thead>
           <tbody>
             {history?.map((item: any) => (
@@ -58,9 +58,7 @@ const UserInvesmentHistory = () => {
         </Table>
       </BarChartScroll>
     </BarChartContainer>
-
   );
-
 };
 
 export default UserInvesmentHistory;

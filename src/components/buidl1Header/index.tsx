@@ -4,8 +4,7 @@ import { Container } from "../../../styles/Container";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
 import { roundApprox } from "../../utils/roundValue";
-import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
-import { getInvestorRewards } from "../../web3/getInvestorRewards";
+import { getIndividualValues } from "../../web3/getIndividualValues";
 import { getVotingPower } from "../../web3/getVotingPower";
 import Disclaimer from "../disclaimer";
 import { DesktopDisclaimerContainer } from "../disclaimer/styled";
@@ -25,7 +24,8 @@ import {
 } from "./styled";
 
 const Buidl1Header = () => {
-  const { currency, tokenCurrency } = useContext(LoadedValuesContext);
+  const { currency, tokenCurrency, totalInvested } =
+    useContext(LoadedValuesContext);
   const { web3Provider, address } = useContext(Web3Context);
   const [
     totalIndividualInvestedToProject,
@@ -35,17 +35,17 @@ const Buidl1Header = () => {
   const [investorRewards, setInvestorRewards] = useState<string>("0.0000");
 
   useEffect(() => {
-    if (Web3Provider && address) {
-      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        setTotalIndividualInvestedToProject(
-          data?.totalAmountInvested == "0.0"
+    if (web3Provider && address) {
+      getIndividualValues(address).then((data: any) => {
+        setInvestorRewards(
+          data.allocatedProjectTokens == "0"
             ? "0.0000"
-            : data.totalAmountInvested
+            : data.allocatedProjectTokens
         );
-      });
 
-      getInvestorRewards(web3Provider, address).then((data: any) => {
-        setInvestorRewards(data == "0.0" ? "0.0000" : data);
+        setTotalIndividualInvestedToProject(
+          data.investedAmount == "0" ? "0.0000" : data.investedAmount
+        );
       });
 
       getVotingPower(web3Provider, address).then((data: any) => {
@@ -60,7 +60,6 @@ const Buidl1Header = () => {
   return (
     <>
       <BackgroundBlur>
-        
         <Container>
           <DesktopDisclaimerContainer>
             <Disclaimer hideMobile={true} />

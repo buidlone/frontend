@@ -18,7 +18,7 @@ import Tooltip from "../tooltip";
 import { roundPrecise } from "../../utils/roundValue";
 
 export default function FundingRoadmap() {
-  const { softCap, hardCap, totalInvested, currency } =
+  const { softCap, hardCap, totalInvested, currency, isSoftCapReached } =
     useContext(LoadedValuesContext);
 
   const [softCapProgress, setSoftCapProgress] = useState<number>(
@@ -43,7 +43,7 @@ export default function FundingRoadmap() {
     <>
       <FProgressWrapper>
         <InlineLabel>
-          {softCap?.isReached ? (
+          {isSoftCapReached ? (
             <Image src={unlockedLock} alt="unlocked lock" height={"17px"} />
           ) : (
             <Image src={lockedLock} alt="locked lock" height={"17px"} />

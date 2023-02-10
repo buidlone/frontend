@@ -120,7 +120,10 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {roundPrecise(tokensReserved).replace(/,/g, " ")}{" "}
+          {roundPrecise(ethers.utils.formatEther(tokensReserved)).replace(
+            /,/g,
+            " "
+          )}{" "}
           {tokenCurrency.label}
         </Data>
 

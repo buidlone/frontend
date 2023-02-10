@@ -7,7 +7,6 @@ import {
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import Web3Context from "../../context/web3Context";
-import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import LogoBuidl from "../../../public/logoNew.svg";
@@ -15,13 +14,14 @@ import { AccordionButtonIcon } from "../accordionContent/styled";
 import DetailedPortfolio from "../detailedPortfolio";
 import { getVotingPower } from "../../web3/getVotingPower";
 import { roundApprox } from "../../utils/roundValue";
+import { getIndividualValues } from "../../web3/getIndividualValues";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
   const [
     totalIndividualInvestedToProject,
     setTotalIndividualInvestedToProject,
-  ] = useState("0");
-  const { currency } = useContext(LoadedValuesContext);
+  ] = useState("0.0000");
+  const { currency, totalInvested } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
   const [votingPower, setVotingPower] = useState("0");
   const { web3Provider, address } = useContext(Web3Context);
@@ -29,17 +29,20 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
   const statusColor = StatusColor();
 
   useEffect(() => {
-    if (web3Provider) {
-      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        setTotalIndividualInvestedToProject(data.totalAmountInvested);
+    if (web3Provider && address) {
+      getIndividualValues(address).then((data: any) => {
+        setTotalIndividualInvestedToProject(
+          data.investedAmount == "0" ? "0.0000" : data.investedAmount
+        );
       });
+
       getVotingPower(web3Provider, address).then((data: any) => {
         setVotingPower(data);
       });
     } else {
-      setTotalIndividualInvestedToProject("0");
+      setTotalIndividualInvestedToProject("0.0000");
     }
-  });
+  }, [totalInvested._hex, web3Provider]);
 
   return (
     <ActiveBlockWrapper>

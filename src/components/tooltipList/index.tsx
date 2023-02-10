@@ -45,7 +45,8 @@ const TooltipList = ({ milestonesArray, fundsObject, index }: IMilestones) => {
                 <div className="label">Instant release</div>
                 <InlineWrapper>
                   <div className="funds">
-                    {roundPrecise(fundsObject.seedAllocated)} {currency.label}
+                    {roundPrecise(fundsObject.seedFundsAllocation)}{" "}
+                    {currency.label}
                   </div>
                 </InlineWrapper>
               </InfoBlock>
@@ -54,7 +55,8 @@ const TooltipList = ({ milestonesArray, fundsObject, index }: IMilestones) => {
 
                 <InlineWrapper>
                   <div className="funds">
-                    {roundPrecise(fundsObject.streamAllocated)} {currency.label}
+                    {roundPrecise(fundsObject.streamFundsAllocation)}{" "}
+                    {currency.label}
                   </div>
                 </InlineWrapper>
               </InfoBlock>

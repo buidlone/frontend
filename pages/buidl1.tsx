@@ -40,7 +40,7 @@ const Buidl1 = () => {
     setWallets((prev) => uniqueInv);
   }, [loadedValuesState.allInvestors]);
 
-  return loadedValuesState.fundraisingStartDate !== "" &&
+  return !!loadedValuesState.projectState &&
     !!loadedValuesState.milestones[0] ? (
     <>
       {isShownStop ? (
