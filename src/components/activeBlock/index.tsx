@@ -25,7 +25,6 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
   const [showMore, setShowMore] = useState(false);
   const [votingPower, setVotingPower] = useState("0");
   const { web3Provider, address } = useContext(Web3Context);
-
   const statusColor = StatusColor();
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
     } else {
       setTotalIndividualInvestedToProject("0.0000");
     }
-  }, [totalInvested._hex, web3Provider]);
+  }, [totalInvested._hex, web3Provider, address]);
 
   return (
     <ActiveBlockWrapper>

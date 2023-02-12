@@ -8,8 +8,6 @@ interface Props {
   started?: boolean;
 }
 
-
-
 export const SoftCapIndicator = styled.div<Props>`
   height: 1.728rem;
   width: 0px;
@@ -57,39 +55,39 @@ export const StyledTimelineSlider = styled(StyledSlider)<Props>`
 
   .example-mark {
     position: absolute;
-  bottom: -100%;
-  width: 1.5rem;
-  height: 1.5rem;
-  background-color: ${(props) =>
-  props?.started ? "rgba(0, 196, 255, 1)" : "#2b3453"};
-  pointer-events: all;
-  cursor: pointer;
-  border-radius: 50%;
-  vertical-align: middle;
-  position: relative;
-
-  &:before {
-    content: "Current state";
-    position: absolute;
-    font-size: 14px;
-    font-family: "IBM Plex Sans", sans-serif;
-    color: rgba(0, 196, 255, 0.75);
-    right: -120%;
-    bottom: -130%;
-    white-space: nowrap;
+    bottom: -100%;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: ${(props) =>
+      props?.started ? "rgba(0, 196, 255, 1)" : "#2b3453"};
+    pointer-events: all;
     cursor: pointer;
-    text-decoration: underline;
-  }
+    border-radius: 50%;
+    vertical-align: middle;
+    position: relative;
 
-  &:after {
-    content: "";
-    height: 0.808rem;
-    width: 0px;
-    border-left: 2px dashed rgba(0, 196, 255, 0.73);
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    cursor: default;
-  }
+    &:before {
+      content: "Current state";
+      position: absolute;
+      font-size: 14px;
+      font-family: "IBM Plex Sans", sans-serif;
+      color: rgba(0, 196, 255, 0.75);
+      right: -120%;
+      bottom: -130%;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    &:after {
+      content: "";
+      height: 0.808rem;
+      width: 0px;
+      border-left: 2px dashed rgba(0, 196, 255, 0.73);
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      cursor: default;
+    }
   }
 `;

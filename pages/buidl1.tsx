@@ -17,31 +17,16 @@ import InvestStatus from "../src/components/statusNotification/investStatus";
 import Buidl1Header from "../src/components/buidl1Header";
 import MobileFooter from "../src/components/mobileFooter";
 import Head from "next/head";
+import { useInvestorData } from "../src/hooks/useInvestorData";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
-  const [wallets, setWallets] = useState<String[]>([""]);
+
   const [isShownStop, setIsShownStop] = useState(false);
   const [isShownWrong, setIsShownWrong] = useState(false);
   const [isShownInvest, setIsShownInvest] = useState(false);
 
-  useEffect(() => {
-    getAllInvestments().then((data: any) =>
-      loadedValuesState.setAllInvestors((prev) => data?.allInvestments)
-    );
-  }, [loadedValuesState.totalInvested._hex]);
-
-  useEffect(() => {
-    const uniqueInv = [
-      ...Array.from(
-        new Set(loadedValuesState?.allInvestors.map((item) => item.caller))
-      ),
-    ];
-    setWallets((prev) => uniqueInv);
-  }, [loadedValuesState.allInvestors]);
-
-  return !!loadedValuesState.projectState &&
-    !!loadedValuesState.milestones[0] ? (
+  return loadedValuesState.isDataLoaded ? (
     <>
       {isShownStop ? (
         <Container>
@@ -53,7 +38,7 @@ const Buidl1 = () => {
         </Container>
       ) : isShownInvest ? (
         <Container>
-          <InvestStatus setIsShownInvest={setIsShownInvest} wallets={wallets} />{" "}
+          <InvestStatus setIsShownInvest={setIsShownInvest} />{" "}
         </Container>
       ) : (
         <>
@@ -76,14 +61,13 @@ const Buidl1 = () => {
           <ProgressSection
             setIsShownStop={setIsShownStop}
             setIsShownWrong={setIsShownWrong}
-            wallets={wallets}
           />
           <FeaturesSec>
             <Calculator />
-            <InvestorsBarChart wallets={wallets} />
+            <InvestorsBarChart />
           </FeaturesSec>
         </HideForMobile>
-        <AboutSection wallets={wallets} />
+        <AboutSection />
       </Container>
       <MobileFooter />
 

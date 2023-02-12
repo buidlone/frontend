@@ -1,3 +1,4 @@
+import { ProjectState } from "../interfaces/enums/ProjectStateEnums";
 import { getActiveVotingTokens } from "./getActiveVotingTokens";
 
 export const isStopAllowed = async (
@@ -14,7 +15,10 @@ export const isStopAllowed = async (
 
   if (address === undefined || address === null) {
     return true;
-  } else if (projectState !== 4 && projectState !== 32) {
+  } else if (
+    projectState !== ProjectState.ONGOING_FUNDRAISER &&
+    projectState !== ProjectState.MILESTONES_ONGOING_BEFORE_LAST
+  ) {
     return true;
   } else if (activeTokens === undefined || activeTokens <= 0) {
     return true;

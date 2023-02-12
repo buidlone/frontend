@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import useCountdown from "../../hooks/useCountdown";
+import { ProjectState } from "../../interfaces/enums/ProjectStateEnums";
 import { TextWrapper } from "./styled";
 
 const ProgressRoadmapTimer = () => {
@@ -17,7 +18,7 @@ const ProgressRoadmapTimer = () => {
   useEffect(() => {}, [projectState]);
 
   switch (projectState) {
-    case 1:
+    case ProjectState.CANCELED:
       return (
         <TextWrapper suspended>
           <span className="topText">Fundraising starts in</span>
@@ -27,7 +28,7 @@ const ProgressRoadmapTimer = () => {
           </span>
         </TextWrapper>
       );
-    case 2:
+    case ProjectState.BEFORE_FUNDRAISER:
       timeTillNextMilestone = useCountdown(fundraisingStartDate);
       return (
         <TextWrapper>
@@ -40,7 +41,7 @@ const ProgressRoadmapTimer = () => {
           </span>
         </TextWrapper>
       );
-    case 4:
+    case ProjectState.ONGOING_FUNDRAISER:
       timeTillNextMilestone = useCountdown(fundraisingEndDate);
       return (
         <TextWrapper>
@@ -54,7 +55,7 @@ const ProgressRoadmapTimer = () => {
         </TextWrapper>
       );
 
-    case 8:
+    case ProjectState.FAILED_FUNDRAISER:
       return (
         <TextWrapper suspended>
           <span className="topText">Fundraiser ends in</span>
@@ -62,7 +63,7 @@ const ProgressRoadmapTimer = () => {
         </TextWrapper>
       );
 
-    case 16:
+    case ProjectState.FUNDRAISER_ENDED_NO_MILESTONES_ONGOING:
       timeTillNextMilestone = useCountdown(
         milestones[currentMilestone].startTime
       );
@@ -80,7 +81,7 @@ const ProgressRoadmapTimer = () => {
         </TextWrapper>
       );
 
-    case 32:
+    case ProjectState.MILESTONES_ONGOING_BEFORE_LAST:
       timeTillNextMilestone = useCountdown(
         milestones[currentMilestone + 1].startTime
       );
@@ -95,7 +96,7 @@ const ProgressRoadmapTimer = () => {
           </span>
         </TextWrapper>
       );
-    case 64:
+    case ProjectState.LAST_MILESTONE_ONGOING:
       timeTillNextMilestone = useCountdown(
         milestones[currentMilestone].endTime
       );
@@ -111,7 +112,7 @@ const ProgressRoadmapTimer = () => {
         </TextWrapper>
       );
 
-    case 128:
+    case ProjectState.TERMINATED_BY_VOTING:
       return (
         <TextWrapper suspended>
           <span className="topText">Next milestone starts in</span>
@@ -119,14 +120,14 @@ const ProgressRoadmapTimer = () => {
         </TextWrapper>
       );
 
-    case 256:
+    case ProjectState.TERMINATED_DUE_TO_INACTIVITY:
       return (
         <TextWrapper suspended>
           <span className="topText">Next milestone starts in</span>
           <span className="daysLeft">Project terminated</span>
         </TextWrapper>
       );
-    case 512:
+    case ProjectState.SUCCESSFULLY_ENDED:
       timeTillNextMilestone = useCountdown(
         milestones[currentMilestone].endTime,
         milestones[0].startTime
@@ -142,7 +143,7 @@ const ProgressRoadmapTimer = () => {
           </span>
         </TextWrapper>
       );
-    case 1024:
+    case ProjectState.UNKNOWN:
       return <TextWrapper>Project state is unknown</TextWrapper>;
 
     default:

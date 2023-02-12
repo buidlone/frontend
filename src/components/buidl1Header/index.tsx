@@ -3,12 +3,14 @@ import { useContext, useEffect, useState } from "react";
 import { Container } from "../../../styles/Container";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
+import { useInvestorData } from "../../hooks/useInvestorData";
 import { roundApprox } from "../../utils/roundValue";
 import { getIndividualValues } from "../../web3/getIndividualValues";
 import { getVotingPower } from "../../web3/getVotingPower";
 import Disclaimer from "../disclaimer";
 import { DesktopDisclaimerContainer } from "../disclaimer/styled";
-import ProjectState, { StatusColor } from "../projectState";
+import ProjectStateLabel, { StatusColor } from "../projectState";
+
 import {
   HeaderInfo,
   HeaderLabel,
@@ -33,6 +35,10 @@ const Buidl1Header = () => {
   ] = useState<string>("0.0000");
   const [votingPower, setVotingPower] = useState<number>(0);
   const [investorRewards, setInvestorRewards] = useState<string>("0.0000");
+
+  const r = useInvestorData(
+    !!address ? "0x27dEb271c3cf0f8b2f9BF9C9908165fa443dfbfA" : undefined
+  );
 
   useEffect(() => {
     if (web3Provider && address) {
@@ -94,7 +100,7 @@ const Buidl1Header = () => {
             </HeaderInline>
             <RoundSectionMobile>
               <Round statusColor={StatusColor}>
-                <ProjectState />
+                <ProjectStateLabel />
               </Round>
             </RoundSectionMobile>
             <div className="lastLine">Project overview</div>
@@ -105,7 +111,7 @@ const Buidl1Header = () => {
       <Container>
         <RoundSection>
           <Round statusColor={StatusColor}>
-            <ProjectState />
+            <ProjectStateLabel />
           </Round>
         </RoundSection>
       </Container>

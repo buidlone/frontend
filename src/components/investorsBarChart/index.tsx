@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { useInvestors } from "../../hooks/useInvestmentHistory";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import { roundPrecise } from "../../utils/roundValue";
 import {
@@ -13,12 +14,13 @@ import {
   InvFooterItem,
 } from "./styled";
 
-const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
-  const { currency, allInvestors } = useContext(LoadedValuesContext);
+const InvestorsBarChart = () => {
+  const { currency } = useContext(LoadedValuesContext);
   const [active, setActive] = useState(false);
   const [max, setMax] = useState<BigNumber>(BigNumber.from(0));
   const [min, setMin] = useState<BigNumber>(BigNumber.from(0));
   const containerRef = React.createRef<HTMLElement>();
+  const { investors, wallets, refetch } = useInvestors();
 
   const handleMouseOver = () => {
     setActive(true);
@@ -29,24 +31,24 @@ const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
 
   const findLowHigh = () => {
     setMax((prev) =>
-      allInvestors.reduce(
+      investors.reduce(
         (max, p) => (p.amount.gt(max) ? p.amount : max),
-        allInvestors[0]?.amount
+        investors[0]?.amount
       )
     );
     setMin((prev) =>
-      allInvestors.reduce(
+      investors.reduce(
         (min, p) => (p.amount.lt(min) ? p.amount : min),
-        allInvestors[0]?.amount
+        investors[0]?.amount
       )
     );
   };
 
   useEffect(() => {
-    if (allInvestors.length !== 0) {
+    if (investors.length !== 0) {
       findLowHigh();
     }
-  }, [allInvestors]);
+  }, [investors]);
 
   return (
     <BarChartBlock>
@@ -55,10 +57,7 @@ const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
         onMouseOut={handleMouseOut}
       >
         <InvHeader>
-          {wallets[0] !== "" ? wallets?.length : 0}{" "}
-          {wallets?.length === 1 && wallets[0] !== ""
-            ? "investor"
-            : "investors"}
+          {wallets} {wallets === 1 ? "investor" : "investors"}
         </InvHeader>
 
         <BarChartScroll
@@ -67,15 +66,15 @@ const InvestorsBarChart = ({ wallets, ...props }: IInvestorsProps) => {
           vertical={false}
           horizontal
         >
-          {allInvestors &&
+          {investors &&
             min.gte(BigNumber.from(0)) &&
             max.gte(BigNumber.from(0)) &&
-            allInvestors.map((inv, index) => {
+            investors.map((inv, index) => {
               return (
                 <BarChartColumn
                   key={index}
                   amount={
-                    allInvestors.length === 1
+                    investors.length === 1
                       ? 100
                       : 5 +
                         (Number(

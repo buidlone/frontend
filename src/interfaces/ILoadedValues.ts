@@ -12,7 +12,7 @@ export type Milestone = {
 
 export type SoftCap = {
   amount: BigNumber;
-  //isReached: boolean;
+  isReached: boolean;
 };
 
 export type Currency = {
@@ -40,11 +40,12 @@ export interface ILoadedValues {
   tokensReserved: BigNumber;
   tokenCurrency: Currency;
   fundsUsedByCreator: string;
-  isSoftCapReached: boolean;
+
   softCapMultiplier: BigNumber;
   hardCapMultiplier: BigNumber;
   maximumWeightDivisor: BigNumber;
   supplyCap: BigNumber;
+  isDataLoaded: boolean;
 }
 
 export interface IMilestoneFundsAllocated {

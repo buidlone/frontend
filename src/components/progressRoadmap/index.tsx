@@ -29,6 +29,7 @@ import {
   buildStyles,
   CircularProgressbarWithChildren,
 } from "react-circular-progressbar";
+import { ProjectState } from "../../interfaces/enums/ProjectStateEnums";
 
 const ProgressRoadmap = () => {
   const { milestones, currentMilestone, projectState } =
@@ -155,9 +156,9 @@ const ProgressRoadmap = () => {
               <PBWrapper>
                 <CircularProgressbarWithChildren
                   value={
-                    projectState === 512
+                    projectState === ProjectState.SUCCESSFULLY_ENDED
                       ? 100
-                      : projectState === 32 || projectState === 64
+                      : projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST || ProjectState.LAST_MILESTONE_ONGOING
                       ? getFullProjectProgress()
                       : 0
                   }
@@ -170,11 +171,11 @@ const ProgressRoadmap = () => {
                     backgroundColor: "#1C2B3A",
                   })}
                 >
-                  {projectState === 512 ? (
+                  {projectState === ProjectState.SUCCESSFULLY_ENDED ? (
                     <CheckMark className="lastMilestone" />
                   ) : (
                     <div className="lastMilestoneProgress">
-                      {projectState === 32 || projectState === 64
+                      {projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST || ProjectState.LAST_MILESTONE_ONGOING
                         ? getFullProjectProgress().toFixed(1)
                         : 0}
                       %

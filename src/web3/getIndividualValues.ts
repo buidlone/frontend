@@ -19,15 +19,17 @@ export const getIndividualValues = async (
     let allocatedProjectTokens = "0";
 
     if (
-      data.project.investments[0]?.investedAmount &&
-      data.project.investments[0]?.allocatedProjectTokens
+      data.project.projectInvestments[0]?.investedAmount &&
+      data.project.projectInvestments[0]?.allocatedProjectTokens
     ) {
       investedAmount = ethers.utils.formatEther(
-        BigNumber.from(data.project.investments[0].investedAmount)
+        BigNumber.from(data.project.projectInvestments[0].investedAmount)
       );
 
       allocatedProjectTokens = ethers.utils.formatEther(
-        BigNumber.from(data.project.investments[0].allocatedProjectTokens)
+        BigNumber.from(
+          data.project.projectInvestments[0].allocatedProjectTokens
+        )
       );
     }
 

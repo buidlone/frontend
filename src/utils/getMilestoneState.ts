@@ -1,3 +1,5 @@
+import { ProjectState } from "../interfaces/enums/ProjectStateEnums";
+
 export function getMilestoneState(
   projectState: number,
   currentMilestoneID: number,
@@ -8,13 +10,20 @@ export function getMilestoneState(
   let suspended = false;
 
   if (
-    (projectState === 32 || projectState === 64) &&
+    (projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST ||
+      projectState === ProjectState.LAST_MILESTONE_ONGOING) &&
     milestoneID === currentMilestoneID
   ) {
     active = true;
-  } else if (milestoneID < currentMilestoneID || projectState === 512) {
+  } else if (
+    milestoneID < currentMilestoneID ||
+    projectState === ProjectState.SUCCESSFULLY_ENDED
+  ) {
     completed = true;
-  } else if (milestoneID === currentMilestoneID && projectState === 128) {
+  } else if (
+    milestoneID === currentMilestoneID &&
+    projectState === ProjectState.TERMINATED_BY_VOTING
+  ) {
     suspended = true;
   }
 

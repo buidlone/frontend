@@ -3,13 +3,11 @@ import ProgressRoadmap from "../progressRoadmap";
 import { ProgressBlockWrapper, ProgressContentWrapper } from "./styled";
 
 interface IProgressSectionProps {
-  wallets: String[];
   setIsShownStop: any;
   setIsShownWrong: any;
 }
 
 const ProgressSection = ({
-  wallets,
   setIsShownStop,
   setIsShownWrong,
   ...props
@@ -21,7 +19,6 @@ const ProgressSection = ({
         <ProgressInfoBlock
           setIsShownWrong={setIsShownWrong}
           setIsShownStop={setIsShownStop}
-          wallets={wallets}
         />
       </ProgressContentWrapper>
     </ProgressBlockWrapper>

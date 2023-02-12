@@ -13,6 +13,7 @@ import { getUsedInvestments } from "../../web3/getUsedInvestments";
 import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { roundApprox } from "../../utils/roundValue";
 import { getIndividualValues } from "../../web3/getIndividualValues";
+import ProjectStateLabel from "../projectState";
 
 const items = [
   {
@@ -49,8 +50,6 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   let milestonePercentage = 0;
 
   if (isMilestoneOngoing) {
-    milestonePercentage = ((currentMilestone + 1) * 100) / milestones.length;
-  } else {
     milestonePercentage = (currentMilestone * 100) / milestones.length;
   }
 
@@ -131,7 +130,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
               color={statusColor && statusColor}
               style={{ position: "unset" }}
             />{" "}
-            <ProjectState />
+            <ProjectStateLabel />
           </div>
         </td>
         <td>
