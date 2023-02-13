@@ -1,9 +1,7 @@
-import { Web3Provider } from "@ethersproject/providers";
 import { useContext, useEffect, useState } from "react";
 import { Container } from "../../../styles/Container";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
-import { useInvestorData } from "../../hooks/useInvestorData";
 import { roundApprox } from "../../utils/roundValue";
 import { getIndividualValues } from "../../web3/getIndividualValues";
 import { getVotingPower } from "../../web3/getVotingPower";
@@ -26,8 +24,7 @@ import {
 } from "./styled";
 
 const Buidl1Header = () => {
-  const { currency, tokenCurrency, totalInvested } =
-    useContext(LoadedValuesContext);
+  const { currency, tokenCurrency } = useContext(LoadedValuesContext);
   const { web3Provider, address } = useContext(Web3Context);
   const [
     totalIndividualInvestedToProject,
@@ -35,10 +32,6 @@ const Buidl1Header = () => {
   ] = useState<string>("0.0000");
   const [votingPower, setVotingPower] = useState<number>(0);
   const [investorRewards, setInvestorRewards] = useState<string>("0.0000");
-
-  const r = useInvestorData(
-    !!address ? "0x27dEb271c3cf0f8b2f9BF9C9908165fa443dfbfA" : undefined
-  );
 
   useEffect(() => {
     if (web3Provider && address) {

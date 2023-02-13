@@ -33,14 +33,11 @@ export interface ILoadedValues {
   projectState: number;
   currency: Currency;
   setTotalInvested: React.Dispatch<React.SetStateAction<BigNumber>>;
-  allInvestors: IInvestor[];
-  setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   percentageDivider: string;
   isMilestoneOngoing: boolean;
   tokensReserved: BigNumber;
   tokenCurrency: Currency;
   fundsUsedByCreator: string;
-
   softCapMultiplier: BigNumber;
   hardCapMultiplier: BigNumber;
   maximumWeightDivisor: BigNumber;

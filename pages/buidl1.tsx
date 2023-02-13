@@ -10,14 +10,12 @@ import InvestorsBarChart from "../src/components/investorsBarChart";
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../src/context/loadedValuesContext";
 import { Spinner, SpinnerText } from "../src/components/navbar/styled";
-import { getAllInvestments } from "../src/web3/getAllInvestments";
 import StopStatus from "../src/components/statusNotification/stopStatus";
 import WrongStatus from "../src/components/statusNotification/wrongStatus";
 import InvestStatus from "../src/components/statusNotification/investStatus";
 import Buidl1Header from "../src/components/buidl1Header";
 import MobileFooter from "../src/components/mobileFooter";
 import Head from "next/head";
-import { useInvestorData } from "../src/hooks/useInvestorData";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);

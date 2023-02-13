@@ -43,8 +43,6 @@ export const loadedValuesInitialState: ILoadedValues = {
     decimals: 0,
   },
   setTotalInvested: () => {},
-  allInvestors: [],
-  setAllInvestors: () => {},
   percentageDivider: "0",
   isMilestoneOngoing: false,
   tokensReserved: BigNumber.from(0),
@@ -95,9 +93,6 @@ export const useLoadValues = () => {
     address: "",
     decimals: 0,
   });
-  const [allInvestors, setAllInvestors] = useState<IInvestor[]>([
-    { caller: "", amount: BigNumber.from(0) },
-  ]);
   const [percentageDivider, setPercentageDivider] = useState<string>("0");
   const [fundsUsedByCreator, setFundsUsedByCreator] = useState<string>("0");
 
@@ -120,15 +115,10 @@ export const useLoadValues = () => {
           InvestmentPoolABI,
           provider
         );
-
         const isMilestoneOngoing = await contract.isAnyMilestoneOngoing();
-        // const allInvestors = await getAllInvestments();
         const fundsUsedByCreator = await contract.getFundsUsed();
-
         setIsMilestoneOngoing(isMilestoneOngoing);
         setFundsUsedByCreator(ethers.utils.formatEther(fundsUsedByCreator));
-        // allInvestors !== undefined &&
-        //   setAllInvestors(allInvestors.allInvestments);
       } catch (error) {
         console.log(error);
         toast.error("Error occurred while retrieving data from blockchain");
@@ -305,8 +295,6 @@ export const useLoadValues = () => {
     projectState,
     currency,
     setTotalInvested,
-    allInvestors,
-    setAllInvestors,
     percentageDivider,
     isMilestoneOngoing,
     tokensReserved,
