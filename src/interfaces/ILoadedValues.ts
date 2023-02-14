@@ -12,7 +12,7 @@ export type Milestone = {
 
 export type SoftCap = {
   amount: BigNumber;
-  //isReached: boolean;
+  isReached: boolean;
 };
 
 export type Currency = {
@@ -33,18 +33,16 @@ export interface ILoadedValues {
   projectState: number;
   currency: Currency;
   setTotalInvested: React.Dispatch<React.SetStateAction<BigNumber>>;
-  allInvestors: IInvestor[];
-  setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   percentageDivider: string;
   isMilestoneOngoing: boolean;
   tokensReserved: BigNumber;
   tokenCurrency: Currency;
   fundsUsedByCreator: string;
-  isSoftCapReached: boolean;
   softCapMultiplier: BigNumber;
   hardCapMultiplier: BigNumber;
   maximumWeightDivisor: BigNumber;
   supplyCap: BigNumber;
+  isDataLoaded: boolean;
 }
 
 export interface IMilestoneFundsAllocated {

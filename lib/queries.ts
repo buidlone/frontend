@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const GET_INITIAL_DATA = gql`
-  query InitialData($id: ID!) {
+export const GET_STATIC_DATA = gql`
+  query StaticData($id: ID!) {
     project(id: $id) {
       acceptedToken {
         decimals
@@ -22,20 +22,13 @@ export const GET_INITIAL_DATA = gql`
       }
       softCap
       hardCap
+      milestonesCount
       milestones {
         milestoneId
         startTime
         endTime
-        isStreamOngoing
-        isSeedAllocationPaid
-        seedFundsAllocation
-        streamFundsAllocation
       }
       percentageDivider
-      totalInvested
-      currentMilestone {
-        milestoneId
-      }
       softCapMultiplier
       hardCapMultiplier
       maximumWeightDivisor
@@ -48,12 +41,91 @@ export const GET_INITIAL_DATA = gql`
   }
 `;
 
-export const GET_INDIVIDUAL_VALUES = gql`
-  query IndividualValues($id: ID!, $investor: Bytes!) {
+export const GET_DYNAMIC_DATA = gql`
+  query DynamicData($id: ID!) {
     project(id: $id) {
-      investments(where: { investor: $investor }) {
-        investedAmount
+      isSoftCapReached
+      hardCap
+      milestones {
+        milestoneId
+        isStreamOngoing
+        isSeedAllocationPaid
+        seedFundsAllocation
+        streamFundsAllocation
+      }
+      totalInvested
+      currentMilestone {
+        milestoneId
+      }
+      isCanceledBeforeFundraiserStart
+      isCanceledDuringMilestones
+      isTerminatedByGelato
+      isEmergencyTerminated
+      distributionPool {
+        didCreatorLockTokens
+      }
+    }
+  }
+`;
+
+export const GET_INVESTOR_VALUES = gql`
+  query InvestorValues($id: ID!, $project: String) {
+    investor(id: $id) {
+      projectInvestments(where: { project: $project }) {
         allocatedProjectTokens
+        claimedProjectTokens
+        investedAmount
+      }
+    }
+  }
+`;
+
+export const GET_INVESTOR_HISTORY = gql`
+  query InvestorHistory($id: ID!, $investor: Bytes!) {
+    singleInvestments(
+      where: { projectInvestment_: { project: $id, investor: $investor } }
+    ) {
+      id
+      investor {
+        id
+      }
+      investedAmount
+      transactionHash
+    }
+  }
+`;
+
+export const GET_INVESTMENTS_HISTORY = gql`
+  query InvestmentsHistory($id: ID!) {
+    singleInvestments(where: { projectInvestment_: { project: $id } }) {
+      investor {
+        id
+      }
+      transactionHash
+      investedAmount
+    }
+
+    lowest: singleInvestments(
+      first: 1
+      orderBy: investedAmount
+      orderDirection: asc
+      where: { projectInvestment_: { project: $id } }
+    ) {
+      investedAmount
+      investor {
+        id
+      }
+    }
+
+    highest: singleInvestments(
+      first: 1
+      orderBy: investedAmount
+      orderDirection: desc
+      where: { projectInvestment_: { project: $id } }
+    ) {
+      investedAmount
+      investor {
+        id
       }
     }
   }

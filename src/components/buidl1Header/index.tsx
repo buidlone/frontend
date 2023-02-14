@@ -1,4 +1,3 @@
-import { Web3Provider } from "@ethersproject/providers";
 import { useContext, useEffect, useState } from "react";
 import { Container } from "../../../styles/Container";
 import LoadedValuesContext from "../../context/loadedValuesContext";
@@ -8,7 +7,8 @@ import { getIndividualValues } from "../../web3/getIndividualValues";
 import { getVotingPower } from "../../web3/getVotingPower";
 import Disclaimer from "../disclaimer";
 import { DesktopDisclaimerContainer } from "../disclaimer/styled";
-import ProjectState, { StatusColor } from "../projectState";
+import ProjectStateLabel, { StatusColor } from "../projectState";
+
 import {
   HeaderInfo,
   HeaderLabel,
@@ -24,8 +24,7 @@ import {
 } from "./styled";
 
 const Buidl1Header = () => {
-  const { currency, tokenCurrency, totalInvested } =
-    useContext(LoadedValuesContext);
+  const { currency, tokenCurrency } = useContext(LoadedValuesContext);
   const { web3Provider, address } = useContext(Web3Context);
   const [
     totalIndividualInvestedToProject,
@@ -94,7 +93,7 @@ const Buidl1Header = () => {
             </HeaderInline>
             <RoundSectionMobile>
               <Round statusColor={StatusColor}>
-                <ProjectState />
+                <ProjectStateLabel />
               </Round>
             </RoundSectionMobile>
             <div className="lastLine">Project overview</div>
@@ -105,7 +104,7 @@ const Buidl1Header = () => {
       <Container>
         <RoundSection>
           <Round statusColor={StatusColor}>
-            <ProjectState />
+            <ProjectStateLabel />
           </Round>
         </RoundSection>
       </Container>
