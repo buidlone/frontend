@@ -17,10 +17,8 @@ import {
 const InvestorsBarChart = () => {
   const { currency } = useContext(LoadedValuesContext);
   const [active, setActive] = useState(false);
-  const [max, setMax] = useState<BigNumber>(BigNumber.from(0));
-  const [min, setMin] = useState<BigNumber>(BigNumber.from(0));
   const containerRef = React.createRef<HTMLElement>();
-  const { investors, wallets, refetch } = useInvestors();
+  const { investors, wallets, refetch, min, max } = useInvestors();
 
   const handleMouseOver = () => {
     setActive(true);
@@ -28,27 +26,6 @@ const InvestorsBarChart = () => {
   const handleMouseOut = () => {
     setActive(false);
   };
-
-  const findLowHigh = () => {
-    setMax((prev) =>
-      investors.reduce(
-        (max, p) => (p.amount.gt(max) ? p.amount : max),
-        investors[0]?.amount
-      )
-    );
-    setMin((prev) =>
-      investors.reduce(
-        (min, p) => (p.amount.lt(min) ? p.amount : min),
-        investors[0]?.amount
-      )
-    );
-  };
-
-  useEffect(() => {
-    if (investors.length !== 0) {
-      findLowHigh();
-    }
-  }, [investors]);
 
   return (
     <BarChartBlock>

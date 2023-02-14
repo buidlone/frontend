@@ -22,6 +22,7 @@ export const GET_STATIC_DATA = gql`
       }
       softCap
       hardCap
+      milestonesCount
       milestones {
         milestoneId
         startTime
@@ -97,12 +98,35 @@ export const GET_INVESTOR_HISTORY = gql`
 export const GET_INVESTMENTS_HISTORY = gql`
   query InvestmentsHistory($id: ID!) {
     singleInvestments(where: { projectInvestment_: { project: $id } }) {
-      id
       investor {
         id
       }
       transactionHash
       investedAmount
+    }
+
+    lowest: singleInvestments(
+      first: 1
+      orderBy: investedAmount
+      orderDirection: asc
+      where: { projectInvestment_: { project: $id } }
+    ) {
+      investedAmount
+      investor {
+        id
+      }
+    }
+
+    highest: singleInvestments(
+      first: 1
+      orderBy: investedAmount
+      orderDirection: desc
+      where: { projectInvestment_: { project: $id } }
+    ) {
+      investedAmount
+      investor {
+        id
+      }
     }
   }
 `;

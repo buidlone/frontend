@@ -24,7 +24,7 @@ export const getProjectState = (projectState: number | undefined) => {
     case ProjectState.TERMINATED_BY_VOTING:
       return "Project was terminated by voting";
     case ProjectState.TERMINATED_DUE_TO_INACTIVITY:
-      return "Project was terminated by gelato";
+      return "Project was terminated due to creator inactivity";
 
     case ProjectState.SUCCESSFULLY_ENDED:
       return "Project successfully ended";
@@ -36,8 +36,8 @@ export const getProjectState = (projectState: number | undefined) => {
 };
 
 export const getProjectStatus = (
-  fundraiserEndTime: number,
-  fundraiserStartTime: number,
+  fundraiserEndTime: string,
+  fundraiserStartTime: string,
   isSoftCapReached: boolean,
   isCanceledBeforeFundraiserStart: boolean,
   isEmergencyTerminated: boolean,
@@ -45,17 +45,17 @@ export const getProjectStatus = (
   milestones: any,
   isTerminatedByGelato: boolean,
   isCanceledDuringMilestones: boolean,
-  currentMilestone: any
+  currentMilestone: any,
+  milestonesCount: number
 ) => {
-  const currentTime = new Date().getTime();
-
+  const currentTime = Math.floor(Date.now() / 1000);
   const isFailedFundraiser =
-    currentTime >= fundraiserEndTime && isSoftCapReached == false;
+    currentTime >= Number(fundraiserEndTime) && isSoftCapReached == false;
 
   if (isCanceledBeforeFundraiserStart) {
     return ProjectState.CANCELED;
   } else if (
-    currentTime < fundraiserStartTime &&
+    currentTime < Number(fundraiserStartTime) &&
     isEmergencyTerminated == false
   ) {
     return ProjectState.BEFORE_FUNDRAISER;
@@ -65,28 +65,28 @@ export const getProjectStatus = (
   ) {
     return ProjectState.FAILED_FUNDRAISER;
   } else if (
-    currentTime >= fundraiserStartTime &&
-    currentTime < fundraiserEndTime &&
+    currentTime >= Number(fundraiserStartTime) &&
+    currentTime < Number(fundraiserEndTime) &&
     isEmergencyTerminated == false
   ) {
     return ProjectState.ONGOING_FUNDRAISER;
   } else if (
-    currentTime >= fundraiserEndTime &&
-    currentTime < milestones[0].startTime &&
+    currentTime >= Number(fundraiserEndTime) &&
+    currentTime < Number(milestones[0].startTime) &&
     isFailedFundraiser == false &&
     isEmergencyTerminated == false
   ) {
     return ProjectState.FUNDRAISER_ENDED_NO_MILESTONES_ONGOING;
   } else if (
-    currentTime >= milestones[0].startTime &&
-    currentTime < milestones[milestones.length - 2].endTime &&
+    currentTime >= Number(milestones[0].startTime) &&
+    currentTime < Number(milestones[milestonesCount - 2].endTime) &&
     isFailedFundraiser == false &&
     isEmergencyTerminated == false
   ) {
     return ProjectState.MILESTONES_ONGOING_BEFORE_LAST;
   } else if (
-    currentTime >= milestones[milestones.length - 1].startTime &&
-    currentTime < milestones[milestones.length - 1].endTime &&
+    currentTime >= Number(milestones[milestonesCount - 1].startTime) &&
+    currentTime < Number(milestones[milestonesCount - 1].endTime) &&
     isFailedFundraiser == false &&
     isEmergencyTerminated == false
   ) {
@@ -104,8 +104,8 @@ export const getProjectStatus = (
   ) {
     return ProjectState.TERMINATED_DUE_TO_INACTIVITY;
   } else if (
-    currentTime > milestones[milestones.length - 1].endTime &&
-    currentMilestone.milestoneId == milestones.length - 1 &&
+    currentTime > Number(milestones[milestonesCount - 1].endTime) &&
+    currentMilestone.milestoneId == milestonesCount - 1 &&
     isFailedFundraiser == false &&
     isEmergencyTerminated == false
   ) {

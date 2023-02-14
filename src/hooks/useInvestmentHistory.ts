@@ -14,6 +14,8 @@ export const useInvestors = () => {
   });
   const [investors, setInvestors] = useState<IInvestor[]>([]);
   const [wallets, setWallets] = useState<number>(0);
+  const [min, setMin] = useState<BigNumber>(BigNumber.from(0));
+  const [max, setMax] = useState<BigNumber>(BigNumber.from(0));
 
   useEffect(() => {
     if (!data) return;
@@ -30,6 +32,18 @@ export const useInvestors = () => {
     });
     setInvestors(values.reverse());
     setWallets(uniqueInvestors.size);
+    setMin((prev) => {
+      if (!prev.eq(BigNumber.from(data.lowest[0].investedAmount))) {
+        return BigNumber.from(data.lowest[0].investedAmount);
+      }
+      return prev;
+    });
+    setMax((prev) => {
+      if (!prev.eq(BigNumber.from(data.highest[0].investedAmount))) {
+        return BigNumber.from(data.highest[0].investedAmount);
+      }
+      return prev;
+    });
   }, [data]);
 
   return {
@@ -38,5 +52,7 @@ export const useInvestors = () => {
     loading,
     error,
     refetch,
+    min,
+    max,
   };
 };

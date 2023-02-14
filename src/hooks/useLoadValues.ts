@@ -14,8 +14,6 @@ import {
   Milestone,
   SoftCap,
 } from "../interfaces/ILoadedValues";
-import { IInvestor } from "../interfaces/IInvestors";
-import { getAllInvestments } from "../web3/getAllInvestments";
 import { GET_DYNAMIC_DATA, GET_STATIC_DATA } from "../../lib/queries";
 import { useQuery } from "@apollo/client";
 import { getProjectStatus } from "../utils/getProjectState";
@@ -53,7 +51,6 @@ export const loadedValuesInitialState: ILoadedValues = {
     decimals: 0,
   },
   fundsUsedByCreator: "0",
-
   softCapMultiplier: BigNumber.from(0),
   hardCapMultiplier: BigNumber.from(0),
   maximumWeightDivisor: BigNumber.from(0),
@@ -115,9 +112,9 @@ export const useLoadValues = () => {
           InvestmentPoolABI,
           provider
         );
-        const isMilestoneOngoing = await contract.isAnyMilestoneOngoing();
+
         const fundsUsedByCreator = await contract.getFundsUsed();
-        setIsMilestoneOngoing(isMilestoneOngoing);
+
         setFundsUsedByCreator(ethers.utils.formatEther(fundsUsedByCreator));
       } catch (error) {
         console.log(error);
@@ -191,7 +188,6 @@ export const useLoadValues = () => {
       setSupplyCap(
         BigNumber.from(data.project.governancePool.votingToken.supplyCap)
       );
-
       const formattedMilestones = data.project.milestones.map(
         (milestone: any) => ({
           milestoneId: milestone.milestoneId,
@@ -206,16 +202,26 @@ export const useLoadValues = () => {
 
   useEffect(() => {
     if (!dLoading && dData && data) {
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      setIsMilestoneOngoing(
+        currentTime >= Number(data.project.milestones[0].startTime) &&
+          currentTime <=
+            Number(
+              data.project.milestones[data.project.milestonesCount - 1].endTime
+            )
+      );
+
       setSoftCap((prev) => ({
         ...prev,
         isReached: dData.project.isSoftCapReached,
       }));
-      setCurrentMilestone(dData.project.currentMilestone.milestoneId);
 
+      setCurrentMilestone(dData.project.currentMilestone.milestoneId);
       setTotalInvested(BigNumber.from(dData.project.totalInvested));
       const pState = getProjectStatus(
-        data.project.fundraisingEndDate,
-        data.project.fundraisingStartDate,
+        data.project.fundraiserEndTime,
+        data.project.fundraiserStartTime,
         dData.project.isSoftCapReached,
         dData.project.isCanceledBeforeFundraiserStart,
         dData.project.isEmergencyTerminated,
@@ -223,7 +229,8 @@ export const useLoadValues = () => {
         data.project.milestones,
         dData.project.isTerminatedByGelato,
         dData.project.isCanceledDuringMilestones,
-        dData.project.currentMilestone
+        dData.project.currentMilestone,
+        data.project.milestonesCount
       );
       setProjectState(pState);
 

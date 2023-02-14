@@ -47,11 +47,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   const { web3Provider, address } = useContext(Web3Context);
   const statusColor = StatusColor();
   let today = new Date();
-  let milestonePercentage = 0;
-
-  if (isMilestoneOngoing) {
-    milestonePercentage = (currentMilestone * 100) / milestones.length;
-  }
+  let milestonePercentage = (currentMilestone * 100) / milestones.length;
 
   useEffect(() => {
     const interval = setInterval(() => {

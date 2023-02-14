@@ -71,7 +71,25 @@ const MilestoneFundsSection = () => {
         </FundsSection>
       );
     case ProjectState.TERMINATED_DUE_TO_INACTIVITY:
-      return <FundsSection />;
+      return (
+        <FundsSection>
+          <MilestonePlaceholder suspended>{`M${
+            currentMilestone + 1
+          }`}</MilestonePlaceholder>
+          <FundsBubble active />
+          {milestones.map(
+            (milestone, index) =>
+              milestone.milestoneId == currentMilestone && (
+                <FundsPlaceholder key={milestone.milestoneId} suspended>
+                  {roundPrecise(
+                    milestone.fundsAllocated.totalFundsAllocated
+                  ).replace(/,/g, " ")}{" "}
+                  {currency.label}
+                </FundsPlaceholder>
+              )
+          )}
+        </FundsSection>
+      );
     case ProjectState.SUCCESSFULLY_ENDED:
       return (
         <FundsSection>
