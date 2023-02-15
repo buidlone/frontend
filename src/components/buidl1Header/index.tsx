@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { Container } from "../../../styles/Container";
+import InvestorValuesContext from "../../context/investorContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
 import { roundApprox } from "../../utils/roundValue";
-import { getIndividualValues } from "../../web3/getIndividualValues";
 import { getVotingPower } from "../../web3/getVotingPower";
 import Disclaimer from "../disclaimer";
 import { DesktopDisclaimerContainer } from "../disclaimer/styled";
@@ -26,33 +26,16 @@ import {
 const Buidl1Header = () => {
   const { currency, tokenCurrency } = useContext(LoadedValuesContext);
   const { web3Provider, address } = useContext(Web3Context);
-  const [
-    totalIndividualInvestedToProject,
-    setTotalIndividualInvestedToProject,
-  ] = useState<string>("0.0000");
   const [votingPower, setVotingPower] = useState<number>(0);
-  const [investorRewards, setInvestorRewards] = useState<string>("0.0000");
+  const {
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
   useEffect(() => {
     if (web3Provider && address) {
-      getIndividualValues(address).then((data: any) => {
-        setInvestorRewards(
-          data.allocatedProjectTokens == "0"
-            ? "0.0000"
-            : data.allocatedProjectTokens
-        );
-
-        setTotalIndividualInvestedToProject(
-          data.investedAmount == "0" ? "0.0000" : data.investedAmount
-        );
-      });
-
       getVotingPower(web3Provider, address).then((data: any) => {
         setVotingPower(data);
       });
-    } else {
-      setTotalIndividualInvestedToProject("0.0000");
-      setInvestorRewards("0.0000");
     }
   }, [web3Provider]);
 
@@ -80,11 +63,17 @@ const Buidl1Header = () => {
             </DemoButton>
             <HeaderInline>
               <PersonalInfo className="investment">
-                Your investment: {roundApprox(totalIndividualInvestedToProject)}{" "}
+                Your investment:{" "}
+                {projectInvestments
+                  ? roundApprox(projectInvestments.totalInvestedAmount)
+                  : "0.0000"}{" "}
                 {currency.label}
               </PersonalInfo>
               <PersonalInfo className="reward">
-                Your reward: {roundApprox(investorRewards)}{" "}
+                Your reward:{" "}
+                {projectInvestments
+                  ? roundApprox(projectInvestments.allocatedProjectTokens)
+                  : "0.0000"}{" "}
                 {tokenCurrency.label}
               </PersonalInfo>
               <PersonalInfo className="impact">

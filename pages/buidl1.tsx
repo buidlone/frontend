@@ -19,7 +19,6 @@ import Head from "next/head";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
-
   const [isShownStop, setIsShownStop] = useState(false);
   const [isShownWrong, setIsShownWrong] = useState(false);
   const [isShownInvest, setIsShownInvest] = useState(false);

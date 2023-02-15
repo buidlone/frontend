@@ -13,33 +13,24 @@ import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
 import DetailedPortfolio from "../detailedPortfolio";
 import { getVotingPower } from "../../web3/getVotingPower";
+import InvestorValuesContext from "../../context/investorContext";
 import { roundApprox } from "../../utils/roundValue";
-import { getIndividualValues } from "../../web3/getIndividualValues";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
-  const [
-    totalIndividualInvestedToProject,
-    setTotalIndividualInvestedToProject,
-  ] = useState("0.0000");
   const { currency, totalInvested } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
   const [votingPower, setVotingPower] = useState("0");
   const { web3Provider, address } = useContext(Web3Context);
   const statusColor = StatusColor();
+  const {
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
   useEffect(() => {
     if (web3Provider && address) {
-      getIndividualValues(address).then((data: any) => {
-        setTotalIndividualInvestedToProject(
-          data.investedAmount == "0" ? "0.0000" : data.investedAmount
-        );
-      });
-
       getVotingPower(web3Provider, address).then((data: any) => {
         setVotingPower(data);
       });
-    } else {
-      setTotalIndividualInvestedToProject("0.0000");
     }
   }, [totalInvested._hex, web3Provider, address]);
 
@@ -74,7 +65,10 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
               </a>
             </td>
             <td className="greenText bigger">
-              {roundApprox(totalIndividualInvestedToProject)} {currency.label}
+              {projectInvestments
+                ? roundApprox(projectInvestments.totalInvestedAmount)
+                : "0.0000"}{" "}
+              {currency.label}
             </td>
 
             <td className="flexGap yellowText bigger">

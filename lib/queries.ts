@@ -54,6 +54,7 @@ export const GET_DYNAMIC_DATA = gql`
         streamFundsAllocation
       }
       totalInvested
+      fundsUsedByCreator
       currentMilestone {
         milestoneId
       }
@@ -68,29 +69,23 @@ export const GET_DYNAMIC_DATA = gql`
   }
 `;
 
-export const GET_INVESTOR_VALUES = gql`
+//needs to be queried every time user invests
+export const GET_INVESTOR_DATA = gql`
   query InvestorValues($id: ID!, $project: String) {
     investor(id: $id) {
+      id
       projectInvestments(where: { project: $project }) {
+        id
         allocatedProjectTokens
         claimedProjectTokens
-        investedAmount
+        totalInvestedAmount: investedAmount
+        investmentFlowrates
+        investmentUsed
+        singleInvestments {
+          investedAmount
+          transactionHash
+        }
       }
-    }
-  }
-`;
-
-export const GET_INVESTOR_HISTORY = gql`
-  query InvestorHistory($id: ID!, $investor: Bytes!) {
-    singleInvestments(
-      where: { projectInvestment_: { project: $id, investor: $investor } }
-    ) {
-      id
-      investor {
-        id
-      }
-      investedAmount
-      transactionHash
     }
   }
 `;

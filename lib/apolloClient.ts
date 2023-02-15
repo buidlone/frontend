@@ -10,34 +10,12 @@ const client = new ApolloClient({
           project: {
             merge: true,
           },
-          singleInvestments: {
-            // read(singleInvestments) {
-            //   return singleInvestments && [...singleInvestments].reverse();
-            // },
-          },
+          singleInvestments: {},
           investor: {},
         },
-        
       },
     },
   }),
 });
 
 export default client;
-
-// interface Props {
-//   query: any;
-//   options?: any;
-// }
-// export const useMyQuery = ({ query, options = {} }: Props) => {
-//   const cacheKey = options.cacheKey || query;
-//   const { data, ...result } = useQuery(query, {
-//     ...options,
-//     client,
-//     //fetchPolicy
-//   });
-//   return {
-//     data: data ? data[cacheKey] : undefined,
-//     ...result,
-//   };
-// };

@@ -103,26 +103,6 @@ export const useLoadValues = () => {
     BigNumber.from(0)
   );
   const [supplyCap, setSupplyCap] = useState<BigNumber>(BigNumber.from(0));
-
-  const getValuesFromInvestmentPool = async () => {
-    if (provider) {
-      try {
-        const contract = new ethers.Contract(
-          InvestmentPoolAddress,
-          InvestmentPoolABI,
-          provider
-        );
-
-        const fundsUsedByCreator = await contract.getFundsUsed();
-
-        setFundsUsedByCreator(ethers.utils.formatEther(fundsUsedByCreator));
-      } catch (error) {
-        console.log(error);
-        toast.error("Error occurred while retrieving data from blockchain");
-      }
-    }
-  };
-
   const [isSLoaded, setIsSLoaded] = useState(false);
   const [isDLoaded, setIsDLoaded] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -145,12 +125,9 @@ export const useLoadValues = () => {
     variables: {
       id: PROJECT_ID,
     },
-    pollInterval: 50,
+    pollInterval: 5000,
+    fetchPolicy: "cache-and-network",
   });
-
-  useEffect(() => {
-    getValuesFromInvestmentPool();
-  }, []);
 
   useEffect(() => {
     if (!sLoading && data) {
@@ -263,6 +240,10 @@ export const useLoadValues = () => {
           );
           return { ...milestone, ...updatedMilestone };
         })
+      );
+
+      setFundsUsedByCreator(
+        ethers.utils.formatEther(dData.project.fundsUsedByCreator)
       );
       setIsDLoaded(true);
     }
