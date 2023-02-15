@@ -138,7 +138,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
 
         <td>
           <p>Voted against</p>
-          <p className="yellowText">{votedAgainst} %</p>
+          <p className="yellowText">{votedAgainst ? votedAgainst : 0} %</p>
         </td>
 
         <td>

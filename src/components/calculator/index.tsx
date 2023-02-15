@@ -48,7 +48,6 @@ const Calculator = () => {
     tokensReserved,
     maximumWeightDivisor,
     supplyCap,
-    
   } = useContext(LoadedValuesContext);
 
   const [showModal, setShowModal] = useState(false);
@@ -62,10 +61,10 @@ const Calculator = () => {
   const [over, setOver] = useState(0);
   const [current, setCurrent] = useState<boolean>(true);
   const [timelineValue, setTimelineValue] = useState(
-    ethers.utils.formatEther(hardCap.sub(totalInvested))
+    ethers.utils.formatEther(totalInvested)
   );
   const [markerValue, setMarkerValue] = useState(
-    ethers.utils.formatEther(hardCap.sub(totalInvested))
+    ethers.utils.formatEther(totalInvested)
   );
   const [maxAmount, setMaxAmount] = useState(
     ethers.utils.formatEther(hardCap.sub(totalInvested))
@@ -137,7 +136,7 @@ const Calculator = () => {
       hardCapMultiplier,
       maximumWeightDivisor,
       tokensReserved,
-      supplyCap,
+      supplyCap
     );
 
     if (result) {
