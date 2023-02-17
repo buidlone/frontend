@@ -17,6 +17,7 @@ export const useInvestorValues = (address: string | null | undefined) => {
       project: PROJECT_ID,
     },
     skip: !address,
+    pollInterval: 5000,
     fetchPolicy: "cache-and-network",
   });
 
@@ -42,9 +43,7 @@ export const useInvestorValues = (address: string | null | undefined) => {
             )
           ),
           totalInvestedAmount: ethers.utils.formatEther(
-            BigNumber.from(
-              data.investor.projectInvestments[0].totalInvestedAmount
-            )
+            BigNumber.from(data.investor.projectInvestments[0].investedAmount)
           ),
           claimedProjectTokens:
             data.investor.projectInvestments[0].claimedProjectTokens,

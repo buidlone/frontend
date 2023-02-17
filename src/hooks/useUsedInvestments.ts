@@ -51,7 +51,7 @@ const useRealTimeInvestments = () => {
   };
 
   useEffect(() => {
-    if (!isMilestoneOngoing && projectInvestments) {
+    if (isMilestoneOngoing && projectInvestments) {
       startTimer();
     } else {
       setUsedInvestments("");

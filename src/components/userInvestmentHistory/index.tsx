@@ -24,7 +24,7 @@ const UserInvesmentHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {projectInvestments &&
+            {projectInvestments?.singleInvestments &&
               projectInvestments.singleInvestments.map((item: any) => (
                 <tr key={item.transactionHash}>
                   <td data-label={`Address`} className="token">

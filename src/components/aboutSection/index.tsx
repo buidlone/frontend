@@ -3,9 +3,7 @@ import { useState } from "react";
 import DetailsBlock from "../detailsBlock";
 import { AboutSec, ButtonsWrapper, AboutButton } from "./styled";
 import Buidl1Section from "../buidl1Section";
-import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import Buidl1SectionCarousel from "../buidl1Section/withCarousel";
-import { useInvestors } from "../../hooks/useInvestmentHistory";
 
 const AboutSection = () => {
   const [active, setActive] = useState("details");

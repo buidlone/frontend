@@ -78,7 +78,7 @@ export const GET_INVESTOR_DATA = gql`
         id
         allocatedProjectTokens
         claimedProjectTokens
-        totalInvestedAmount: investedAmount
+        investedAmount
         investmentFlowrates
         investmentUsed
         singleInvestments {
