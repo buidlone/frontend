@@ -16,7 +16,6 @@ const HistoryBlock = () => {
   };
 
   const { currency, totalInvested } = useContext(LoadedValuesContext);
-  //const { history, refetch } = useInvestmentHistory();
   const { investors, refetch } = useInvestors();
 
   useEffect(() => {

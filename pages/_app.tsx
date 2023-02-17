@@ -10,25 +10,28 @@ import { LoadedValuesContextProvider } from "../src/context/loadedValuesContext"
 import { DisclaimerContextProdvider } from "../src/context/disclaimerContext";
 import { ApolloProvider } from "@apollo/client";
 import client from "../lib/apolloClient";
+import { InvestorContextProvider } from "../src/context/investorContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
       <LoadedValuesContextProvider>
         <Web3ContextProvider>
-          <ProjectContextProdvider>
-            <DisclaimerContextProdvider>
-              <SafeHydrate>
-                <Navbar />
-                <Component {...pageProps} />
-                <ToastContainer
-                  hideProgressBar
-                  position="bottom-right"
-                  autoClose={2000}
-                />
-              </SafeHydrate>
-            </DisclaimerContextProdvider>
-          </ProjectContextProdvider>
+          <InvestorContextProvider>
+            <ProjectContextProdvider>
+              <DisclaimerContextProdvider>
+                <SafeHydrate>
+                  <Navbar />
+                  <Component {...pageProps} />
+                  <ToastContainer
+                    hideProgressBar
+                    position="bottom-right"
+                    autoClose={2000}
+                  />
+                </SafeHydrate>
+              </DisclaimerContextProdvider>
+            </ProjectContextProdvider>
+          </InvestorContextProvider>
         </Web3ContextProvider>
       </LoadedValuesContextProvider>
     </ApolloProvider>

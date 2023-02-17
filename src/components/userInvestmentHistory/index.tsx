@@ -1,38 +1,16 @@
-import { useQuery } from "@apollo/client";
 import { ethers } from "ethers";
 import React from "react";
-import { useContext, useEffect, useState } from "react";
-import { GET_INVESTOR_HISTORY } from "../../../lib/queries";
-import { PROJECT_ID } from "../../constants/contractAddresses";
+import { useContext } from "react";
+import InvestorValuesContext from "../../context/investorContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import Web3Context from "../../context/web3Context";
-
 import { BarChartContainer, BarChartScroll } from "../investorsBarChart/styled";
 import { Table } from "../tokenStreamTable/styled";
 
 const UserInvesmentHistory = () => {
-  type History = {
-    address: string;
-    hash: string;
-    amount: string;
-  };
-  const { web3Provider, address } = useContext(Web3Context);
-  const { currency, totalInvested } = useContext(LoadedValuesContext);
+  const { currency } = useContext(LoadedValuesContext);
   const {
-    data: history,
-    error,
-    loading,
-    refetch,
-  } = useQuery(GET_INVESTOR_HISTORY, {
-    variables: {
-      id: PROJECT_ID,
-      investor: address?.toLowerCase(),
-    },
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [totalInvested._hex]);
+    investorValues: { projectInvestments, id },
+  } = useContext(InvestorValuesContext);
 
   return (
     <BarChartContainer>
@@ -46,11 +24,11 @@ const UserInvesmentHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {!!history &&
-              history.singleInvestments.map((item: any) => (
+            {projectInvestments?.singleInvestments &&
+              projectInvestments.singleInvestments.map((item: any) => (
                 <tr key={item.transactionHash}>
                   <td data-label={`Address`} className="token">
-                    {item.investor.id}
+                    {id}
                   </td>
                   <td data-label={`Amount`} className="token">
                     {ethers.utils.formatEther(item.investedAmount)}{" "}

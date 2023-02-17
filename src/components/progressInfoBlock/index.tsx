@@ -126,7 +126,7 @@ const ProgressInfoBlock = ({
           {tokenCurrency.label}
         </Data>
 
-        <Data className="votes">{votedAgainst}%</Data>
+        <Data className="votes">{votedAgainst ? votedAgainst : 0}%</Data>
 
         <Data>
           {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S
