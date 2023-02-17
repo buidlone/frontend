@@ -7,11 +7,7 @@ export type Milestone = {
   endTime: string;
   isStreamOngoing: boolean;
   isSeedAllocationPaid: boolean;
-  //paid: boolean;
-  //totalMilestoneTokenAllocation?: number;
-  //seedAmount: BigNumber;
-  //intervalSeedPortion: BigNumber;
-  //intervalStreamingPortion: BigNumber;
+  fundsAllocated: IMilestoneFundsAllocated;
 };
 
 export type SoftCap = {
@@ -37,18 +33,20 @@ export interface ILoadedValues {
   projectState: number;
   currency: Currency;
   setTotalInvested: React.Dispatch<React.SetStateAction<BigNumber>>;
-  allInvestors: IInvestor[];
-  setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
   percentageDivider: string;
-  milestonesInvestmentsListForFormula: BigNumber[];
   isMilestoneOngoing: boolean;
-  tokensReserved: string;
+  tokensReserved: BigNumber;
   tokenCurrency: Currency;
   fundsUsedByCreator: string;
+  softCapMultiplier: BigNumber;
+  hardCapMultiplier: BigNumber;
+  maximumWeightDivisor: BigNumber;
+  supplyCap: BigNumber;
+  isDataLoaded: boolean;
 }
 
 export interface IMilestoneFundsAllocated {
-  streamAllocated: string;
-  seedAllocated: string;
+  seedFundsAllocation: string;
+  streamFundsAllocation: string;
   totalFundsAllocated: string;
 }

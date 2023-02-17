@@ -43,7 +43,7 @@ export default function FundingRoadmap() {
     <>
       <FProgressWrapper>
         <InlineLabel>
-          {softCap?.isReached ? (
+          {softCap.isReached ? (
             <Image src={unlockedLock} alt="unlocked lock" height={"17px"} />
           ) : (
             <Image src={lockedLock} alt="locked lock" height={"17px"} />

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
 import RPC from "../web3/ethersRPC";
@@ -43,8 +43,6 @@ export const useWeb3Auth = () => {
 
         subscribeAuthEvents(web3auth);
         setWeb3auth(web3auth);
-       
-
         await web3auth.initModal({
           modalConfig: {
             [WALLET_ADAPTERS.OPENLOGIN]: {
@@ -91,6 +89,7 @@ export const useWeb3Auth = () => {
         console.error(error);
       }
     };
+
     const subscribeAuthEvents = (web3auth: Web3Auth) => {
       web3auth.on(ADAPTER_EVENTS.READY, () => {
         console.log("ready");
@@ -123,26 +122,29 @@ export const useWeb3Auth = () => {
   const login = async () => {
     if (!web3auth) {
       console.log("web3auth not initialized yet");
-
       return false;
     }
 
-    const web3authProvider = await web3auth.connect();
-    setProvider(web3authProvider);
+    try {
+      const web3authProvider = await web3auth.connect();
+      setProvider(web3authProvider);
 
-    const web3Provider = new ethers.providers.Web3Provider(
-      web3authProvider as any
-    );
+      const web3Provider = new ethers.providers.Web3Provider(
+        web3authProvider as any
+      );
 
-    setWeb3Provider(web3Provider);
-    const signer = web3Provider.getSigner();
-    const address = await signer.getAddress();
-    const network = await web3Provider.getNetwork();
-    const user = await web3auth.getUserInfo();
+      setWeb3Provider(web3Provider);
+      const signer = web3Provider.getSigner();
+      const address = await signer.getAddress();
+      const network = await web3Provider.getNetwork();
+      const user = await web3auth.getUserInfo();
 
-    setAddress(address);
-    setChainId(network.chainId);
-    setIsConnected(true);
+      setAddress(address);
+      setChainId(network.chainId);
+      setIsConnected(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const logout = async () => {
@@ -161,12 +163,10 @@ export const useWeb3Auth = () => {
 
   useEffect(() => {
     if (!provider || !isConnected) {
-       console.log("provider not initialized yet");
+      console.log("provider not initialized yet");
       return;
     }
     const handleAccountsChanged = async (accounts: string) => {
-      const rpc = new RPC(provider);
-      const web3accounts = await rpc.getAccounts();
       if (accounts.length === 0) {
         console.log("address is 0");
         logout();
@@ -197,12 +197,7 @@ export const useWeb3Auth = () => {
     };
   }, [isConnected, provider]);
 
-  // useEffect(() => {
-  //   if (web3auth && web3auth.cachedAdapter) {
-  //     login();
-  //   }
-  // }, [provider]);
-
+  //currently unused methods
   const authenticateUser = async () => {
     if (!web3auth) {
       console.log("web3auth not initialized yet");

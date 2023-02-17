@@ -19,7 +19,6 @@ import {
 import Slider from "../slider";
 import Modal from "../modal";
 import InvestModal from "../investModal";
-
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
 import { getProjectState } from "../../utils/getProjectState";
@@ -38,8 +37,18 @@ const minStep = 0.0000000000000000001;
 
 const Calculator = () => {
   const { web3Provider, login } = useContext(Web3Context);
-  const { totalInvested, hardCap, currency, projectState, softCap } =
-    useContext(LoadedValuesContext);
+  const {
+    totalInvested,
+    hardCap,
+    currency,
+    projectState,
+    softCap,
+    softCapMultiplier,
+    hardCapMultiplier,
+    tokensReserved,
+    maximumWeightDivisor,
+    supplyCap,
+  } = useContext(LoadedValuesContext);
 
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState<string>("0");
@@ -52,10 +61,10 @@ const Calculator = () => {
   const [over, setOver] = useState(0);
   const [current, setCurrent] = useState<boolean>(true);
   const [timelineValue, setTimelineValue] = useState(
-    ethers.utils.formatEther(hardCap.sub(totalInvested))
+    ethers.utils.formatEther(totalInvested)
   );
   const [markerValue, setMarkerValue] = useState(
-    ethers.utils.formatEther(hardCap.sub(totalInvested))
+    ethers.utils.formatEther(totalInvested)
   );
   const [maxAmount, setMaxAmount] = useState(
     ethers.utils.formatEther(hardCap.sub(totalInvested))
@@ -117,12 +126,17 @@ const Calculator = () => {
       e.preventDefault();
   };
 
-  const inputSumChange = async () => {
-    const result = await getCalculatedVotingTokens(
+  const inputSumChange = () => {
+    const result = getCalculatedVotingTokens(
       ethers.utils.parseEther(amount || "0"),
       softCap.amount,
       hardCap,
-      ethers.utils.parseEther(timelineValue)
+      ethers.utils.parseEther(timelineValue),
+      softCapMultiplier,
+      hardCapMultiplier,
+      maximumWeightDivisor,
+      tokensReserved,
+      supplyCap
     );
 
     if (result) {

@@ -7,39 +7,32 @@ import {
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import Web3Context from "../../context/web3Context";
-import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
 import { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
 import DetailedPortfolio from "../detailedPortfolio";
 import { getVotingPower } from "../../web3/getVotingPower";
+import InvestorValuesContext from "../../context/investorContext";
 import { roundApprox } from "../../utils/roundValue";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
-  const [
-    totalIndividualInvestedToProject,
-    setTotalIndividualInvestedToProject,
-  ] = useState("0");
-  const { currency } = useContext(LoadedValuesContext);
+  const { currency, totalInvested } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
   const [votingPower, setVotingPower] = useState("0");
   const { web3Provider, address } = useContext(Web3Context);
-
   const statusColor = StatusColor();
+  const {
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
   useEffect(() => {
-    if (web3Provider) {
-      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        setTotalIndividualInvestedToProject(data?.totalAmountInvested);
-      });
+    if (web3Provider && address) {
       getVotingPower(web3Provider, address).then((data: any) => {
         setVotingPower(data);
       });
-    } else {
-      setTotalIndividualInvestedToProject("0");
     }
-  });
+  }, [totalInvested._hex, web3Provider, address]);
 
   return (
     <ActiveBlockWrapper>
@@ -72,7 +65,10 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
               </a>
             </td>
             <td className="greenText bigger">
-              {roundApprox(totalIndividualInvestedToProject)} {currency.label}
+              {projectInvestments
+                ? roundApprox(projectInvestments.totalInvestedAmount)
+                : "0.0000"}{" "}
+              {currency.label}
             </td>
 
             <td className="flexGap yellowText bigger">

@@ -21,11 +21,6 @@ const Disclaimer = ({ hideMobile }: any) => {
   const { web3Provider, chainId, address } = useContext(Web3Context);
   const { showDisclaimer, setShowDisclaimer } = useContext(DisclaimerContext);
 
-  useEffect(() => {
-    console.log(web3Provider);
-    console.log(chainId);
-    console.log(typeof chainId);
-  }, [chainId]);
 
   if (hideMobile) {
     return (

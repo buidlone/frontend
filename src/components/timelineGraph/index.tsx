@@ -14,6 +14,7 @@ import {
 } from "./styled";
 import useCountdown from "../../hooks/useCountdown";
 import MilestoneDetails from "../milestoneDetails";
+import { ProjectState } from "../../interfaces/enums/ProjectStateEnums";
 
 interface ITimeline {
   scale: number;
@@ -37,18 +38,18 @@ const TimelineGraph = ({ scale }: ITimeline) => {
   const getTimelineProgress = () => {
     let progress = 0;
 
-    if (projectState === 32 || projectState === 64) {
+    if (projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST || ProjectState.LAST_MILESTONE_ONGOING) {
       let oneMilestonePortion = 100 / milestones.length;
 
       let currentMaxProgress =
-        projectState === 32
+        projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST
           ? oneMilestonePortion * (currentMilestone + 1)
           : 100;
 
       progress =
         (Number(currentDays.timerDays) * currentMaxProgress) /
         Number(maxDays.timerDays);
-    } else if (projectState === 512) {
+    } else if (projectState === ProjectState.SUCCESSFULLY_ENDED) {
       progress = 100;
     }
     return progress;

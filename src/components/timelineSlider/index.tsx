@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { ProjectState } from "../../interfaces/enums/ProjectStateEnums";
 import { ISlider } from "../../interfaces/ISlider";
 import { StyledThumb, StyledTrack } from "../slider/styled";
 
@@ -62,7 +63,12 @@ const TimelineSlider = ({
       marks={[Number(markerValue)]}
       step={step}
       markClassName="example-mark"
-      started={[4, 16, 32, 64, 128].includes(projectState)}
+      started={[
+        ProjectState.ONGOING_FUNDRAISER,
+        ProjectState.FUNDRAISER_ENDED_NO_MILESTONES_ONGOING,
+        ProjectState.MILESTONES_ONGOING_BEFORE_LAST,
+        ProjectState.LAST_MILESTONE_ONGOING,
+      ].includes(projectState)}
       renderMark={(props) => (
         <div data-label="current" onClick={handleMarkerClick} {...props}></div>
       )}

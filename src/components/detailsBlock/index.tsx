@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { useContext } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { useInvestors } from "../../hooks/useInvestmentHistory";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import {
   FlexItem,
@@ -12,7 +13,7 @@ import {
   MobileDivider,
 } from "./styled";
 
-const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
+const DetailsBlock = () => {
   const {
     currency,
     milestones,
@@ -21,6 +22,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
 
     tokenCurrency,
   } = useContext(LoadedValuesContext);
+  const { wallets } = useInvestors();
 
   return (
     <DetailsBlockWrapper>
@@ -41,10 +43,7 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
             </Data>
 
             <Data>
-              {wallets[0] !== "" ? wallets?.length : 0}{" "}
-              {wallets?.length === 1 && wallets[0] !== ""
-                ? "wallet"
-                : "wallets"}
+              {wallets} {wallets === 1 ? "wallet" : "wallets"}
             </Data>
 
             <Data>

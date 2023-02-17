@@ -9,5 +9,5 @@ export interface IWeb3Auth {
   provider?: SafeEventEmitterProvider | null;
   web3Provider?: ethers.providers.Web3Provider | null;
   login: (() => Promise<void | boolean>) | null;
-  logout: (() => Promise<void >) | null;
+  logout: (() => Promise<void>) | null;
 }

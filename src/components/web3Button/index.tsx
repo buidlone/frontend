@@ -32,23 +32,8 @@ const DisconnectButton = ({ disconnect }: DisconnectProps) => {
 export function Web3Button() {
   const a = useContext(Web3Context);
 
-  useEffect(() => {
-    console.log(a);
-  }, [a.address, a.chainId]);
-
   return a.web3Provider && a.address ? (
-    <>
-      <DisconnectButton disconnect={a.logout} />
-
-      <>
-        <div>
-          <button className="card">{a.chainId}</button>
-        </div>
-        <div>
-          <button className="card">{a.address}</button>
-        </div>
-      </>
-    </>
+    <DisconnectButton disconnect={a.logout} />
   ) : (
     <ConnectButton connect={a.login} />
   );

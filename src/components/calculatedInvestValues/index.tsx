@@ -17,9 +17,18 @@ const CalculatedInvestValues = ({
 }: {
   control: Control<InputTypes>;
 }) => {
-  const { totalInvested, hardCap, tokenCurrency, softCap } =
-    useContext(LoadedValuesContext);
-  const { web3Provider } = useContext(Web3Context);
+  const {
+    totalInvested,
+    hardCap,
+    tokenCurrency,
+    softCap,
+    softCapMultiplier,
+    hardCapMultiplier,
+    maximumWeightDivisor,
+    tokensReserved,
+    supplyCap,
+  } = useContext(LoadedValuesContext);
+  const { web3Provider, chainId, address } = useContext(Web3Context);
   const amount = useWatch({
     control,
     name: "amount",
@@ -27,16 +36,20 @@ const CalculatedInvestValues = ({
   });
 
   const [tokens, setTokens] = useState<string>("");
-  const [minVotingPower, setMinVotingPower] = useState<number>(0);
   const [maxVotingPower, setMaxVotingPower] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
 
-  const inputSumChange = async () => {
-    const result = await getCalculatedVotingTokens(
+  const inputSumChange = () => {
+    const result = getCalculatedVotingTokens(
       ethers.utils.parseEther(amount || "0"),
       softCap.amount,
       hardCap,
-      totalInvested
+      totalInvested,
+      softCapMultiplier,
+      hardCapMultiplier,
+      maximumWeightDivisor,
+      tokensReserved,
+      supplyCap
     );
 
     if (result) {
@@ -64,8 +77,8 @@ const CalculatedInvestValues = ({
   };
 
   useEffect(() => {
-    if (web3Provider) {
-      if (web3Provider?.network.chainId === 5) {
+    if (web3Provider && chainId) {
+      if (chainId === 5) {
         const delayDebounceFn = setTimeout(() => {
           if (
             ethers.utils

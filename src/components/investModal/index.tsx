@@ -40,6 +40,7 @@ import { invest } from "../../web3/invest";
 import { BigNumber, ethers } from "ethers";
 import UserInvesmentHistory from "../userInvestmentHistory";
 import CalculatedInvestValues from "../calculatedInvestValues";
+import InvestorValuesContext from "../../context/investorContext";
 
 const items = [
   {
@@ -106,6 +107,10 @@ const InvestModal = ({
     undefined
   );
   const [over, setOver] = useState(0);
+  const {
+    setInvestorValues,
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
   const handleCurrencyChange = (selectedOption: any) => {
     setSelectedCurrency({
@@ -116,8 +121,8 @@ const InvestModal = ({
   };
 
   useEffect(() => {
-    if (web3Provider) {
-      if (web3Provider?.network.chainId === 1) {
+    if (web3Provider && chainId) {
+      if (chainId === 1) {
         setOptions(mainnetCurrencies);
         setNetwork("Ethereum Mainnet");
         setNetworkError("Please connect to Goerli Testnet");
@@ -126,9 +131,10 @@ const InvestModal = ({
           address: mainnetCurrencies[0].address,
           decimals: mainnetCurrencies[0].decimals,
         });
-      } else if (web3Provider?.network.chainId === 5) {
+      } else if (chainId === 5) {
         setOptions([currency]);
         setNetwork("Goerli Testnet");
+        setNetworkError("");
         setSelectedCurrency({
           label: currency.label,
           address: currency.address,
@@ -138,7 +144,7 @@ const InvestModal = ({
         setNetworkError("Please connect to Goerli Testnet");
       }
     }
-  }, []);
+  }, [chainId]);
 
   useEffect(() => {
     if (selectedCurrency?.address) {
@@ -164,6 +170,24 @@ const InvestModal = ({
     trigger("amount");
   };
 
+  const updateInvestorValuesLocally = (amount: string) => {
+    setInvestorValues &&
+      setInvestorValues((prevState: any) => {
+        const currentValue = ethers.utils.parseEther(
+          prevState.projectInvestments?.totalInvestedAmount || "0"
+        );
+        const amountBN = ethers.utils.parseEther(amount);
+        const newValue = ethers.utils.formatEther(currentValue.add(amountBN));
+        return {
+          ...prevState,
+          projectInvestments: {
+            ...prevState.projectInvestments,
+            totalInvestedAmount: newValue,
+          },
+        };
+      });
+  };
+
   const submitForm = async (data: InputTypes) => {
     const amount = getValues("amount");
 
@@ -176,6 +200,8 @@ const InvestModal = ({
         address
       );
       result && setTotalInvested && setTotalInvested(result);
+
+      // updateInvestorValuesLocally(amount);
 
       if (result !== undefined) {
         setIsShownInvest(true);

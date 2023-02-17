@@ -3,11 +3,11 @@ import { useState } from "react";
 import DetailsBlock from "../detailsBlock";
 import { AboutSec, ButtonsWrapper, AboutButton } from "./styled";
 import Buidl1Section from "../buidl1Section";
-import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import Buidl1SectionCarousel from "../buidl1Section/withCarousel";
 
-const AboutSection = ({ wallets, ...props }: IInvestorsProps) => {
+const AboutSection = () => {
   const [active, setActive] = useState("details");
+
 
   return (
     <AboutSec>
@@ -40,7 +40,7 @@ const AboutSection = ({ wallets, ...props }: IInvestorsProps) => {
           About the project
         </AboutButton>
       </ButtonsWrapper>
-      {active === "details" && <DetailsBlock wallets={wallets} />}
+      {active === "details" && <DetailsBlock />}
       {active === "about" && <Buidl1Section />}
       {active === "aboutMobile" && <Buidl1SectionCarousel />}
       {active === "history" && <HistoryBlock />}

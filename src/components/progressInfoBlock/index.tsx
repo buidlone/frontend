@@ -26,9 +26,9 @@ import { ethers } from "ethers";
 import { getVotingPower } from "../../web3/getVotingPower";
 import { getVotedAgainst } from "../../web3/getVotedAgainst";
 import { roundPrecise } from "../../utils/roundValue";
+import { useInvestors } from "../../hooks/useInvestmentHistory";
 
 const ProgressInfoBlock = ({
-  wallets,
   setIsShownStop,
   setIsShownWrong,
   ...props
@@ -50,6 +50,7 @@ const ProgressInfoBlock = ({
   const [votedAgainst, setVotedAgainst] = useState<number | undefined>(0);
   const [stopDisabled, setStopDisabled] = useState(false);
   const [over, setOver] = useState(0);
+  const { wallets } = useInvestors();
 
   useEffect(() => {
     isStopAllowed(projectState, currentMilestone, address, web3Provider).then(
@@ -110,9 +111,7 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {" "}
-          {wallets[0] !== "" ? wallets?.length : 0}{" "}
-          {wallets?.length === 1 && wallets[0] !== "" ? "wallet" : "wallets"}
+          {wallets} {wallets === 1 ? "wallet" : "wallets"}
         </Data>
 
         <Data>
@@ -120,11 +119,14 @@ const ProgressInfoBlock = ({
         </Data>
 
         <Data>
-          {roundPrecise(tokensReserved).replace(/,/g, " ")}{" "}
+          {roundPrecise(ethers.utils.formatEther(tokensReserved)).replace(
+            /,/g,
+            " "
+          )}{" "}
           {tokenCurrency.label}
         </Data>
 
-        <Data className="votes">{votedAgainst}%</Data>
+        <Data className="votes">{votedAgainst ? votedAgainst : 0}%</Data>
 
         <Data>
           {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S

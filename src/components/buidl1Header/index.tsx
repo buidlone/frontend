@@ -1,15 +1,14 @@
-import { Web3Provider } from "@ethersproject/providers";
 import { useContext, useEffect, useState } from "react";
 import { Container } from "../../../styles/Container";
+import InvestorValuesContext from "../../context/investorContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import Web3Context from "../../context/web3Context";
 import { roundApprox } from "../../utils/roundValue";
-import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
-import { getInvestorRewards } from "../../web3/getInvestorRewards";
 import { getVotingPower } from "../../web3/getVotingPower";
 import Disclaimer from "../disclaimer";
 import { DesktopDisclaimerContainer } from "../disclaimer/styled";
-import ProjectState, { StatusColor } from "../projectState";
+import ProjectStateLabel, { StatusColor } from "../projectState";
+
 import {
   HeaderInfo,
   HeaderLabel,
@@ -27,40 +26,22 @@ import {
 const Buidl1Header = () => {
   const { currency, tokenCurrency } = useContext(LoadedValuesContext);
   const { web3Provider, address } = useContext(Web3Context);
-  const [
-    totalIndividualInvestedToProject,
-    setTotalIndividualInvestedToProject,
-  ] = useState<string>("0.0000");
   const [votingPower, setVotingPower] = useState<number>(0);
-  const [investorRewards, setInvestorRewards] = useState<string>("0.0000");
+  const {
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
   useEffect(() => {
-    if (Web3Provider && address) {
-      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        setTotalIndividualInvestedToProject(
-          data?.totalAmountInvested == "0.0"
-            ? "0.0000"
-            : data.totalAmountInvested
-        );
-      });
-
-      getInvestorRewards(web3Provider, address).then((data: any) => {
-        setInvestorRewards(data == "0.0" ? "0.0000" : data);
-      });
-
+    if (web3Provider && address) {
       getVotingPower(web3Provider, address).then((data: any) => {
         setVotingPower(data);
       });
-    } else {
-      setTotalIndividualInvestedToProject("0.0000");
-      setInvestorRewards("0.0000");
     }
   }, [web3Provider]);
 
   return (
     <>
       <BackgroundBlur>
-        
         <Container>
           <DesktopDisclaimerContainer>
             <Disclaimer hideMobile={true} />
@@ -82,11 +63,17 @@ const Buidl1Header = () => {
             </DemoButton>
             <HeaderInline>
               <PersonalInfo className="investment">
-                Your investment: {roundApprox(totalIndividualInvestedToProject)}{" "}
+                Your investment:{" "}
+                {projectInvestments
+                  ? roundApprox(projectInvestments.totalInvestedAmount)
+                  : "0.0000"}{" "}
                 {currency.label}
               </PersonalInfo>
               <PersonalInfo className="reward">
-                Your reward: {roundApprox(investorRewards)}{" "}
+                Your reward:{" "}
+                {projectInvestments
+                  ? roundApprox(projectInvestments.allocatedProjectTokens)
+                  : "0.0000"}{" "}
                 {tokenCurrency.label}
               </PersonalInfo>
               <PersonalInfo className="impact">
@@ -95,7 +82,7 @@ const Buidl1Header = () => {
             </HeaderInline>
             <RoundSectionMobile>
               <Round statusColor={StatusColor}>
-                <ProjectState />
+                <ProjectStateLabel />
               </Round>
             </RoundSectionMobile>
             <div className="lastLine">Project overview</div>
@@ -106,7 +93,7 @@ const Buidl1Header = () => {
       <Container>
         <RoundSection>
           <Round statusColor={StatusColor}>
-            <ProjectState />
+            <ProjectStateLabel />
           </Round>
         </RoundSection>
       </Container>
