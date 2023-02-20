@@ -73,7 +73,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     } else {
       setStopDisabled(true);
     }
-  }, [web3Provider, totalInvested._hex]);
+  }, [web3Provider, totalInvested._hex, address]);
 
   return (
     <>
