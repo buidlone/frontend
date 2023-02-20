@@ -7,7 +7,7 @@ import TimelineBlock from "../src/components/timelineBlock";
 import FooterSection from "../src/components/footerSection";
 import Calculator from "../src/components/calculator";
 import InvestorsBarChart from "../src/components/investorsBarChart";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import LoadedValuesContext from "../src/context/loadedValuesContext";
 import { Spinner, SpinnerText } from "../src/components/navbar/styled";
 import StopStatus from "../src/components/statusNotification/stopStatus";

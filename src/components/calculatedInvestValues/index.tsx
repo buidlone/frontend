@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import { useWatch, Control } from "react-hook-form";
 import LoadedValuesContext from "../../context/loadedValuesContext";
@@ -28,7 +28,7 @@ const CalculatedInvestValues = ({
     tokensReserved,
     supplyCap,
   } = useContext(LoadedValuesContext);
-  const { web3Provider } = useContext(Web3Context);
+  const { web3Provider, chainId, address } = useContext(Web3Context);
   const amount = useWatch({
     control,
     name: "amount",
@@ -77,8 +77,8 @@ const CalculatedInvestValues = ({
   };
 
   useEffect(() => {
-    if (web3Provider) {
-      if (web3Provider?.network.chainId === 5) {
+    if (web3Provider && chainId) {
+      if (chainId === 5) {
         const delayDebounceFn = setTimeout(() => {
           if (
             ethers.utils

@@ -12,16 +12,13 @@ export const getActiveVotingTokens = async (
   address: string | undefined | null,
   currentMilestone: number
 ) => {
-  if (provider) {
+  if (provider && address) {
     try {
       const contractGovernancePoolProvider = new ethers.Contract(
         GovernancePoolAddress,
         GovernancePoolABI,
         provider
       );
-
-      const investmentPoolId =
-        await contractGovernancePoolProvider.getInvestmentPoolId();
 
       const activeTokens =
         await contractGovernancePoolProvider.getActiveVotingTokensBalance(

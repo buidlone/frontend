@@ -100,7 +100,7 @@ const InvestModal = ({
     decimals: currency.decimals,
   });
 
-  const { web3Provider, address } = useContext(Web3Context);
+  const { web3Provider, address, chainId } = useContext(Web3Context);
   const [balance, setBalance] = useState<string>("0");
   const [network, setNetwork] = useState<string | undefined>(undefined);
   const [networkError, setNetworkError] = useState<string | undefined>(
@@ -121,8 +121,8 @@ const InvestModal = ({
   };
 
   useEffect(() => {
-    if (web3Provider) {
-      if (web3Provider?.network.chainId === 1) {
+    if (web3Provider && chainId) {
+      if (chainId === 1) {
         setOptions(mainnetCurrencies);
         setNetwork("Ethereum Mainnet");
         setNetworkError("Please connect to Goerli Testnet");
@@ -131,9 +131,10 @@ const InvestModal = ({
           address: mainnetCurrencies[0].address,
           decimals: mainnetCurrencies[0].decimals,
         });
-      } else if (web3Provider?.network.chainId === 5) {
+      } else if (chainId === 5) {
         setOptions([currency]);
         setNetwork("Goerli Testnet");
+        setNetworkError("");
         setSelectedCurrency({
           label: currency.label,
           address: currency.address,
@@ -143,7 +144,7 @@ const InvestModal = ({
         setNetworkError("Please connect to Goerli Testnet");
       }
     }
-  }, []);
+  }, [chainId]);
 
   useEffect(() => {
     if (selectedCurrency?.address) {
@@ -246,7 +247,7 @@ const InvestModal = ({
   };
 
   const isGoerli = () => {
-    return web3Provider?.network.chainId === 5;
+    return chainId === 5;
   };
 
   return (

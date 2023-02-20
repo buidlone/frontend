@@ -21,7 +21,7 @@ export default function FundingBlock({
   setIsShownWrong,
 }: any) {
   const [showModal, setShowModal] = useState(false);
-  const { web3Provider, connect } = useContext(Web3Context);
+  const { web3Provider, login } = useContext(Web3Context);
   const { projectState, totalInvested, hardCap } =
     useContext(LoadedValuesContext);
 
@@ -37,8 +37,8 @@ export default function FundingBlock({
   const handleConnectClick = async () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
     if (isAllowed) {
-      if (connect) {
-        const isConnected = await connect();
+      if (login) {
+        const isConnected = await login();
         typeof isConnected !== "boolean" && setShowModal(true);
       }
     } else {
