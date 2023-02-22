@@ -34,6 +34,7 @@ export const GET_STATIC_DATA = gql`
       maximumWeightDivisor
       governancePool {
         votingToken {
+          id
           supplyCap
         }
       }
@@ -65,6 +66,13 @@ export const GET_DYNAMIC_DATA = gql`
       distributionPool {
         didCreatorLockTokens
       }
+      governancePool {
+        totalPercentageAgainst
+        votingToken {
+          id
+          currentSupply
+        }
+      }
     }
   }
 `;
@@ -81,10 +89,30 @@ export const GET_INVESTOR_DATA = gql`
         investedAmount
         investmentFlowrates
         investmentUsed
+        currentVotesBalance
+        unusedActiveVotes
         singleInvestments {
           investedAmount
           transactionHash
         }
+        project {
+          governancePool {
+            votingToken {
+              id
+              currentSupply
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const INVEST_MUTATION = gql`
+  mutation InvestLocally($id: ID!, $project: String, $amount: String) {
+    investLocally(id: $id, project: $project, amount: $amount) {
+      projectInvestments(where: { project: $project }) {
+        investedAmount
       }
     }
   }
@@ -92,7 +120,11 @@ export const GET_INVESTOR_DATA = gql`
 
 export const GET_INVESTMENTS_HISTORY = gql`
   query InvestmentsHistory($id: ID!) {
-    singleInvestments(where: { projectInvestment_: { project: $id } }) {
+    singleInvestments(
+      orderBy: creationTime
+      orderDirection: asc
+      where: { projectInvestment_: { project: $id } }
+    ) {
       investor {
         id
       }

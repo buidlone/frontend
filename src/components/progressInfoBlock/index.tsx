@@ -14,19 +14,18 @@ import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import DiscordImg from "../../../public/DiscordSmall.png";
 import OrangeLock from "../../../public/yellow_lock.svg";
 import { TableLink } from "../activeBlock/styled";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import useCountdown from "../../hooks/useCountdown";
 import Tooltip from "../tooltip";
 import Web3Context from "../../context/web3Context";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
-import { isStopAllowed } from "../../web3/isStopAllowed";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import { ethers } from "ethers";
-import { getVotingPower } from "../../web3/getVotingPower";
-import { getVotedAgainst } from "../../web3/getVotedAgainst";
 import { roundPrecise } from "../../utils/roundValue";
 import { useInvestors } from "../../hooks/useInvestmentHistory";
+import InvestorValuesContext from "../../context/investorContext";
+import useIsStopAllowed from "../../hooks/useIsStopAllowed";
 
 const ProgressInfoBlock = ({
   setIsShownStop,
@@ -34,56 +33,38 @@ const ProgressInfoBlock = ({
   ...props
 }: IInvestorsProps) => {
   const { web3Provider, address } = useContext(Web3Context);
-  const [votingPower, setVotingPower] = useState(0);
+
   const {
     totalInvested,
     currency,
     milestones,
     currentMilestone,
-    projectState,
     tokensReserved,
     tokenCurrency,
     fundsUsedByCreator,
+    totalPercentageAgainst,
   } = useContext(LoadedValuesContext);
   const { timerDays, timerHours, timerMinutes, timerSeconds, isExpired } =
     useCountdown(milestones[milestones.length - 1].endTime);
-  const [votedAgainst, setVotedAgainst] = useState<number | undefined>(0);
-  const [stopDisabled, setStopDisabled] = useState(false);
+  const isStopAllowed = useIsStopAllowed();
   const [over, setOver] = useState(0);
   const { wallets } = useInvestors();
-
-  useEffect(() => {
-    isStopAllowed(projectState, currentMilestone, address, web3Provider).then(
-      (data: any) => {
-        setStopDisabled(data);
-      }
-    );
-    if (web3Provider) {
-      setStopDisabled(false);
-    } else {
-      setStopDisabled(true);
-    }
-  }, [web3Provider, totalInvested._hex, address]);
+  const {
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
   const handleStop = async () => {
-    if (web3Provider) {
-      const stopped = await stopProject(web3Provider, address);
+    if (web3Provider && projectInvestments) {
+      const stopped = await stopProject(
+        web3Provider,
+        address,
+        projectInvestments.unusedActiveVotes[currentMilestone]
+      );
       if (stopped === true) {
         setIsShownStop(true);
       } else if (stopped === false) setIsShownWrong(true);
     }
   };
-
-  useEffect(() => {
-    getVotedAgainst().then((data: any) => {
-      setVotedAgainst(data);
-    });
-    if (web3Provider) {
-      getVotingPower(web3Provider, address).then((data: any) => {
-        setVotingPower(data);
-      });
-    }
-  }, [totalInvested._hex]);
 
   return (
     <DetailsCard>
@@ -126,7 +107,9 @@ const ProgressInfoBlock = ({
           {tokenCurrency.label}
         </Data>
 
-        <Data className="votes">{votedAgainst ? votedAgainst : 0}%</Data>
+        <Data className="votes">
+          {totalPercentageAgainst ? Math.round(totalPercentageAgainst) : 0}%
+        </Data>
 
         <Data>
           {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S
@@ -147,7 +130,7 @@ const ProgressInfoBlock = ({
             <div>
               Your word has{" "}
               <span className="votingPower">
-                {votingPower ? votingPower : 0}%
+                {projectInvestments ? projectInvestments.votingPower : 0}%
               </span>{" "}
               power
             </div>
@@ -165,7 +148,7 @@ const ProgressInfoBlock = ({
               </Tooltip>
             </div>
           </VotingWrapper>
-          <OrangeButton disabled={stopDisabled} onClick={handleStop}>
+          <OrangeButton disabled={!isStopAllowed} onClick={handleStop}>
             STOP cash flow
           </OrangeButton>
         </InlineBlock>

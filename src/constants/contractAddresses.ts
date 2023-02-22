@@ -15,6 +15,6 @@ export const NEXT_PUBLIC_INFURA_ID = "124e8573221d41399c3157557e962d98";
 //   "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.3";
 
 export const GRAPHQL_ENDPOINT =
-  "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.8";
+  "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.10";
 
 export const PROJECT_ID = "0xfece3be36328902835bc5f098f16a2ffa7d51a1a";

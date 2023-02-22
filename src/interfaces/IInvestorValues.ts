@@ -14,6 +14,8 @@ export type ProjectInvestments = {
   singleInvestments: SingleInvestments[];
   investmentFlowrates: string[];
   investmentUsed: string[];
+  votingPower: number;
+  unusedActiveVotes: string[];
 };
 
 export interface IInvestorValues {

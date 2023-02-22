@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Container } from "../../../styles/Container";
 import InvestorValuesContext from "../../context/investorContext";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import Web3Context from "../../context/web3Context";
 import { roundApprox } from "../../utils/roundValue";
-import { getVotingPower } from "../../web3/getVotingPower";
 import Disclaimer from "../disclaimer";
 import { DesktopDisclaimerContainer } from "../disclaimer/styled";
 import ProjectStateLabel, { StatusColor } from "../projectState";
@@ -25,19 +23,10 @@ import {
 
 const Buidl1Header = () => {
   const { currency, tokenCurrency } = useContext(LoadedValuesContext);
-  const { web3Provider, address } = useContext(Web3Context);
-  const [votingPower, setVotingPower] = useState<number>(0);
+
   const {
     investorValues: { projectInvestments },
   } = useContext(InvestorValuesContext);
-
-  useEffect(() => {
-    if (web3Provider && address) {
-      getVotingPower(web3Provider, address).then((data: any) => {
-        setVotingPower(data);
-      });
-    }
-  }, [web3Provider]);
 
   return (
     <>
@@ -77,7 +66,8 @@ const Buidl1Header = () => {
                 {tokenCurrency.label}
               </PersonalInfo>
               <PersonalInfo className="impact">
-                Voting power: {votingPower ? votingPower : 0}%
+                Voting power:{" "}
+                {projectInvestments ? projectInvestments.votingPower : 0} %
               </PersonalInfo>
             </HeaderInline>
             <RoundSectionMobile>

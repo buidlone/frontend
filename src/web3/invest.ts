@@ -1,18 +1,22 @@
 import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import { InvestmentPoolAddress } from "../constants/contractAddresses";
+import { Currency } from "../interfaces/ILoadedValues";
 import { getErrorMessage } from "../utils/getErrorMessage";
 import ERC20TokenABI from "../web3/abi/ERC20Token.json";
 import InvestmentPoolABI from "./abi/InvestmentPool.json";
+import { addBuidl1Token } from "./addBuidl1Token";
 
 export const invest = async (
   tokenAddress: string,
-  provider: any,
+  web3Provider: any,
   amount: string,
-  address: string
+  address: string,
+  provider: any,
+  tokenCurrency: Currency
 ) => {
-  if (provider) {
-    const signer = provider.getSigner();
+  if (web3Provider) {
+    const signer = web3Provider.getSigner();
     const tokenContract = new ethers.Contract(
       tokenAddress,
       ERC20TokenABI,
@@ -60,6 +64,8 @@ export const invest = async (
             error: "Transaction was rejected",
           }
         );
+
+        addBuidl1Token(provider, web3Provider, address, tokenCurrency);
         const totalInvestedAmount =
           await investmentPoolContract.getTotalInvestedAmount();
 
@@ -78,6 +84,7 @@ export const invest = async (
             error: "Transaction was rejected",
           }
         );
+        addBuidl1Token(provider, web3Provider, address, tokenCurrency);
         const totalInvestedAmount =
           await investmentPoolContract.getTotalInvestedAmount();
 
