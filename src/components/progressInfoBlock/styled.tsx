@@ -1,7 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { TableLink } from "../activeBlock/styled";
 import { Property, Data, FlexItem1 } from "../detailsBlock/styled";
-import { InfoIcon } from "../timelineBlock/styled";
 
 interface isDisabled {
   disabled?: boolean;

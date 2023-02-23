@@ -5,34 +5,22 @@ import {
   StatusBubble,
 } from "./styled";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
-import Web3Context from "../../context/web3Context";
+import { useContext, useState } from "react";
 import { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
 import DetailedPortfolio from "../detailedPortfolio";
-import { getVotingPower } from "../../web3/getVotingPower";
 import InvestorValuesContext from "../../context/investorContext";
 import { roundApprox } from "../../utils/roundValue";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
-  const { currency, totalInvested } = useContext(LoadedValuesContext);
+  const { currency } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
-  const [votingPower, setVotingPower] = useState("0");
-  const { web3Provider, address } = useContext(Web3Context);
   const statusColor = StatusColor();
   const {
     investorValues: { projectInvestments },
   } = useContext(InvestorValuesContext);
-
-  useEffect(() => {
-    if (web3Provider && address) {
-      getVotingPower(web3Provider, address).then((data: any) => {
-        setVotingPower(data);
-      });
-    }
-  }, [totalInvested._hex, web3Provider, address]);
 
   return (
     <ActiveBlockWrapper>
@@ -72,7 +60,7 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
             </td>
 
             <td className="flexGap yellowText bigger">
-              {votingPower ? votingPower : 0} %
+              {projectInvestments ? projectInvestments.votingPower : 0} %
               <AccordionButtonIcon
                 style={{
                   color: "white",

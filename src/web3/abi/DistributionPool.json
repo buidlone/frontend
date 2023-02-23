@@ -1,6 +1,11 @@
 [
   {
     "inputs": [],
+    "name": "DistributionPool__AllTokensAreAllocated",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "DistributionPool__NoAllocatedTokensLeft",
     "type": "error"
   },
@@ -21,6 +26,16 @@
   },
   {
     "inputs": [],
+    "name": "DistributionPool__ProjectTokensNotLocked",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DistributionPool__StateIsInvalidForWithdrawal",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "DistributionPool__TokenTransferFailed",
     "type": "error"
   },
@@ -36,8 +51,14 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "milestoneId",
+        "name": "amount",
         "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "milestoneId",
+        "type": "uint16"
       }
     ],
     "name": "Allocated",
@@ -93,19 +114,38 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "milestoneId",
+        "name": "amount",
         "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "milestoneId",
+        "type": "uint16"
       }
     ],
     "name": "RemovedAllocation",
     "type": "event"
   },
   {
+    "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "_milestoneId",
+        "name": "amount",
         "type": "uint256"
+      }
+    ],
+    "name": "WithdrewTokens",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "_milestoneId",
+        "type": "uint16"
       },
       {
         "internalType": "address",
@@ -180,9 +220,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_milestoneId",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "name": "getAllocatedAmount",
@@ -240,6 +280,32 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getBeforeFundraiserStateValue",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCanceledProjectStateValue",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -253,6 +319,45 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getFailedFundraiserStateValue",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getFundraiserEndedNoMilestonesOngoingStateValue",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getFundraiserOngoingStateValue",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
       }
     ],
     "stateMutability": "view",
@@ -295,9 +400,9 @@
     "name": "getMilestonesWithAllocation",
     "outputs": [
       {
-        "internalType": "uint256[]",
+        "internalType": "uint16[]",
         "name": "",
-        "type": "uint256[]"
+        "type": "uint16[]"
       }
     ],
     "stateMutability": "view",
@@ -308,12 +413,51 @@
     "name": "getPercentageDivider",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "",
-        "type": "uint256"
+        "type": "uint48"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSuccessfullyEndedStateValue",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTerminatedByGelatoStateValue",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTerminatedByVotingStateValue",
+    "outputs": [
+      {
+        "internalType": "uint24",
+        "name": "",
+        "type": "uint24"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -375,9 +519,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_milestoneId",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "address",
@@ -386,6 +530,13 @@
       }
     ],
     "name": "removeTokensAllocation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawTokens",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

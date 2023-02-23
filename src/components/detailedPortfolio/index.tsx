@@ -1,19 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import Accordion from "../accordion";
 import Web3Context from "../../context/web3Context";
-import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
-import ProjectState, { StatusColor } from "../projectState";
+import { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
-import { isStopAllowed } from "../../web3/isStopAllowed";
 import UserInvesmentHistory from "../userInvestmentHistory";
 import { StatusBubble, TableButton } from "../activeBlock/styled";
-import { getVotedAgainst } from "../../web3/getVotedAgainst";
 import { roundApprox } from "../../utils/roundValue";
 import ProjectStateLabel from "../projectState";
 import InvestorValuesContext from "../../context/investorContext";
 import useRealTimeInvestments from "../../hooks/useUsedInvestments";
-
+import useIsStopAllowed from "../../hooks/useIsStopAllowed";
 
 const items = [
   {
@@ -24,31 +21,31 @@ const items = [
 
 const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   const {
-    projectState,
-    totalInvested,
-    hardCap,
     milestones,
     currentMilestone,
     tokenCurrency,
     currency,
+    totalPercentageAgainst,
   } = useContext(LoadedValuesContext);
 
-  const [stopDisabled, setStopDisabled] = useState(true);
-  const [votedAgainst, setVotedAgainst] = useState<number>(0);
-  const [isAllowed, setIsAllowed] = useState(true);
+  const isStopAllowed = useIsStopAllowed();
   const {
     investorValues: { projectInvestments },
   } = useContext(InvestorValuesContext);
 
   const { usedInvestments, refund } = useRealTimeInvestments();
-
   const { web3Provider, address } = useContext(Web3Context);
   const statusColor = StatusColor();
-  let milestonePercentage = (currentMilestone * 100) / milestones.length;
+
+  const [milestonePercentage, setMilestonePercentage] = useState<number>(0);
 
   const handleStop = async () => {
-    if (web3Provider) {
-      const stopped = await stopProject(web3Provider, address);
+    if (web3Provider && projectInvestments) {
+      const stopped = await stopProject(
+        web3Provider,
+        address,
+        projectInvestments.unusedActiveVotes[currentMilestone]
+      );
       if (stopped === true) {
         setIsShownStop(true);
       } else if (stopped === false) setIsShownWrong(true);
@@ -56,24 +53,8 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   };
 
   useEffect(() => {
-    setIsAllowed(isInvestingAllowed(projectState, hardCap, totalInvested));
-    getVotedAgainst().then((data: any) => {
-      setVotedAgainst(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    isStopAllowed(projectState, currentMilestone, address, web3Provider).then(
-      (data: any) => {
-        setStopDisabled(data);
-      }
-    );
-    if (web3Provider) {
-      setStopDisabled(false);
-    } else {
-      setStopDisabled(true);
-    }
-  }, [web3Provider, totalInvested._hex, address]);
+    setMilestonePercentage((currentMilestone * 100) / milestones.length);
+  }, [currentMilestone]);
 
   return (
     <>
@@ -138,12 +119,14 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
 
         <td>
           <p>Voted against</p>
-          <p className="yellowText">{votedAgainst ? votedAgainst : 0} %</p>
+          <p className="yellowText">
+            {totalPercentageAgainst ? Math.round(totalPercentageAgainst) : 0} %
+          </p>
         </td>
 
         <td>
           <TableButton
-            disabled={stopDisabled}
+            disabled={!isStopAllowed}
             className="stopBtn"
             onClick={handleStop}
           >

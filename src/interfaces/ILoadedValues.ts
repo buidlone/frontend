@@ -22,6 +22,12 @@ export type Currency = {
   decimals: number;
 };
 
+export type VotingToken = {
+  id: string;
+  currentSupply?: BigNumber;
+  supplyCap: BigNumber;
+};
+
 export interface ILoadedValues {
   softCap: SoftCap;
   hardCap: BigNumber;
@@ -41,8 +47,9 @@ export interface ILoadedValues {
   softCapMultiplier: BigNumber;
   hardCapMultiplier: BigNumber;
   maximumWeightDivisor: BigNumber;
-  supplyCap: BigNumber;
+  votingToken: VotingToken;
   isDataLoaded: boolean;
+  totalPercentageAgainst: number;
 }
 
 export interface IMilestoneFundsAllocated {
