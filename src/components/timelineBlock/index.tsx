@@ -3,7 +3,6 @@ import { BlockWrapper, Title } from "../fundingBlock/styled";
 import {
   BottomPartWrapper,
   BottomWrapper,
-  InfoIcon,
   InlineWrapper,
   TopWrapper,
   XButton,

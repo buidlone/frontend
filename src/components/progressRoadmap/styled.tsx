@@ -132,15 +132,6 @@ export const ProgressStep = styled.div<Props>`
     pointer-events: none;
     white-space: nowrap;
   }
-
-  &:hover {
-    opacity: 1;
-    background-color: rgba(0, 196, 255, 0.16);
-
-    & > ${Tooltip} {
-      visibility: visible;
-    }
-  }
 `;
 
 export const MilestoneProgressWrapper = styled.div<Props>`

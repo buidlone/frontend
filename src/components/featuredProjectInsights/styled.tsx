@@ -89,6 +89,11 @@ export const LinkButton = styled.a`
     height: 35px;
     font-size: 16px;
   }
+
+  &.demo {
+    width: 233px;
+    margin-right: auto;
+  }
 `;
 
 export const ProjectInfoWrapper = styled.div`

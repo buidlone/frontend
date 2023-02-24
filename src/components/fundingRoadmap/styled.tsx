@@ -6,6 +6,7 @@ interface Props {
   funds?: string;
   currency?: string;
   softCapPosition?: number;
+  suspended?: boolean;
 }
 
 export const FProgressWrapper = styled.div`
@@ -15,13 +16,13 @@ export const FProgressWrapper = styled.div`
   align-items: center;
 `;
 
-export const FundsWrapper = styled.div`
+export const FundsWrapper = styled.div<Props>`
   display: flex;
   justify-content: space-between;
   width: 100%;
 
   font-size: 14px;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 300;
   padding-top: 1.3%;
 
@@ -30,7 +31,7 @@ export const FundsWrapper = styled.div`
   }
 
   .total {
-    color: #3aedc4;
+    color: ${(props) => (props.suspended ? "#EE8205" : "#3aedc4")};
   }
 `;
 
@@ -45,7 +46,7 @@ export const InlineLabel = styled.div`
 
   & > div {
     margin-bottom: -3.3px;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     font-weight: 300;
     font-size: 14px;
     text-align: center;
@@ -55,7 +56,8 @@ export const InlineLabel = styled.div`
 `;
 
 export const FProgress = styled.div<Props>`
-  background-color: #00ffc4 !important;
+  background-color: ${(props) =>
+    props.suspended ? "#EE8205" : "#00ffc4"} !important;
   left: 0;
   position: relative;
   width: ${(props) => props.progress}% !important;
@@ -75,7 +77,7 @@ export const FundsIndicator = styled.div<Props>`
     content: "${(props) => props?.funds} ${(props) => props?.currency}";
     position: absolute;
     font-size: 0.625rem;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
     color: #00ffc4;
     bottom: -40%;
     left: -2.2rem;

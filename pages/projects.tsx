@@ -5,8 +5,13 @@ import FooterSection from "../src/components/footerSection";
 import Disclaimer from "../src/components/disclaimer";
 import Head from "next/head";
 import { DesktopDisclaimerContainer } from "../src/components/disclaimer/styled";
+import { useContext } from "react";
+import DemoStateContext from "../src/demo/context/demoStateContext";
 
 const Projects = () => {
+  const res = useContext(DemoStateContext);
+  console.log(res.isDemo);
+
   return (
     <>
       <Head>

@@ -22,6 +22,8 @@ const Buidl1 = () => {
   const [isShownStop, setIsShownStop] = useState(false);
   const [isShownWrong, setIsShownWrong] = useState(false);
   const [isShownInvest, setIsShownInvest] = useState(false);
+  console.log(loadedValuesState);
+  
 
   return loadedValuesState.isDataLoaded ? (
     <>
@@ -77,23 +79,5 @@ const Buidl1 = () => {
     </>
   );
 };
-
-// export async function getStaticProps() {
-//   const { data } = await client.query({
-//     query: gql`
-//       query Milestones {
-//         milestones {
-//           milestoneId
-//         }
-//       }
-//     `,
-//   });
-
-//   return {
-//     props: {
-//       milestones: data.milestones,
-//     },
-//   };
-// }
 
 export default Buidl1;

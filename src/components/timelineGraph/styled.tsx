@@ -10,6 +10,9 @@ interface Props {
   scale?: number;
   completed?: boolean;
   ref?: any;
+  suspended?: boolean;
+
+  investigation?: boolean;
 }
 
 const pulse = keyframes`
@@ -152,7 +155,12 @@ export const TimelineStep = styled.div<Props>`
     opacity: 0.45;
 
     ${(props) => {
-      if (props.current) {
+      if (props.suspended || (props.current && props.investigation)) {
+        return `
+        background: transparent linear-gradient(180deg, #FF8900 0%, #FF890000 100%) 0% 0% no-repeat padding-box;
+opacity: 1;
+`;
+      } else if (props.current) {
         return `
         background: transparent linear-gradient(180deg, #00C4FF 0%, #00C4FF00 100%) 0% 0% no-repeat padding-box;
         `;
@@ -170,7 +178,7 @@ opacity: 0.3;
     }};
 
     animation: ${(props) =>
-      props.current
+      props.current || (props.current && props.investigation)
         ? css`
             ${pulse} 3s infinite linear
           `
