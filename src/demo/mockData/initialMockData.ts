@@ -23,7 +23,6 @@ export interface IMockData {
   hardCap: number;
   totalInvested: number;
   milestones: Milestone[];
-  //projectState: number;
   currency: string;
   tokenCurrency: string;
   userValues: UserValues;
@@ -75,7 +74,6 @@ export const initialMockData = {
   maxInvestment: 20000,
   maxReward: 40000,
   maxPower: 15,
-  //projectState: 4,
   currency: "USDT",
   tokenCurrency: "BDL",
   userValues: {
@@ -85,8 +83,60 @@ export const initialMockData = {
     power: 0,
   },
   investors: [
-    5, 25, 600, 400, 2, 150, 900, 1000, 10, 1500, 39, 786, 1300, 1111, 98, 900,
-    1100, 786, 150, 1, 1000, 2000, 1500, 392, 600, 400, 1500, 39, 786, 1300,
-    1500, 39, 786, 888, 150,
+    50, 2500, 6000, 4000, 200, 1500, 9000, 1000, 10000, 1500, 3900, 7860, 1300,
+    1111, 980, 9000, 1100, 7860, 1500, 1, 10000, 2000, 1500, 3920, 6000, 400,
+    15000, 390, 786, 1300, 1500, 390, 786, 8880, 150,
+  ],
+};
+
+export const fakeMockData = {
+  softCap: {
+    amount: 100000,
+    isReached: true,
+  },
+  hardCap: 600000,
+  totalInvested: 105000,
+  milestones: [
+    {
+      milestoneId: 0,
+      startTime: "2023 02 19 11:05:03",
+      endTime: "2023 04 20 12:05:03",
+    },
+    {
+      milestoneId: 1,
+      startTime: "2023 04 20 12:05:03",
+      endTime: "2023 06 19 12:05:03",
+    },
+    {
+      milestoneId: 2,
+      startTime: "2023 06 19 12:05:03",
+      endTime: "2023 08 18 12:05:03",
+    },
+    {
+      milestoneId: 3,
+      startTime: "2023 08 18 12:05:03",
+      endTime: "2023 10 17 12:05:03",
+    },
+    {
+      milestoneId: 4,
+      startTime: "2023 10 17 12:05:03",
+      endTime: "2023 12 16 11:05:03",
+    },
+  ],
+  maxInvestment: 20000,
+  maxReward: 40000,
+  maxPower: 15,
+  currency: "USDT",
+  tokenCurrency: "BDL",
+  userValues: {
+    balance: 0,
+    investment: 20000,
+    reward: 40000,
+    power: 15,
+  },
+  investors: [
+    50, 2500, 6000, 4000, 200, 1500, 9000, 1000, 10000, 1500, 3900, 7860, 1300,
+    1111, 980, 9000, 1100, 7860, 1500, 1, 10000, 2000, 1500, 3920, 6000, 400,
+    15000, 390, 786, 1300, 1500, 390, 786, 8880, 150, 20000,
   ],
 };

@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useContext } from "react";
-import { LinkButton } from "../../../components/featuredProjectInsights/styled";
 import DemoStateContext from "../../context/demoStateContext";
 import {
   BottomSection,
@@ -16,7 +14,7 @@ import {
   Text,
 } from "./styled";
 
-interface IDemoProps {
+export interface IDemoProps {
   onClose(): void;
 }
 

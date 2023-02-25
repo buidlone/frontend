@@ -12,24 +12,34 @@ import Reset from "../../../../public/reset-filter.svg";
 import TaskSelector from "../taskSelector.tsx";
 import { useContext } from "react";
 import DemoMockDataContext from "../../context/demoMockDataContext";
-import { initialMockData } from "../../mockData/initialMockData";
+import { fakeMockData, initialMockData } from "../../mockData/initialMockData";
 import DemoTaskContext from "../../context/demoTaskContext";
+import { tasksData } from "../../mockData/taskData";
 
 const DemoEnvironment = () => {
-  const { setMockData } = useContext(DemoMockDataContext);
-  const { currentTask, setCurrentTask, tasks } = useContext(DemoTaskContext);
+  const {
+    setMockData,
+    mockData: { softCap },
+  } = useContext(DemoMockDataContext);
+  const { currentTask, setCurrentTask, tasks, setTasks } =
+    useContext(DemoTaskContext);
   const handleReset = () => {
     setMockData(initialMockData);
+    setTasks(tasksData);
     setCurrentTask(0);
   };
-  console.log(currentTask);
 
   const handleClickLeft = () => {
     setCurrentTask((prev) => prev - 1);
   };
 
   const handleClickRight = () => {
-    setCurrentTask((prev) => prev + 1);
+    if (currentTask === 0 && !softCap.isReached) {
+      setMockData(fakeMockData);
+      setCurrentTask((prev) => prev + 1);
+    } else {
+      setCurrentTask((prev) => prev + 1);
+    }
   };
 
   return (

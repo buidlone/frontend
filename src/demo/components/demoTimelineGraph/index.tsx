@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import Modal from "../../../components/modal";
 import { getDate, ITimeline } from "../../../components/timelineGraph";
 import {
   DateBar,
@@ -12,6 +13,8 @@ import {
 import { getMilestoneState } from "../../../utils/getMilestoneState";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoTaskContext from "../../context/demoTaskContext";
+import DemoMessagesModal from "../demoMessagesModal";
+import DemoModal from "../demoModal";
 import { InvestigateIcon } from "./styled";
 
 const DemoTimelineGraph = ({ scale }: ITimeline) => {
@@ -23,11 +26,24 @@ const DemoTimelineGraph = ({ scale }: ITimeline) => {
     let progress = currentTask === 0 ? 0 : 30;
     return progress;
   };
+
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <TimelineContainer>
       <TimelineScroll hideScrollbars={true}>
         {currentTask !== 0 && (
-          <InvestigateIcon className="material-icons">error</InvestigateIcon>
+          <>
+            <InvestigateIcon
+              onClick={() => setShowModal(true)}
+              className="material-icons"
+            >
+              error
+            </InvestigateIcon>
+            <Modal show={showModal}>
+              <DemoMessagesModal onClose={() => setShowModal(false)} />
+            </Modal>
+          </>
         )}
         <TimelineBar scale={scale}>
           <TProgress progress={getDemoProgress()} />
@@ -50,17 +66,15 @@ const DemoTimelineGraph = ({ scale }: ITimeline) => {
               ).suspended;
 
               return (
-                <>
-                  <TimelineStep
-                    scale={scale}
-                    key={milestone.milestoneId}
-                    stage={`Milestone ${milestone.milestoneId + 1}`}
-                    completed={completed}
-                    current={active}
-                    suspended={suspended}
-                    investigation={[1,2].includes(currentTask)}
-                  />
-                </>
+                <TimelineStep
+                  scale={scale}
+                  key={milestone.milestoneId}
+                  stage={`Milestone ${milestone.milestoneId + 1}`}
+                  completed={completed}
+                  current={active}
+                  suspended={suspended}
+                  investigation={[1, 2].includes(currentTask)}
+                />
               );
             })}
         </TimelineBar>

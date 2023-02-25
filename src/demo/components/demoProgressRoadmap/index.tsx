@@ -10,10 +10,8 @@ import {
   LockBar,
   MilestoneProgressWrapper,
   MProgressBar,
-  PBContainer,
   Progress,
   ProgressBar,
-  ProgressRoadmapWrapper,
   ProgressStep,
   ScrollableContainer,
   ScrollableContainerWrapper,
@@ -26,14 +24,23 @@ import { DemoProgressRoadmapWrapper, DemoRefundButton } from "./styled";
 
 const DemoProgressRoadmap = () => {
   const {
+    setMockData,
+    mockData,
     mockData: {
       milestones,
-      userValues: { reward },
+      userValues,
+      userValues: { reward, balance, investment },
     },
   } = useContext(DemoMockDataContext);
-  const { tasks, currentTask } = useContext(DemoTaskContext);
+  const { tasks, currentTask, setCurrentTask } = useContext(DemoTaskContext);
 
-  const handleRefundClick = () => {};
+  const handleRefundClick = () => {
+    setMockData({
+      ...mockData,
+      userValues: { ...userValues, balance: investment, investment: 0 },
+    });
+    setCurrentTask(3);
+  };
 
   return (
     <DemoProgressRoadmapWrapper>
@@ -149,7 +156,11 @@ const DemoProgressRoadmap = () => {
         </ScrollableContainer>
       </ScrollableContainerWrapper>
       <DemoRefundButton
-        className={currentTask === 3 ? "" : "disabled"}
+        className={
+          tasks[currentTask].projectState === 8 && currentTask === 2
+            ? ""
+            : "disabled"
+        }
         onClick={handleRefundClick}
       >
         Refund remain cash

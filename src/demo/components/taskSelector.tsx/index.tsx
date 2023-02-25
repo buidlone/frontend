@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AccordionButtonIcon } from "../../../components/accordionContent/styled";
 import DemoTaskContext from "../../context/demoTaskContext";
 import {
@@ -13,6 +13,11 @@ import {
 const TaskSelector = () => {
   const [showMore, setShowMore] = useState(false);
   const { tasks, currentTask } = useContext(DemoTaskContext);
+
+  useEffect(() => {
+    setShowMore(true);
+  }, [currentTask]);
+  
   return (
     <>
       <TaskSelectorWrapper>

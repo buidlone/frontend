@@ -54,7 +54,7 @@ const DemoCalculator = () => {
     setMockData,
   } = useContext(DemoMockDataContext);
 
-  const { currentTask } = useContext(DemoTaskContext);
+  const { currentTask, setCurrentTask } = useContext(DemoTaskContext);
 
   const calculatePowerAndTokens = () => {
     const calcVotingPower = (amount * maxPower) / maxInvestment;
@@ -81,6 +81,7 @@ const DemoCalculator = () => {
   };
 
   const handleInvestClick = () => {
+    const newTotalInvested = totalInvested + amount;
     setMockData({
       ...mockData,
       userValues: {
@@ -91,11 +92,12 @@ const DemoCalculator = () => {
         power: power + votingPower,
       },
       investors: [...investors, amount],
-      totalInvested: totalInvested + amount,
+      totalInvested: newTotalInvested,
       softCap: {
         ...softCap,
         isReached:
-          totalInvested > softCap.amount || totalInvested === softCap.amount
+          newTotalInvested > softCap.amount ||
+          newTotalInvested === softCap.amount
             ? true
             : false,
       },
@@ -112,6 +114,12 @@ const DemoCalculator = () => {
   useEffect(() => {
     calculatePowerAndTokens();
   }, [amount]);
+
+  useEffect(() => {
+    if (softCap.isReached && currentTask === 0) {
+      setCurrentTask(1);
+    }
+  }, [softCap.isReached]);
 
   return (
     <DemoCalculatorBlock>

@@ -2,6 +2,8 @@ import Image from "next/image";
 import styled from "styled-components";
 import { FeaturesSec } from "../../../components/featuredProjectsSection/styled";
 
+
+
 export const EnvironmentDisclaimerContainer = styled.div`
   width: 100%;
   height: 2.75rem;

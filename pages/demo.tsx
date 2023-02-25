@@ -14,11 +14,13 @@ import DemoMockDataContext, {
 import DemoTaskContext, {
   DemoTaskContextProdvider,
 } from "../src/demo/context/demoTaskContext";
+import { useTaskChange } from "../src/demo/hooks/useTaskChange";
 import { BgImage, Container } from "../styles/Container";
 
 import { NextPageWithLayout } from "./_app";
 
 const DemoPage: NextPageWithLayout = () => {
+  useTaskChange();
   return (
     <>
       <BgImage isFixed />

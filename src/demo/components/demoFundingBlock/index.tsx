@@ -21,7 +21,7 @@ const DemoFundingBlock = () => {
     mockData: { softCap, hardCap, totalInvested, currency },
     setMockData,
   } = useContext(DemoMockDataContext);
-  const { currentTask } = useContext(DemoTaskContext);
+  const { currentTask, tasks } = useContext(DemoTaskContext);
 
   const [softCapProgress, setSoftCapProgress] = useState<number>(
     (totalInvested * 100) / softCap.amount
@@ -36,90 +36,82 @@ const DemoFundingBlock = () => {
   }, [totalInvested]);
 
   return (
-    <>
-      <DemoBlockWrapper>
-        <Title>Funding</Title>
-        <DemoFContainer>
-          <>
-            <FProgressWrapper>
-              <InlineLabel>
-                {softCap.isReached ? (
-                  <Image
-                    src={unlockedLock}
-                    alt="unlocked lock"
-                    height={"17px"}
-                  />
-                ) : (
-                  <Image src={lockedLock} alt="locked lock" height={"17px"} />
-                )}
-                <div>Soft Cap</div>
-
-                <Tooltip
-                  nowrap
-                  text={
-                    "Funds needed to start the project, best time to invest"
-                  }
-                >
-                  <Image
-                    src={infoBubbleWhite}
-                    alt="information"
-                    height={"14px"}
-                  />
-                </Tooltip>
-              </InlineLabel>
-              <FundsBar>
-                <FProgress
-                  suspended={currentTask === 3}
-                  progress={softCapProgress > 100 ? 100 : softCapProgress}
-                />
-              </FundsBar>
-              <FundsWrapper suspended={currentTask === 3}>
-                <div className="total">
-                  {totalInvested.toLocaleString("fr-FR")} {currency}
-                </div>
-                <div className="required">
-                  {softCap.amount.toLocaleString("fr-FR")} {currency}
-                </div>
-              </FundsWrapper>
-            </FProgressWrapper>
-            <FProgressWrapper>
-              <InlineLabel>
+    <DemoBlockWrapper>
+      <Title>Funding</Title>
+      <DemoFContainer>
+        <>
+          <FProgressWrapper>
+            <InlineLabel>
+              {softCap.isReached ? (
+                <Image src={unlockedLock} alt="unlocked lock" height={"17px"} />
+              ) : (
                 <Image src={lockedLock} alt="locked lock" height={"17px"} />
+              )}
+              <div>Soft Cap</div>
 
-                <div>Hard Cap</div>
-
-                <Tooltip
-                  nowrap
-                  text={
-                    "Overall funds needed, investment available till hard cap is reached"
-                  }
-                >
-                  <Image
-                    src={infoBubbleWhite}
-                    alt="information"
-                    height={"14px"}
-                  />
-                </Tooltip>
-              </InlineLabel>
-              <FundsBar>
-                <FProgress
-                  progress={hardCapProgress}
-                  suspended={currentTask === 3}
+              <Tooltip
+                nowrap
+                text={"Funds needed to start the project, best time to invest"}
+              >
+                <Image
+                  src={infoBubbleWhite}
+                  alt="information"
+                  height={"14px"}
                 />
-              </FundsBar>
-              <FundsWrapper suspended={currentTask === 3}>
-                <div className="total">
-                  {totalInvested.toLocaleString("fr-FR")} {currency}
-                </div>
-                <div className="required">
-                  {hardCap.toLocaleString("fr-FR")} {currency}
-                </div>
-              </FundsWrapper>
-            </FProgressWrapper>
-          </>
-        </DemoFContainer>
-      </DemoBlockWrapper>
-    </>
+              </Tooltip>
+            </InlineLabel>
+            <FundsBar>
+              <FProgress
+                suspended={tasks[currentTask].projectState === 8}
+                progress={softCapProgress > 100 ? 100 : softCapProgress}
+              />
+            </FundsBar>
+            <FundsWrapper suspended={tasks[currentTask].projectState === 8}>
+              <div className="total">
+                {totalInvested.toLocaleString("fr-FR")} {currency}
+              </div>
+              <div className="required">
+                {softCap.amount.toLocaleString("fr-FR")} {currency}
+              </div>
+            </FundsWrapper>
+          </FProgressWrapper>
+          <FProgressWrapper>
+            <InlineLabel>
+              <Image src={lockedLock} alt="locked lock" height={"17px"} />
+
+              <div>Hard Cap</div>
+
+              <Tooltip
+                nowrap
+                text={
+                  "Overall funds needed, investment available till hard cap is reached"
+                }
+              >
+                <Image
+                  src={infoBubbleWhite}
+                  alt="information"
+                  height={"14px"}
+                />
+              </Tooltip>
+            </InlineLabel>
+            <FundsBar>
+              <FProgress
+                progress={hardCapProgress}
+                suspended={tasks[currentTask].projectState === 8}
+              />
+            </FundsBar>
+            <FundsWrapper suspended={tasks[currentTask].projectState === 8}>
+              <div className="total">
+                {totalInvested.toLocaleString("fr-FR")} {currency}
+              </div>
+              <div className="required">
+                {hardCap.toLocaleString("fr-FR")} {currency}
+              </div>
+            </FundsWrapper>
+          </FProgressWrapper>
+        </>
+      </DemoFContainer>
+    </DemoBlockWrapper>
   );
 };
 

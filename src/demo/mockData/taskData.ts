@@ -13,6 +13,7 @@ export type TaskContext = {
   tasks: task[];
   currentTask: number;
   setCurrentTask: Dispatch<SetStateAction<number>>;
+  setTasks: Dispatch<SetStateAction<task[]>>;
 };
 
 export const tasksData = [

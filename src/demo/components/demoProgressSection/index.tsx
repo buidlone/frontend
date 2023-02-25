@@ -33,9 +33,18 @@ const DemoProgressSection = () => {
       tokenCurrency,
     },
   } = useContext(DemoMockDataContext);
-  const { tasks, currentTask, setCurrentTask } = useContext(DemoTaskContext);
+  const { tasks, setTasks, currentTask, setCurrentTask } =
+    useContext(DemoTaskContext);
   const handleStop = () => {
-    setCurrentTask(3);
+    setTasks(
+      tasks.map((task) => {
+        if (task.id === currentTask) {
+          return { ...task, projectState: 8 };
+        } else {
+          return task;
+        }
+      })
+    );
   };
   return (
     <DemoProgressBlockWrapper>
@@ -101,7 +110,12 @@ const DemoProgressSection = () => {
                     />
                   </Tooltip>
                 </VotingWrapper>
-                <OrangeButton disabled={currentTask !== 2} onClick={handleStop}>
+                <OrangeButton
+                  disabled={
+                    currentTask !== 2 || tasks[currentTask].projectState === 8
+                  }
+                  onClick={handleStop}
+                >
                   STOP cash flow
                 </OrangeButton>
               </InlineBlock>

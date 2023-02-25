@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
+import styled from "styled-components";
 
 export const DModalWrapper = styled.div`
   display: flex;
@@ -96,7 +96,7 @@ export const BottomSection = styled.div`
 `;
 export const Button = styled.button`
   height: 2.5rem;
-  //border: 1px solid #00c4ff;
+
   border-radius: 12px;
 
   display: flex;
@@ -113,11 +113,6 @@ export const Button = styled.button`
   background: #2e314d;
   border: 1px solid #00c4ff;
 
-  /* &:hover {
-    border: 1px solid rgba(255, 255, 255, 1) !important;
-    color: rgba(255, 255, 255, 1) !important;
-  } */
-
   &.back {
     background: #1f233c;
     border: 1px solid #00c4ff;
@@ -131,10 +126,4 @@ export const Button = styled.button`
     color: #ffc400;
     width: 17.563rem;
   }
-
-  /* @media screen and ${breakpoints.Device.mobile} {
-    width: 120px;
-    height: 35px;
-    font-size: 16px;
-  } */
 `;

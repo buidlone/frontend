@@ -1,4 +1,13 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+// const openSlowly = keyframes`
+//   0% {  visibility: none}
+//   100% { }
+// `;
+
+const fadeIn = keyframes` 
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+`;
 
 export const TaskSelectorWrapper = styled.div`
   background: #ffbc0d;
@@ -53,6 +62,7 @@ export const TaskDescriptionContainer = styled.div`
   padding-bottom: 1.3rem;
   border-bottom-left-radius: 17px;
   border-bottom-right-radius: 17px;
+  //animation: ${openSlowly} 1s ease-in-out;
 
   top: 60%;
   right: 0%;
@@ -80,6 +90,7 @@ export const Description = styled.div`
   text-align: left;
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 14px;
+  animation: ${fadeIn} 1s ease-in-out;
 
   color: #15151f;
   .bold {
