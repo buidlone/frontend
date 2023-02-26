@@ -1,12 +1,9 @@
 import styled from "styled-components";
 import { DemoProjectLogo } from "../demoProjectInfoBlock/styled";
-import ScrollContainer from "react-indiana-drag-scroll";
 
 export const DMessagesModalWrapper = styled.div`
   display: flex;
-  //justify-content: flex-start;
   flex-direction: row;
-
   max-width: 48.563rem;
   width: 100%;
   min-height: 29.563rem;
@@ -15,6 +12,9 @@ export const DMessagesModalWrapper = styled.div`
   background: #0d0b1a;
   box-shadow: 0px 0px 20px #000000dd;
   border-radius: 20px;
+  margin: 0rem 3rem;
+  flex-shrink: 1;
+  
 `;
 
 export const LogoSectionWrapper = styled.div`
@@ -65,8 +65,6 @@ export const VoteButton = styled.button`
   color: #ffbc0d;
   font-weight: 400;
   cursor: pointer;
-
-  //margin-left: auto;
 
   &.filled {
     color: #000000;

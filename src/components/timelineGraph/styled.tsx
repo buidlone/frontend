@@ -11,7 +11,6 @@ interface Props {
   completed?: boolean;
   ref?: any;
   suspended?: boolean;
-
   investigation?: boolean;
 }
 

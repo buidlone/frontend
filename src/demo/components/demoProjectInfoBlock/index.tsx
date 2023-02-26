@@ -12,19 +12,23 @@ import {
 import logo from "../../../../public/demo_logo.png";
 import { useContext } from "react";
 import DemoMockDataContext from "../../context/demoMockDataContext";
-import ProjectStateLabel, { StatusColor } from "../demoProjectState";
+import ProjectStateLabel, {
+  StatusColor,
+} from "../../../components/projectState";
 import DemoTaskContext from "../../context/demoTaskContext";
 
 const DemoProjectInfoBlock = () => {
   const {
     mockData: {
-      userValues: { balance, investment, reward, power },
+      userValues: { investment, reward, power },
       currency,
       tokenCurrency,
     },
   } = useContext(DemoMockDataContext);
-  const statusColor = StatusColor();
- 
+
+  const { tasks, currentTask } = useContext(DemoTaskContext);
+  const projectState = tasks[currentTask].projectState;
+  const statusColor = StatusColor({ projectState });
 
   return (
     <InfoBlockWrapper>
@@ -48,7 +52,7 @@ const DemoProjectInfoBlock = () => {
         </DemoProjectDetails>
         <DemoRoundSection>
           <DemoRound statusColor={statusColor}>
-            <ProjectStateLabel />
+            <ProjectStateLabel projectState={projectState} />
           </DemoRound>
         </DemoRoundSection>
       </InsideBlockWrapper>

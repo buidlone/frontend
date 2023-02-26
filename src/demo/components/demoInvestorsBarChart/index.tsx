@@ -16,6 +16,17 @@ const DemoInvestorsBarchart = () => {
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(2000);
 
+  const getAmount = (inv: number) => {
+    const amount =
+      investors.length === 1
+        ? 100
+        : 5 +
+          (Number(
+            ((Number(inv) - Number(min)) / (Number(max) - Number(min))) * 95
+          ) || 0);
+    return amount;
+  };
+
   useEffect(() => {
     setMin(Math.min(...investors));
     setMax(Math.max(...investors));
@@ -28,21 +39,7 @@ const DemoInvestorsBarchart = () => {
 
         <BarChartScroll hideScrollbars={true} vertical={false} horizontal>
           {investors.map((inv, index) => {
-            return (
-              <DemoBarChartColumn
-                key={index}
-                amount={
-                  investors.length === 1
-                    ? 100
-                    : 5 +
-                      (Number(
-                        ((Number(inv) - Number(min)) /
-                          (Number(max) - Number(min))) *
-                          95
-                      ) || 0)
-                }
-              />
-            );
+            return <DemoBarChartColumn key={index} amount={getAmount(inv)} />;
           })}
         </BarChartScroll>
         <InvFooter>

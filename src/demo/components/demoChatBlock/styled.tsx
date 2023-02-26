@@ -13,8 +13,6 @@ export const ChatWindow = styled.div`
   padding-top: 4.4rem;
   padding-top: 18rem;
   width: 100%;
-  //height: 24.701rem;
-  //padding-bottom: 1.576rem;
   padding-left: 1.224rem;
   display: flex;
   flex-direction: column;

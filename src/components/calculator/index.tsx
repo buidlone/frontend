@@ -15,6 +15,8 @@ import {
   VotingRow,
   VotingItem,
   Positioning,
+  InputFieldWrapper,
+  CurrencyIndicator,
 } from "./styled";
 import Slider from "../slider";
 import Modal from "../modal";
@@ -215,25 +217,25 @@ const Calculator = () => {
             </div>
           </InlineWrapper>
 
-          <SelectWrapper
-            currency={
-              currency.label
-                .substring(0, currency.label.length - 1)
-                .toLocaleLowerCase() +
-              currency.label.slice(-1).toLocaleUpperCase()
-            }
-          >
+          <SelectWrapper>
             <div className="blueText">Invested Sum:</div>
-            <InputField
-              type="number"
-              autoComplete="off"
-              name="amount"
-              placeholder=""
-              //defaultValue={"0"}
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              onKeyPress={handleKeyPress}
-            />
+            <InputFieldWrapper>
+              <InputField
+                type="number"
+                autoComplete="off"
+                name="amount"
+                placeholder=""
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+              <CurrencyIndicator>
+                {currency.label
+                  .substring(0, currency.label.length - 1)
+                  .toLocaleLowerCase() +
+                  currency.label.slice(-1).toLocaleUpperCase()}
+              </CurrencyIndicator>
+            </InputFieldWrapper>
           </SelectWrapper>
 
           <Slider

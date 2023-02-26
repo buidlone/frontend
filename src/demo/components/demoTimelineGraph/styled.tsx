@@ -1,4 +1,21 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const bounce = keyframes`
+  0% {
+		transform: scale(0.95);
+		
+	}
+
+	70% {
+		transform: scale(1);
+	
+	}
+
+	100% {
+		transform: scale(0.95);
+		
+	}
+`;
 
 export const InvestigateIcon = styled.span`
   position: absolute;
@@ -8,4 +25,5 @@ export const InvestigateIcon = styled.span`
   left: 28.5%;
   z-index: 1000;
   cursor: pointer;
+  animation: ${bounce} 2s infinite;
 `;

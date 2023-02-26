@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import {
   CalculatorBlock,
   InputField,
@@ -38,7 +38,6 @@ export const MaxButton = styled.button`
   font-size: 20px;
   font-weight: lighter;
   border: none;
-  position: absolute;
   color: #3aedc4;
   opacity: 1;
   right: 24%;
@@ -47,11 +46,37 @@ export const MaxButton = styled.button`
 `;
 export const DemoSelectWrapper = styled(SelectWrapper)`
   width: 83%;
+  position: relative;
+`;
 
+export const InputFieldWrapper = styled.div`
+  width: 14.938rem;
+  height: 2.5rem;
+  position: relative;
+`;
+
+export const CurrencyIndicator = styled.span`
+  position: absolute;
+  color: #00ffc4;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  border-left: 1.5px solid #00ffc4;
+  padding-left: 1%;
+  padding-right: 4%;
+  right: 0%;
+  bottom: 25%;
+`;
+
+export const DemoInputWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
   position: relative;
 `;
 export const DemoInputField = styled(InputField)`
-  width: 14.938rem;
+  width: 100%;
+  height: 100%;
 `;
 
 export const DemoBalance = styled.p`

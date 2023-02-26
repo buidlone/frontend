@@ -15,11 +15,11 @@ import { DemoBlockWrapper, DemoFContainer } from "./styled";
 import { useContext, useEffect, useState } from "react";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoTaskContext from "../../context/demoTaskContext";
+import { ProjectState } from "../../../interfaces/enums/ProjectStateEnums";
 
 const DemoFundingBlock = () => {
   const {
-    mockData: { softCap, hardCap, totalInvested, currency },
-    setMockData,
+    mockData: { softCap, hardCap, totalInvested, currency }
   } = useContext(DemoMockDataContext);
   const { currentTask, tasks } = useContext(DemoTaskContext);
 
@@ -29,6 +29,7 @@ const DemoFundingBlock = () => {
   const [hardCapProgress, setHardCapProgress] = useState<number>(
     (totalInvested * 100) / hardCap
   );
+  const projectState = tasks[currentTask].projectState;
 
   useEffect(() => {
     setSoftCapProgress((totalInvested * 100) / softCap.amount);
@@ -62,11 +63,11 @@ const DemoFundingBlock = () => {
             </InlineLabel>
             <FundsBar>
               <FProgress
-                suspended={tasks[currentTask].projectState === 8}
+                suspended={projectState === ProjectState.TERMINATED_BY_VOTING}
                 progress={softCapProgress > 100 ? 100 : softCapProgress}
               />
             </FundsBar>
-            <FundsWrapper suspended={tasks[currentTask].projectState === 8}>
+            <FundsWrapper suspended={projectState === ProjectState.TERMINATED_BY_VOTING}>
               <div className="total">
                 {totalInvested.toLocaleString("fr-FR")} {currency}
               </div>
@@ -97,10 +98,10 @@ const DemoFundingBlock = () => {
             <FundsBar>
               <FProgress
                 progress={hardCapProgress}
-                suspended={tasks[currentTask].projectState === 8}
+                suspended={projectState === ProjectState.TERMINATED_BY_VOTING}
               />
             </FundsBar>
-            <FundsWrapper suspended={tasks[currentTask].projectState === 8}>
+            <FundsWrapper suspended={projectState === ProjectState.TERMINATED_BY_VOTING}>
               <div className="total">
                 {totalInvested.toLocaleString("fr-FR")} {currency}
               </div>

@@ -1,4 +1,3 @@
-import ScrollContainer from "react-indiana-drag-scroll";
 import { messages } from "../../mockData/messagesData";
 import { DemoProjectLogoInner } from "../demoProjectInfoBlock/styled";
 import logo from "../../../../public/brandmark_blue.svg";
@@ -11,7 +10,7 @@ import {
   MessageText,
   UserLogo,
 } from "./styled";
-import React, { Dispatch, SetStateAction, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 interface IDemoChatBlockProps {
   setIsBottom: Dispatch<SetStateAction<boolean>>;
@@ -19,7 +18,6 @@ interface IDemoChatBlockProps {
 
 const DemoChatBlock = ({ setIsBottom }: IDemoChatBlockProps) => {
   const listInnerRef = React.createRef<HTMLElement>();
-  
 
   const onScroll = () => {
     if (listInnerRef.current) {
@@ -35,8 +33,6 @@ const DemoChatBlock = ({ setIsBottom }: IDemoChatBlockProps) => {
       onScroll={() => onScroll()}
       vertical
       horizontal={false}
-     
-      
     >
       <ChatWindow>
         {messages &&

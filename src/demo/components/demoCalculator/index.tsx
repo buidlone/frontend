@@ -1,13 +1,10 @@
 import Image from "next/image";
 import {
   CalculationWrapper,
-  CalculatorBlock,
   CalculatorContainer,
-  InputField,
   PBContainer,
   PBWrapper,
   Positioning,
-  SelectWrapper,
   VotingItem,
   VotingRow,
   VotingWrapper,
@@ -16,19 +13,22 @@ import { InlineWrapper } from "../../../components/timelineBlock/styled";
 import Tooltip from "../../../components/tooltip";
 import infoBubbleWhite from "../../../../public/info_bubble_white.svg";
 import Slider from "../../../components/slider";
-import { KeyboardEvent, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
-import { GreenButton } from "../../../components/fundingBlock/styled";
 import {
+  CurrencyIndicator,
   DemoBalance,
   DemoCalculatorBlock,
   DemoGreenButton,
   DemoInputField,
+  DemoInputWrapper,
   DemoSelectWrapper,
+  InputFieldWrapper,
   MaxButton,
 } from "./styled";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoTaskContext from "../../context/demoTaskContext";
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 
 const DemoCalculator = () => {
   const [amount, setAmount] = useState<number>(0);
@@ -116,8 +116,8 @@ const DemoCalculator = () => {
   }, [amount]);
 
   useEffect(() => {
-    if (softCap.isReached && currentTask === 0) {
-      setCurrentTask(1);
+    if (softCap.isReached && currentTask === CurrentTask.INVEST) {
+      setCurrentTask(CurrentTask.INVESTIGATE);
     }
   }, [softCap.isReached]);
 
@@ -137,17 +137,21 @@ const DemoCalculator = () => {
             </Tooltip>
           </InlineWrapper>
 
-          <DemoSelectWrapper currency={currency}>
+          <DemoSelectWrapper>
             <div className="blueText">Invested Sum:</div>
-            <DemoInputField
-              type="number"
-              autoComplete="off"
-              name="amount"
-              value={amount}
-              onChange={handleAmountChange}
-            />
-
-            <MaxButton onClick={handleMaxClick}>Max</MaxButton>
+            <DemoInputWrapper>
+              <InputFieldWrapper>
+                <DemoInputField
+                  type="number"
+                  autoComplete="off"
+                  name="amount"
+                  value={amount}
+                  onChange={handleAmountChange}
+                />
+                <CurrencyIndicator>{currency}</CurrencyIndicator>
+              </InputFieldWrapper>
+              <MaxButton onClick={handleMaxClick}>Max</MaxButton>
+            </DemoInputWrapper>
             <DemoBalance>
               Your balance: {balance.toLocaleString("fr-FR")} {currency}
             </DemoBalance>

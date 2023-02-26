@@ -9,9 +9,6 @@ import { useContext } from "react";
 import DemoStateContext from "../src/demo/context/demoStateContext";
 
 const Projects = () => {
-  const res = useContext(DemoStateContext);
-  console.log(res.isDemo);
-
   return (
     <>
       <Head>

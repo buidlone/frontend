@@ -14,7 +14,6 @@ import ProjectStateLabel from "../projectState";
 import InvestorValuesContext from "../../context/investorContext";
 import useRealTimeInvestments from "../../hooks/useUsedInvestments";
 
-
 const items = [
   {
     name: "Investment details",
@@ -43,7 +42,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   const { usedInvestments, refund } = useRealTimeInvestments();
 
   const { web3Provider, address } = useContext(Web3Context);
-  const statusColor = StatusColor();
+  const statusColor = StatusColor({ projectState });
   let milestonePercentage = (currentMilestone * 100) / milestones.length;
 
   const handleStop = async () => {
@@ -86,7 +85,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
               color={statusColor && statusColor}
               style={{ position: "unset" }}
             />{" "}
-            <ProjectStateLabel />
+            <ProjectStateLabel projectState={projectState} />
           </div>
         </td>
         <td>

@@ -14,6 +14,7 @@ export const DModalWrapper = styled.div`
   position: relative;
   padding: 2.3rem 1.5rem;
   gap: 2.375rem;
+  margin: 2.3rem 1.875rem;
 `;
 
 export const Header = styled.h5`
@@ -27,13 +28,14 @@ export const Header = styled.h5`
 `;
 
 export const MiddleSection = styled.div`
-  width: 61.438rem;
+  max-width: 61.438rem;
   height: 15.5rem;
   background: #2e314d 0% 0% no-repeat padding-box;
   border-radius: 20px;
   display: flex;
   flex-direction: row;
   padding: 1.75rem 2rem 1.75rem 4.563rem;
+  justify-content: space-between;
 `;
 
 export const MiddleSectionContent = styled.div`
@@ -41,6 +43,10 @@ export const MiddleSectionContent = styled.div`
   flex-direction: column;
   width: 50%;
   gap: 0.438rem;
+  width: 100%;
+  &.time {
+    width: 20%;
+  }
 `;
 
 export const StepBubble = styled.div`
@@ -96,16 +102,13 @@ export const BottomSection = styled.div`
 `;
 export const Button = styled.button`
   height: 2.5rem;
-
   border-radius: 12px;
-
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Space Grotesk", sans-serif;
   font-weight: 300;
   width: 30%;
-
   color: #00c4ff;
   font-size: 18px;
 

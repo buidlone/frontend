@@ -12,7 +12,6 @@ export const InfoBlockWrapper = styled.div`
   border-radius: 20px;
   width: 100%;
   height: 16.688rem;
-  //margin-top: 1.9rem;
   position: relative;
   padding: 1.893rem 1.875rem;
   gap: 1.438rem;

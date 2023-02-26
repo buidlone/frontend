@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useContext } from "react";
-
 import { Data, Property } from "../../../components/detailsBlock/styled";
 import {
   BottomBlock,
@@ -21,6 +20,8 @@ import {
   DemoProgressBlockWrapper,
   DemoProgressContentWrapper,
 } from "./styled";
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
+import { ProjectState } from "../../../interfaces/enums/ProjectStateEnums";
 
 const DemoProgressSection = () => {
   const {
@@ -35,6 +36,7 @@ const DemoProgressSection = () => {
   } = useContext(DemoMockDataContext);
   const { tasks, setTasks, currentTask, setCurrentTask } =
     useContext(DemoTaskContext);
+  const projectState = tasks[currentTask].projectState;
   const handleStop = () => {
     setTasks(
       tasks.map((task) => {
@@ -46,6 +48,7 @@ const DemoProgressSection = () => {
       })
     );
   };
+
   return (
     <DemoProgressBlockWrapper>
       <DemoProgressContentWrapper>
@@ -77,7 +80,9 @@ const DemoProgressSection = () => {
 
               <Data>4 000 000 {tokenCurrency}</Data>
 
-              <Data className="votes">{currentTask === 3 ? 100 : 0}%</Data>
+              <Data className="votes">
+                {projectState === ProjectState.TERMINATED_BY_VOTING ? 55 : 0}%
+              </Data>
 
               <Data>2Y 250D 13H 20M 10S</Data>
             </DetailsInfoWrapper>
@@ -95,7 +100,9 @@ const DemoProgressSection = () => {
 
                   <div>
                     Your word has{" "}
-                    <span className="votingPower">{power ? power : 0}%</span>{" "}
+                    <span className="votingPower">
+                      {power ? power.toFixed(2) : 0}%
+                    </span>{" "}
                     power
                   </div>
 
@@ -112,11 +119,14 @@ const DemoProgressSection = () => {
                 </VotingWrapper>
                 <OrangeButton
                   disabled={
-                    currentTask !== 2 || tasks[currentTask].projectState === 8
+                    currentTask !== CurrentTask.EVACUATE ||
+                    projectState === ProjectState.TERMINATED_BY_VOTING
                   }
                   onClick={handleStop}
                 >
-                  STOP cash flow
+                  {projectState === ProjectState.TERMINATED_BY_VOTING
+                    ? "You have decided"
+                    : "STOP cash flow"}
                 </OrangeButton>
               </InlineBlock>
             </BottomBlock>

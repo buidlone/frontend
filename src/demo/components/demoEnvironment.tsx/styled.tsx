@@ -1,8 +1,5 @@
-import Image from "next/image";
 import styled from "styled-components";
 import { FeaturesSec } from "../../../components/featuredProjectsSection/styled";
-
-
 
 export const EnvironmentDisclaimerContainer = styled.div`
   width: 100%;
@@ -54,6 +51,7 @@ export const ResetButton = styled.button`
   opacity: 1;
   gap: 1.248rem;
   cursor: pointer;
+  margin-left: 0.633rem;
 `;
 
 export const SwitchTaskButton = styled.button`

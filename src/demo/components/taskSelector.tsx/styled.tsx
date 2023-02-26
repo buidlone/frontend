@@ -1,8 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
-// const openSlowly = keyframes`
-//   0% {  visibility: none}
-//   100% { }
-// `;
+import styled, { keyframes } from "styled-components";
 
 const fadeIn = keyframes` 
   0% { opacity: 0; }
@@ -32,6 +28,7 @@ export const StepIndicator = styled.div`
   font-family: "Space Grotesk", sans-serif;
   font-size: 16px;
   font-weight: 500;
+  white-space: nowrap;
 `;
 
 export const StepBubble = styled.div`
@@ -48,12 +45,12 @@ export const TaskName = styled.p`
   color: #15151f;
   opacity: 1;
   z-index: 2;
+  white-space: nowrap;
 `;
 
 export const TaskDescriptionContainer = styled.div`
   z-index: 1;
   display: block;
-  //overflow: auto;
   height: 11rem;
   width: 100%;
   position: absolute;
@@ -62,8 +59,6 @@ export const TaskDescriptionContainer = styled.div`
   padding-bottom: 1.3rem;
   border-bottom-left-radius: 17px;
   border-bottom-right-radius: 17px;
-  //animation: ${openSlowly} 1s ease-in-out;
-
   top: 60%;
   right: 0%;
 
@@ -84,8 +79,6 @@ export const Description = styled.div`
   justify-content: space-between;
   padding-left: 2.25rem;
   padding-right: 2.25rem;
-  //gap: 0.6rem;
-  //padding: 1.7rem 2.25rem 1.5rem 2.25rem;
   font-weight: 400;
   text-align: left;
   font-family: "IBM Plex Sans", sans-serif;

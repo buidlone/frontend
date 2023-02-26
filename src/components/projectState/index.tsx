@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import LoadedValuesContext from "../../context/loadedValuesContext";
 import {
   StateTextBlue,
   StateTextGreen,
@@ -7,10 +6,13 @@ import {
   StateTextYellow,
 } from "./styled";
 import { ProjectState } from "../../interfaces/enums/ProjectStateEnums";
+import DemoStateContext from "../../demo/context/demoStateContext";
 
-export const StatusColor = () => {
-  const { projectState } = useContext(LoadedValuesContext);
+export interface IStatusProps {
+  projectState: number;
+}
 
+export const StatusColor = ({ projectState }: IStatusProps) => {
   if (
     [
       ProjectState.ONGOING_FUNDRAISER,
@@ -42,8 +44,8 @@ export const StatusColor = () => {
   } else return "transparent";
 };
 
-const ProjectStateLabel = () => {
-  const { projectState } = useContext(LoadedValuesContext);
+const ProjectStateLabel = ({ projectState }: IStatusProps) => {
+  const { isDemo } = useContext(DemoStateContext);
 
   if (
     [
@@ -53,24 +55,25 @@ const ProjectStateLabel = () => {
       ProjectState.LAST_MILESTONE_ONGOING,
     ].includes(projectState)
   ) {
-    return <StateTextGreen>Ongoing</StateTextGreen>;
+    return (
+      <StateTextGreen isDemo={isDemo}>
+        {isDemo ? "Active - Private round" : "Ongoing"}
+      </StateTextGreen>
+    );
   } else if (
     [ProjectState.CANCELED, ProjectState.FAILED_FUNDRAISER].includes(
       projectState
     )
   ) {
-    return <StateTextBlue>Canceled</StateTextBlue>;
+    return <StateTextBlue isDemo={isDemo}>Canceled</StateTextBlue>;
   } else if (projectState === ProjectState.BEFORE_FUNDRAISER) {
-    return <StateTextYellow>Not started</StateTextYellow>;
-  } else if (
-    [
-      ProjectState.TERMINATED_BY_VOTING,
-      ProjectState.TERMINATED_DUE_TO_INACTIVITY,
-    ].includes(projectState)
-  ) {
-    return <StateTextOrange>Terminated</StateTextOrange>;
+    return <StateTextYellow isDemo={isDemo}>Not started</StateTextYellow>;
+  } else if (projectState === ProjectState.TERMINATED_BY_VOTING) {
+    return <StateTextOrange isDemo={isDemo}>Suspended</StateTextOrange>;
+  } else if (projectState === ProjectState.TERMINATED_DUE_TO_INACTIVITY) {
+    return <StateTextOrange isDemo={isDemo}>Terminated</StateTextOrange>;
   } else if (projectState === ProjectState.SUCCESSFULLY_ENDED) {
-    return <StateTextBlue>Ended</StateTextBlue>;
+    return <StateTextBlue isDemo={isDemo}>Ended</StateTextBlue>;
   } else if (projectState === ProjectState.UNKNOWN) {
     return <>¯\_(ツ)_/¯</>; // TODO: decide what is shown to user when status is unknown
   } else {

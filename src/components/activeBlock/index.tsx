@@ -17,11 +17,12 @@ import InvestorValuesContext from "../../context/investorContext";
 import { roundApprox } from "../../utils/roundValue";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
-  const { currency, totalInvested } = useContext(LoadedValuesContext);
+  const { currency, totalInvested, projectState } =
+    useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
   const [votingPower, setVotingPower] = useState("0");
   const { web3Provider, address } = useContext(Web3Context);
-  const statusColor = StatusColor();
+  const statusColor = StatusColor({ projectState });
   const {
     investorValues: { projectInvestments },
   } = useContext(InvestorValuesContext);

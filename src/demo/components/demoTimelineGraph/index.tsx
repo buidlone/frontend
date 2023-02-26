@@ -10,11 +10,11 @@ import {
   TimelineStep,
   TProgress,
 } from "../../../components/timelineGraph/styled";
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 import { getMilestoneState } from "../../../utils/getMilestoneState";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoTaskContext from "../../context/demoTaskContext";
 import DemoMessagesModal from "../demoMessagesModal";
-import DemoModal from "../demoModal";
 import { InvestigateIcon } from "./styled";
 
 const DemoTimelineGraph = ({ scale }: ITimeline) => {
@@ -23,9 +23,11 @@ const DemoTimelineGraph = ({ scale }: ITimeline) => {
   } = useContext(DemoMockDataContext);
   const { tasks, currentTask } = useContext(DemoTaskContext);
   const getDemoProgress = () => {
-    let progress = currentTask === 0 ? 0 : 30;
+    let progress = currentTask === CurrentTask.INVEST ? 0 : 30;
     return progress;
   };
+  const projectState = tasks[currentTask].projectState;
+  const currentMilestone = tasks[currentTask].currentMilestone;
 
   const [showModal, setShowModal] = useState(false);
 
@@ -50,18 +52,18 @@ const DemoTimelineGraph = ({ scale }: ITimeline) => {
           {milestones &&
             milestones.map((milestone) => {
               const completed = getMilestoneState(
-                tasks[currentTask].projectState,
-                tasks[currentTask].currentMilestone,
+                projectState,
+                currentMilestone,
                 milestone.milestoneId
               ).completed;
               const active = getMilestoneState(
-                tasks[currentTask].projectState,
-                tasks[currentTask].currentMilestone,
+                projectState,
+                currentMilestone,
                 milestone.milestoneId
               ).active;
               const suspended = getMilestoneState(
-                tasks[currentTask].projectState,
-                tasks[currentTask].currentMilestone,
+                projectState,
+                currentMilestone,
                 milestone.milestoneId
               ).suspended;
 

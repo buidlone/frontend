@@ -30,6 +30,7 @@ export interface IMockData {
   maxInvestment: number;
   maxReward: number;
   maxPower: number;
+  refund: number;
 }
 
 export type MockDataContext = {
@@ -74,6 +75,7 @@ export const initialMockData = {
   maxInvestment: 20000,
   maxReward: 40000,
   maxPower: 15,
+  refund: 15000,
   currency: "USDT",
   tokenCurrency: "BDL",
   userValues: {
@@ -126,6 +128,7 @@ export const fakeMockData = {
   maxInvestment: 20000,
   maxReward: 40000,
   maxPower: 15,
+  refund: 15000,
   currency: "USDT",
   tokenCurrency: "BDL",
   userValues: {

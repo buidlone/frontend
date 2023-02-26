@@ -1,4 +1,3 @@
-import { IDemoProps } from "../demoModal";
 import { DemoProjectLogoInner } from "../demoProjectInfoBlock/styled";
 import {
   BottomSection,
@@ -14,8 +13,10 @@ import { Divider } from "../../../components/buidl1Header/styled";
 import DemoChatBlock from "../demoChatBlock";
 import { useContext, useState } from "react";
 import DemoTaskContext from "../../context/demoTaskContext";
+import { IModalProps } from "../../../interfaces/IModal";
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 
-const DemoMessagesModal = ({ onClose }: IDemoProps) => {
+const DemoMessagesModal = ({ onClose }: IModalProps) => {
   const [isBottom, setIsBottom] = useState<boolean>(false);
   const { setCurrentTask, setTasks, tasks, currentTask } =
     useContext(DemoTaskContext);
@@ -25,7 +26,7 @@ const DemoMessagesModal = ({ onClose }: IDemoProps) => {
   });
 
   const handleThinkButtonClick = () => {
-    setCurrentTask(2);
+    setCurrentTask(CurrentTask.EVACUATE);
     onClose();
   };
 
@@ -39,7 +40,7 @@ const DemoMessagesModal = ({ onClose }: IDemoProps) => {
         }
       })
     );
-    setCurrentTask(2);
+    setCurrentTask(CurrentTask.EVACUATE);
     onClose();
   };
 

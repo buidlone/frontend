@@ -1,10 +1,5 @@
 import styled from "styled-components";
-import breakpoints from "../../../../styles/constants";
 import { BackgroundBlur } from "../../../components/buidl1Header/styled";
-
-interface Props {
-  statusColor?: any;
-}
 
 export const DemoBackgroundBlur = styled(BackgroundBlur)`
   height: 22.063rem;
@@ -20,6 +15,7 @@ export const DemoHeaderSection = styled.div`
 `;
 
 export const DemoPersonalInfo = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -41,6 +37,7 @@ export const DemoPersonalInfo = styled.div`
 export const DemoPersonalValue = styled.p`
   margin-left: 2.5rem;
   padding: 0;
+
   text-align: left;
   font-family: "Space Grotesk", sans-serif;
   font-size: 19px;
@@ -70,7 +67,6 @@ export const DemoHeaderText = styled.div`
   font-family: "Space Grotesk", sans-serif;
   font-size: 23px;
   font-weight: 300;
-
   color: #ffbc0d;
 `;
 
@@ -87,13 +83,6 @@ export const DemoButton = styled.a`
   border: none;
   font-weight: 100;
   font-family: "Space Grotesk";
-
-  @media screen and ${breakpoints.Device.mobile} {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 70px;
-  }
 `;
 
 export const ExitLink = styled.a`

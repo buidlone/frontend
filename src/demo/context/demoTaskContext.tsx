@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { CurrentTask } from "../../interfaces/enums/DemoTaskEnums";
 import { task, TaskContext, tasksData } from "../mockData/taskData";
 
 interface Props {
@@ -14,7 +15,7 @@ const DemoTaskContext = createContext<TaskContext>({
 
 export function DemoTaskContextProdvider({ children }: Props) {
   const [tasks, setTasks] = useState<task[]>(tasksData);
-  const [currentTask, setCurrentTask] = useState<number>(0);
+  const [currentTask, setCurrentTask] = useState<number>(CurrentTask.INVEST);
 
   return (
     <DemoTaskContext.Provider

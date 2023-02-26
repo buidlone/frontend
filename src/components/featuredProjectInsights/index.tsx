@@ -19,10 +19,9 @@ import Link from "next/link";
 import { ethers } from "ethers";
 import useCountdown from "../../hooks/useCountdown";
 import ProgressInsights from "../progressInsights";
-import DemoStateContext from "../../demo/context/demoStateContext";
 import Modal from "../modal";
-import InvestModal from "../investModal";
 import DemoModal from "../../demo/components/demoModal";
+import { HideForMobile } from "../../../styles/Container";
 
 interface IFeaturedProject {
   project: string;
@@ -98,9 +97,11 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
         <LinkButton href="mailto:info@buidl.one" target="_blank">
           Contact us
         </LinkButton>
-        <LinkButton onClick={() => setShowModal(true)} className="demo">
-          Play Demo mode
-        </LinkButton>
+        <HideForMobile>
+          <LinkButton onClick={() => setShowModal(true)} className="demo">
+            Play Demo mode
+          </LinkButton>
+        </HideForMobile>
         <Modal show={showModal}>
           <DemoModal onClose={() => setShowModal(false)} />
         </Modal>

@@ -15,7 +15,7 @@ import DemoTaskContext, {
   DemoTaskContextProdvider,
 } from "../src/demo/context/demoTaskContext";
 import { useTaskChange } from "../src/demo/hooks/useTaskChange";
-import { BgImage, Container } from "../styles/Container";
+import { BgImage, Container, HideForMobile } from "../styles/Container";
 
 import { NextPageWithLayout } from "./_app";
 

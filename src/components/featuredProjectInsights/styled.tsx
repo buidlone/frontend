@@ -93,6 +93,7 @@ export const LinkButton = styled.a`
   &.demo {
     width: 233px;
     margin-right: auto;
+    margin-left: 1rem;
   }
 `;
 
@@ -114,9 +115,7 @@ export const ProjectInfoWrapper = styled.div`
 export const WhitepaperLink = styled.a`
   text-align: left;
   text-decoration: underline;
-
   cursor: pointer;
-
   color: rgba(255, 255, 255, 0.5);
   font-family: "Roboto", sans-serif;
   font-weight: 300;

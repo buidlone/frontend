@@ -15,31 +15,52 @@ import DemoMockDataContext from "../../context/demoMockDataContext";
 import { fakeMockData, initialMockData } from "../../mockData/initialMockData";
 import DemoTaskContext from "../../context/demoTaskContext";
 import { tasksData } from "../../mockData/taskData";
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 
 const DemoEnvironment = () => {
   const {
     setMockData,
-    mockData: { softCap },
+    mockData,
+    mockData: {
+      softCap,
+      userValues,
+      userValues: { investment },
+      maxInvestment,
+      refund,
+    },
   } = useContext(DemoMockDataContext);
   const { currentTask, setCurrentTask, tasks, setTasks } =
     useContext(DemoTaskContext);
   const handleReset = () => {
     setMockData(initialMockData);
     setTasks(tasksData);
-    setCurrentTask(0);
+    setCurrentTask(CurrentTask.INVEST);
   };
 
   const handleClickLeft = () => {
+    if (currentTask === CurrentTask.REVIEW) {
+      setMockData({
+        ...mockData,
+        userValues: {
+          ...userValues,
+          investment: investment,
+          balance: maxInvestment - investment,
+        },
+      });
+    }
     setCurrentTask((prev) => prev - 1);
   };
 
   const handleClickRight = () => {
-    if (currentTask === 0 && !softCap.isReached) {
+    if (currentTask === CurrentTask.INVEST && !softCap.isReached) {
       setMockData(fakeMockData);
-      setCurrentTask((prev) => prev + 1);
-    } else {
-      setCurrentTask((prev) => prev + 1);
+    } else if (currentTask === CurrentTask.EVACUATE) {
+      setMockData({
+        ...mockData,
+        userValues: { ...userValues, balance: refund },
+      });
     }
+    setCurrentTask((prev) => prev + 1);
   };
 
   return (
@@ -50,8 +71,8 @@ const DemoEnvironment = () => {
       </TestDisclaimer>
       <TaskSelectionWrapper>
         <SwitchTaskButton
-          className={currentTask === 0 ? "disabled" : ""}
-          disabled={currentTask === 0}
+          className={currentTask === CurrentTask.INVEST ? "disabled" : ""}
+          disabled={currentTask === CurrentTask.INVEST}
           style={{ paddingLeft: "8px" }}
           onClick={handleClickLeft}
         >

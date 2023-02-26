@@ -255,23 +255,6 @@ export const useLoadValues = () => {
     }
   }, [isSLoaded, isDLoaded]);
 
-  // useEffect(() => {
-  //   const subscription = client
-  //     .subscribe({
-  //       query: SUBSCRIBE_TO_UPDATES,
-  //       variables: {
-  //         id: PROJECT_ID,
-  //       },
-  //     })
-  //     .subscribe({
-  //       next: ({ data }) => {
-  //         console.log(data);
-  //       },
-  //     });
-
-  //   return () => subscription.unsubscribe();
-  // }, []);
-
   return {
     totalInvested,
     softCap,

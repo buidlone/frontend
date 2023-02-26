@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import { IModalProps } from "../../../interfaces/IModal";
 import DemoStateContext from "../../context/demoStateContext";
 import {
   BottomSection,
@@ -14,11 +15,7 @@ import {
   Text,
 } from "./styled";
 
-export interface IDemoProps {
-  onClose(): void;
-}
-
-const DemoModal = ({ onClose }: IDemoProps) => {
+const DemoModal = ({ onClose }: IModalProps) => {
   const { setIsDemo } = useContext(DemoStateContext);
   const router = useRouter();
 
@@ -61,7 +58,7 @@ const DemoModal = ({ onClose }: IDemoProps) => {
             </StepListItem>
           </StepList>
         </MiddleSectionContent>
-        <MiddleSectionContent>
+        <MiddleSectionContent className="time">
           <Text className="grey">3-5 minutes</Text>
         </MiddleSectionContent>
       </MiddleSection>
@@ -72,9 +69,6 @@ const DemoModal = ({ onClose }: IDemoProps) => {
         <Button className="start" onClick={launchDemo}>
           Start your adventure
         </Button>
-        {/* <Link href="/demo" passHref>
-          <LinkButton>View</LinkButton>
-        </Link> */}
       </BottomSection>
     </DModalWrapper>
   );

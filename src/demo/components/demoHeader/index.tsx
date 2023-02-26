@@ -2,10 +2,11 @@ import Link from "next/link";
 import { useContext } from "react";
 import { Container } from "../../../../styles/Container";
 import { Divider } from "../../../components/buidl1Header/styled";
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoStateContext from "../../context/demoStateContext";
+import DemoTaskContext from "../../context/demoTaskContext";
 import DemoEnvironment from "../demoEnvironment.tsx";
-
 import {
   DemoBackgroundBlur,
   DemoHeaderSection,
@@ -23,6 +24,7 @@ const DemoHeader = () => {
       currency,
     },
   } = useContext(DemoMockDataContext);
+  const { currentTask } = useContext(DemoTaskContext);
 
   return (
     <>
@@ -42,7 +44,8 @@ const DemoHeader = () => {
             <DemoPersonalInfo className="balance">
               Your balance:{" "}
               <DemoPersonalValue className="balance">
-                {balance.toLocaleString("fr-FR")} {currency}
+                {balance.toLocaleString("fr-FR")} {currency}{" "}
+                {currentTask === CurrentTask.REVIEW && "REFUNDED"}
               </DemoPersonalValue>
             </DemoPersonalInfo>
           </DemoHeaderSection>

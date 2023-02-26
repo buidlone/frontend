@@ -16,37 +16,36 @@ import {
   ScrollableContainer,
   ScrollableContainerWrapper,
 } from "../../../components/progressRoadmap/styled";
-
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
+import { ProjectState } from "../../../interfaces/enums/ProjectStateEnums";
 import { getMilestoneState } from "../../../utils/getMilestoneState";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoTaskContext from "../../context/demoTaskContext";
-import { DemoProgressRoadmapWrapper, DemoRefundButton } from "./styled";
+import { DemoProgressRoadmapWrapper, DemoRefundButton, DemoScrollableContainer } from "./styled";
 
 const DemoProgressRoadmap = () => {
   const {
     setMockData,
     mockData,
-    mockData: {
-      milestones,
-      userValues,
-      userValues: { reward, balance, investment },
-    },
+    mockData: { milestones, userValues, refund },
   } = useContext(DemoMockDataContext);
   const { tasks, currentTask, setCurrentTask } = useContext(DemoTaskContext);
+  const projectState = tasks[currentTask].projectState;
+  const currentMilestone = tasks[currentTask].currentMilestone;
 
   const handleRefundClick = () => {
     setMockData({
       ...mockData,
-      userValues: { ...userValues, balance: investment, investment: 0 },
+      userValues: { ...userValues, balance: refund },
     });
-    setCurrentTask(3);
+    setCurrentTask(CurrentTask.REVIEW);
   };
 
   return (
     <DemoProgressRoadmapWrapper>
       <Title>Project progress</Title>
       <ScrollableContainerWrapper>
-        <ScrollableContainer
+        <DemoScrollableContainer
           horizontal={false}
           vertical={false}
           style={{ cursor: "default" }}
@@ -55,18 +54,18 @@ const DemoProgressRoadmap = () => {
             {milestones &&
               milestones.map((milestone) => {
                 const completed = getMilestoneState(
-                  tasks[currentTask].projectState,
-                  tasks[currentTask].currentMilestone,
+                  projectState,
+                  currentMilestone,
                   milestone.milestoneId
                 ).completed;
                 const active = getMilestoneState(
-                  tasks[currentTask].projectState,
-                  tasks[currentTask].currentMilestone,
+                  projectState,
+                  currentMilestone,
                   milestone.milestoneId
                 ).active;
                 const suspended = getMilestoneState(
-                  tasks[currentTask].projectState,
-                  tasks[currentTask].currentMilestone,
+                  projectState,
+                  currentMilestone,
                   milestone.milestoneId
                 ).suspended;
 
@@ -86,7 +85,9 @@ const DemoProgressRoadmap = () => {
                       milestones[milestones.length - 1].milestoneId && (
                       <MProgressBar>
                         <Progress
-                          progress={active ? 50 : completed ? 100 : 0}
+                          progress={
+                            active || suspended ? 50 : completed ? 100 : 0
+                          }
                         />
                       </MProgressBar>
                     )}
@@ -97,20 +98,20 @@ const DemoProgressRoadmap = () => {
 
           <LockBar>
             {milestones &&
-              milestones.map((milestone, index) => {
+              milestones.map((milestone) => {
                 const completed = getMilestoneState(
-                  tasks[currentTask].projectState,
-                  tasks[currentTask].currentMilestone,
+                  projectState,
+                  currentMilestone,
                   milestone.milestoneId
                 ).completed;
                 const active = getMilestoneState(
-                  tasks[currentTask].projectState,
-                  tasks[currentTask].currentMilestone,
+                  projectState,
+                  currentMilestone,
                   milestone.milestoneId
                 ).active;
                 const suspended = getMilestoneState(
-                  tasks[currentTask].projectState,
-                  tasks[currentTask].currentMilestone,
+                  projectState,
+                  currentMilestone,
                   milestone.milestoneId
                 ).suspended;
 
@@ -153,13 +154,20 @@ const DemoProgressRoadmap = () => {
                 );
               })}
           </LockBar>
-        </ScrollableContainer>
+        </DemoScrollableContainer>
       </ScrollableContainerWrapper>
       <DemoRefundButton
         className={
-          tasks[currentTask].projectState === 8 && currentTask === 2
+          projectState === ProjectState.TERMINATED_BY_VOTING &&
+          currentTask === CurrentTask.EVACUATE
             ? ""
             : "disabled"
+        }
+        disabled={
+          !(
+            projectState === ProjectState.TERMINATED_BY_VOTING &&
+            currentTask === CurrentTask.EVACUATE
+          )
         }
         onClick={handleRefundClick}
       >
