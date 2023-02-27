@@ -22,19 +22,14 @@ import discord from "../../assets/discord.svg";
 import instagram from "../../assets/Instagram.svg";
 import linkedin from "../../assets/linkedin.svg";
 import twitter from "../../assets/Twitter.svg";
-import { useEffect, useState } from "react";
-import { getVotedAgainst } from "../../web3/getVotedAgainst";
+import { useContext} from "react";
+import LoadedValuesContext from "../../context/loadedValuesContext";
 
 const StopStatus = ({ setIsShownStop }: any) => {
   const handleClose = () => {
     setIsShownStop(false);
   };
-  const [votedAgainst, setVotedAgainst] = useState<number>(0);
-  useEffect(() => {
-    getVotedAgainst().then((data: any) => {
-      setVotedAgainst(data);
-    });
-  }, []);
+  const { totalPercentageAgainst } = useContext(LoadedValuesContext);
 
   return (
     <Block color="#00C4FF">
@@ -48,7 +43,12 @@ const StopStatus = ({ setIsShownStop }: any) => {
           <BigExlamation>!</BigExlamation>
           <Box>
             <TextWrapper>
-              <TitleBoxText>{votedAgainst} % has voted against</TitleBoxText>{" "}
+              <TitleBoxText>
+                {totalPercentageAgainst
+                  ? Math.round(totalPercentageAgainst)
+                  : 0}{" "}
+                % has voted against
+              </TitleBoxText>{" "}
               <br />
               <BoxText>
                 Go ahead and share on{" "}
@@ -86,4 +86,3 @@ const StopStatus = ({ setIsShownStop }: any) => {
 };
 
 export default StopStatus;
-

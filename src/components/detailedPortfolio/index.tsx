@@ -1,17 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import Accordion from "../accordion";
 import Web3Context from "../../context/web3Context";
-import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
-import ProjectState, { StatusColor } from "../projectState";
+import { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { stopProject } from "../../web3/stopProject";
-import { isStopAllowed } from "../../web3/isStopAllowed";
 import UserInvesmentHistory from "../userInvestmentHistory";
 import { StatusBubble, TableButton } from "../activeBlock/styled";
-import { getVotedAgainst } from "../../web3/getVotedAgainst";
-import { getAllocatedTokens } from "../../web3/getAllocatedTokens";
-import { getUsedInvestments } from "../../web3/getUsedInvestments";
-import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
+import { roundApprox } from "../../utils/roundValue";
+import ProjectStateLabel from "../projectState";
+import InvestorValuesContext from "../../context/investorContext";
+import useRealTimeInvestments from "../../hooks/useUsedInvestments";
+import useIsStopAllowed from "../../hooks/useIsStopAllowed";
 
 const items = [
   {
@@ -22,72 +21,33 @@ const items = [
 
 const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   const {
-    projectState,
-    totalInvested,
-    hardCap,
     milestones,
     currentMilestone,
-    isMilestoneOngoing,
     tokenCurrency,
     currency,
+    totalPercentageAgainst,
+    projectState,
   } = useContext(LoadedValuesContext);
 
-  const [stopDisabled, setStopDisabled] = useState(true);
+  const isStopAllowed = useIsStopAllowed();
+  const {
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
-  const [votedAgainst, setVotedAgainst] = useState<number>(0);
-  const [isAllowed, setIsAllowed] = useState(true);
-  const [allocatedTokens, setAllocatedTokens] = useState<number>(0);
-  const [usedInvestments, setUsedInvestments] = useState<number>(0);
-  const [
-    totalIndividualInvestedToProject,
-    setTotalIndividualInvestedToProject,
-  ] = useState(0);
+  const { usedInvestments, refund } = useRealTimeInvestments();
   const { web3Provider, address } = useContext(Web3Context);
-  let today = new Date();
-  let milestonePercentage = 0;
 
-  if (isMilestoneOngoing) {
-    milestonePercentage = ((currentMilestone + 1) * 100) / milestones.length;
-  } else {
-    milestonePercentage = (currentMilestone * 100) / milestones.length;
-  }
+  const statusColor = StatusColor({ projectState });
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      today = new Date();
-      if (milestones[currentMilestone]) {
-        getSeconds();
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (web3Provider) {
-      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        setTotalIndividualInvestedToProject(data.totalAmountInvested);
-      });
-    }
-  }, [totalInvested]);
-
-  function getSeconds() {
-    const milestoneStart = new Date(milestones[currentMilestone].startDate);
-    const seconds = Math.abs(milestoneStart.getTime() - today.getTime()) / 1000;
-
-    if (!isMilestoneOngoing) {
-      setUsedInvestments(0);
-    } else if (web3Provider) {
-      getUsedInvestments(web3Provider, address, seconds).then((data: any) => {
-        setUsedInvestments(data.toFixed(12));
-      });
-    }
-  }
-
-  const refundable = totalIndividualInvestedToProject - usedInvestments;
+  const [milestonePercentage, setMilestonePercentage] = useState<number>(0);
 
   const handleStop = async () => {
-    if (web3Provider) {
-      const stopped = await stopProject(web3Provider, address);
+    if (web3Provider && projectInvestments) {
+      const stopped = await stopProject(
+        web3Provider,
+        address,
+        projectInvestments.unusedActiveVotes[currentMilestone]
+      );
       if (stopped === true) {
         setIsShownStop(true);
       } else if (stopped === false) setIsShownWrong(true);
@@ -95,52 +55,28 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
   };
 
   useEffect(() => {
-    setIsAllowed(isInvestingAllowed(projectState, hardCap, totalInvested));
-    getVotedAgainst().then((data: any) => {
-      setVotedAgainst(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    isStopAllowed(projectState, currentMilestone, address, web3Provider).then(
-      (data: any) => {
-        setStopDisabled(data);
-      }
-    );
-    if (web3Provider) {
-      getAllocatedTokens(web3Provider, address).then((data: any) => {
-        setAllocatedTokens(data);
-      });
-
-      setStopDisabled(false);
-    } else {
-      setStopDisabled(true);
-    }
-  }, [web3Provider, totalInvested._hex]);
+    setMilestonePercentage((currentMilestone * 100) / milestones.length);
+  }, [currentMilestone]);
 
   return (
     <>
       <tr>
         <td>
-          <p>Status</p>
-          <p className="greenText flex" style={{ gap: "10px" }}>
+          <span>Status</span>
+          <div className="greenText flex" style={{ gap: "10px" }}>
             {" "}
             <StatusBubble
-              color={StatusColor}
+              color={statusColor && statusColor}
               style={{ position: "unset" }}
             />{" "}
-            <ProjectState />
-          </p>
+            <ProjectStateLabel projectState={projectState} />
+          </div>
         </td>
         <td>
           <p>Reserved</p>
           <p className="blueText">
-            {allocatedTokens >= 0.0001 && allocatedTokens <= 4
-              ? allocatedTokens
-              : allocatedTokens >= 0.0001 && allocatedTokens > 4
-              ? `≈ ${Number(allocatedTokens).toFixed(4)} `
-              : allocatedTokens < 0.0001 && allocatedTokens > 0
-              ? "≈ 0.0001"
+            {projectInvestments
+              ? roundApprox(projectInvestments.allocatedProjectTokens)
               : "0.0000"}{" "}
             {tokenCurrency.label}
           </p>
@@ -148,7 +84,11 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
         <td>
           <p>Refund if failed</p>
           <p className="blueText">
-            {refundable === 0 ? refundable : `≈ ${refundable.toFixed(12)}`}{" "}
+            {!!refund
+              ? `≈ ${Number(refund).toFixed(12)}`
+              : projectInvestments?.totalInvestedAmount
+              ? projectInvestments?.totalInvestedAmount
+              : "0.0000"}{" "}
             {currency.label}
           </p>
         </td>
@@ -162,26 +102,33 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
       <tr>
         <td>
           <p>Completed</p>
-          <p className="greenText">{milestonePercentage} %</p>
+          <p className="greenText">
+            {milestonePercentage && milestonePercentage !== Infinity
+              ? milestonePercentage
+              : 0}{" "}
+            %
+          </p>
         </td>
         <td>
           <p>Used investments</p>
           <p className="greenText">
-            {usedInvestments === 0
-              ? usedInvestments
-              : `≈ ${Number(usedInvestments).toFixed(12)}`}{" "}
+            {!!usedInvestments
+              ? `≈ ${Number(usedInvestments).toFixed(12)}`
+              : "0.0000"}{" "}
             {currency.label}
           </p>
         </td>
 
         <td>
           <p>Voted against</p>
-          <p className="yellowText">{votedAgainst} %</p>
+          <p className="yellowText">
+            {totalPercentageAgainst ? Math.round(totalPercentageAgainst) : 0} %
+          </p>
         </td>
 
         <td>
           <TableButton
-            disabled={stopDisabled}
+            disabled={!isStopAllowed}
             className="stopBtn"
             onClick={handleStop}
           >
@@ -199,4 +146,3 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
 };
 
 export default DetailedPortfolio;
-

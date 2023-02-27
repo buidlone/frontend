@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import DiscordImg from "../../../public/DiscordSmall.png";
 import { useRouter } from "next/router";
@@ -19,6 +19,9 @@ import Link from "next/link";
 import { ethers } from "ethers";
 import useCountdown from "../../hooks/useCountdown";
 import ProgressInsights from "../progressInsights";
+import Modal from "../modal";
+import DemoModal from "../../demo/components/demoModal";
+import { HideForMobile } from "../../../styles/Container";
 
 interface IFeaturedProject {
   project: string;
@@ -29,9 +32,12 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
   const { softCap, hardCap, currency, milestones } =
     useContext(LoadedValuesContext);
   const projectDays = useCountdown(
-    milestones[milestones.length - 1]?.endDate,
-    milestones[0]?.startDate
+    milestones[milestones.length - 1]?.endTime,
+    milestones[0]?.startTime
   );
+
+  const [showModal, setShowModal] = useState(false);
+
   return project == "Buidl1" ? (
     <ProjectInfoWrapper>
       <NumbersInsights>
@@ -91,10 +97,17 @@ const FeaturedProjectInsights = ({ project, ...props }: IFeaturedProject) => {
         <LinkButton href="mailto:info@buidl.one" target="_blank">
           Contact us
         </LinkButton>
+        <HideForMobile>
+          <LinkButton onClick={() => setShowModal(true)} className="demo">
+            Play Demo mode
+          </LinkButton>
+        </HideForMobile>
+        <Modal show={showModal}>
+          <DemoModal onClose={() => setShowModal(false)} />
+        </Modal>
       </BottomSection>
     </ProjectInfoWrapper>
   );
 };
 
 export default FeaturedProjectInsights;
-

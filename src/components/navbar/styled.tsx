@@ -1,6 +1,10 @@
 import styled, { css, keyframes } from "styled-components";
 import breakpoints from "../../../styles/constants";
 
+interface Props {
+  connected?: boolean | null;
+}
+
 export const Nav = styled.nav`
   height: 70px;
   background-color: rgba(19, 19, 29, 0.7);
@@ -11,7 +15,7 @@ export const Nav = styled.nav`
   font-size: 1rem;
   position: relative;
   top: 0;
-  z-index: 10;
+  z-index: 16;
 
   @media screen and (max-width: 991px) {
     transition: 0.8s all ease;
@@ -76,12 +80,13 @@ export const NavMenuMobile = styled.ul`
   }
 `;
 
-export const NavMenu = styled.ul`
+export const NavMenu = styled.ul<Props>`
   display: flex;
   align-items: center;
   list-style: none;
   text-align: center;
-  margin-right: -159px;
+
+  margin-right: ${(props) => (props?.connected ? "-40px" : "-155px")};
   gap: 3.75rem;
 
   @media screen and (max-width: 800px) {
@@ -264,3 +269,27 @@ export const SpinnerText = styled.p`
   }
 `;
 
+export const Network = styled.div<Props>`
+  margin-right: 1.3rem;
+  font-size: 18px;
+  font-family: "Barlow", sans-serif;
+  font-weight: 300;
+  color: #00ffc4;
+  text-align: left;
+  white-space: nowrap;
+  position: relative;
+  text-decoration: none;
+  opacity: ${(props) => (props?.connected ? 1 : 0.41)};
+
+  &:before {
+    content: "";
+    background: #00ffc4 0% 0% no-repeat padding-box;
+    opacity: 1;
+    border-radius: 50%;
+    right: calc(100% + 0.6rem);
+    top: 21%;
+    width: 0.85rem;
+    height: 0.85rem;
+    position: absolute;
+  }
+`;

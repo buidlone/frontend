@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, KeyboardEvent } from "react";
+import React, { useState, useContext, useEffect, KeyboardEvent } from "react";
 import { InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
@@ -11,49 +11,66 @@ import {
   VotingWrapper,
   InputField,
   PBWrapper,
-  IButton,
   PBContainer,
   VotingRow,
   VotingItem,
   Positioning,
+  InputFieldWrapper,
+  CurrencyIndicator,
 } from "./styled";
 import Slider from "../slider";
 import Modal from "../modal";
 import InvestModal from "../investModal";
-import Web3Context from "../../context/web3Context";
 import { isInvestingAllowed } from "../../web3/isInvestingAllowed";
 import { toast } from "react-toastify";
 import { getProjectState } from "../../utils/getProjectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { getCalculatedVotingTokens } from "../../web3/getCalculatedVotingTokens";
-import useCountdown from "../../hooks/useCountdown";
-import { BigNumber, ethers } from "ethers";
-import { getCalculatedProjectTokens } from "../../web3/getCalculatedProjectTokens";
+import { ethers } from "ethers";
 import infoBubble from "../../../public/info_bubble.svg";
 import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import Image from "next/image";
-import { countDecimals } from "../../utils/countDecimals";
+import { roundApprox } from "../../utils/roundValue";
+import TimelineSlider from "../timelineSlider";
+import CalculatorInvestButton from "../calculatorInvestButton";
+import Web3Context from "../../context/web3Context";
 
-const minStep = 0.0000001;
+const minStep = 0.0000000000000000001;
 
 const Calculator = () => {
-  const { web3Provider, connect } = useContext(Web3Context);
-  const { totalInvested, hardCap, currency, milestones, projectState } =
-    useContext(LoadedValuesContext);
+  const { web3Provider, login } = useContext(Web3Context);
+  const {
+    totalInvested,
+    hardCap,
+    currency,
+    projectState,
+    softCap,
+    softCapMultiplier,
+    hardCapMultiplier,
+    tokensReserved,
+    maximumWeightDivisor,
+    votingToken,
+  } = useContext(LoadedValuesContext);
 
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState<string>("0");
   const [sum, setSum] = useState<string>("");
   const [tokens, setTokens] = useState<string>("");
   const [tokensPerMonth, setTokensPerMonth] = useState<number>(0);
-  const [voting, setVoting] = useState<number>(0);
+  const [minVotingPower, setMinVotingPower] = useState<number>(0);
+  const [maxVotingPower, setMaxVotingPower] = useState<number>(0);
   const [tickets, setTickets] = useState<string>("");
   const [over, setOver] = useState(0);
-  const maxDays = useCountdown(
-    milestones[milestones.length - 1]?.endDate,
-    milestones[0]?.startDate
+  const [current, setCurrent] = useState<boolean>(true);
+  const [timelineValue, setTimelineValue] = useState(
+    ethers.utils.formatEther(totalInvested)
   );
-  const currentDays = useCountdown(undefined, milestones[0]?.startDate, true);
+  const [markerValue, setMarkerValue] = useState(
+    ethers.utils.formatEther(totalInvested)
+  );
+  const [maxAmount, setMaxAmount] = useState(
+    ethers.utils.formatEther(hardCap.sub(totalInvested))
+  );
 
   const handleClick = () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
@@ -67,13 +84,38 @@ const Calculator = () => {
   const handleConnectClick = async () => {
     const isAllowed = isInvestingAllowed(projectState, hardCap, totalInvested);
     if (isAllowed) {
-      if (connect) {
-        const isConnected = await connect();
+      if (login) {
+        const isConnected = await login();
         typeof isConnected !== "boolean" && setShowModal(true);
       }
     } else {
       toast.info(getProjectState(projectState));
     }
+  };
+
+  const handleTimelineChange = (value: string) => {
+    if (Number(value).toFixed(3) === Number(markerValue).toFixed(3)) {
+      setTimelineValue(markerValue);
+      setMaxAmount(
+        ethers.utils.formatEther(
+          hardCap.sub(ethers.utils.parseEther(markerValue))
+        )
+      );
+      setCurrent(true);
+    } else {
+      setTimelineValue(value.toString());
+      setMaxAmount(
+        ethers.utils.formatEther(
+          hardCap.sub(ethers.utils.parseEther(value.toString()))
+        )
+      );
+      setCurrent(value.toString() === markerValue ? true : false);
+    }
+  };
+
+  const handleMarkerClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    handleTimelineChange(markerValue);
   };
 
   const handleSumChange = (value: string) => {
@@ -86,32 +128,42 @@ const Calculator = () => {
       e.preventDefault();
   };
 
-  const inputSumChange = async () => {
-    const resultVoting = await getCalculatedVotingTokens(amount || "0");
-    const resultTokens = await getCalculatedProjectTokens(amount || "0");
+  const inputSumChange = () => {
+    const result = getCalculatedVotingTokens(
+      ethers.utils.parseEther(amount || "0"),
+      softCap.amount,
+      hardCap,
+      ethers.utils.parseEther(timelineValue),
+      softCapMultiplier,
+      hardCapMultiplier,
+      maximumWeightDivisor,
+      tokensReserved,
+      votingToken.supplyCap
+    );
 
-    if (resultVoting) {
+    if (result) {
       setTickets(
-        resultVoting.votingTokensToMint.toString() != "0"
-          ? ethers.utils.formatEther(resultVoting.votingTokensToMint)
+        result.votingTickets.toString() != "0"
+          ? ethers.utils.formatEther(result.votingTickets)
           : "0"
       );
 
-      const calculatedVotingTokens =
-        resultVoting.calculatedVotingTokens.toNumber() / 100;
+      const calculatedMaxVotingPower = result.maxVotingPower.toNumber() / 100;
 
-      setVoting(calculatedVotingTokens);
-    }
+      setMaxVotingPower(calculatedMaxVotingPower);
 
-    if (resultTokens) {
+      const calculatedMinVotingPower = result.minVotingPower.toNumber() / 100;
+
+      setMinVotingPower(calculatedMinVotingPower);
+
       setTokens(
-        resultTokens.expectedTokensAllocation.toString() != "0"
-          ? ethers.utils.formatEther(resultTokens.expectedTokensAllocation)
+        result.expectedTokenAllocation.toString() != "0"
+          ? ethers.utils.formatEther(result.expectedTokenAllocation)
           : "0"
       );
 
       const calculatedProjectTokens =
-        resultTokens.projectTokensPercentage.toNumber() / 100;
+        result.expectedTokenAllocationPercentage.toNumber() / 100;
 
       setTokensPerMonth(calculatedProjectTokens);
     }
@@ -122,11 +174,19 @@ const Calculator = () => {
       if (
         ethers.utils
           .parseEther(amount || "0")
-          .add(totalInvested)
+          .add(ethers.utils.parseEther(timelineValue))
           .gt(hardCap)
       ) {
-        setSum(ethers.utils.formatEther(hardCap.sub(totalInvested)));
-        setAmount(ethers.utils.formatEther(hardCap.sub(totalInvested)));
+        setSum(
+          ethers.utils.formatEther(
+            hardCap.sub(ethers.utils.parseEther(timelineValue))
+          )
+        );
+        setAmount(
+          ethers.utils.formatEther(
+            hardCap.sub(ethers.utils.parseEther(timelineValue))
+          )
+        );
         return;
       }
       setSum(amount);
@@ -134,7 +194,7 @@ const Calculator = () => {
     }, 200);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [amount, totalInvested._hex]);
+  }, [amount, timelineValue, totalInvested._hex]);
 
   return (
     <CalculatorBlock>
@@ -157,44 +217,43 @@ const Calculator = () => {
             </div>
           </InlineWrapper>
 
-          <SelectWrapper
-            currency={
-              currency.label
-                .substring(0, currency.label.length - 1)
-                .toLocaleLowerCase() +
-              currency.label.slice(-1).toLocaleUpperCase()
-            }
-          >
+          <SelectWrapper>
             <div className="blueText">Invested Sum:</div>
-            <InputField
-              type="number"
-              autoComplete="off"
-              name="amount"
-              placeholder=""
-              defaultValue={"0"}
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              onKeyPress={handleKeyPress}
-            />
+            <InputFieldWrapper>
+              <InputField
+                type="number"
+                autoComplete="off"
+                name="amount"
+                placeholder=""
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+              <CurrencyIndicator>
+                {currency.label
+                  .substring(0, currency.label.length - 1)
+                  .toLocaleLowerCase() +
+                  currency.label.slice(-1).toLocaleUpperCase()}
+              </CurrencyIndicator>
+            </InputFieldWrapper>
           </SelectWrapper>
 
           <Slider
             value={sum}
             onChange={handleSumChange}
             min={0}
-            max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
-            //max={ethers.utils.formatEther(hardCap.sub(totalInvested))}
-            //max={0.02}
+            max={Number(maxAmount)}
             step={minStep}
           />
 
           <div className="blueText">Timeline:</div>
 
-          <Slider
-            min={0}
-            max={maxDays.timerDays}
-            value={currentDays.timerDays}
-            timeline
+          <TimelineSlider
+            value={timelineValue}
+            onChange={handleTimelineChange}
+            markerValue={markerValue}
+            step={minStep}
+            handleMarkerClick={handleMarkerClick}
           />
         </CalculationWrapper>
         <VotingWrapper>
@@ -220,7 +279,7 @@ const Calculator = () => {
               >
                 <div style={{ width: "84%" }}>
                   <CircularProgressbarWithChildren
-                    value={voting ? voting : 0}
+                    value={maxVotingPower ? maxVotingPower : 0}
                     counterClockwise
                     styles={{
                       path: {
@@ -248,14 +307,18 @@ const Calculator = () => {
                     </div>
 
                     <div className="votingPercentage">
-                      {" "}
-                      {`${
-                        voting > 1
-                          ? voting.toFixed(2)
-                          : Number(tickets) > 0 && voting < 1
-                          ? "<1.00"
-                          : "0"
-                      }%`}
+                      {maxVotingPower > 1 ? (
+                        <>
+                          <span className="sign">≤</span>
+
+                          <span>{maxVotingPower.toFixed(2)}</span>
+                        </>
+                      ) : Number(tickets) > 0 && maxVotingPower < 1 ? (
+                        "<1.00"
+                      ) : (
+                        "0"
+                      )}
+                      %
                     </div>
                   </CircularProgressbarWithChildren>
                 </div>
@@ -264,15 +327,11 @@ const Calculator = () => {
             <Positioning>
               <VotingRow>
                 <VotingItem>
-                  <div className="text">Rewards</div>
+                  <div className="text">Project Tokens</div>
                   <div className="tokens">
-                    {Number(tokens) >= 0.0001 && countDecimals(tokens) <= 4
-                      ? tokens
-                      : Number(tokens) >= 0.0001 && countDecimals(tokens) > 4
-                      ? `≈ ${Number(tokens).toFixed(4)}`
-                      : Number(tokens) < 0.0001 && Number(tokens) > 0
-                      ? "≈ 0.0001"
-                      : "0"}{" "}
+                    {roundApprox(tokens) == "0.0000"
+                      ? "0"
+                      : roundApprox(tokens)}{" "}
                     Tokens
                   </div>
                 </VotingItem>
@@ -281,27 +340,19 @@ const Calculator = () => {
                 <VotingItem>
                   <div className="text">Voting Power</div>
                   <div className="tickets">
-                    {Number(tickets) >= 0.0001 && countDecimals(tickets) <= 4
-                      ? tickets
-                      : Number(tickets) >= 0.0001 && countDecimals(tickets) > 4
-                      ? `≈ ${Number(tickets).toFixed(4)}`
-                      : Number(tickets) < 0.0001 && Number(tickets) > 0
-                      ? "≈ 0.0001"
-                      : "0"}{" "}
+                    {roundApprox(tickets) == "0.0000"
+                      ? "0"
+                      : roundApprox(tickets)}{" "}
                     Tickets
                   </div>
                 </VotingItem>
               </VotingRow>
             </Positioning>
-            {web3Provider ? (
-              <>
-                <IButton onClick={handleClick}>Invest</IButton>
-              </>
-            ) : (
-              <>
-                <IButton onClick={handleConnectClick}>Invest</IButton>
-              </>
-            )}
+            <CalculatorInvestButton
+              current={current}
+              handleClick={handleClick}
+              handleConnectClick={handleConnectClick}
+            />
             <Modal show={showModal}>
               <InvestModal onClose={() => setShowModal(false)} />
             </Modal>

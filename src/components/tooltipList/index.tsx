@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { IMilestoneFundsAllocated } from "../../interfaces/ILoadedValues";
+import { roundPrecise } from "../../utils/roundValue";
 import { InfoBlock, InlineWrapper, List, TooltipWrapper } from "./styled";
 
 interface IMilestones {
@@ -44,7 +45,8 @@ const TooltipList = ({ milestonesArray, fundsObject, index }: IMilestones) => {
                 <div className="label">Instant release</div>
                 <InlineWrapper>
                   <div className="funds">
-                    {fundsObject.seedAllocated} {currency.label}
+                    {roundPrecise(fundsObject.seedFundsAllocation)}{" "}
+                    {currency.label}
                   </div>
                 </InlineWrapper>
               </InfoBlock>
@@ -53,7 +55,8 @@ const TooltipList = ({ milestonesArray, fundsObject, index }: IMilestones) => {
 
                 <InlineWrapper>
                   <div className="funds">
-                    {fundsObject.streamAllocated} {currency.label}
+                    {roundPrecise(fundsObject.streamFundsAllocation)}{" "}
+                    {currency.label}
                   </div>
                 </InlineWrapper>
               </InfoBlock>

@@ -2,30 +2,28 @@ import { useEffect, useState } from "react";
 import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
-  DistributionPoolAddress,
   InvestmentPoolAddress,
   NEXT_PUBLIC_INFURA_ID,
+  PROJECT_ID,
 } from "../constants/contractAddresses";
 import InvestmentPoolABI from "../web3/abi/InvestmentPool.json";
-import DistributionPoolABI from "../web3/abi/DistributionPool.json";
 import { formatTime } from "../utils/formatTime";
 import {
   Currency,
   ILoadedValues,
   Milestone,
   SoftCap,
+  VotingToken,
 } from "../interfaces/ILoadedValues";
-
-import ERC20TokenABI from "../web3/abi/ERC20Token.json";
-import { IInvestor } from "../interfaces/IInvestors";
-import { getAllInvestments } from "../web3/getAllInvestments";
+import { GET_DYNAMIC_DATA, GET_STATIC_DATA } from "../../lib/queries";
+import { useQuery } from "@apollo/client";
+import { getProjectStatus } from "../utils/getProjectState";
 
 const provider = new ethers.providers.JsonRpcProvider(
   `https://goerli.infura.io/v3/${NEXT_PUBLIC_INFURA_ID}`
 );
 
 export const loadedValuesInitialState: ILoadedValues = {
-  seedFundingLimit: 0,
   softCap: {
     amount: BigNumber.from(0),
     isReached: false,
@@ -39,18 +37,14 @@ export const loadedValuesInitialState: ILoadedValues = {
   projectState: 0,
   currency: {
     name: "",
-
     label: "",
     address: "",
     decimals: 0,
   },
   setTotalInvested: () => {},
-  allInvestors: [],
-  setAllInvestors: () => {},
-  percentageDivider: BigNumber.from(0),
-  milestonesInvestmentsListForFormula: [],
+  percentageDivider: "0",
   isMilestoneOngoing: false,
-  tokensReserved: "0",
+  tokensReserved: BigNumber.from(0),
   tokenCurrency: {
     name: "",
     label: "",
@@ -58,17 +52,28 @@ export const loadedValuesInitialState: ILoadedValues = {
     decimals: 0,
   },
   fundsUsedByCreator: "0",
+  softCapMultiplier: BigNumber.from(0),
+  hardCapMultiplier: BigNumber.from(0),
+  maximumWeightDivisor: BigNumber.from(0),
+  votingToken: {
+    id: "",
+    supplyCap: BigNumber.from(0),
+  },
+  isDataLoaded: false,
+  totalPercentageAgainst: 0,
 };
 
 export const useLoadValues = () => {
-  const [tokensReserved, setTokensReserved] = useState<string>("0");
+  const [tokensReserved, setTokensReserved] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
   const [tokenCurrency, setTokenCurrency] = useState<Currency>({
     name: "",
     label: "",
     address: "",
     decimals: 0,
   });
-  const [seedFundingLimit, setSeedFundingLimit] = useState<number>(0);
+
   const [softCap, setSoftCap] = useState<SoftCap>({
     amount: BigNumber.from(0),
     isReached: false,
@@ -90,155 +95,183 @@ export const useLoadValues = () => {
     address: "",
     decimals: 0,
   });
-  const [allInvestors, setAllInvestors] = useState<IInvestor[]>([
-    { caller: "", amount: BigNumber.from(0) },
-  ]);
-  const [percentageDivider, setPercentageDivider] = useState<BigNumber>(
-    BigNumber.from(0)
-  );
-  const [
-    milestonesInvestmentsListForFormula,
-    setMilestonesInvestmentListForFormula,
-  ] = useState<BigNumber[]>([]);
-
+  const [percentageDivider, setPercentageDivider] = useState<string>("0");
   const [fundsUsedByCreator, setFundsUsedByCreator] = useState<string>("0");
 
-  const getAvailableCurrencies = async (tokenAddress: string) => {
-    if (provider) {
-      try {
-        const tokenContract = new ethers.Contract(
-          tokenAddress,
-          ERC20TokenABI,
-          provider
-        );
-        const tokenDecimals = await tokenContract.decimals();
-        const tokenSymbol = await tokenContract.symbol();
-        const tokenName = await tokenContract.name();
-        return { tokenSymbol, tokenDecimals, tokenName };
-      } catch (error) {
-        console.log(error);
-        toast.error(
-          "Error occurred while retrieving currency data from blockchain"
-        );
-      }
-    }
-  };
+  const [softCapMultiplier, setSoftCapMultiplier] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
+  const [hardCapMultiplier, setHardCapMultiplier] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
+  const [maximumWeightDivisor, setMaximumWeightDivisor] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
+  const [votingToken, setVotingToken] = useState<VotingToken>({
+    id: "",
+    supplyCap: BigNumber.from(0),
+  });
 
-  const getValuesFromInvestmentPool = async () => {
-    if (provider) {
-      try {
-        const contract = new ethers.Contract(
-          InvestmentPoolAddress,
-          InvestmentPoolABI,
-          provider
-        );
+  const [isSLoaded, setIsSLoaded] = useState(false);
+  const [isDLoaded, setIsDLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [totalPercentageAgainst, setTotalPercentageAgainst] = useState(0);
 
-        const distributionContract = new ethers.Contract(
-          DistributionPoolAddress,
-          DistributionPoolABI,
-          provider
-        );
+  const {
+    data,
+    error: sError,
+    loading: sLoading,
+  } = useQuery(GET_STATIC_DATA, {
+    variables: {
+      id: PROJECT_ID,
+    },
+  });
 
-        const tokensReserved = await distributionContract.getLockedTokens();
-        const reservedTokenAddress = await distributionContract.getToken();
-        const reservedTokenDetails = await getAvailableCurrencies(
-          reservedTokenAddress
-        );
-
-        setTokenCurrency({
-          name: reservedTokenDetails?.tokenName,
-          label: reservedTokenDetails?.tokenSymbol,
-          address: reservedTokenAddress,
-          decimals: reservedTokenDetails?.tokenDecimals,
-        });
-
-        const totalInvested = await contract.getTotalInvestedAmount();
-        const softCap = await contract.getSoftCap();
-        const hardCap = await contract.getHardCap();
-        const isSoftCapReached = await contract.isSoftCapReached();
-        const fundraisingStartAt = await contract.getFundraiserStartTime();
-        const fundraisingStartDate = formatTime(fundraisingStartAt);
-        const fundraisingEndAt = await contract.getFundraiserEndTime();
-        const fundraisingEndDate = formatTime(fundraisingEndAt);
-        const projectState = await contract.getProjectStateByteValue();
-        const isMilestoneOngoing = await contract.isAnyMilestoneOngoing();
-
-        const acceptedTokenAddress = await contract.getAcceptedToken();
-        const acceptedTokenDetails = await getAvailableCurrencies(
-          acceptedTokenAddress
-        );
-
-        setCurrency({
-          name: acceptedTokenDetails?.tokenName,
-          label: acceptedTokenDetails?.tokenSymbol,
-          address: acceptedTokenAddress,
-          decimals: acceptedTokenDetails?.tokenDecimals,
-        });
-
-        const allInvestors = await getAllInvestments();
-
-        const fundsUsedByCreator = await contract.getFundsUsed();
-
-        const milestoneCount = (await contract.getMilestonesCount()).toNumber();
-        const currentMilestone = (
-          await contract.getCurrentMilestoneId()
-        ).toNumber();
-
-        const percentageDivider = await contract.getPercentageDivider();
-        const milestonesInvestmentsList =
-          await contract.getMilestonesInvestmentsListForFormula();
-        setMilestonesInvestmentListForFormula(milestonesInvestmentsList);
-
-        setPercentageDivider(percentageDivider);
-        setCurrentMilestone(currentMilestone);
-        for (let i = 0; i < milestoneCount; i++) {
-          let milestone = await contract.getMilestone(i);
-          let seedAmount = await contract.getMilestoneSeedAmount(i);
-
-          setMilestones((prevData) => [
-            ...prevData,
-            {
-              id: i,
-              startDate: formatTime(milestone?.startDate),
-              endDate: formatTime(milestone?.endDate),
-              paid: milestone?.paid,
-              seedAmount: seedAmount,
-              seedAmountPaid: milestone?.seedAmountPaid,
-              streamOngoing: milestone?.streamOngoing,
-              intervalSeedPortion: milestone?.intervalSeedPortion,
-              intervalStreamingPortion: milestone?.intervalStreamingPortion,
-            },
-          ]);
-        }
-
-        setTokensReserved(ethers.utils.formatEther(tokensReserved));
-        setTotalInvested(totalInvested);
-        setSoftCap({
-          amount: softCap,
-          isReached: isSoftCapReached,
-        });
-        setHardCap(hardCap);
-        setFundraisingStartDate(fundraisingStartDate);
-        setFundraisingEndDate(fundraisingEndDate);
-        setIsMilestoneOngoing(isMilestoneOngoing);
-        setFundsUsedByCreator(ethers.utils.formatEther(fundsUsedByCreator));
-
-        setProjectState(parseInt(projectState, 10));
-        allInvestors !== undefined &&
-          setAllInvestors(allInvestors.allInvestments);
-      } catch (error) {
-        console.log(error);
-        toast.error("Error occurred while retrieving data from blockchain");
-      }
-    }
-  };
+  const {
+    data: dData,
+    error: dError,
+    loading: dLoading,
+  } = useQuery(GET_DYNAMIC_DATA, {
+    variables: {
+      id: PROJECT_ID,
+    },
+    pollInterval: 5000,
+    fetchPolicy: "cache-and-network",
+  });
 
   useEffect(() => {
-    getValuesFromInvestmentPool();
-  }, []);
+    if (!sLoading && data) {
+      setPercentageDivider(data.project.percentageDivider);
+      setTokensReserved(
+        BigNumber.from(data.project.distributionPool.lockedTokensForRewards)
+      );
+
+      setCurrency({
+        name: data.project.acceptedToken.name,
+        label: data.project.acceptedToken.symbol,
+        address: data.project.acceptedToken.id,
+        decimals: data.project.acceptedToken.decimals,
+      });
+      setTokenCurrency({
+        name: data.project.distributionPool.projectToken.name,
+        label: data.project.distributionPool.projectToken.symbol,
+        address: data.project.distributionPool.projectToken.id,
+        decimals: data.project.distributionPool.projectToken.decimals,
+      });
+
+      setSoftCap({
+        amount: BigNumber.from(data.project.softCap),
+        isReached: data.project.isSoftCapReached,
+      });
+
+      setHardCap(BigNumber.from(data.project.hardCap));
+      setFundraisingStartDate(formatTime(data.project.fundraiserStartTime));
+      setFundraisingEndDate(formatTime(data.project.fundraiserEndTime));
+      setSoftCapMultiplier(BigNumber.from(data.project.softCapMultiplier));
+      setHardCapMultiplier(BigNumber.from(data.project.hardCapMultiplier));
+      setMaximumWeightDivisor(
+        BigNumber.from(data.project.maximumWeightDivisor)
+      );
+      setVotingToken({
+        id: data.project.governancePool.votingToken.supplyCap,
+        supplyCap: BigNumber.from(
+          data.project.governancePool.votingToken.supplyCap
+        ),
+      });
+      const formattedMilestones = data.project.milestones.map(
+        (milestone: any) => ({
+          milestoneId: milestone.milestoneId,
+          startTime: formatTime(milestone.startTime),
+          endTime: formatTime(milestone.endTime),
+        })
+      );
+      setMilestones(formattedMilestones);
+      setIsSLoaded(true);
+    }
+  }, [data, sLoading]);
+
+  useEffect(() => {
+    if (!dLoading && dData && data) {
+      const currentTime = Math.floor(Date.now() / 1000);
+
+      setIsMilestoneOngoing(
+        currentTime >= Number(data.project.milestones[0].startTime) &&
+          currentTime <=
+            Number(
+              data.project.milestones[data.project.milestonesCount - 1].endTime
+            )
+      );
+
+      setSoftCap((prev) => ({
+        ...prev,
+        isReached: dData.project.isSoftCapReached,
+      }));
+
+      setCurrentMilestone(dData.project.currentMilestone.milestoneId);
+      setTotalInvested(BigNumber.from(dData.project.totalInvested));
+      const pState = getProjectStatus(
+        data.project.fundraiserEndTime,
+        data.project.fundraiserStartTime,
+        dData.project.isSoftCapReached,
+        dData.project.isCanceledBeforeFundraiserStart,
+        dData.project.isEmergencyTerminated,
+        dData.project.didCreatorLockTokens,
+        data.project.milestones,
+        dData.project.isTerminatedByGelato,
+        dData.project.isCanceledDuringMilestones,
+        dData.project.currentMilestone,
+        data.project.milestonesCount
+      );
+      setProjectState(pState);
+
+      const formattedMilestones = dData.project.milestones.map(
+        (milestone: any) => ({
+          milestoneId: milestone.milestoneId,
+          isStreamOngoing: milestone.isStreamOngoing,
+          isSeedAllocationPaid: milestone.isSeedAllocationPaid,
+
+          fundsAllocated: {
+            seedFundsAllocation: ethers.utils.formatEther(
+              milestone.seedFundsAllocation
+            ),
+            streamFundsAllocation: ethers.utils.formatEther(
+              milestone.streamFundsAllocation
+            ),
+            totalFundsAllocated: ethers.utils.formatEther(
+              BigNumber.from(milestone.seedFundsAllocation).add(
+                BigNumber.from(milestone.streamFundsAllocation)
+              )
+            ),
+          },
+        })
+      );
+
+      setMilestones((prevMilestones) =>
+        prevMilestones.map((milestone) => {
+          const updatedMilestone = formattedMilestones.find(
+            (m: Milestone) => m.milestoneId === milestone.milestoneId
+          );
+          return { ...milestone, ...updatedMilestone };
+        })
+      );
+
+      setFundsUsedByCreator(
+        ethers.utils.formatEther(dData.project.fundsUsedByCreator)
+      );
+      setTotalPercentageAgainst(
+        dData.project.governancePool.totalPercentageAgainst
+      );
+      setIsDLoaded(true);
+    }
+  }, [dData, dLoading, data]);
+
+  useEffect(() => {
+    if (isSLoaded && isDLoaded) {
+      setIsDataLoaded(true);
+    }
+  }, [isSLoaded, isDLoaded]);
 
   return {
-    seedFundingLimit,
     totalInvested,
     softCap,
     hardCap,
@@ -249,13 +282,16 @@ export const useLoadValues = () => {
     projectState,
     currency,
     setTotalInvested,
-    allInvestors,
-    setAllInvestors,
     percentageDivider,
-    milestonesInvestmentsListForFormula,
     isMilestoneOngoing,
     tokensReserved,
     tokenCurrency,
     fundsUsedByCreator,
+    softCapMultiplier,
+    hardCapMultiplier,
+    maximumWeightDivisor,
+    votingToken,
+    isDataLoaded,
+    totalPercentageAgainst,
   };
 };

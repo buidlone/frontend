@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import breakpoints from "../../../styles/constants";
+import { DesktopDisclaimerContainer } from "../disclaimer/styled";
 
 interface Props {
   statusColor?: any;
@@ -8,8 +9,10 @@ interface Props {
 export const BackgroundBlur = styled.div`
   background-image: url("/header_blur.png");
   background-size: 103% 150%;
-  height: 450px;
+  height: 30.563rem;
   background-repeat: no-repeat;
+  z-index: 11;
+  position: relative;
 
   @media screen and ${breakpoints.Device.mobile} {
     background-size: 100% 100%;
@@ -27,14 +30,12 @@ export const HeaderSection = styled.div`
   padding-left: 0.2%;
   padding-bottom: 0.457rem;
   height: 26.188rem;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   cursor: default;
   position: relative;
-
   color: #f0f0f0;
 
   .lastLine {
@@ -192,4 +193,3 @@ export const Round = styled.div<Props>`
     position: absolute;
   }
 `;
-

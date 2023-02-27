@@ -32,7 +32,11 @@ const FeaturedProject = ({ project, ...props }: IFeaturedProject) => {
           />
         </FeaturedProjectLogo>
         <FeaturedProjectName>Buidl1 - LCF protocol</FeaturedProjectName>
-        {projectState ? <StateBubble statusColor={StatusColor} /> : <Spinner />}
+        {projectState ? (
+          <StateBubble statusColor={StatusColor({ projectState })} />
+        ) : (
+          <Spinner />
+        )}
       </FeaturedProjectHeader>
       <FeaturedProjectInsights project={project} />
     </FeaturedProjectsBlockWrapper>

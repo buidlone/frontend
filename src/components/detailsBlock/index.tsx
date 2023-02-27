@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { useContext } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import useCountdown from "../../hooks/useCountdown";
+import { useInvestors } from "../../hooks/useInvestmentHistory";
 import { IInvestorsProps } from "../../interfaces/ICommonProps";
 import {
   FlexItem,
@@ -13,18 +13,16 @@ import {
   MobileDivider,
 } from "./styled";
 
-const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
+const DetailsBlock = () => {
   const {
     currency,
     milestones,
     currentMilestone,
     hardCap,
-    isMilestoneOngoing,
+
     tokenCurrency,
   } = useContext(LoadedValuesContext);
-  const { timerDays, timerHours, timerMinutes, timerSeconds } = useCountdown(
-    milestones[milestones.length - 1].endDate
-  );
+  const { wallets } = useInvestors();
 
   return (
     <DetailsBlockWrapper>
@@ -45,21 +43,17 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
             </Data>
 
             <Data>
-              {wallets[0] !== "" ? wallets?.length : 0}{" "}
-              {wallets?.length === 1 && wallets[0] !== ""
-                ? "wallet"
-                : "wallets"}
+              {wallets} {wallets === 1 ? "wallet" : "wallets"}
             </Data>
 
             <Data>
               {ethers.utils.formatEther(hardCap)} {currency.label}
             </Data>
 
-            <Data className="medium">{milestones[0].startDate}</Data>
+            <Data className="medium">{milestones[0].startTime}</Data>
 
             <Data className="smaller">
-              {/* {timerDays}D {timerHours}H {timerMinutes}M {timerSeconds}S */}
-              {milestones[9].endDate}
+              {milestones[milestones.length - 1].endTime}
             </Data>
           </FlexItem1>
         </FlexItem>
@@ -93,4 +87,3 @@ const DetailsBlock = ({ wallets, ...props }: IInvestorsProps) => {
 };
 
 export default DetailsBlock;
-

@@ -13,11 +13,26 @@ import {
   TimelineScroll,
 } from "./styled";
 import useCountdown from "../../hooks/useCountdown";
+import MilestoneDetails from "../milestoneDetails";
+import { ProjectState } from "../../interfaces/enums/ProjectStateEnums";
 
-interface ITimeline {
+export interface ITimeline {
   scale: number;
 }
-
+export const getDate = (endDate: string, startDate: string, scale: number) => {
+  const date = dateDiff(endDate, startDate);
+  if (scale === 1) {
+    return `${date.rounded_months} mo`;
+  } else {
+    if (date.days > 0) {
+      return `${date.months} mo ${date.days} ${
+        date.days === 1 ? "day" : "days"
+      }`;
+    } else {
+      return `${date.months} mo`;
+    }
+  }
+};
 const TimelineGraph = ({ scale }: ITimeline) => {
   const [active, setActive] = useState(false);
   const { milestones, projectState, currentMilestone } =
@@ -27,45 +42,33 @@ const TimelineGraph = ({ scale }: ITimeline) => {
   const activeStageRef = React.createRef<HTMLElement>();
 
   const maxDays = useCountdown(
-    milestones[currentMilestone]?.endDate,
-    milestones[0]?.startDate
+    milestones[currentMilestone]?.endTime,
+    milestones[0]?.startTime
   );
 
-  const currentDays = useCountdown(undefined, milestones[0]?.startDate, true);
+  const currentDays = useCountdown(undefined, milestones[0]?.startTime, true);
 
   const getTimelineProgress = () => {
     let progress = 0;
 
-    if (projectState === 32 || projectState === 64) {
+    if (
+      projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST ||
+      ProjectState.LAST_MILESTONE_ONGOING
+    ) {
       let oneMilestonePortion = 100 / milestones.length;
 
       let currentMaxProgress =
-        projectState === 32
+        projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST
           ? oneMilestonePortion * (currentMilestone + 1)
           : 100;
 
       progress =
         (Number(currentDays.timerDays) * currentMaxProgress) /
         Number(maxDays.timerDays);
-    } else if (projectState === 512) {
+    } else if (projectState === ProjectState.SUCCESSFULLY_ENDED) {
       progress = 100;
     }
     return progress;
-  };
-
-  const getDate = (endDate: string, startDate: string) => {
-    const date = dateDiff(endDate, startDate);
-    if (scale === 1) {
-      return `${date.rounded_months} mo`;
-    } else {
-      if (date.days > 0) {
-        return `${date.months} mo ${date.days} ${
-          date.days === 1 ? "day" : "days"
-        }`;
-      } else {
-        return `${date.months} mo`;
-      }
-    }
   };
 
   useEffect(() => {
@@ -77,9 +80,11 @@ const TimelineGraph = ({ scale }: ITimeline) => {
     ) {
       containerRef.current.scrollTo({
         left:
-          activeStageRef.current.offsetLeft -
-          containerRef.current.offsetWidth / 2.6,
-
+          scale === 3
+            ? activeStageRef.current.offsetLeft -
+              containerRef.current.offsetWidth / 9
+            : activeStageRef.current.offsetLeft -
+              containerRef.current.offsetWidth / 2.6,
         behavior: "smooth",
       });
     }
@@ -101,41 +106,59 @@ const TimelineGraph = ({ scale }: ITimeline) => {
         innerRef={containerRef}
         hideScrollbars={active ? false : true}
       >
-        <TimelineBar>
+        <TimelineBar scale={scale}>
           <TProgress progress={getTimelineProgress()} />
           {milestones &&
             milestones.map((milestone) => {
               const completed = getMilestoneState(
                 projectState,
                 currentMilestone,
-                milestone.id
+                milestone.milestoneId
               ).completed;
               const active = getMilestoneState(
                 projectState,
                 currentMilestone,
-                milestone.id
+                milestone.milestoneId
               ).active;
               const itemProps = active ? { ref: activeStageRef } : {};
               return (
                 <TimelineStep
                   scale={scale}
-                  key={milestone.id}
-                  stage={`Milestone ${milestone.id + 1}`}
+                  key={milestone.milestoneId}
+                  stage={`Milestone ${milestone.milestoneId + 1}`}
                   completed={completed}
                   current={active}
                   {...itemProps}
-                />
+                >
+                  {scale === 3 && (
+                    <MilestoneDetails
+                      milestone={milestone}
+                      date={getDate(
+                        milestone.endTime,
+                        milestone.startTime,
+                        scale
+                      )}
+                    />
+                  )}
+                </TimelineStep>
               );
             })}
         </TimelineBar>
 
-        <DateBar>
+        <DateBar scale={scale}>
           {milestones &&
             milestones.map((milestone) => (
               <DateStep
-                key={milestone.id}
+                key={milestone.milestoneId}
                 scale={scale}
-                date={getDate(milestone.endDate, milestone.startDate)}
+                date={
+                  scale === 3
+                    ? `${milestone.startTime.slice(
+                        0,
+                        10
+                      )} - ${milestone.endTime.slice(0, 10)}`
+                    : getDate(milestone.endTime, milestone.startTime, scale)
+                }
               />
             ))}
         </DateBar>

@@ -13,17 +13,17 @@
       },
       {
         "internalType": "address",
-        "name": "_ipImplementation",
+        "name": "_ipLogic",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_gpImplementation",
+        "name": "_gpLogic",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_dpImplementation",
+        "name": "_dpLogic",
         "type": "address"
       },
       {
@@ -93,14 +93,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "oldMilestoneEnd",
-        "type": "uint256"
+        "type": "uint48"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "newMilestoneStart",
-        "type": "uint256"
+        "type": "uint48"
       }
     ],
     "name": "InvestmentPoolFactory__MilestonesAreNotAdjacentInTime",
@@ -124,14 +124,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "totalPercentagesProvided",
-        "type": "uint256"
+        "type": "uint48"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "maxPercentages",
-        "type": "uint256"
+        "type": "uint48"
       }
     ],
     "name": "InvestmentPoolFactory__PercentagesAreNotAddingUp",
@@ -291,14 +291,14 @@
             "type": "uint48"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint48",
             "name": "intervalSeedPortion",
-            "type": "uint256"
+            "type": "uint48"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint48",
             "name": "intervalStreamingPortion",
-            "type": "uint256"
+            "type": "uint48"
           }
         ],
         "internalType": "struct IInvestmentPool.MilestoneInterval[]",
@@ -332,7 +332,7 @@
   },
   {
     "inputs": [],
-    "name": "getDistributionPoolImplementation",
+    "name": "getDistributionPoolLogic",
     "outputs": [
       {
         "internalType": "address",
@@ -348,9 +348,9 @@
     "name": "getFundraiserMaxDuration",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "",
-        "type": "uint256"
+        "type": "uint48"
       }
     ],
     "stateMutability": "pure",
@@ -361,9 +361,9 @@
     "name": "getFundraiserMinDuration",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "",
-        "type": "uint256"
+        "type": "uint48"
       }
     ],
     "stateMutability": "pure",
@@ -371,7 +371,7 @@
   },
   {
     "inputs": [],
-    "name": "getGelatoFeeAllocationForProject",
+    "name": "getGelatoFee",
     "outputs": [
       {
         "internalType": "uint256",
@@ -397,7 +397,7 @@
   },
   {
     "inputs": [],
-    "name": "getGovernancePoolImplementation",
+    "name": "getGovernancePoolLogic",
     "outputs": [
       {
         "internalType": "address",
@@ -413,9 +413,9 @@
     "name": "getHardCapMultiplier",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "stateMutability": "pure",
@@ -423,7 +423,7 @@
   },
   {
     "inputs": [],
-    "name": "getInvestmentPoolImplementation",
+    "name": "getInvestmentPoolLogic",
     "outputs": [
       {
         "internalType": "address",
@@ -439,19 +439,6 @@
     "name": "getInvestmentWithdrawPercentageFee",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getMaxMilestoneCount",
-    "outputs": [
-      {
         "internalType": "uint32",
         "name": "",
         "type": "uint32"
@@ -462,12 +449,38 @@
   },
   {
     "inputs": [],
+    "name": "getMaxMilestoneCount",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMaxProportionalDifference",
+    "outputs": [
+      {
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getMilestoneMaxDuration",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "",
-        "type": "uint256"
+        "type": "uint48"
       }
     ],
     "stateMutability": "pure",
@@ -478,9 +491,9 @@
     "name": "getMilestoneMinDuration",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "",
-        "type": "uint256"
+        "type": "uint48"
       }
     ],
     "stateMutability": "pure",
@@ -491,9 +504,9 @@
     "name": "getPercentageDivider",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint48",
         "name": "",
-        "type": "uint256"
+        "type": "uint48"
       }
     ],
     "stateMutability": "pure",
@@ -504,9 +517,9 @@
     "name": "getSoftCapMultiplier",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "stateMutability": "pure",
@@ -556,9 +569,9 @@
     "name": "getVotesWithdrawPercentageFee",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "",
-        "type": "uint256"
+        "type": "uint32"
       }
     ],
     "stateMutability": "pure",

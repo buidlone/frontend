@@ -89,12 +89,18 @@ export const LinkButton = styled.a`
     height: 35px;
     font-size: 16px;
   }
+
+  &.demo {
+    width: 233px;
+    margin-right: auto;
+    margin-left: 1rem;
+  }
 `;
 
 export const ProjectInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #2e314d;
+  background: #2e314d 0% 0% no-repeat padding-box;
   border-radius: 20px;
   height: 80%;
   width: 100%;
@@ -109,12 +115,9 @@ export const ProjectInfoWrapper = styled.div`
 export const WhitepaperLink = styled.a`
   text-align: left;
   text-decoration: underline;
-
   cursor: pointer;
-
   color: rgba(255, 255, 255, 0.5);
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-size: 14px;
 `;
-

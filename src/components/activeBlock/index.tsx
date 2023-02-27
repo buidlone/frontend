@@ -5,54 +5,40 @@ import {
   StatusBubble,
 } from "./styled";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
-import Web3Context from "../../context/web3Context";
-import { getIndividualInvestedAmount } from "../../web3/getIndividualInvestedAmount";
+import { useContext, useState } from "react";
 import { StatusColor } from "../projectState";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import LogoBuidl from "../../../public/logoNew.svg";
 import { AccordionButtonIcon } from "../accordionContent/styled";
 import DetailedPortfolio from "../detailedPortfolio";
-import { getVotingPower } from "../../web3/getVotingPower";
-import { countDecimals } from "../../utils/countDecimals";
+import InvestorValuesContext from "../../context/investorContext";
+import { roundApprox } from "../../utils/roundValue";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
-  const [
-    totalIndividualInvestedToProject,
-    setTotalIndividualInvestedToProject,
-  ] = useState(0);
-  const { currency } = useContext(LoadedValuesContext);
+  const { currency, projectState } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
-  const [votingPower, setVotingPower] = useState("0");
-  const { web3Provider, address } = useContext(Web3Context);
+  const statusColor = StatusColor({ projectState });
 
-  useEffect(() => {
-    if (web3Provider) {
-      getIndividualInvestedAmount(web3Provider, address).then((data: any) => {
-        setTotalIndividualInvestedToProject(data.totalAmountInvested);
-      });
-      getVotingPower(web3Provider, address).then((data: any) => {
-        setVotingPower(data);
-      });
-    } else {
-      setTotalIndividualInvestedToProject(0);
-    }
-  });
+  const {
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
   return (
     <ActiveBlockWrapper>
       <Table id="main" cellSpacing="0" className="colored">
         <thead>
-          <th>Project</th>
-          <th>Launchpad</th>
-          <th>Invested</th>
-          <th>Voting power</th>
+          <tr className="none">
+            <th>Project</th>
+            <th>Launchpad</th>
+            <th>Invested</th>
+            <th>Voting power</th>
+          </tr>
         </thead>
         <tbody>
           <tr style={{ background: "rgba(46, 49, 77, 0.1)" }}>
             <td className="blue bigger flex">
               <RoundImgWrapper>
-                <StatusBubble color={StatusColor} />
+                <StatusBubble color={statusColor && statusColor} />
                 <Image
                   src={LogoBuidl}
                   alt="buidl logo"
@@ -68,21 +54,14 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
               </a>
             </td>
             <td className="greenText bigger">
-              {Number(totalIndividualInvestedToProject) >= 0.0001 &&
-              countDecimals(String(totalIndividualInvestedToProject)) <= 4
-                ? totalIndividualInvestedToProject
-                : Number(totalIndividualInvestedToProject) >= 0.0001 &&
-                  countDecimals(String(totalIndividualInvestedToProject)) > 4
-                ? `≈ ${Number(totalIndividualInvestedToProject).toFixed(4)}`
-                : Number(totalIndividualInvestedToProject) < 0.0001 &&
-                  Number(totalIndividualInvestedToProject) > 0
-                ? "≈ 0.0001"
+              {projectInvestments
+                ? roundApprox(projectInvestments.totalInvestedAmount)
                 : "0.0000"}{" "}
               {currency.label}
             </td>
 
             <td className="flexGap yellowText bigger">
-              {votingPower ? votingPower : 0} %
+              {projectInvestments ? projectInvestments.votingPower : 0} %
               <AccordionButtonIcon
                 style={{
                   color: "white",
@@ -112,4 +91,3 @@ const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
 };
 
 export default ActiveBlock;
-

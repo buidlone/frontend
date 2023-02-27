@@ -6,6 +6,7 @@ export const HistoryTable = styled(BlockWrapper)`
   width: 100%;
   padding: 20px;
   background: #1f233c 0% 0% no-repeat padding-box;
+  border-radius: 20px;
   border: 1px solid #157fc1;
   opacity: 0.85;
   overflow: auto;

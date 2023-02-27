@@ -3,7 +3,6 @@ import { BlockWrapper, Title } from "../fundingBlock/styled";
 import {
   BottomPartWrapper,
   BottomWrapper,
-  InfoIcon,
   InlineWrapper,
   TopWrapper,
   XButton,
@@ -39,8 +38,8 @@ const TimelineBlock = () => {
 
   useEffect(() => {
     const projectPeriod = dateDiff(
-      milestones[milestones.length - 1].endDate,
-      milestones[0].startDate
+      milestones[milestones.length - 1].endTime,
+      milestones[0].startTime
     );
 
     projectPeriod.years > 0

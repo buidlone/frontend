@@ -2,16 +2,12 @@ import { BigNumber } from "ethers";
 import { IInvestor } from "./IInvestors";
 
 export type Milestone = {
-  id: number;
-  startDate: string;
-  endDate: string;
-  paid: boolean;
-  totalMilestoneTokenAllocation?: number;
-  seedAmount: BigNumber;
-  seedAmountPaid: boolean;
-  streamOngoing: boolean;
-  intervalSeedPortion: BigNumber;
-  intervalStreamingPortion: BigNumber;
+  milestoneId: number;
+  startTime: string;
+  endTime: string;
+  isStreamOngoing: boolean;
+  isSeedAllocationPaid: boolean;
+  fundsAllocated: IMilestoneFundsAllocated;
 };
 
 export type SoftCap = {
@@ -26,8 +22,13 @@ export type Currency = {
   decimals: number;
 };
 
+export type VotingToken = {
+  id: string;
+  currentSupply?: BigNumber;
+  supplyCap: BigNumber;
+};
+
 export interface ILoadedValues {
-  seedFundingLimit: number; //will be removed
   softCap: SoftCap;
   hardCap: BigNumber;
   totalInvested: BigNumber;
@@ -38,18 +39,21 @@ export interface ILoadedValues {
   projectState: number;
   currency: Currency;
   setTotalInvested: React.Dispatch<React.SetStateAction<BigNumber>>;
-  allInvestors: IInvestor[];
-  setAllInvestors: React.Dispatch<React.SetStateAction<IInvestor[]>>;
-  percentageDivider: BigNumber;
-  milestonesInvestmentsListForFormula: BigNumber[];
+  percentageDivider: string;
   isMilestoneOngoing: boolean;
-  tokensReserved: string;
+  tokensReserved: BigNumber;
   tokenCurrency: Currency;
   fundsUsedByCreator: string;
+  softCapMultiplier: BigNumber;
+  hardCapMultiplier: BigNumber;
+  maximumWeightDivisor: BigNumber;
+  votingToken: VotingToken;
+  isDataLoaded: boolean;
+  totalPercentageAgainst: number;
 }
 
 export interface IMilestoneFundsAllocated {
-  streamAllocated: string;
-  seedAllocated: string;
+  seedFundsAllocation: string;
+  streamFundsAllocation: string;
   totalFundsAllocated: string;
 }

@@ -24,8 +24,15 @@ import discord from "../../assets/discord.svg";
 import instagram from "../../assets/Instagram.svg";
 import linkedin from "../../assets/linkedin.svg";
 import twitter from "../../assets/Twitter.svg";
+import { useInvestors } from "../../hooks/useInvestmentHistory";
+import { useContext } from "react";
+import InvestorValuesContext from "../../context/investorContext";
 
-const InvestStatus = ({ setIsShownInvest, wallets }: any) => {
+const InvestStatus = ({ setIsShownInvest }: any) => {
+  const { wallets } = useInvestors();
+  const { investorValues: projectInvestments } = useContext(
+    InvestorValuesContext
+  );
   const handleClose = () => {
     setIsShownInvest(false);
   };
@@ -46,7 +53,9 @@ const InvestStatus = ({ setIsShownInvest, wallets }: any) => {
             <BigExlamation>!</BigExlamation>
             <Box>
               <TextWrapper>
-                <TitleBoxText>You are {wallets.length} BUIDLER</TitleBoxText>{" "}
+                <TitleBoxText>
+                  You are {projectInvestments ? wallets : wallets + 1} BUIDLER
+                </TitleBoxText>{" "}
                 <br />
                 <BoxText>
                   Go ahead and share on{" "}
@@ -93,4 +102,3 @@ const InvestStatus = ({ setIsShownInvest, wallets }: any) => {
 };
 
 export default InvestStatus;
-

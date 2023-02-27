@@ -9,7 +9,6 @@ import {
   IModalInputSectionWrapper,
   IModalFieldWrapper,
   InputField,
-  OutputField,
   SelectField,
   InputLabel,
   IModalFormConfirmSection,
@@ -24,24 +23,24 @@ import {
   BalanceBtn,
   MaxBalanceBtn,
 } from "./styled";
-import logo from "../../../public/brandmark_blue.svg";
 import infoBubble from "../../../public/info_bubble.svg";
 import infoBubbleWhite from "../../../public/info_bubble_white.svg";
 import BuidlLogo from "../../../public/BuidlLogo.png";
 import Accordion from "../accordion";
-import { InfoIcon, InlineWrapper } from "../timelineBlock/styled";
+import { InlineWrapper } from "../timelineBlock/styled";
 import Tooltip from "../tooltip";
 import React, { useContext, useEffect, useState, KeyboardEvent } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Currency, mainnetCurrencies } from "../../constants/currencies";
 import Web3Context from "../../context/web3Context";
 import { getTokenBalance } from "../../web3/getTokenBalance";
-import { toast } from "react-toastify";
 import LoadedValuesContext from "../../context/loadedValuesContext";
 import { invest } from "../../web3/invest";
 import { BigNumber, ethers } from "ethers";
 import UserInvesmentHistory from "../userInvestmentHistory";
 import CalculatedInvestValues from "../calculatedInvestValues";
+import InvestorValuesContext from "../../context/investorContext";
+
 
 const items = [
   {
@@ -79,6 +78,7 @@ const InvestModal = ({
     setTotalInvested,
     hardCap,
     totalInvested,
+    tokenCurrency,
   } = useContext(LoadedValuesContext);
   const {
     register,
@@ -101,13 +101,17 @@ const InvestModal = ({
     decimals: currency.decimals,
   });
 
-  const { web3Provider, address } = useContext(Web3Context);
+  const { web3Provider, address, chainId, provider } = useContext(Web3Context);
   const [balance, setBalance] = useState<string>("0");
   const [network, setNetwork] = useState<string | undefined>(undefined);
   const [networkError, setNetworkError] = useState<string | undefined>(
     undefined
   );
   const [over, setOver] = useState(0);
+  const {
+    setInvestorValues,
+    investorValues: { projectInvestments },
+  } = useContext(InvestorValuesContext);
 
   const handleCurrencyChange = (selectedOption: any) => {
     setSelectedCurrency({
@@ -118,8 +122,8 @@ const InvestModal = ({
   };
 
   useEffect(() => {
-    if (web3Provider) {
-      if (web3Provider?.network.chainId === 1) {
+    if (web3Provider && chainId) {
+      if (chainId === 1) {
         setOptions(mainnetCurrencies);
         setNetwork("Ethereum Mainnet");
         setNetworkError("Please connect to Goerli Testnet");
@@ -128,9 +132,10 @@ const InvestModal = ({
           address: mainnetCurrencies[0].address,
           decimals: mainnetCurrencies[0].decimals,
         });
-      } else if (web3Provider?.network.chainId === 5) {
+      } else if (chainId === 5) {
         setOptions([currency]);
         setNetwork("Goerli Testnet");
+        setNetworkError("");
         setSelectedCurrency({
           label: currency.label,
           address: currency.address,
@@ -140,7 +145,7 @@ const InvestModal = ({
         setNetworkError("Please connect to Goerli Testnet");
       }
     }
-  }, []);
+  }, [chainId]);
 
   useEffect(() => {
     if (selectedCurrency?.address) {
@@ -166,6 +171,24 @@ const InvestModal = ({
     trigger("amount");
   };
 
+  const updateInvestorValuesLocally = (amount: string) => {
+    setInvestorValues &&
+      setInvestorValues((prevState: any) => {
+        const currentValue = ethers.utils.parseEther(
+          prevState.projectInvestments?.totalInvestedAmount || "0"
+        );
+        const amountBN = ethers.utils.parseEther(amount);
+        const newValue = ethers.utils.formatEther(currentValue.add(amountBN));
+        return {
+          ...prevState,
+          projectInvestments: {
+            ...prevState.projectInvestments,
+            totalInvestedAmount: newValue,
+          },
+        };
+      });
+  };
+
   const submitForm = async (data: InputTypes) => {
     const amount = getValues("amount");
 
@@ -175,11 +198,13 @@ const InvestModal = ({
         selectedCurrency.address,
         web3Provider,
         amount,
-        address
+        address,
+        provider,
+        tokenCurrency
       );
-      result !== undefined &&
-        setTotalInvested !== null &&
-        setTotalInvested(result);
+      result && setTotalInvested && setTotalInvested(result);
+
+      // updateInvestorValuesLocally(amount);
 
       if (result !== undefined) {
         setIsShownInvest(true);
@@ -225,7 +250,7 @@ const InvestModal = ({
   };
 
   const isGoerli = () => {
-    return web3Provider?.network.chainId === 5;
+    return chainId === 5;
   };
 
   return (
@@ -373,4 +398,3 @@ const InvestModal = ({
 };
 
 export default InvestModal;
-

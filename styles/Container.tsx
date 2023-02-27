@@ -7,13 +7,11 @@ interface Props {
 }
 
 export const Container = styled.div`
-  z-index: 1;
   width: 100%;
   max-width: 1400px;
-  /* max-width: 1233px; */
   margin-left: auto;
   margin-right: auto;
-  padding: 0 3rem; // 50px
+  padding: 0 3rem;
   position: relative;
 
   @media screen and (max-width: 991px) {
@@ -47,7 +45,7 @@ export const BgImage = styled.div<Props>`
       background-position: center center;
       mix-blend-mode: color;
       opacity: 1;
-      z-index: 11;
+      z-index: 10;
 
       @media screen and ${breakpoints.Device.mobile} {
         opacity: 0.8;
@@ -85,4 +83,3 @@ export const BgImage = styled.div<Props>`
     }
   }};
 `;
-

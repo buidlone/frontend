@@ -5,7 +5,7 @@ import breakpoints from "../../../styles/constants";
 
 export const ProgressBlockWrapper = styled.div`
   background: #1f233c 0% 0% no-repeat padding-box;
-  border-radius: 28px;
+  border-radius: 20px;
   opacity: 1;
   @media screen and ${breakpoints.Device.mobile} {
     display: none;
@@ -25,7 +25,7 @@ export const ProgressContentWrapper = styled.div`
   align-content: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: 45px 0;
+  margin: 30px 0;
 
   @media screen and (max-width: 991px) {
     & > ${ProgressRoadmap}, & > ${DetailsCard} {
@@ -38,4 +38,3 @@ export const ProgressContentWrapper = styled.div`
     }
   } ;
 `;
-

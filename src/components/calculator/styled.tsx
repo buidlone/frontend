@@ -7,16 +7,15 @@ import { InlineWrapper } from "../timelineBlock/styled";
 interface Props {
   currency?: string;
   row?: boolean;
+  disabled?: boolean;
 }
 
 export const CalculatorBlock = styled(BlockWrapper)`
-  width: 72%;
-  min-width: 39.063rem;
-  min-width: 17.688rem;
+  width: 100%;
+
   max-width: 60.063rem;
   height: 23.938rem;
-  background: #1f233c;
-  border-radius: 12px;
+
   padding: 0;
   @media screen and (max-width: 1394px) {
     width: 100%;
@@ -54,34 +53,38 @@ export const CalculationWrapper = styled.div`
   padding: 1.25rem 1.875rem;
 `;
 
-export const SelectWrapper = styled.div<Props>`
+export const SelectWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 1.219rem;
-  margin-bottom: 5%;
+  margin-bottom: 0.5rem;
+`;
+export const CurrencyIndicator = styled.span`
+  position: absolute;
+  color: #00ffc4;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  border-left: 1.5px solid #00ffc4;
+  padding-left: 1%;
+  padding-right: 4%;
+  right: 2%;
+  bottom: 26%;
+`;
 
-  &:before {
-    content: "${(props) => props?.currency}";
-    position: absolute;
-    top: 63%;
-
-    left: 40%;
-    z-index: 1;
-    color: #00ffc4;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-
-    border-left: 1.5px solid #00ffc4;
-    padding-left: 1%;
-  }
+export const InputFieldWrapper = styled.div`
+  width: fit-content;
+  min-width: 50%;
+  height: 2.5rem;
+  position: relative;
+  flex-grow: 1;
 `;
 
 export const InputField = styled.input`
-  width: 50%;
-  height: 2.5rem;
+  width: 100%;
+  height: 100%;
   background: #1d2031;
   box-shadow: inset 0px 0px 5px #141620;
   border-radius: 8px;
@@ -99,7 +102,7 @@ export const InputField = styled.input`
     font-size: 15px;
     color: #00ffc4;
     opacity: 1;
-    padding-right: 12%;
+    padding-right: 26%;
   }
 
   @media screen and (max-width: 800px) {
@@ -111,8 +114,9 @@ export const VotingWrapper = styled.div`
   width: 33%;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-right: 2%;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 500;
   font-family: "Space Grotesk", sans-serif;
 
@@ -124,6 +128,15 @@ export const VotingWrapper = styled.div`
     color: #ffb100;
     text-shadow: 0px 0px 6px #ffb1008c;
     opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .sign {
+      font-size: 15px;
+      margin-right: 2%;
+      font-weight: bold;
+    }
   }
 
   .votingNumbers {
@@ -141,29 +154,35 @@ export const VotingWrapper = styled.div`
 export const PBContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   width: 100%;
   height: 90%;
-  border-radius: 13px;
-  box-shadow: inset 0px 0px 20px #404a8c;
+  background: #2e314d 0% 0% no-repeat padding-box;
+  border-radius: 20px;
   opacity: 1;
   position: relative;
   display: flex;
-  padding: 2rem 1.5rem;
+  padding: 1.419rem 1.5rem 1.875rem 1.5rem;
 `;
 
 export const PBWrapper = styled.div`
-  width: 11.548rem;
-  height: 13.433rem;
+  width: 11.182rem;
+  height: 11.182rem;
+  margin-bottom: 0.669rem;
 `;
 
-export const IButton = styled(GreenButton)`
+export const IButton = styled(GreenButton)<Props>`
   width: 100%;
-  height: 15%;
+  max-width: 15.375rem;
+  min-height: 2.5rem;
   margin-top: 1rem;
   background: transparent linear-gradient(168deg, #3aedc4 0%, #469898 100%) 0%
     0% no-repeat padding-box;
+  border: 1px solid #00ffc4;
+  border-radius: 12px;
+  opacity: ${(props) => (props.disabled ? 0.4 : 1)};
+  transition: none;
 `;
 
 export const VotingRow = styled.div`
@@ -183,6 +202,7 @@ export const VotingItem = styled.div`
   .text {
     font-size: 12px;
     color: rgba(255, 255, 255, 0.5);
+    font-weight: 200;
   }
 
   .tokens {
@@ -201,5 +221,4 @@ export const Positioning = styled.div<Props>`
   justify-content: space-between;
   display: flex;
   //flex-direction: ${(props) => (props?.row ? "row" : "column")};
-  
 `;

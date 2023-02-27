@@ -1,8 +1,9 @@
+import { ethers } from "ethers";
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
-import Web3Context from "../../context/web3Context";
-import { getHistoryTable } from "../../web3/historyTable";
+import { useInvestors } from "../../hooks/useInvestmentHistory";
+
 import { BarChartContainer, BarChartScroll } from "../investorsBarChart/styled";
 import { Table } from "../tokenStreamTable/styled";
 import { HistoryTable } from "./styled";
@@ -13,41 +14,44 @@ const HistoryBlock = () => {
     hash: string;
     amount: string;
   };
-  const [history, setHistory] = useState<History[]>();
+
   const { currency, totalInvested } = useContext(LoadedValuesContext);
+  const { investors, refetch } = useInvestors();
 
   useEffect(() => {
-    getHistoryTable().then((data: any) => {
-      setHistory(data);
-    });
+    refetch();
   }, [totalInvested._hex]);
 
-  if (history) {
+  if (!!investors) {
     return (
       <HistoryTable style={{ color: "white" }}>
         <BarChartContainer>
           <BarChartScroll hideScrollbars={false} vertical={true}>
             <Table>
               <thead>
-                <th>Address</th>
-                <th>Amount</th>
-                <th>Transaction Hash</th>
+                <tr className="none">
+                  <th>Address</th>
+                  <th>Amount</th>
+                  <th>Transaction Hash</th>
+                </tr>
               </thead>
+
               <tbody>
-                {history.map((item: any) => (
-                  <tr>
+                {investors.map((investor: any) => (
+                  <tr key={investor.transactionHash}>
                     <td data-label={`Address`} className="token">
-                      {item.address}
+                      {investor.caller}
                     </td>
                     <td data-label={`Amount`} className="token">
-                      {item.amount} {currency.label}
+                      {ethers.utils.formatEther(investor.amount)}{" "}
+                      {currency.label}
                     </td>
                     <td data-label={`Transaction Hash`} className="fund">
                       <a
                         target="_blank"
-                        href={`https://goerli.etherscan.io/tx/${item.hash}`}
+                        href={`https://goerli.etherscan.io/tx/${investor.transactionHash}`}
                       >
-                        {item.hash}
+                        {investor.transactionHash}
                       </a>
                     </td>
                   </tr>
@@ -63,11 +67,13 @@ const HistoryBlock = () => {
     <HistoryTable style={{ color: "white" }}>
       <Table>
         <thead>
-          <th>Address</th>
-          <th>Amount</th>
-          <th>Transaction Hash</th>
+          <tr className="none">
+            <th>Address</th>
+            <th>Amount</th>
+            <th>Transaction Hash</th>
+          </tr>
         </thead>
-        <tbody></tbody>
+        <tbody />
       </Table>
     </HistoryTable>
   );

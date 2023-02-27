@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-export const StateTextGreen = styled.text`
+interface Props {
+  isDemo: boolean;
+}
+
+export const StateTextGreen = styled.span<Props>`
   color: rgb(0, 255, 196);
-  font-size: 18px;
+  font-size: ${(props) => (props.isDemo ? "14px" : "18px")};
 `;
 
 export const StateTextOrange = styled(StateTextGreen)`

@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import { useContext, useEffect, useState } from "react";
 import LoadedValuesContext from "../../context/loadedValuesContext";
+import { roundPrecise } from "../../utils/roundValue";
 
 import {
   FProgress,
@@ -14,6 +15,7 @@ import {
 const ProgressInsights = () => {
   const { softCap, hardCap, totalInvested, currency } =
     useContext(LoadedValuesContext);
+
 
   const [progress, setProgress] = useState<number>(0);
 
@@ -33,14 +35,16 @@ const ProgressInsights = () => {
   return (
     <FProgressWrapper>
       <FundsBar>
-        <SoftCapIndicator softCapPosition={softCapPosition} />
+        {softCap.amount.toString() !== "0" && (
+          <SoftCapIndicator softCapPosition={softCapPosition} />
+        )}
         <HardCapIndicator />
         <FProgress progress={progress ? progress : 0} />
       </FundsBar>
       <FundsWrapper>
         <div className="total">
           {" "}
-          {ethers.utils.formatEther(totalInvested).replace(/,/g, " ")}{" "}
+          {roundPrecise(ethers.utils.formatEther(totalInvested)).replace(/,/g, " ")}{" "}
           {currency.label}
         </div>
         <div className="required">
