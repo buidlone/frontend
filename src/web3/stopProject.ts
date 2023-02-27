@@ -2,36 +2,21 @@ import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import {
   GovernancePoolAddress,
-  InvestmentPoolAddress,
   VotingTokenAddress,
 } from "../constants/contractAddresses";
 import GovernancePoolABI from "./abi/GovernancePool.json";
 import VotingTokenABI from "./abi/VotingToken.json";
-import InvestmentPoolABI from "./abi/InvestmentPool.json";
 import { VoteAgainstErrorEnum } from "../interfaces/enums/VoteAgainstErrorEnums";
 
 export const stopProject = async (
   provider: any,
-  address: string | undefined | null
+  address: string | undefined | null,
+  unusedActiveVotes: string
 ) => {
   if (provider) {
     try {
       const signer = provider.getSigner();
-      const contractGovernancePoolProvider = new ethers.Contract(
-        GovernancePoolAddress,
-        GovernancePoolABI,
-        provider
-      );
-      const contractInvestmentPoolProvider = new ethers.Contract(
-        InvestmentPoolAddress,
-        InvestmentPoolABI,
-        provider
-      );
-      const contractInvestmentPoolSigner = new ethers.Contract(
-        InvestmentPoolAddress,
-        InvestmentPoolABI,
-        signer
-      );
+
       const contractVotingToken = new ethers.Contract(
         VotingTokenAddress,
         VotingTokenABI,
@@ -47,22 +32,6 @@ export const stopProject = async (
         VotingTokenABI,
         signer
       );
-
-      const votingTokenBalance =
-        await contractGovernancePoolProvider.getVotingTokenBalance(address);
-      const investmentPoolId =
-        await contractGovernancePoolProvider.getInvestmentPoolId();
-      const currentMilestone =
-        await contractInvestmentPoolProvider.getCurrentMilestoneId();
-      const activeTokens =
-        await contractGovernancePoolProvider.getActiveVotingTokensBalance(
-          currentMilestone,
-          address
-        );
-      const usedTokens = await contractGovernancePoolProvider.getVotesAmount(
-        address
-      );
-      const votesBalance = activeTokens.sub(usedTokens);
 
       const isApprovedPromise = contractVotingToken.isApprovedForAll(
         address,
@@ -81,10 +50,11 @@ export const stopProject = async (
           error: "Transaction was rejected",
         });
       }
+
       if (isApproved) {
         try {
           const voteTx = await contractGovernancePoolSigner.voteAgainst(
-            votesBalance
+            BigNumber.from(unusedActiveVotes)
           );
           const voteReceipt = await toast.promise(voteTx.wait(), {
             pending: "Transaction is pending",
@@ -128,4 +98,3 @@ export const stopProject = async (
     toast.error("Could not connect to the provider");
   }
 };
-

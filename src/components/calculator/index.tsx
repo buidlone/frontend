@@ -49,7 +49,7 @@ const Calculator = () => {
     hardCapMultiplier,
     tokensReserved,
     maximumWeightDivisor,
-    supplyCap,
+    votingToken,
   } = useContext(LoadedValuesContext);
 
   const [showModal, setShowModal] = useState(false);
@@ -138,7 +138,7 @@ const Calculator = () => {
       hardCapMultiplier,
       maximumWeightDivisor,
       tokensReserved,
-      supplyCap
+      votingToken.supplyCap
     );
 
     if (result) {

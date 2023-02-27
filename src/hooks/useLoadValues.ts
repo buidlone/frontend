@@ -13,6 +13,7 @@ import {
   ILoadedValues,
   Milestone,
   SoftCap,
+  VotingToken,
 } from "../interfaces/ILoadedValues";
 import { GET_DYNAMIC_DATA, GET_STATIC_DATA } from "../../lib/queries";
 import { useQuery } from "@apollo/client";
@@ -54,8 +55,12 @@ export const loadedValuesInitialState: ILoadedValues = {
   softCapMultiplier: BigNumber.from(0),
   hardCapMultiplier: BigNumber.from(0),
   maximumWeightDivisor: BigNumber.from(0),
-  supplyCap: BigNumber.from(0),
+  votingToken: {
+    id: "",
+    supplyCap: BigNumber.from(0),
+  },
   isDataLoaded: false,
+  totalPercentageAgainst: 0
 };
 
 export const useLoadValues = () => {
@@ -102,10 +107,15 @@ export const useLoadValues = () => {
   const [maximumWeightDivisor, setMaximumWeightDivisor] = useState<BigNumber>(
     BigNumber.from(0)
   );
-  const [supplyCap, setSupplyCap] = useState<BigNumber>(BigNumber.from(0));
+  const [votingToken, setVotingToken] = useState<VotingToken>({
+    id: "",
+    supplyCap: BigNumber.from(0),
+  });
+
   const [isSLoaded, setIsSLoaded] = useState(false);
   const [isDLoaded, setIsDLoaded] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [totalPercentageAgainst, setTotalPercentageAgainst] = useState(0)
 
   const {
     data,
@@ -162,9 +172,12 @@ export const useLoadValues = () => {
       setMaximumWeightDivisor(
         BigNumber.from(data.project.maximumWeightDivisor)
       );
-      setSupplyCap(
-        BigNumber.from(data.project.governancePool.votingToken.supplyCap)
-      );
+      setVotingToken({
+        id: data.project.governancePool.votingToken.supplyCap,
+        supplyCap: BigNumber.from(
+          data.project.governancePool.votingToken.supplyCap
+        ),
+      });
       const formattedMilestones = data.project.milestones.map(
         (milestone: any) => ({
           milestoneId: milestone.milestoneId,
@@ -245,6 +258,7 @@ export const useLoadValues = () => {
       setFundsUsedByCreator(
         ethers.utils.formatEther(dData.project.fundsUsedByCreator)
       );
+      setTotalPercentageAgainst(dData.project.governancePool.totalPercentageAgainst)
       setIsDLoaded(true);
     }
   }, [dData, dLoading, data]);
@@ -274,7 +288,8 @@ export const useLoadValues = () => {
     softCapMultiplier,
     hardCapMultiplier,
     maximumWeightDivisor,
-    supplyCap,
+    votingToken,
     isDataLoaded,
+    totalPercentageAgainst
   };
 };

@@ -26,7 +26,7 @@ const CalculatedInvestValues = ({
     hardCapMultiplier,
     maximumWeightDivisor,
     tokensReserved,
-    supplyCap,
+    votingToken,
   } = useContext(LoadedValuesContext);
   const { web3Provider, chainId, address } = useContext(Web3Context);
   const amount = useWatch({
@@ -49,7 +49,7 @@ const CalculatedInvestValues = ({
       hardCapMultiplier,
       maximumWeightDivisor,
       tokensReserved,
-      supplyCap
+      votingToken.supplyCap
     );
 
     if (result) {

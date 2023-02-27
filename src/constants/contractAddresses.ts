@@ -1,12 +1,13 @@
 export const GovernancePoolAddress =
-  "0x9e36632a4059a612cD213979E1be2E72fa5aD89c";
+  "0x7F3B76F7a302D54e05223bC0e91dDB96B9C03e78";
 export const InvestmentPoolAddress =
-  "0x192Ed82F6F408a4FbfcE92B639e47F98fB6c2476";
+  "0xfeCe3BE36328902835BC5F098f16a2FFa7D51a1a";
 export const InvestmentPoolFactoryAddress =
-  "0xD53124C3d78b589C1484B7b165Ae814bEaFfFFe9";
-export const VotingTokenAddress = "0x1F19A22658654Ef8f1E783A0F41044A19d71003a";
+  "0xfcb73e5277fA2fE4cc04262D7f2637668FA1b2B0";
+export const VotingTokenAddress = "0x74b2cb3488aB329E57Ea847D315AD5eF8769C27c";
 export const DistributionPoolAddress =
-  "0x2b4981EF9A987628db0b140734b51c0702dEC3eB";
+  "0xC87963a51f8d2e542ae2961207CA5332dEA57877";
+export const Buidl1TokenAddress = "0x6413ec323a665bB86E446A15bD238DB8bD4723Ec";
 
 //later will be added to .env.local
 export const NEXT_PUBLIC_INFURA_ID = "124e8573221d41399c3157557e962d98";
@@ -14,6 +15,6 @@ export const NEXT_PUBLIC_INFURA_ID = "124e8573221d41399c3157557e962d98";
 //   "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.3";
 
 export const GRAPHQL_ENDPOINT =
-  "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.6";
+  "https://api.studio.thegraph.com/query/32875/buidl1-dev/v0.0.10";
 
-export const PROJECT_ID = "0x192ed82f6f408a4fbfce92b639e47f98fb6c2476";
+export const PROJECT_ID = "0xfece3be36328902835bc5f098f16a2ffa7d51a1a";

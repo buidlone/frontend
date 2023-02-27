@@ -54,6 +54,21 @@ export const useInvestorValues = (address: string | null | undefined) => {
           investmentUsed: [
             ...data.investor.projectInvestments[0].investmentUsed,
           ],
+          votingPower:
+            BigNumber.from(
+              data.investor.projectInvestments[0].currentVotesBalance
+            )
+              .mul(10000)
+              .div(
+                BigNumber.from(
+                  data.investor.projectInvestments[0].project.governancePool
+                    .votingToken.currentSupply
+                )
+              )
+              .toNumber() / 100,
+          unusedActiveVotes: [
+            ...data.investor.projectInvestments[0].unusedActiveVotes,
+          ],
         },
       });
     } else {

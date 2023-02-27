@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { BigNumber } from "ethers";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GET_INVESTMENTS_HISTORY } from "../../lib/queries";
 import { PROJECT_ID } from "../constants/contractAddresses";
 import { IInvestor } from "../interfaces/IInvestors";
@@ -31,7 +31,7 @@ export const useInvestors = () => {
         transactionHash: investment.transactionHash,
       };
     });
-    setInvestors(values);
+    setInvestors(values.reverse());
     setWallets(uniqueInvestors.size);
     setMin((prev) => {
       if (!prev.eq(BigNumber.from(data.lowest[0].investedAmount))) {

@@ -9,7 +9,6 @@ import {
   IModalInputSectionWrapper,
   IModalFieldWrapper,
   InputField,
-  OutputField,
   SelectField,
   InputLabel,
   IModalFormConfirmSection,
@@ -41,6 +40,7 @@ import { BigNumber, ethers } from "ethers";
 import UserInvesmentHistory from "../userInvestmentHistory";
 import CalculatedInvestValues from "../calculatedInvestValues";
 import InvestorValuesContext from "../../context/investorContext";
+
 
 const items = [
   {
@@ -78,6 +78,7 @@ const InvestModal = ({
     setTotalInvested,
     hardCap,
     totalInvested,
+    tokenCurrency,
   } = useContext(LoadedValuesContext);
   const {
     register,
@@ -100,7 +101,7 @@ const InvestModal = ({
     decimals: currency.decimals,
   });
 
-  const { web3Provider, address, chainId } = useContext(Web3Context);
+  const { web3Provider, address, chainId, provider } = useContext(Web3Context);
   const [balance, setBalance] = useState<string>("0");
   const [network, setNetwork] = useState<string | undefined>(undefined);
   const [networkError, setNetworkError] = useState<string | undefined>(
@@ -197,7 +198,9 @@ const InvestModal = ({
         selectedCurrency.address,
         web3Provider,
         amount,
-        address
+        address,
+        provider,
+        tokenCurrency
       );
       result && setTotalInvested && setTotalInvested(result);
 
