@@ -8,12 +8,8 @@ import DemoInvestorsBarchart from "../src/demo/components/demoInvestorsBarChart"
 import DemoProgressSection from "../src/demo/components/demoProgressSection";
 import DemoProjectInfoBlock from "../src/demo/components/demoProjectInfoBlock";
 import DemoTimelineBlock from "../src/demo/components/demoTimelineBlock";
-import DemoMockDataContext, {
-  DemoMockDataContextProdvider,
-} from "../src/demo/context/demoMockDataContext";
-import DemoTaskContext, {
-  DemoTaskContextProdvider,
-} from "../src/demo/context/demoTaskContext";
+import { DemoMockDataContextProdvider } from "../src/demo/context/demoMockDataContext";
+import { DemoTaskContextProdvider } from "../src/demo/context/demoTaskContext";
 import { useTaskChange } from "../src/demo/hooks/useTaskChange";
 import { BgImage, Container, HideForMobile } from "../styles/Container";
 
@@ -22,7 +18,7 @@ import { NextPageWithLayout } from "./_app";
 const DemoPage: NextPageWithLayout = () => {
   useTaskChange();
   return (
-    <>
+    <HideForMobile>
       <BgImage isFixed />
       <DemoHeader />
       <Container>
@@ -41,7 +37,7 @@ const DemoPage: NextPageWithLayout = () => {
           <DemoProgressSection />
         </DemoFeaturesSec>
       </Container>
-    </>
+    </HideForMobile>
   );
 };
 

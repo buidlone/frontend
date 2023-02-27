@@ -23,8 +23,6 @@ const Buidl1 = () => {
   const [isShownStop, setIsShownStop] = useState(false);
   const [isShownWrong, setIsShownWrong] = useState(false);
   const [isShownInvest, setIsShownInvest] = useState(false);
- 
-
   return loadedValuesState.isDataLoaded ? (
     <>
       {isShownStop ? (

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {
   ProgressRoadmapWrapper,
   ScrollableContainer,
-  ScrollableContainerWrapper,
 } from "../../../components/progressRoadmap/styled";
 
 import { DemoGreenButton } from "../demoCalculator/styled";
@@ -24,5 +23,9 @@ export const DemoProgressRoadmapWrapper = styled(ProgressRoadmapWrapper)`
 
 export const DemoScrollableContainer = styled(ScrollableContainer)`
   padding-right: 2.8rem !important;
- 
+
+  @media screen and (max-width: 991px) {
+    padding-left: 10rem !important;
+    padding-right: 10rem !important;
+  } ;
 `;

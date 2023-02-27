@@ -13,7 +13,6 @@ import {
   Progress,
   ProgressBar,
   ProgressStep,
-  ScrollableContainer,
   ScrollableContainerWrapper,
 } from "../../../components/progressRoadmap/styled";
 import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
@@ -21,7 +20,11 @@ import { ProjectState } from "../../../interfaces/enums/ProjectStateEnums";
 import { getMilestoneState } from "../../../utils/getMilestoneState";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoTaskContext from "../../context/demoTaskContext";
-import { DemoProgressRoadmapWrapper, DemoRefundButton, DemoScrollableContainer } from "./styled";
+import {
+  DemoProgressRoadmapWrapper,
+  DemoRefundButton,
+  DemoScrollableContainer,
+} from "./styled";
 
 const DemoProgressRoadmap = () => {
   const {

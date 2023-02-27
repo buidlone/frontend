@@ -71,7 +71,7 @@ const DemoEnvironment = () => {
       </TestDisclaimer>
       <TaskSelectionWrapper>
         <SwitchTaskButton
-          className={currentTask === CurrentTask.INVEST ? "disabled" : ""}
+          className={currentTask === CurrentTask.INVEST ? "display" : ""}
           disabled={currentTask === CurrentTask.INVEST}
           style={{ paddingLeft: "8px" }}
           onClick={handleClickLeft}
@@ -80,11 +80,13 @@ const DemoEnvironment = () => {
         </SwitchTaskButton>
         <TaskSelector />
         <SwitchTaskButton
-          className={currentTask === tasks.length - 1 ? "disabled" : ""}
+          className={
+            currentTask === tasks.length - 1 ? "disabled skip" : "skip"
+          }
           disabled={currentTask === tasks.length - 1}
-          style={{ paddingRight: "7px" }}
           onClick={handleClickRight}
         >
+          skip
           <Arrow className="right" />
         </SwitchTaskButton>
       </TaskSelectionWrapper>

@@ -60,6 +60,15 @@ export const DemoPersonalValue = styled.p`
     color: rgba(255, 196, 0, 0.51);
     font-size: 16px;
   }
+
+  @media screen and (max-width: 890px) {
+    &.investment,
+    &.reward,
+    &.power {
+      margin-left: 1rem;
+      white-space: nowrap;
+    }
+  }
 `;
 
 export const DemoHeaderText = styled.div`

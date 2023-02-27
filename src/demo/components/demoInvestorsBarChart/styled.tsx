@@ -6,6 +6,7 @@ import {
 
 export const DemoBarChartBlock = styled(BarChartBlock)`
   height: 20rem;
+  flex-shrink: 1;
 `;
 
 export const DemoBarChartColumn = styled(BarChartColumn)`

@@ -68,6 +68,22 @@ export const SwitchTaskButton = styled.button`
   &.disabled {
     opacity: 0.4;
   }
+
+  &.last {
+    display: none;
+  }
+
+  &.skip {
+    padding: 0.375rem 1.083rem;
+    width: 4.634rem;
+    height: 1.875rem;
+    border-radius: 17px;
+    font-family: "Space Grotesk";
+    font-size: 14px;
+    font-weight: 600;
+    gap: 0.3rem;
+    color: #15151f;
+  }
 `;
 
 export const Arrow = styled.span`

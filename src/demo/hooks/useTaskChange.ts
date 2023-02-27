@@ -12,13 +12,13 @@ export const useTaskChange = () => {
   useEffect(() => {
     async function changeTask() {
       await timeout(1000);
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     if (currentTask === CurrentTask.INVESTIGATE) {
       changeTask();
     } else {
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [currentTask]);
 };

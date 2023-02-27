@@ -8,6 +8,7 @@ import { GreenButton } from "../../../components/fundingBlock/styled";
 
 export const DemoCalculatorBlock = styled(CalculatorBlock)`
   height: 20rem;
+  flex-shrink: 1;
 `;
 
 export const DemoGreenButton = styled(GreenButton)`
