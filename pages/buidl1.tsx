@@ -16,13 +16,13 @@ import InvestStatus from "../src/components/statusNotification/investStatus";
 import Buidl1Header from "../src/components/buidl1Header";
 import MobileFooter from "../src/components/mobileFooter";
 import Head from "next/head";
+import DemoStateContext from "../src/demo/context/demoStateContext";
 
 const Buidl1 = () => {
   const loadedValuesState = useContext(LoadedValuesContext);
   const [isShownStop, setIsShownStop] = useState(false);
   const [isShownWrong, setIsShownWrong] = useState(false);
   const [isShownInvest, setIsShownInvest] = useState(false);
-
   return loadedValuesState.isDataLoaded ? (
     <>
       {isShownStop ? (
@@ -77,23 +77,5 @@ const Buidl1 = () => {
     </>
   );
 };
-
-// export async function getStaticProps() {
-//   const { data } = await client.query({
-//     query: gql`
-//       query Milestones {
-//         milestones {
-//           milestoneId
-//         }
-//       }
-//     `,
-//   });
-
-//   return {
-//     props: {
-//       milestones: data.milestones,
-//     },
-//   };
-// }
 
 export default Buidl1;

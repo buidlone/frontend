@@ -16,10 +16,23 @@ import useCountdown from "../../hooks/useCountdown";
 import MilestoneDetails from "../milestoneDetails";
 import { ProjectState } from "../../interfaces/enums/ProjectStateEnums";
 
-interface ITimeline {
+export interface ITimeline {
   scale: number;
 }
-
+export const getDate = (endDate: string, startDate: string, scale: number) => {
+  const date = dateDiff(endDate, startDate);
+  if (scale === 1) {
+    return `${date.rounded_months} mo`;
+  } else {
+    if (date.days > 0) {
+      return `${date.months} mo ${date.days} ${
+        date.days === 1 ? "day" : "days"
+      }`;
+    } else {
+      return `${date.months} mo`;
+    }
+  }
+};
 const TimelineGraph = ({ scale }: ITimeline) => {
   const [active, setActive] = useState(false);
   const { milestones, projectState, currentMilestone } =
@@ -38,7 +51,10 @@ const TimelineGraph = ({ scale }: ITimeline) => {
   const getTimelineProgress = () => {
     let progress = 0;
 
-    if (projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST || ProjectState.LAST_MILESTONE_ONGOING) {
+    if (
+      projectState === ProjectState.MILESTONES_ONGOING_BEFORE_LAST ||
+      ProjectState.LAST_MILESTONE_ONGOING
+    ) {
       let oneMilestonePortion = 100 / milestones.length;
 
       let currentMaxProgress =
@@ -53,21 +69,6 @@ const TimelineGraph = ({ scale }: ITimeline) => {
       progress = 100;
     }
     return progress;
-  };
-
-  const getDate = (endDate: string, startDate: string) => {
-    const date = dateDiff(endDate, startDate);
-    if (scale === 1) {
-      return `${date.rounded_months} mo`;
-    } else {
-      if (date.days > 0) {
-        return `${date.months} mo ${date.days} ${
-          date.days === 1 ? "day" : "days"
-        }`;
-      } else {
-        return `${date.months} mo`;
-      }
-    }
   };
 
   useEffect(() => {
@@ -132,7 +133,11 @@ const TimelineGraph = ({ scale }: ITimeline) => {
                   {scale === 3 && (
                     <MilestoneDetails
                       milestone={milestone}
-                      date={getDate(milestone.endTime, milestone.startTime)}
+                      date={getDate(
+                        milestone.endTime,
+                        milestone.startTime,
+                        scale
+                      )}
                     />
                   )}
                 </TimelineStep>
@@ -152,7 +157,7 @@ const TimelineGraph = ({ scale }: ITimeline) => {
                         0,
                         10
                       )} - ${milestone.endTime.slice(0, 10)}`
-                    : getDate(milestone.endTime, milestone.startTime)
+                    : getDate(milestone.endTime, milestone.startTime, scale)
                 }
               />
             ))}

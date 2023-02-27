@@ -22,7 +22,8 @@ import {
 } from "./styled";
 
 const Buidl1Header = () => {
-  const { currency, tokenCurrency } = useContext(LoadedValuesContext);
+  const { currency, tokenCurrency, projectState } =
+    useContext(LoadedValuesContext);
 
   const {
     investorValues: { projectInvestments },
@@ -71,8 +72,8 @@ const Buidl1Header = () => {
               </PersonalInfo>
             </HeaderInline>
             <RoundSectionMobile>
-              <Round statusColor={StatusColor}>
-                <ProjectStateLabel />
+              <Round statusColor={StatusColor({ projectState })}>
+                <ProjectStateLabel projectState={projectState} />
               </Round>
             </RoundSectionMobile>
             <div className="lastLine">Project overview</div>
@@ -82,8 +83,8 @@ const Buidl1Header = () => {
       <Divider />
       <Container>
         <RoundSection>
-          <Round statusColor={StatusColor}>
-            <ProjectStateLabel />
+          <Round statusColor={StatusColor({ projectState })}>
+            <ProjectStateLabel projectState={projectState} />
           </Round>
         </RoundSection>
       </Container>

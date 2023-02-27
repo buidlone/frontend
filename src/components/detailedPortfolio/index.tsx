@@ -26,6 +26,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
     tokenCurrency,
     currency,
     totalPercentageAgainst,
+    projectState,
   } = useContext(LoadedValuesContext);
 
   const isStopAllowed = useIsStopAllowed();
@@ -35,7 +36,8 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
 
   const { usedInvestments, refund } = useRealTimeInvestments();
   const { web3Provider, address } = useContext(Web3Context);
-  const statusColor = StatusColor();
+
+  const statusColor = StatusColor({ projectState });
 
   const [milestonePercentage, setMilestonePercentage] = useState<number>(0);
 
@@ -67,7 +69,7 @@ const DetailedPortfolio = ({ setIsShownStop, setIsShownWrong }: any) => {
               color={statusColor && statusColor}
               style={{ position: "unset" }}
             />{" "}
-            <ProjectStateLabel />
+            <ProjectStateLabel projectState={projectState} />
           </div>
         </td>
         <td>

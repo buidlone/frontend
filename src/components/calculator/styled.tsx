@@ -53,34 +53,38 @@ export const CalculationWrapper = styled.div`
   padding: 1.25rem 1.875rem;
 `;
 
-export const SelectWrapper = styled.div<Props>`
+export const SelectWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 1.219rem;
   margin-bottom: 0.5rem;
+`;
+export const CurrencyIndicator = styled.span`
+  position: absolute;
+  color: #00ffc4;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  border-left: 1.5px solid #00ffc4;
+  padding-left: 1%;
+  padding-right: 4%;
+  right: 2%;
+  bottom: 26%;
+`;
 
-  &:before {
-    content: "${(props) => props?.currency}";
-    position: absolute;
-    top: 63%;
-
-    left: 40%;
-    z-index: 1;
-    color: #00ffc4;
-    font-family: "Space Grotesk", sans-serif;
-    font-weight: 400;
-    font-size: 15px;
-
-    border-left: 1.5px solid #00ffc4;
-    padding-left: 1%;
-  }
+export const InputFieldWrapper = styled.div`
+  width: fit-content;
+  min-width: 50%;
+  height: 2.5rem;
+  position: relative;
+  flex-grow: 1;
 `;
 
 export const InputField = styled.input`
-  width: 50%;
-  height: 2.5rem;
+  width: 100%;
+  height: 100%;
   background: #1d2031;
   box-shadow: inset 0px 0px 5px #141620;
   border-radius: 8px;
@@ -98,7 +102,7 @@ export const InputField = styled.input`
     font-size: 15px;
     color: #00ffc4;
     opacity: 1;
-    padding-right: 12%;
+    padding-right: 26%;
   }
 
   @media screen and (max-width: 800px) {

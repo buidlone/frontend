@@ -15,9 +15,10 @@ import InvestorValuesContext from "../../context/investorContext";
 import { roundApprox } from "../../utils/roundValue";
 
 const ActiveBlock = ({ setIsShownStop, setIsShownWrong }: any) => {
-  const { currency } = useContext(LoadedValuesContext);
+  const { currency, projectState } = useContext(LoadedValuesContext);
   const [showMore, setShowMore] = useState(false);
-  const statusColor = StatusColor();
+  const statusColor = StatusColor({ projectState });
+
   const {
     investorValues: { projectInvestments },
   } = useContext(InvestorValuesContext);
