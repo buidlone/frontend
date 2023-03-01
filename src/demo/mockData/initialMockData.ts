@@ -16,6 +16,7 @@ export type UserValues = {
   investment: number;
   reward: number;
   power: number;
+  voted: boolean;
 };
 
 export interface IMockData {
@@ -83,6 +84,7 @@ export const initialMockData = {
     investment: 0,
     reward: 0,
     power: 0,
+    voted: false,
   },
   investors: [
     50, 2500, 6000, 4000, 200, 1500, 9000, 1000, 10000, 1500, 3900, 7860, 1300,
@@ -136,6 +138,7 @@ export const fakeMockData = {
     investment: 20000,
     reward: 40000,
     power: 15,
+    voted: false,
   },
   investors: [
     50, 2500, 6000, 4000, 200, 1500, 9000, 1000, 10000, 1500, 3900, 7860, 1300,

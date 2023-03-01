@@ -10,25 +10,39 @@ import {
   InsideBlockWrapper,
 } from "./styled";
 import logo from "../../../../public/demo_logo.png";
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import ProjectStateLabel, {
   StatusColor,
 } from "../../../components/projectState";
 import DemoTaskContext from "../../context/demoTaskContext";
 
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
+import useRealTimeFlow from "../../hooks/useRealTimeFlow";
+
 const DemoProjectInfoBlock = () => {
   const {
+    mockData,
     mockData: {
+      userValues,
       userValues: { investment, reward, power },
       currency,
       tokenCurrency,
     },
+    setMockData,
   } = useContext(DemoMockDataContext);
 
-  const { tasks, currentTask } = useContext(DemoTaskContext);
+  const { tasks, currentTask, completedTasks } = useContext(DemoTaskContext);
   const projectState = tasks[currentTask].projectState;
   const statusColor = StatusColor({ projectState });
+  const active =
+    completedTasks.includes(CurrentTask.INVEST) &&
+    !completedTasks.includes(CurrentTask.REVIEW);
+
+  //TODO: bug in voting chat modal
+  //useRealTimeFlow();
+ 
+  
 
   return (
     <InfoBlockWrapper>
@@ -52,28 +66,28 @@ const DemoProjectInfoBlock = () => {
         </DemoProjectDetails>
         <DemoRoundSection>
           <DemoRound statusColor={statusColor}>
-            <ProjectStateLabel projectState={projectState} />
+            <ProjectStateLabel projectState={projectState} isDemoEnv />
           </DemoRound>
         </DemoRoundSection>
       </InsideBlockWrapper>
       <InlineRow>
-        <DemoPersonalInfo>
+        <DemoPersonalInfo className="investment" active={active}>
           Your investment:{" "}
-          <DemoPersonalValue className="investment">
+          <DemoPersonalValue>
             {investment ? investment.toLocaleString("fr-FR") : "0.0000"}{" "}
             {currency}
           </DemoPersonalValue>
         </DemoPersonalInfo>
-        <DemoPersonalInfo>
+        <DemoPersonalInfo className="reward" active={active}>
           Your reward:{" "}
-          <DemoPersonalValue className="reward">
+          <DemoPersonalValue>
             {" "}
             {reward ? reward.toLocaleString("fr-FR") : "0"} {tokenCurrency}
           </DemoPersonalValue>
         </DemoPersonalInfo>
-        <DemoPersonalInfo>
+        <DemoPersonalInfo className="power" active={active}>
           Your power:{" "}
-          <DemoPersonalValue className="power">
+          <DemoPersonalValue>
             {" "}
             {power ? power.toFixed(2) : "0.00"} %
           </DemoPersonalValue>

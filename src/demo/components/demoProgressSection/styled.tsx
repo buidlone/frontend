@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { DetailsCard } from "../../../components/progressInfoBlock/styled";
+import {
+  DetailsCard,
+  OrangeButton,
+} from "../../../components/progressInfoBlock/styled";
 import { ScrollableContainerWrapper } from "../../../components/progressRoadmap/styled";
 import {
   ProgressBlockWrapper,
@@ -10,7 +13,7 @@ export const DemoProgressBlockWrapper = styled(ProgressBlockWrapper)`
   min-height: 29.563rem;
   width: 100%;
   padding: 1.875rem;
-  display: flex; 
+  display: flex;
 `;
 
 export const DemoDetailsCard = styled(DetailsCard)`
@@ -28,4 +31,11 @@ export const DemoProgressContentWrapper = styled(ProgressContentWrapper)`
   gap: 1.875rem;
 `;
 
-
+export const StopButton = styled(OrangeButton)`
+  background: rgba(255, 188, 13, 1);
+  border-radius: 17px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 1);
+`;

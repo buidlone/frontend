@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { BackgroundBlur } from "../../../components/buidl1Header/styled";
 
+interface Props {
+  active?: boolean;
+}
 export const DemoBackgroundBlur = styled(BackgroundBlur)`
   height: 22.063rem;
 `;
@@ -14,7 +17,7 @@ export const DemoHeaderSection = styled.div`
   gap: 2.8rem;
 `;
 
-export const DemoPersonalInfo = styled.div`
+export const DemoPersonalInfo = styled.div<Props>`
   position: relative;
   display: flex;
   justify-content: flex-start;
@@ -31,6 +34,26 @@ export const DemoPersonalInfo = styled.div`
 
   &.balance {
     border: 1px solid #00ffc4;
+    color: #3aedc4;
+  }
+  &.investment {
+    color: ${(props) =>
+      props.active ? "rgba(58, 237, 196, 1)" : " rgba(58, 237, 196, 0.35)"};
+    border-color: ${(props) => (props.active ? "#3AEDC4" : "#7e7e83")};
+  }
+
+  &.reward {
+    color: ${(props) =>
+      props.active ? "rgba(0, 196, 255, 1)" : " rgba(0, 196, 255, 0.54)"};
+    font-size: 16px;
+    border-color: ${(props) => (props.active ? "#00C4FF" : "#7e7e83")};
+  }
+
+  &.power {
+    color: ${(props) =>
+      props.active ? "rgba(255, 196, 0, 1)" : " rgba(255, 196, 0, 0.51)"};
+    font-size: 16px;
+    border-color: ${(props) => (props.active ? "#FFB100" : "#7e7e83")};
   }
 `;
 
@@ -43,11 +66,11 @@ export const DemoPersonalValue = styled.p`
   font-size: 19px;
   font-weight: 400;
 
-  &.balance {
-    color: #3aedc4;
-  }
+  /* &.balance {
+    
+  } */
 
-  &.investment {
+  /* &.investment {
     color: rgba(58, 237, 196, 0.35);
   }
 
@@ -59,7 +82,7 @@ export const DemoPersonalValue = styled.p`
   &.power {
     color: rgba(255, 196, 0, 0.51);
     font-size: 16px;
-  }
+  } */
 
   @media screen and (max-width: 890px) {
     &.investment,

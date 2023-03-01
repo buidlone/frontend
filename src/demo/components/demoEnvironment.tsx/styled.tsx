@@ -67,6 +67,7 @@ export const SwitchTaskButton = styled.button`
 
   &.disabled {
     opacity: 0.4;
+    display: none;
   }
 
   &.last {

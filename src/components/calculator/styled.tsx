@@ -68,7 +68,7 @@ export const CurrencyIndicator = styled.span`
   font-weight: 400;
   font-size: 15px;
   border-left: 1.5px solid #00ffc4;
-  padding-left: 1%;
+  padding-left: 2%;
   padding-right: 4%;
   right: 2%;
   bottom: 26%;

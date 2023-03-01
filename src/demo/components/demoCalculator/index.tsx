@@ -1,6 +1,5 @@
 import Image from "next/image";
 import {
-  CalculationWrapper,
   CalculatorContainer,
   PBContainer,
   PBWrapper,
@@ -16,8 +15,9 @@ import Slider from "../../../components/slider";
 import { useContext, useEffect, useState } from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import {
-  CurrencyIndicator,
+  Currency,
   DemoBalance,
+  DemoCalculationWrapper,
   DemoCalculatorBlock,
   DemoGreenButton,
   DemoInputField,
@@ -29,6 +29,9 @@ import {
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoTaskContext from "../../context/demoTaskContext";
 import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
+import Modal from "../../../components/modal";
+
+import InvestConfiramationCard from "../confirmationCard/investCard";
 
 const DemoCalculator = () => {
   const [amount, setAmount] = useState<number>(0);
@@ -37,7 +40,7 @@ const DemoCalculator = () => {
   const [tokensPerMonth, setTokensPerMonth] = useState<number>(0);
   const [votingPower, setVotingPower] = useState<number>(0);
   const [tickets, setTickets] = useState<number>(0);
-
+  const [deficiency, setDeficiency] = useState<number>(0);
   const {
     mockData,
     mockData: {
@@ -54,7 +57,9 @@ const DemoCalculator = () => {
     setMockData,
   } = useContext(DemoMockDataContext);
 
-  const { currentTask, setCurrentTask } = useContext(DemoTaskContext);
+  const { currentTask, setCurrentTask, setCompletedTasks, completedTasks } =
+    useContext(DemoTaskContext);
+  const [showModal, setShowModal] = useState(false);
 
   const calculatePowerAndTokens = () => {
     const calcVotingPower = (amount * maxPower) / maxInvestment;
@@ -80,8 +85,10 @@ const DemoCalculator = () => {
     setSum(e.target.valueAsNumber);
   };
 
-  const handleInvestClick = () => {
+  const handleInvest = () => {
     const newTotalInvested = totalInvested + amount;
+    const deficiency = softCap.amount - newTotalInvested;
+
     setMockData({
       ...mockData,
       userValues: {
@@ -102,8 +109,11 @@ const DemoCalculator = () => {
             : false,
       },
     });
-    setAmount(0);
-    setSum(0);
+    setDeficiency(deficiency);
+  };
+
+  const handleInvestClick = () => {
+    setShowModal(true);
   };
 
   const handleMaxClick = () => {
@@ -117,134 +127,150 @@ const DemoCalculator = () => {
 
   useEffect(() => {
     if (softCap.isReached && currentTask === CurrentTask.INVEST) {
+      setCompletedTasks([...completedTasks, currentTask]);
       setCurrentTask(CurrentTask.INVESTIGATE);
     }
   }, [softCap.isReached]);
 
   return (
-    <DemoCalculatorBlock>
-      <CalculatorContainer>
-        <CalculationWrapper>
-          <InlineWrapper>
-            <div className="ctext">Calculator</div>
+    <>
+      <DemoCalculatorBlock>
+        <CalculatorContainer>
+          <DemoCalculationWrapper>
+            <InlineWrapper>
+              <div className="ctext">Calculator</div>
 
-            <Tooltip
-              text={
-                "The results of your calculations are estimates based on information you provide and may not reflect actual results"
-              }
-            >
-              <Image src={infoBubbleWhite} alt="information" height={"14px"} />
-            </Tooltip>
-          </InlineWrapper>
-
-          <DemoSelectWrapper>
-            <div className="blueText">Invested Sum:</div>
-            <DemoInputWrapper>
-              <InputFieldWrapper>
-                <DemoInputField
-                  type="number"
-                  autoComplete="off"
-                  name="amount"
-                  value={amount}
-                  onChange={handleAmountChange}
+              <Tooltip
+                text={
+                  "The results of your calculations are estimates based on information you provide and may not reflect actual results"
+                }
+              >
+                <Image
+                  src={infoBubbleWhite}
+                  alt="information"
+                  height={"14px"}
                 />
-                <CurrencyIndicator>{currency}</CurrencyIndicator>
-              </InputFieldWrapper>
-              <MaxButton onClick={handleMaxClick}>Max</MaxButton>
-            </DemoInputWrapper>
+              </Tooltip>
+            </InlineWrapper>
             <DemoBalance>
               Your balance: {balance.toLocaleString("fr-FR")} {currency}
             </DemoBalance>
-          </DemoSelectWrapper>
 
-          <Slider
-            value={sum}
-            onChange={handleSumChange}
-            min={0}
-            max={balance}
-            step={1}
-          />
-          <DemoGreenButton
-            onClick={handleInvestClick}
-            className={!amount ? "disabled" : ""}
-            disabled={!amount}
-          >
-            Invest
-          </DemoGreenButton>
-        </CalculationWrapper>
-        <VotingWrapper>
-          <PBContainer>
-            <PBWrapper>
-              <CircularProgressbarWithChildren
-                value={tokensPerMonth ? tokensPerMonth : 0}
-                counterClockwise
-                styles={{
-                  path: {
-                    stroke: `#1EB5FF`,
-                    strokeWidth: "0.4rem",
-                    transition: "stroke-dashoffset 0.5s ease 0s",
-                  },
-                  trail: {
-                    stroke: "#2B3453",
-                    strokeWidth: "0.4rem",
-                    strokeLinecap: "butt",
-                    transform: "rotate(0.25turn)",
-                    transformOrigin: "center center",
-                  },
-                }}
-              >
-                <div style={{ width: "84%" }}>
-                  <CircularProgressbarWithChildren
-                    value={votingPower ? votingPower : 0}
-                    counterClockwise
-                    styles={{
-                      path: {
-                        stroke: `rgba(255, 177, 0, 1)`,
-                        strokeWidth: "0.4rem",
-                        transition: "stroke-dashoffset 0.5s ease 0s",
-                      },
-                      trail: {
-                        stroke: "#2B3453",
-                        strokeWidth: "0.4rem",
-                        strokeLinecap: "butt",
-                        transform: "rotate(0.25turn)",
-                        transformOrigin: "center center",
-                      },
-                    }}
-                  >
-                    <div className="votingNumbers">
-                      {tokensPerMonth ? tokensPerMonth.toFixed(2) : 0}%
-                    </div>
+            <DemoSelectWrapper>
+              <DemoInputWrapper>
+                <InputFieldWrapper>
+                  <DemoInputField
+                    type="number"
+                    autoComplete="off"
+                    name="amount"
+                    value={amount}
+                    onChange={handleAmountChange}
+                  />
+                  <Currency>{currency}</Currency>
+                </InputFieldWrapper>
+                <MaxButton onClick={handleMaxClick}>Max</MaxButton>
+              </DemoInputWrapper>
+            </DemoSelectWrapper>
 
-                    <div className="votingPercentage">
-                      {votingPower ? votingPower.toFixed(2) : 0}%
+            <Slider
+              value={sum}
+              onChange={handleSumChange}
+              min={0}
+              max={balance}
+              step={1}
+            />
+            <DemoGreenButton
+              onClick={handleInvestClick}
+              className={!amount ? "disabled" : ""}
+              disabled={!amount}
+            >
+              Invest
+            </DemoGreenButton>
+          </DemoCalculationWrapper>
+          <VotingWrapper>
+            <PBContainer>
+              <PBWrapper>
+                <CircularProgressbarWithChildren
+                  value={tokensPerMonth ? tokensPerMonth : 0}
+                  counterClockwise
+                  styles={{
+                    path: {
+                      stroke: `#1EB5FF`,
+                      strokeWidth: "0.4rem",
+                      transition: "stroke-dashoffset 0.5s ease 0s",
+                    },
+                    trail: {
+                      stroke: "#2B3453",
+                      strokeWidth: "0.4rem",
+                      strokeLinecap: "butt",
+                      transform: "rotate(0.25turn)",
+                      transformOrigin: "center center",
+                    },
+                  }}
+                >
+                  <div style={{ width: "84%" }}>
+                    <CircularProgressbarWithChildren
+                      value={votingPower ? votingPower : 0}
+                      counterClockwise
+                      styles={{
+                        path: {
+                          stroke: `rgba(255, 177, 0, 1)`,
+                          strokeWidth: "0.4rem",
+                          transition: "stroke-dashoffset 0.5s ease 0s",
+                        },
+                        trail: {
+                          stroke: "#2B3453",
+                          strokeWidth: "0.4rem",
+                          strokeLinecap: "butt",
+                          transform: "rotate(0.25turn)",
+                          transformOrigin: "center center",
+                        },
+                      }}
+                    >
+                      <div className="votingNumbers">
+                        {tokensPerMonth ? tokensPerMonth.toFixed(2) : 0}%
+                      </div>
+
+                      <div className="votingPercentage">
+                        {votingPower ? votingPower.toFixed(2) : 0}%
+                      </div>
+                    </CircularProgressbarWithChildren>
+                  </div>
+                </CircularProgressbarWithChildren>
+              </PBWrapper>
+              <Positioning>
+                <VotingRow>
+                  <VotingItem>
+                    <div className="text">Project Tokens</div>
+                    <div className="tokens">
+                      {tokens ? Math.round(tokens) : 0} Tokens
                     </div>
-                  </CircularProgressbarWithChildren>
-                </div>
-              </CircularProgressbarWithChildren>
-            </PBWrapper>
-            <Positioning>
-              <VotingRow>
-                <VotingItem>
-                  <div className="text">Project Tokens</div>
-                  <div className="tokens">
-                    {tokens ? Math.round(tokens) : 0} Tokens
-                  </div>
-                </VotingItem>
-              </VotingRow>
-              <VotingRow>
-                <VotingItem>
-                  <div className="text">Voting Power</div>
-                  <div className="tickets">
-                    {tickets ? Math.round(tickets) : 0} Tickets
-                  </div>
-                </VotingItem>
-              </VotingRow>
-            </Positioning>
-          </PBContainer>
-        </VotingWrapper>
-      </CalculatorContainer>
-    </DemoCalculatorBlock>
+                  </VotingItem>
+                </VotingRow>
+                <VotingRow>
+                  <VotingItem>
+                    <div className="text">Voting Power</div>
+                    <div className="tickets">
+                      {tickets ? Math.round(tickets) : 0} Tickets
+                    </div>
+                  </VotingItem>
+                </VotingRow>
+              </Positioning>
+            </PBContainer>
+          </VotingWrapper>
+        </CalculatorContainer>
+      </DemoCalculatorBlock>
+      <Modal show={showModal}>
+        <InvestConfiramationCard
+          deficiency={deficiency}
+          setAmount={setAmount}
+          setSum={setSum}
+          amount={amount}
+          onClose={() => setShowModal(false)}
+          handleInvest={handleInvest}
+        />
+      </Modal>
+    </>
   );
 };
 

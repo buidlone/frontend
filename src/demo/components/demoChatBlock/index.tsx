@@ -10,62 +10,95 @@ import {
   MessageText,
   UserLogo,
 } from "./styled";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
+import DemoTaskContext from "../../context/demoTaskContext";
+import Modal from "../../../components/modal";
+import VoteConfiramationCard from "../confirmationCard/voteCard";
+import DemoMockDataContext from "../../context/demoMockDataContext";
+import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 
 interface IDemoChatBlockProps {
   setIsBottom: Dispatch<SetStateAction<boolean>>;
 }
 
 const DemoChatBlock = ({ setIsBottom }: IDemoChatBlockProps) => {
+  const {
+    completedTasks,
+    setCompletedTasks,
+    currentTask,
+    tasks,
+    setTasks,
+    setCurrentTask,
+  } = useContext(DemoTaskContext);
   const listInnerRef = React.createRef<HTMLElement>();
+  const [showModal, setShowModal] = useState(false);
+  const {
+    mockData: {
+      userValues: { voted },
+    },
+  } = useContext(DemoMockDataContext);
+
+  const showModalWithDelay = () => {
+    setTimeout(function () {
+      setCurrentTask(CurrentTask.EVACUATE);
+      setShowModal(true);
+    }, 3000);
+  };
 
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
       if (scrollTop + clientHeight === scrollHeight) {
         setIsBottom(true);
+        setCompletedTasks([...completedTasks, currentTask]);
+        voted && showModalWithDelay();
       }
     }
   };
   return (
-    <ChatScrollContainer
-      innerRef={listInnerRef}
-      onScroll={() => onScroll()}
-      vertical
-      horizontal={false}
-    >
-      <ChatWindow>
-        {messages &&
-          messages.map((message) => (
-            <MessageContainer key={message.id}>
-              <UserLogo>
-                <DemoProjectLogoInner
-                  src={logo}
-                  alt={"logo"}
-                  height={"37px"}
-                  width={"37px"}
-                />
-              </UserLogo>
-              <MessageContent>
-                <MessageDetails>
-                  <span
-                    className={
-                      message.type === "PROJECT OWNER" ? "owner" : "investor"
-                    }
-                  >
-                    {message.name}
-                  </span>
+    <>
+      <ChatScrollContainer
+        innerRef={listInnerRef}
+        onScroll={() => onScroll()}
+        vertical
+        horizontal={false}
+      >
+        <ChatWindow>
+          {messages &&
+            messages.map((message) => (
+              <MessageContainer key={message.id}>
+                <UserLogo>
+                  <DemoProjectLogoInner
+                    src={logo}
+                    alt={"logo"}
+                    height={"37px"}
+                    width={"37px"}
+                  />
+                </UserLogo>
+                <MessageContent>
+                  <MessageDetails>
+                    <span
+                      className={
+                        message.type === "PROJECT OWNER" ? "owner" : "investor"
+                      }
+                    >
+                      {message.name}
+                    </span>
 
-                  <span> {message.type}</span>
+                    <span> {message.type}</span>
 
-                  <span> — {message.time}</span>
-                </MessageDetails>
-                <MessageText>{message.message}</MessageText>
-              </MessageContent>
-            </MessageContainer>
-          ))}
-      </ChatWindow>
-    </ChatScrollContainer>
+                    <span> — {message.time}</span>
+                  </MessageDetails>
+                  <MessageText>{message.message}</MessageText>
+                </MessageContent>
+              </MessageContainer>
+            ))}
+        </ChatWindow>
+      </ChatScrollContainer>
+      <Modal show={showModal}>
+        <VoteConfiramationCard onClose={() => setShowModal(false)} />
+      </Modal>
+    </>
   );
 };
 

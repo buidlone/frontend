@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Container } from "../../../../styles/Container";
 import { Divider } from "../../../components/buidl1Header/styled";
 import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
+
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoStateContext from "../../context/demoStateContext";
 import DemoTaskContext from "../../context/demoTaskContext";
@@ -24,7 +25,7 @@ const DemoHeader = () => {
       currency,
     },
   } = useContext(DemoMockDataContext);
-  const { currentTask } = useContext(DemoTaskContext);
+  const { completedTasks } = useContext(DemoTaskContext);
 
   return (
     <>
@@ -43,9 +44,14 @@ const DemoHeader = () => {
             <DemoEnvironment />
             <DemoPersonalInfo className="balance">
               Your balance:{" "}
-              <DemoPersonalValue className="balance">
+              <DemoPersonalValue>
                 {balance.toLocaleString("fr-FR")} {currency}{" "}
-                {currentTask === CurrentTask.REVIEW && "REFUNDED"}
+                {[
+                  CurrentTask.INVEST,
+                  CurrentTask.INVESTIGATE,
+                  CurrentTask.EVACUATE,
+                ].every((value) => completedTasks.includes(value)) &&
+                  "REFUNDED"}
               </DemoPersonalValue>
             </DemoPersonalInfo>
           </DemoHeaderSection>

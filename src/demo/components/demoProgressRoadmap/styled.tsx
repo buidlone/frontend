@@ -7,11 +7,7 @@ import {
 import { DemoGreenButton } from "../demoCalculator/styled";
 
 export const DemoRefundButton = styled(DemoGreenButton)`
-  margin-top: 1.879rem;
-  width: 18.563rem;
-  height: 2.5rem !important;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 20px;
+  margin-top: 1.856rem !important;
   margin-bottom: 0rem;
 `;
 export const DemoProgressRoadmapWrapper = styled(ProgressRoadmapWrapper)`

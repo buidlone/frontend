@@ -9,16 +9,25 @@ export const useTaskChange = () => {
     return new Promise((res) => setTimeout(res, delay));
   }
 
-  useEffect(() => {
-    async function changeTask() {
-      await timeout(1000);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  //  useEffect(() => {
+  //     if (softCap.isReached && currentTask === CurrentTask.INVEST) {
+  //       setCompletedTasks([...completedTasks, currentTask]);
+  //       setCurrentTask(CurrentTask.INVESTIGATE);
+  //     }
+  //   }, [softCap.isReached]);
 
-    if (currentTask === CurrentTask.INVESTIGATE) {
-      changeTask();
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  useEffect(() => {
+    // async function changeTask() {
+    //   await timeout(1000);
+    //   window.scrollTo({ top: 0, behavior: "smooth" });
+    // }
+
+    // if (currentTask === CurrentTask.INVESTIGATE) {
+    //   changeTask();
+    // } else {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    // }
   }, [currentTask]);
+
+  
 };

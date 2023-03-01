@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Data, Property } from "../../../components/detailsBlock/styled";
 import {
   BottomBlock,
@@ -19,14 +19,17 @@ import {
   DemoDetailsCard,
   DemoProgressBlockWrapper,
   DemoProgressContentWrapper,
+  StopButton,
 } from "./styled";
 import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 import { ProjectState } from "../../../interfaces/enums/ProjectStateEnums";
+import Modal from "../../../components/modal";
+import VoteConfiramationCard from "../confirmationCard/voteCard";
 
 const DemoProgressSection = () => {
   const {
     mockData: {
-      userValues: { power },
+      userValues: { power, voted },
       totalInvested,
       currency,
       milestones,
@@ -34,26 +37,27 @@ const DemoProgressSection = () => {
       tokenCurrency,
     },
   } = useContext(DemoMockDataContext);
-  const { tasks, setTasks, currentTask, setCurrentTask } =
+  const { tasks, setTasks, currentTask, completedTasks } =
     useContext(DemoTaskContext);
   const projectState = tasks[currentTask].projectState;
-  const handleStop = () => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === currentTask) {
-          return { ...task, projectState: 8 };
-        } else {
-          return task;
-        }
-      })
-    );
+
+  const [showModal, setShowModal] = useState(false);
+  const communityVotes = completedTasks.includes(CurrentTask.INVESTIGATE)
+    ? 40
+    : voted
+    ? 15
+    : 0;
+
+  const handleStopClick = () => {
+    setShowModal(true);
   };
 
   return (
-    <DemoProgressBlockWrapper>
-      <DemoProgressContentWrapper>
-        <DemoProgressRoadmap />
-        <>
+    <>
+      <DemoProgressBlockWrapper>
+        <DemoProgressContentWrapper>
+          <DemoProgressRoadmap />
+
           <DemoDetailsCard>
             <DetailsInfoWrapper>
               <Property>Raised</Property>
@@ -81,7 +85,10 @@ const DemoProgressSection = () => {
               <Data>4 000 000 {tokenCurrency}</Data>
 
               <Data className="votes">
-                {projectState === ProjectState.TERMINATED_BY_VOTING ? 55 : 0}%
+                {projectState === ProjectState.TERMINATED_BY_VOTING
+                  ? 55
+                  : communityVotes}
+                %
               </Data>
 
               <Data>2Y 250D 13H 20M 10S</Data>
@@ -117,23 +124,21 @@ const DemoProgressSection = () => {
                     />
                   </Tooltip>
                 </VotingWrapper>
-                <OrangeButton
-                  disabled={
-                    currentTask !== CurrentTask.EVACUATE ||
-                    projectState === ProjectState.TERMINATED_BY_VOTING
-                  }
-                  onClick={handleStop}
+                <StopButton
+                  disabled={currentTask == CurrentTask.INVEST || voted}
+                  onClick={handleStopClick}
                 >
-                  {projectState === ProjectState.TERMINATED_BY_VOTING
-                    ? "You have decided"
-                    : "STOP cash flow"}
-                </OrangeButton>
+                  {voted ? "You have decided" : "STOP funding"}
+                </StopButton>
               </InlineBlock>
             </BottomBlock>
           </DemoDetailsCard>
-        </>
-      </DemoProgressContentWrapper>
-    </DemoProgressBlockWrapper>
+        </DemoProgressContentWrapper>
+      </DemoProgressBlockWrapper>
+      <Modal show={showModal}>
+        <VoteConfiramationCard onClose={() => setShowModal(false)} />
+      </Modal>
+    </>
   );
 };
 
