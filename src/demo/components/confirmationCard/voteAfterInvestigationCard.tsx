@@ -47,7 +47,9 @@ const VoteAfterInvestigationCard = ({ onClose }: IConfirmModalProps) => {
       </InnerModal>
       <TextContainer>
         <BottomText>
-          You have <span className="votingDeficiency">15%</span> voting power.
+          You have{" "}
+          <span className="votingDeficiency">{Math.round(power)}%</span> voting
+          power.
         </BottomText>
         <BottomText>
           Community need to reach <span className="votingDeficiency">51%</span>{" "}

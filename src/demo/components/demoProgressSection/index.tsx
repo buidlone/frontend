@@ -6,7 +6,6 @@ import {
   DetailsInfoWrapper,
   GreyLine,
   InlineBlock,
-  OrangeButton,
   VotingWrapper,
 } from "../../../components/progressInfoBlock/styled";
 import DemoMockDataContext from "../../context/demoMockDataContext";
@@ -29,16 +28,15 @@ import VoteConfiramationCard from "../confirmationCard/voteCard";
 const DemoProgressSection = () => {
   const {
     mockData: {
-      userValues: { power, voted },
+      userValues: { power, voted, investment },
       totalInvested,
       currency,
       milestones,
-      investors,
+      wallets,
       tokenCurrency,
     },
   } = useContext(DemoMockDataContext);
-  const { tasks, setTasks, currentTask, completedTasks } =
-    useContext(DemoTaskContext);
+  const { tasks, currentTask, completedTasks } = useContext(DemoTaskContext);
   const projectState = tasks[currentTask].projectState;
 
   const [showModal, setShowModal] = useState(false);
@@ -78,7 +76,7 @@ const DemoProgressSection = () => {
                 {tasks[currentTask].currentMilestone}/{milestones.length}
               </Data>
 
-              <Data>{investors.length} wallets</Data>
+              <Data>{investment > 0 ? wallets + 1 : wallets} wallets</Data>
 
               <Data>2 3452 {currency}</Data>
 

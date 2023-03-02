@@ -32,6 +32,7 @@ export interface IMockData {
   maxReward: number;
   maxPower: number;
   refund: number;
+  wallets: number;
 }
 
 export type MockDataContext = {
@@ -91,6 +92,7 @@ export const initialMockData = {
     1111, 980, 9000, 1100, 7860, 1500, 1, 10000, 2000, 1500, 3920, 6000, 400,
     15000, 390, 786, 1300, 1500, 390, 786, 8880, 150,
   ],
+  wallets: 35
 };
 
 export const fakeMockData = {
@@ -145,4 +147,5 @@ export const fakeMockData = {
     1111, 980, 9000, 1100, 7860, 1500, 1, 10000, 2000, 1500, 3920, 6000, 400,
     15000, 390, 786, 1300, 1500, 390, 786, 8880, 150, 20000,
   ],
+  wallets: 35
 };

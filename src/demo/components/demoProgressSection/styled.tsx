@@ -3,7 +3,6 @@ import {
   DetailsCard,
   OrangeButton,
 } from "../../../components/progressInfoBlock/styled";
-import { ScrollableContainerWrapper } from "../../../components/progressRoadmap/styled";
 import {
   ProgressBlockWrapper,
   ProgressContentWrapper,

@@ -23,7 +23,7 @@ import VoteAfterInvestigationCard from "../confirmationCard/voteAfterInvestigati
 const DemoMessagesModal = ({ onClose }: IModalProps) => {
   const [isBottom, setIsBottom] = useState<boolean>(false);
   const [showModal, setShowModal] = useState(false);
-  const { setCurrentTask, setTasks, tasks, currentTask } =
+  const { setCurrentTask } =
     useContext(DemoTaskContext);
   const {
     mockData: {

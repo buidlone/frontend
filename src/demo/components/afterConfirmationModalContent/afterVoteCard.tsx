@@ -15,6 +15,7 @@ const AfterVoteConfirmationContent = () => {
 
   const { completedTasks } = useContext(DemoTaskContext);
   const communityHasVoted = completedTasks.includes(CurrentTask.INVESTIGATE);
+  const votedPower = power + 40;
 
   return (
     <InnerContainer className="voting">
@@ -23,7 +24,7 @@ const AfterVoteConfirmationContent = () => {
           <ConfirmedIcon className="voting">
             <CheckMark />
           </ConfirmedIcon>
-          {communityHasVoted ? 55 : power} %
+          {communityHasVoted ? Math.round(votedPower) : Math.round(power)} %
         </InnerModalContent>
         <InnerModalContent className="voting smaller">
           {communityHasVoted

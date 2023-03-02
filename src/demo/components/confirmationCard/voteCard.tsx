@@ -76,7 +76,7 @@ const VoteConfiramationCard = ({ onClose }: IConfirmModalProps) => {
           <InnerModalContent>
             <VotesInline>
               <VotesContainer>
-                <span>{power} %</span>
+                <span>{Math.round(power)} %</span>
                 <span className="belowText">Your impact</span>
               </VotesContainer>
               <VotesContainer className="currentVotes">

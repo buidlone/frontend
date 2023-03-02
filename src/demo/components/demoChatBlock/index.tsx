@@ -1,6 +1,5 @@
 import { messages } from "../../mockData/messagesData";
 import { DemoProjectLogoInner } from "../demoProjectInfoBlock/styled";
-import logo from "../../../../public/brandmark_blue.svg";
 import {
   ChatScrollContainer,
   ChatWindow,
@@ -22,14 +21,8 @@ interface IDemoChatBlockProps {
 }
 
 const DemoChatBlock = ({ setIsBottom }: IDemoChatBlockProps) => {
-  const {
-    completedTasks,
-    setCompletedTasks,
-    currentTask,
-    tasks,
-    setTasks,
-    setCurrentTask,
-  } = useContext(DemoTaskContext);
+  const { completedTasks, setCompletedTasks, currentTask, setCurrentTask } =
+    useContext(DemoTaskContext);
   const listInnerRef = React.createRef<HTMLElement>();
   const [showModal, setShowModal] = useState(false);
   const {
@@ -42,7 +35,7 @@ const DemoChatBlock = ({ setIsBottom }: IDemoChatBlockProps) => {
     setTimeout(function () {
       setCurrentTask(CurrentTask.EVACUATE);
       setShowModal(true);
-    }, 3000);
+    }, 1500);
   };
 
   const onScroll = () => {
@@ -69,10 +62,10 @@ const DemoChatBlock = ({ setIsBottom }: IDemoChatBlockProps) => {
               <MessageContainer key={message.id}>
                 <UserLogo>
                   <DemoProjectLogoInner
-                    src={logo}
+                    src={message.image}
                     alt={"logo"}
-                    height={"37px"}
-                    width={"37px"}
+                    height={"54px"}
+                    width={"54px"}
                   />
                 </UserLogo>
                 <MessageContent>

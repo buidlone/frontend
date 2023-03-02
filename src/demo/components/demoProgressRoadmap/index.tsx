@@ -171,7 +171,6 @@ const DemoProgressRoadmap = () => {
             </LockBar>
           </DemoScrollableContainer>
         </ScrollableContainerWrapper>
-        {/*TODO: rethink the logic when the button is disabled */}
         <DemoRefundButton
           className={
             projectState === ProjectState.TERMINATED_BY_VOTING &&
@@ -182,6 +181,7 @@ const DemoProgressRoadmap = () => {
           }
           disabled={
             projectState !== ProjectState.TERMINATED_BY_VOTING ||
+            currentTask === CurrentTask.REVIEW ||
             userValues.balance === refund
           }
           onClick={handleRefundClick}

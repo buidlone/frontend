@@ -30,7 +30,7 @@ export const MessageContainer = styled.div`
 export const UserLogo = styled(DemoProjectLogo)`
   width: 3.375rem;
   height: 3.375rem;
-  background-color: pink;
+  background-color: #0d0b1a;
   flex-shrink: 0;
 `;
 
@@ -58,7 +58,6 @@ export const MessageDetails = styled.div`
 
 export const MessageText = styled.div`
   height: 100%;
-
   text-align: left;
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 18px;

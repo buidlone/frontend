@@ -8,7 +8,6 @@ import {
   ConfirmationModalWrapper,
   FeedBackBottomWrapper,
   InnerModal,
-  TextContainer,
 } from "./styled";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import AfterInvestConfirmationContent from "../afterConfirmationModalContent/afterInvestCard";
