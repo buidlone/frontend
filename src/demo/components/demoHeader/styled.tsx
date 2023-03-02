@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { BackgroundBlur } from "../../../components/buidl1Header/styled";
+import { RoundButton } from "../demoMessagesModal/styled";
 
+interface Props {
+  active?: boolean;
+}
 export const DemoBackgroundBlur = styled(BackgroundBlur)`
   height: 22.063rem;
 `;
@@ -11,13 +15,14 @@ export const DemoHeaderSection = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2.813rem 0;
-  gap: 2.8rem;
+  gap: 2.856rem;
 `;
 
-export const DemoPersonalInfo = styled.div`
+export const DemoPersonalInfo = styled.div<Props>`
   position: relative;
   display: flex;
   justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border-radius: 20px;
   padding: 0 1.563rem 0 1.375rem;
@@ -31,13 +36,37 @@ export const DemoPersonalInfo = styled.div`
 
   &.balance {
     border: 1px solid #00ffc4;
+    padding-left: 0.851rem;
+  }
+
+  &.investment {
+    width: 372px;
+    border-color: ${(props) => (props.active ? "#3AEDC4" : "#7e7e83")};
+  }
+
+  &.reward {
+    width: 307px;
+    border-color: ${(props) => (props.active ? "#00C4FF" : "#7e7e83")};
+  }
+
+  &.power {
+    border-color: ${(props) => (props.active ? "#FFB100" : "#7e7e83")};
+  }
+
+  @media screen and (max-width: 1090px) {
+    &.balance,
+    &.investment,
+    &.reward,
+    &.power {
+      height: 2.6rem;
+      font-size: 14px;
+    }
   }
 `;
 
-export const DemoPersonalValue = styled.p`
+export const DemoPersonalValue = styled.p<Props>`
   margin-left: 2.5rem;
   padding: 0;
-
   text-align: left;
   font-family: "Space Grotesk", sans-serif;
   font-size: 19px;
@@ -48,25 +77,30 @@ export const DemoPersonalValue = styled.p`
   }
 
   &.investment {
-    color: rgba(58, 237, 196, 0.35);
+    color: ${(props) =>
+      props.active ? "rgba(58, 237, 196, 1)" : " rgba(58, 237, 196, 0.35)"};
   }
 
   &.reward {
-    color: rgba(0, 196, 255, 0.54);
+    color: ${(props) =>
+      props.active ? "rgba(0, 196, 255, 1)" : " rgba(0, 196, 255, 0.54)"};
     font-size: 16px;
   }
 
   &.power {
-    color: rgba(255, 196, 0, 0.51);
+    color: ${(props) =>
+      props.active ? "rgba(255, 196, 0, 1)" : " rgba(255, 196, 0, 0.51)"};
     font-size: 16px;
   }
 
-  @media screen and (max-width: 890px) {
+  @media screen and (max-width: 1090px) {
+    &.balance,
     &.investment,
     &.reward,
     &.power {
       margin-left: 1rem;
       white-space: nowrap;
+      font-size: 14px;
     }
   }
 `;
@@ -100,4 +134,23 @@ export const ExitLink = styled.a`
   color: #ffbc0d;
   font-size: 16px;
   cursor: pointer;
+`;
+
+export const BottomInline = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 1.1rem;
+
+  & > ${RoundButton} {
+    margin: 0 auto;
+    margin-right: 0;
+    border-radius: 20px;
+  }
+`;
+
+export const Wallet = styled.span`
+  color: #7e7e83;
+  padding-right: 0.69rem;
 `;

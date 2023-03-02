@@ -14,7 +14,7 @@ export const messages: IMessage[] = [
     type: "INVESTOR",
     time: "12/22/2022 10:14 AM",
     message: "GM",
-    image: "",
+    image: "/vanilla.png",
   },
   {
     id: 1,
@@ -22,7 +22,7 @@ export const messages: IMessage[] = [
     type: "PROJECT OWNER",
     time: "12/22/2022 10:14 AM",
     message: "GM",
-    image: "",
+    image: "/meme.png",
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ export const messages: IMessage[] = [
     type: "INVESTOR",
     time: "12/22/2022 10:14 AM",
     message: `Why haven’t we reached our project milestones yet?`,
-    image: "",
+    image: "/vanilla.png",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ export const messages: IMessage[] = [
     type: "",
     time: "12/22/2022 10:14 AM",
     message: `Yeah, it’s been months. What’s going on?`,
-    image: "",
+    image: "/minister.png",
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ export const messages: IMessage[] = [
     type: "",
     time: "12/22/2022 10:14 AM",
     message: `I heard the project owners are getting ready to buy a Lambo`,
-    image: "",
+    image: "/lunatic.png",
   },
   {
     id: 5,
@@ -54,7 +54,7 @@ export const messages: IMessage[] = [
     type: "",
     time: "12/22/2022 10:14 AM",
     message: `What? That’s ridiculous. We should stop funding this project.`,
-    image: "",
+    image: "/super.png",
   },
   {
     id: 6,
@@ -62,7 +62,7 @@ export const messages: IMessage[] = [
     type: "PROJECT OWNER",
     time: "12/22/2022 10:14 AM",
     message: `Hold on, guys. The Lamborghini is essential for the project.`,
-    image: "",
+    image: "/meme.png",
   },
   {
     id: 7,
@@ -70,7 +70,7 @@ export const messages: IMessage[] = [
     type: "INVESTOR",
     time: "12/22/2022 10:14 AM",
     message: `How?`,
-    image: "",
+    image: "/vanilla.png",
   },
   {
     id: 8,
@@ -78,7 +78,7 @@ export const messages: IMessage[] = [
     type: "PROJECT OWNER",
     time: "12/22/2022 10:14 AM",
     message: `It’s all about image. With the car, we can attract more investors and expand the project.`,
-    image: "",
+    image: "/meme.png",
   },
   {
     id: 9,
@@ -86,7 +86,7 @@ export const messages: IMessage[] = [
     type: "",
     time: "12/22/2022 10:14 AM",
     message: `I’m not convinced. This all sounds sketchy.`,
-    image: "",
+    image: "/super.png",
   },
   {
     id: 10,
@@ -94,7 +94,7 @@ export const messages: IMessage[] = [
     type: "",
     time: "12/22/2022 10:14 AM",
     message: `Agreed. We need to see some progress or we’re wasting our money.`,
-    image: "",
+    image: "/lunatic.png",
   },
   {
     id: 11,
@@ -102,7 +102,7 @@ export const messages: IMessage[] = [
     type: "",
     time: "12/22/2022 10:14 AM",
     message: `I suggest we vote on whether or not to continue funding this project.`,
-    image: "",
+    image: "/minister.png",
   },
   {
     id: 12,
@@ -110,6 +110,6 @@ export const messages: IMessage[] = [
     type: "INVESTOR",
     time: "12/22/2022 10:14 AM",
     message: `Agreed. Let's put it to a vote.`,
-    image: "",
+    image: "/vanilla.png",
   },
 ];

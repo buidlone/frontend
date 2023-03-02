@@ -1,5 +1,36 @@
 import styled from "styled-components";
+import { CloseButton } from "../../../components/investModal/styled";
 import { DemoProjectLogo } from "../demoProjectInfoBlock/styled";
+
+interface Props {
+  vote?: boolean;
+  feedback?: boolean;
+}
+
+export const MessagesModalCloseBtn = styled(CloseButton)`
+  background: #161e3b 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  opacity: 1;
+  left: 96%;
+  top: -3%;
+
+  &::after,
+  &::before {
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 18px;
+    background-color: #363e7e;
+    transform: rotate(45deg) translate(-50%, -50%);
+    transform-origin: top left;
+    content: "";
+  }
+  &::after {
+    transform: rotate(-45deg) translate(-50%, -50%);
+  }
+`;
 
 export const DMessagesModalWrapper = styled.div`
   display: flex;
@@ -14,7 +45,6 @@ export const DMessagesModalWrapper = styled.div`
   border-radius: 20px;
   margin: 0rem 3rem;
   flex-shrink: 1;
-  
 `;
 
 export const LogoSectionWrapper = styled.div`
@@ -53,22 +83,31 @@ export const BottomSection = styled.div`
   padding-bottom: 0.5rem;
 `;
 
-export const VoteButton = styled.button`
+export const RoundButton = styled.button<Props>`
   background: transparent;
-  border: 1px solid #ffc400;
+  border: ${(props) =>
+    props.vote ? "1px solid #ffc400" : "1px solid #3AEDC4"};
   border-radius: 17px;
   opacity: 1;
-  width: 10.563rem;
-  height: 2.063rem;
-  font-size: 16px;
-  font-family: "Space Grotesk", sans-serif;
-  color: #ffbc0d;
-  font-weight: 400;
+  width: ${(props) => (props.feedback ? "14.938rem" : "10.563rem")};
+  height: ${(props) => (props.feedback ? "2.5rem" : "2.063rem")};
+  font-size: ${(props) => (props.feedback ? "18px" : "16px")};
+  font-family: ${(props) =>
+    props.feedback
+      ? `"IBM Plex Sans", sans-serif`
+      : `"Space Grotesk", sans-serif`};
+
+  color: ${(props) => (props.vote ? "#ffbc0d" : "#3AEDC4")};
+  font-weight: 500;
   cursor: pointer;
 
   &.filled {
     color: #000000;
     background: #ffbc0d;
+    background: ${(props) =>
+      props.vote ? "#ffbc0d" : props.feedback ? "#19E6B7" : "#3AEDC4"};
     border: none;
+    box-shadow: ${(props) =>
+      props.feedback ? "0px 0px 15px #00FFC4" : "none"};
   }
 `;
