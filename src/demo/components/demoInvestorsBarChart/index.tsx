@@ -11,7 +11,11 @@ import { DemoBarChartBlock, DemoBarChartColumn } from "./styled";
 
 const DemoInvestorsBarchart = () => {
   const {
-    mockData: { investors },
+    mockData: {
+      investors,
+      wallets,
+      userValues: { investment },
+    },
   } = useContext(DemoMockDataContext);
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(2000);
@@ -35,7 +39,9 @@ const DemoInvestorsBarchart = () => {
   return (
     <DemoBarChartBlock>
       <BarChartContainer>
-        <InvHeader>{investors.length} investors already in</InvHeader>
+        <InvHeader>
+          {investment > 0 ? wallets + 1 : wallets} investors already in
+        </InvHeader>
 
         <BarChartScroll hideScrollbars={true} vertical={false} horizontal>
           {investors.map((inv, index) => {

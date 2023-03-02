@@ -11,6 +11,7 @@ import {
   TProgress,
 } from "../../../components/timelineGraph/styled";
 import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
+import { ProjectState } from "../../../interfaces/enums/ProjectStateEnums";
 import { getMilestoneState } from "../../../utils/getMilestoneState";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoTaskContext from "../../context/demoTaskContext";
@@ -26,72 +27,79 @@ const DemoTimelineGraph = ({ scale }: ITimeline) => {
     let progress = currentTask === CurrentTask.INVEST ? 0 : 30;
     return progress;
   };
+
   const projectState = tasks[currentTask].projectState;
+  const usersVoted = projectState === ProjectState.TERMINATED_BY_VOTING;
   const currentMilestone = tasks[currentTask].currentMilestone;
 
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <TimelineContainer>
-      <TimelineScroll hideScrollbars={true}>
-        {currentTask !== 0 && (
-          <>
-            <InvestigateIcon
-              onClick={() => setShowModal(true)}
-              className="material-icons"
-            >
-              error
-            </InvestigateIcon>
-            <Modal show={showModal}>
-              <DemoMessagesModal onClose={() => setShowModal(false)} />
-            </Modal>
-          </>
-        )}
-        <TimelineBar scale={scale}>
-          <TProgress progress={getDemoProgress()} />
-          {milestones &&
-            milestones.map((milestone) => {
-              const completed = getMilestoneState(
-                projectState,
-                currentMilestone,
-                milestone.milestoneId
-              ).completed;
-              const active = getMilestoneState(
-                projectState,
-                currentMilestone,
-                milestone.milestoneId
-              ).active;
-              const suspended = getMilestoneState(
-                projectState,
-                currentMilestone,
-                milestone.milestoneId
-              ).suspended;
+    <>
+      <TimelineContainer>
+        <TimelineScroll hideScrollbars={true}>
+          {currentTask === CurrentTask.INVESTIGATE &&
+            projectState !== ProjectState.TERMINATED_BY_VOTING && (
+              <InvestigateIcon
+                onClick={() => setShowModal(true)}
+                className="material-icons"
+              >
+                error
+              </InvestigateIcon>
+            )}
+          <TimelineBar scale={scale}>
+            <TProgress progress={getDemoProgress()} />
+            {milestones &&
+              milestones.map((milestone) => {
+                const completed = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).completed;
+                const active = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).active;
+                const suspended = getMilestoneState(
+                  projectState,
+                  currentMilestone,
+                  milestone.milestoneId
+                ).suspended;
 
-              return (
-                <TimelineStep
-                  scale={scale}
+                return (
+                  <TimelineStep
+                    scale={scale}
+                    key={milestone.milestoneId}
+                    stage={`Milestone ${milestone.milestoneId + 1}`}
+                    completed={completed}
+                    current={active}
+                    suspended={suspended}
+                    investigation={[
+                      CurrentTask.INVESTIGATE,
+                      CurrentTask.EVACUATE,
+                    ].includes(currentTask)}
+                    voted={usersVoted}
+                  />
+                );
+              })}
+          </TimelineBar>
+          <DateBar scale={scale}>
+            {milestones &&
+              milestones.map((milestone) => (
+                <DateStep
                   key={milestone.milestoneId}
-                  stage={`Milestone ${milestone.milestoneId + 1}`}
-                  completed={completed}
-                  current={active}
-                  suspended={suspended}
-                  investigation={[1, 2].includes(currentTask)}
+                  scale={scale}
+                  date={getDate(milestone.endTime, milestone.startTime, scale)}
                 />
-              );
-            })}
-        </TimelineBar>
-        <DateBar scale={scale}>
-          {milestones &&
-            milestones.map((milestone) => (
-              <DateStep
-                key={milestone.milestoneId}
-                scale={scale}
-                date={getDate(milestone.endTime, milestone.startTime, scale)}
-              />
-            ))}
-        </DateBar>
-      </TimelineScroll>
-    </TimelineContainer>
+              ))}
+          </DateBar>
+        </TimelineScroll>
+      </TimelineContainer>
+      <Modal show={showModal}>
+        <DemoMessagesModal onClose={() => setShowModal(false)} />
+      </Modal>
+    </>
   );
 };
 

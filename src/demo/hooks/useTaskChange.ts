@@ -3,22 +3,17 @@ import { CurrentTask } from "../../interfaces/enums/DemoTaskEnums";
 import DemoTaskContext from "../context/demoTaskContext";
 
 export const useTaskChange = () => {
-  const { currentTask } = useContext(DemoTaskContext);
-
-  function timeout(delay: number) {
-    return new Promise((res) => setTimeout(res, delay));
-  }
+  const { currentTask, completedTasks } = useContext(DemoTaskContext);
 
   useEffect(() => {
-    async function changeTask() {
-      await timeout(1000);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    if (currentTask === CurrentTask.INVESTIGATE) {
-      changeTask();
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    if (
+      currentTask === CurrentTask.EVACUATE &&
+      !completedTasks.includes(CurrentTask.EVACUATE)
+    ) {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    } else window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentTask]);
 };

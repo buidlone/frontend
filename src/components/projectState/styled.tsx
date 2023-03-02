@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface Props {
-  isDemo: boolean;
+  isDemo?: boolean;
 }
 
 export const StateTextGreen = styled.span<Props>`

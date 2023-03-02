@@ -12,54 +12,33 @@ import Reset from "../../../../public/reset-filter.svg";
 import TaskSelector from "../taskSelector.tsx";
 import { useContext } from "react";
 import DemoMockDataContext from "../../context/demoMockDataContext";
-import { fakeMockData, initialMockData } from "../../mockData/initialMockData";
+import { initialMockData } from "../../mockData/initialMockData";
 import DemoTaskContext from "../../context/demoTaskContext";
 import { tasksData } from "../../mockData/taskData";
 import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 
 const DemoEnvironment = () => {
+  const { setMockData } = useContext(DemoMockDataContext);
   const {
-    setMockData,
-    mockData,
-    mockData: {
-      softCap,
-      userValues,
-      userValues: { investment },
-      maxInvestment,
-      refund,
-    },
-  } = useContext(DemoMockDataContext);
-  const { currentTask, setCurrentTask, tasks, setTasks } =
-    useContext(DemoTaskContext);
+    currentTask,
+    setCurrentTask,
+    tasks,
+    setTasks,
+    completedTasks,
+    setCompletedTasks,
+  } = useContext(DemoTaskContext);
   const handleReset = () => {
-    setMockData(initialMockData);
     setTasks(tasksData);
+    setMockData(initialMockData);
     setCurrentTask(CurrentTask.INVEST);
+    setCompletedTasks([]);
   };
 
   const handleClickLeft = () => {
-    if (currentTask === CurrentTask.REVIEW) {
-      setMockData({
-        ...mockData,
-        userValues: {
-          ...userValues,
-          investment: investment,
-          balance: maxInvestment - investment,
-        },
-      });
-    }
     setCurrentTask((prev) => prev - 1);
   };
 
   const handleClickRight = () => {
-    if (currentTask === CurrentTask.INVEST && !softCap.isReached) {
-      setMockData(fakeMockData);
-    } else if (currentTask === CurrentTask.EVACUATE) {
-      setMockData({
-        ...mockData,
-        userValues: { ...userValues, balance: refund },
-      });
-    }
     setCurrentTask((prev) => prev + 1);
   };
 
@@ -71,7 +50,7 @@ const DemoEnvironment = () => {
       </TestDisclaimer>
       <TaskSelectionWrapper>
         <SwitchTaskButton
-          className={currentTask === CurrentTask.INVEST ? "display" : ""}
+          className={currentTask === CurrentTask.INVEST ? "disabled" : ""}
           disabled={currentTask === CurrentTask.INVEST}
           style={{ paddingLeft: "8px" }}
           onClick={handleClickLeft}
@@ -80,13 +59,16 @@ const DemoEnvironment = () => {
         </SwitchTaskButton>
         <TaskSelector />
         <SwitchTaskButton
+          style={{ paddingRight: "8px" }}
           className={
-            currentTask === tasks.length - 1 ? "disabled skip" : "skip"
+            currentTask === tasks.length - 1 ||
+            !completedTasks.includes(currentTask)
+              ? "disabled"
+              : ""
           }
           disabled={currentTask === tasks.length - 1}
           onClick={handleClickRight}
         >
-          skip
           <Arrow className="right" />
         </SwitchTaskButton>
       </TaskSelectionWrapper>

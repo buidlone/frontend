@@ -9,11 +9,14 @@ export type task = {
   currentMilestone: number;
 };
 
+
 export type TaskContext = {
   tasks: task[];
   currentTask: number;
   setCurrentTask: Dispatch<SetStateAction<number>>;
   setTasks: Dispatch<SetStateAction<task[]>>;
+  completedTasks: number[];
+  setCompletedTasks: Dispatch<SetStateAction<number[]>>;
 };
 
 export const tasksData = [

@@ -6,14 +6,18 @@ import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoStateContext from "../../context/demoStateContext";
 import DemoTaskContext from "../../context/demoTaskContext";
+import useRealTimeFlow from "../../hooks/useRealTimeFlow";
 import DemoEnvironment from "../demoEnvironment.tsx";
+import { RoundButton } from "../demoMessagesModal/styled";
 import {
+  BottomInline,
   DemoBackgroundBlur,
   DemoHeaderSection,
   DemoHeaderText,
   DemoPersonalInfo,
   DemoPersonalValue,
   ExitLink,
+  Wallet,
 } from "./styled";
 
 const DemoHeader = () => {
@@ -22,9 +26,11 @@ const DemoHeader = () => {
     mockData: {
       userValues: { balance },
       currency,
+      tokenCurrency,
     },
   } = useContext(DemoMockDataContext);
-  const { currentTask } = useContext(DemoTaskContext);
+  const { completedTasks } = useContext(DemoTaskContext);
+  const { newRewards } = useRealTimeFlow();
 
   return (
     <>
@@ -41,13 +47,37 @@ const DemoHeader = () => {
               Complete 4 steps to become a buiDLer legend
             </DemoHeaderText>
             <DemoEnvironment />
-            <DemoPersonalInfo className="balance">
-              Your balance:{" "}
-              <DemoPersonalValue className="balance">
-                {balance.toLocaleString("fr-FR")} {currency}{" "}
-                {currentTask === CurrentTask.REVIEW && "REFUNDED"}
-              </DemoPersonalValue>
-            </DemoPersonalInfo>
+            <BottomInline>
+              <DemoPersonalInfo className="balance">
+                <>
+                  <Wallet className="material-icons">wallet</Wallet>
+                  Your balance:{" "}
+                  <DemoPersonalValue className="balance">
+                    {balance.toLocaleString("fr-FR")} {currency}{" "}
+                    {[
+                      CurrentTask.INVEST,
+                      CurrentTask.INVESTIGATE,
+                      CurrentTask.EVACUATE,
+                    ].every((value) => completedTasks.includes(value)) &&
+                      "REFUNDED"}
+                  </DemoPersonalValue>
+                </>
+              </DemoPersonalInfo>
+              {completedTasks.includes(CurrentTask.EVACUATE) && (
+                <>
+                  <DemoPersonalInfo className="reward" active>
+                    Your reward:
+                    <DemoPersonalValue className="reward bigger" active>
+                      {" "}
+                      {newRewards.toFixed(4)} {tokenCurrency}
+                    </DemoPersonalValue>
+                  </DemoPersonalInfo>
+                  <RoundButton feedback className="filled">
+                    Interested?
+                  </RoundButton>
+                </>
+              )}
+            </BottomInline>
           </DemoHeaderSection>
         </Container>
       </DemoBackgroundBlur>

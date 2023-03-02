@@ -5,7 +5,8 @@ import {
   DemoMessagesProjectLogo,
   DMessagesModalWrapper,
   LogoSectionWrapper,
-  VoteButton,
+  MessagesModalCloseBtn,
+  RoundButton,
 } from "./styled";
 import logo from "../../../../public/brandmark_blue.svg";
 import useClickOutside from "../../../hooks/useClickOutside";
@@ -15,64 +16,71 @@ import { useContext, useState } from "react";
 import DemoTaskContext from "../../context/demoTaskContext";
 import { IModalProps } from "../../../interfaces/IModal";
 import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
+import Modal from "../../../components/modal";
+import DemoMockDataContext from "../../context/demoMockDataContext";
+import VoteAfterInvestigationCard from "../confirmationCard/voteAfterInvestigationCard";
+import VoteConfiramationCard from "../confirmationCard/voteCard";
 
 const DemoMessagesModal = ({ onClose }: IModalProps) => {
   const [isBottom, setIsBottom] = useState<boolean>(false);
-  const { setCurrentTask, setTasks, tasks, currentTask } =
-    useContext(DemoTaskContext);
+  const [showModal1, setShowModal1] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const { setCurrentTask } = useContext(DemoTaskContext);
+  const {
+    mockData: {
+      userValues: { voted },
+    },
+  } = useContext(DemoMockDataContext);
 
   let domNode: any = useClickOutside(() => {
     onClose();
   });
 
-  const handleThinkButtonClick = () => {
+  const handleTakeActionButtonClick = () => {
     setCurrentTask(CurrentTask.EVACUATE);
-    onClose();
-  };
-
-  const handleVoteButtonClick = () => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === 2) {
-          return { ...task, projectState: 8 };
-        } else {
-          return task;
-        }
-      })
-    );
-    setCurrentTask(CurrentTask.EVACUATE);
-    onClose();
+    voted ? setShowModal2(true) : setShowModal1(true);
   };
 
   return (
-    <DMessagesModalWrapper ref={domNode}>
-      <LogoSectionWrapper>
-        <DemoMessagesProjectLogo>
-          <DemoProjectLogoInner
-            src={logo}
-            alt={"logo"}
-            height={"47px"}
-            width={"47px"}
-          />
-        </DemoMessagesProjectLogo>
-      </LogoSectionWrapper>
-      <ChatSectionWrapper>
-        <DemoChatBlock setIsBottom={setIsBottom} />
-        {!isBottom && <Divider />}
-        <BottomSection>
-          {isBottom && (
-            <>
-              <VoteButton onClick={handleThinkButtonClick}>
-                Think about it
-              </VoteButton>
-              <VoteButton className="filled" onClick={handleVoteButtonClick}>
-                Vote now
-              </VoteButton>
-            </>
-          )}
-        </BottomSection>
-      </ChatSectionWrapper>
-    </DMessagesModalWrapper>
+    <>
+      <DMessagesModalWrapper ref={domNode}>
+        <MessagesModalCloseBtn onClick={onClose} />
+
+        <LogoSectionWrapper>
+          <DemoMessagesProjectLogo>
+            <DemoProjectLogoInner
+              src={logo}
+              alt={"logo"}
+              height={"47px"}
+              width={"47px"}
+            />
+          </DemoMessagesProjectLogo>
+        </LogoSectionWrapper>
+        <ChatSectionWrapper>
+          <DemoChatBlock setIsBottom={setIsBottom} />
+          {!isBottom && <Divider />}
+          <BottomSection>
+            {isBottom && (
+              <>
+                <RoundButton
+                  vote
+                  className="filled"
+                  onClick={handleTakeActionButtonClick}
+                >
+                  Take action
+                </RoundButton>
+              </>
+            )}
+          </BottomSection>
+        </ChatSectionWrapper>
+      </DMessagesModalWrapper>
+      <Modal show={showModal1}>
+        <VoteAfterInvestigationCard onClose={() => setShowModal1(false)} />
+      </Modal>
+      <Modal show={showModal2}>
+        <VoteConfiramationCard onClose={() => setShowModal2(false)} />
+      </Modal>
+    </>
   );
 };
 
