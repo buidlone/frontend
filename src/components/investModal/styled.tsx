@@ -50,7 +50,6 @@ export const CloseButton = styled.button`
     width: 4px;
     height: 18px;
     background-color: #363e7e;
-
     transform: rotate(45deg) translate(-50%, -50%);
     transform-origin: top left;
     content: "";

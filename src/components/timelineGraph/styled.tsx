@@ -12,6 +12,7 @@ interface Props {
   ref?: any;
   suspended?: boolean;
   investigation?: boolean;
+  voted?: boolean;
 }
 
 const pulse = keyframes`
@@ -154,7 +155,7 @@ export const TimelineStep = styled.div<Props>`
     opacity: 0.45;
 
     ${(props) => {
-      if (props.suspended || (props.current && props.investigation)) {
+      if (props.current && props.investigation) {
         return `
         background: transparent linear-gradient(180deg, #FF8900 0%, #FF890000 100%) 0% 0% no-repeat padding-box;
 opacity: 1;
@@ -175,6 +176,21 @@ opacity: 0.3;
       `;
       }
     }};
+
+    ${(props) => {
+      if (props.voted) {
+        if (props.suspended) {
+          return `
+       background: transparent linear-gradient(180deg, #FF8900 0%, #FF8900 44%, #00C4FF00 100%) 0% 0% no-repeat padding-box;
+opacity: 0.45;`;
+        } else {
+          return `
+        background: #C56E0F;
+        opacity: 0.74;
+      `;
+        }
+      }
+    }}
 
     animation: ${(props) =>
       props.current || (props.current && props.investigation)

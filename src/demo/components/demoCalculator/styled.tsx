@@ -1,23 +1,37 @@
 import styled from "styled-components";
 import {
+  CalculationWrapper,
   CalculatorBlock,
+  CurrencyIndicator,
   InputField,
   SelectWrapper,
 } from "../../../components/calculator/styled";
 import { GreenButton } from "../../../components/fundingBlock/styled";
 
+export const DemoCalculationWrapper = styled(CalculationWrapper)`
+  padding: 1.875rem 1.875rem 0 1.875rem;
+  gap: 0rem;
+`;
+
 export const DemoCalculatorBlock = styled(CalculatorBlock)`
   height: 20rem;
   flex-shrink: 1;
+  padding-bottom: 0.6rem;
 `;
 
 export const DemoGreenButton = styled(GreenButton)`
   margin: auto;
-  background: transparent linear-gradient(168deg, #3aedc4 0%, #469898 100%) 0%
-    0% no-repeat padding-box;
-  box-shadow: 0px 0px 6px #3aedc4;
-  width: 15.375rem;
+  margin-top: 3.079rem;
+  width: 14.938rem;
+  height: 2.5rem !important;
   transition: none;
+  background: rgba(25, 230, 183, 1);
+  box-shadow: 0px 0px 15px rgba(0, 255, 196, 1);
+  border-radius: 20px;
+  color: rgba(31, 35, 60, 1);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
 
   &.disabled {
     opacity: 0.4;
@@ -46,8 +60,11 @@ export const MaxButton = styled.button`
   cursor: pointer;
 `;
 export const DemoSelectWrapper = styled(SelectWrapper)`
+  padding-top: 1.961rem;
   width: 83%;
   position: relative;
+  padding-bottom: 2.523rem;
+  margin-bottom: 0;
 `;
 
 export const InputFieldWrapper = styled.div`
@@ -56,17 +73,9 @@ export const InputFieldWrapper = styled.div`
   position: relative;
 `;
 
-export const CurrencyIndicator = styled.span`
-  position: absolute;
-  color: #00ffc4;
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  border-left: 1.5px solid #00ffc4;
-  padding-left: 1%;
-  padding-right: 4%;
-  right: 0%;
-  bottom: 25%;
+export const Currency = styled(CurrencyIndicator)`
+  padding-left: 3%;
+  right: 2%;
 `;
 
 export const DemoInputWrapper = styled.div`
@@ -81,13 +90,15 @@ export const DemoInputField = styled(InputField)`
 `;
 
 export const DemoBalance = styled.p`
-  position: absolute;
+  //position: absolute;
   margin: 0;
-  padding: 0;
+  padding: 0.7rem 0 0 0;
+
   font-family: "Space Grotesk", sans-serif;
-  font-weight: lighter;
-  font-size: 10px;
-  color: rgba(228, 228, 228, 0.51);
-  bottom: -23%;
-  left: 0;
+  font-weight: 400;
+  font-size: 12px;
+  color: rgba(0, 255, 196, 1);
+  // bottom: -23%;
+  //left: 3.2%;
+  //bottom: 80%;
 `;

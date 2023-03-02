@@ -19,7 +19,7 @@ export const useInvestors = () => {
   const [max, setMax] = useState<BigNumber>(BigNumber.from(0));
 
   useEffect(() => {
-    if (!data || !data.singleInvestments) return;
+    if (!data || !data.singleInvestments || !data.singleInvestments[0]) return;
     const uniqueInvestors = new Set();
 
     const values = data.singleInvestments.map((investment: any) => {
