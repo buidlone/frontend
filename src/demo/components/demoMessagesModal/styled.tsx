@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import { CloseButton } from "../../../components/investModal/styled";
 import { DemoProjectLogo } from "../demoProjectInfoBlock/styled";
 

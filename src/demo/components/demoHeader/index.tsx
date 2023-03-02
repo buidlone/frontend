@@ -6,6 +6,7 @@ import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import DemoStateContext from "../../context/demoStateContext";
 import DemoTaskContext from "../../context/demoTaskContext";
+import useRealTimeFlow from "../../hooks/useRealTimeFlow";
 import DemoEnvironment from "../demoEnvironment.tsx";
 import { RoundButton } from "../demoMessagesModal/styled";
 import {
@@ -23,12 +24,13 @@ const DemoHeader = () => {
   const { setIsDemo } = useContext(DemoStateContext);
   const {
     mockData: {
-      userValues: { balance, reward },
+      userValues: { balance },
       currency,
       tokenCurrency,
     },
   } = useContext(DemoMockDataContext);
-  const { completedTasks, currentTask } = useContext(DemoTaskContext);
+  const { completedTasks } = useContext(DemoTaskContext);
+  const { newRewards } = useRealTimeFlow();
 
   return (
     <>
@@ -61,19 +63,18 @@ const DemoHeader = () => {
                   </DemoPersonalValue>
                 </>
               </DemoPersonalInfo>
-              {currentTask === CurrentTask.REVIEW && (
+              {completedTasks.includes(CurrentTask.EVACUATE) && (
                 <>
                   <DemoPersonalInfo className="reward" active>
-                    Your rewards:{" "}
+                    Your reward:
                     <DemoPersonalValue className="reward bigger" active>
                       {" "}
-                      {reward.toLocaleString("fr-FR")} {tokenCurrency}
+                      {newRewards.toFixed(4)} {tokenCurrency}
                     </DemoPersonalValue>
                   </DemoPersonalInfo>
                   <RoundButton feedback className="filled">
                     Interested?
                   </RoundButton>
-                  
                 </>
               )}
             </BottomInline>

@@ -9,50 +9,39 @@ import {
   MessageText,
   UserLogo,
 } from "./styled";
-import React, { Dispatch, SetStateAction, useContext, useState } from "react";
+import React, { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import DemoTaskContext from "../../context/demoTaskContext";
-import Modal from "../../../components/modal";
-import VoteConfiramationCard from "../confirmationCard/voteCard";
-import DemoMockDataContext from "../../context/demoMockDataContext";
-import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 
 interface IDemoChatBlockProps {
   setIsBottom: Dispatch<SetStateAction<boolean>>;
 }
 
 const DemoChatBlock = ({ setIsBottom }: IDemoChatBlockProps) => {
-  const { completedTasks, setCompletedTasks, currentTask, setCurrentTask } =
+  const { completedTasks, setCompletedTasks, currentTask } =
     useContext(DemoTaskContext);
   const listInnerRef = React.createRef<HTMLElement>();
-  const [showModal, setShowModal] = useState(false);
-  const {
-    mockData: {
-      userValues: { voted },
-    },
-  } = useContext(DemoMockDataContext);
-
-  const showModalWithDelay = () => {
-    setTimeout(function () {
-      setCurrentTask(CurrentTask.EVACUATE);
-      setShowModal(true);
-    }, 1500);
-  };
 
   const onScroll = () => {
     if (listInnerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-      if (scrollTop + clientHeight === scrollHeight) {
-        setIsBottom(true);
-        setCompletedTasks([...completedTasks, currentTask]);
-        voted && showModalWithDelay();
-      }
+      const { scrollHeight } = listInnerRef.current;
+      listInnerRef.current.scrollTo({
+        top: scrollHeight,
+        behavior: "smooth",
+      });
+
+      setIsBottom(true);
+      setCompletedTasks([...completedTasks, currentTask]);
     }
   };
+
+  useEffect(() => {
+    onScroll();
+  }, []);
   return (
     <>
       <ChatScrollContainer
         innerRef={listInnerRef}
-        onScroll={() => onScroll()}
+        //onScroll={() => onScroll()}
         vertical
         horizontal={false}
       >
@@ -88,9 +77,6 @@ const DemoChatBlock = ({ setIsBottom }: IDemoChatBlockProps) => {
             ))}
         </ChatWindow>
       </ChatScrollContainer>
-      <Modal show={showModal}>
-        <VoteConfiramationCard onClose={() => setShowModal(false)} />
-      </Modal>
     </>
   );
 };

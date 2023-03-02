@@ -37,7 +37,7 @@ const DemoProjectInfoBlock = () => {
     completedTasks.includes(CurrentTask.INVEST) &&
     projectState !== ProjectState.TERMINATED_BY_VOTING;
 
-  const [newInvestment, newReward] = useRealTimeFlow();
+  const { newInvestment, newRewards } = useRealTimeFlow();
 
   return (
     <InfoBlockWrapper>
@@ -69,7 +69,9 @@ const DemoProjectInfoBlock = () => {
         <DemoPersonalInfo className="investment" active={active}>
           Your investment:{" "}
           <DemoPersonalValue className="investment" active={active}>
-            {investment ? investment.toLocaleString("fr-FR") : "0.0000"}{" "}
+            {newInvestment && newInvestment > 0
+              ? newInvestment.toFixed(4)
+              : "0.0000"}{" "}
             {currency}
           </DemoPersonalValue>
         </DemoPersonalInfo>
@@ -77,7 +79,7 @@ const DemoProjectInfoBlock = () => {
           Your reward:{" "}
           <DemoPersonalValue className="reward" active={active}>
             {" "}
-            {reward ? reward.toLocaleString("fr-FR") : "0"} {tokenCurrency}
+            {newRewards ? newRewards.toFixed(4) : "0.0000"} {tokenCurrency}
           </DemoPersonalValue>
         </DemoPersonalInfo>
         <DemoPersonalInfo className="power" active={active}>

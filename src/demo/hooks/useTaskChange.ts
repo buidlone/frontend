@@ -1,10 +1,19 @@
 import { useContext, useEffect } from "react";
+import { CurrentTask } from "../../interfaces/enums/DemoTaskEnums";
 import DemoTaskContext from "../context/demoTaskContext";
 
 export const useTaskChange = () => {
-  const { currentTask } = useContext(DemoTaskContext);
+  const { currentTask, completedTasks } = useContext(DemoTaskContext);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (
+      currentTask === CurrentTask.EVACUATE &&
+      !completedTasks.includes(CurrentTask.EVACUATE)
+    ) {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    } else window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentTask]);
 };

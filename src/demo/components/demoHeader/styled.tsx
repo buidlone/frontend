@@ -22,6 +22,7 @@ export const DemoPersonalInfo = styled.div<Props>`
   position: relative;
   display: flex;
   justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border-radius: 20px;
   padding: 0 1.563rem 0 1.375rem;
@@ -39,10 +40,12 @@ export const DemoPersonalInfo = styled.div<Props>`
   }
 
   &.investment {
+    width: 372px;
     border-color: ${(props) => (props.active ? "#3AEDC4" : "#7e7e83")};
   }
 
   &.reward {
+    width: 307px;
     border-color: ${(props) => (props.active ? "#00C4FF" : "#7e7e83")};
   }
 
@@ -50,8 +53,14 @@ export const DemoPersonalInfo = styled.div<Props>`
     border-color: ${(props) => (props.active ? "#FFB100" : "#7e7e83")};
   }
 
-  @media screen and (max-width: 1025px) {
-    height: 2.6rem;
+  @media screen and (max-width: 1090px) {
+    &.balance,
+    &.investment,
+    &.reward,
+    &.power {
+      height: 2.6rem;
+      font-size: 14px;
+    }
   }
 `;
 
@@ -62,12 +71,6 @@ export const DemoPersonalValue = styled.p<Props>`
   font-family: "Space Grotesk", sans-serif;
   font-size: 19px;
   font-weight: 400;
-
-  @media screen and (max-width: 1025px) {
-    margin-left: 1rem;
-    white-space: nowrap;
-    font-size: 16px;
-  }
 
   &.balance {
     color: #3aedc4;
@@ -89,8 +92,16 @@ export const DemoPersonalValue = styled.p<Props>`
       props.active ? "rgba(255, 196, 0, 1)" : " rgba(255, 196, 0, 0.51)"};
     font-size: 16px;
   }
-  &.bigger {
-    font-size: 19px;
+
+  @media screen and (max-width: 1090px) {
+    &.balance,
+    &.investment,
+    &.reward,
+    &.power {
+      margin-left: 1rem;
+      white-space: nowrap;
+      font-size: 14px;
+    }
   }
 `;
 

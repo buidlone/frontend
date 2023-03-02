@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import useClickOutside from "../../../hooks/useClickOutside";
 import { IModalProps } from "../../../interfaces/IModal";
-
 import {
   ConfirmationModalCloseBtn,
   ConfirmationModalWrapper,
@@ -10,9 +9,7 @@ import {
   BottomText,
   TextContainer,
 } from "./styled";
-
 import DemoMockDataContext from "../../context/demoMockDataContext";
-
 import {
   InnerContainer,
   InnerContentWrapper,
@@ -41,6 +38,9 @@ const VoteAfterInvestigationCard = ({ onClose }: IConfirmModalProps) => {
             <InnerModalContent className="voting">40 %</InnerModalContent>
             <InnerModalContent className="voting smaller">
               Investors already voted to terminate the project.
+            </InnerModalContent>
+            <InnerModalContent className="voting smaller">
+              Now it's your time to vote.
             </InnerModalContent>
           </InnerContentWrapper>
         </InnerContainer>

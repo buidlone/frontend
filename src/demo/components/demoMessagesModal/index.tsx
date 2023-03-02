@@ -19,12 +19,13 @@ import { CurrentTask } from "../../../interfaces/enums/DemoTaskEnums";
 import Modal from "../../../components/modal";
 import DemoMockDataContext from "../../context/demoMockDataContext";
 import VoteAfterInvestigationCard from "../confirmationCard/voteAfterInvestigationCard";
+import VoteConfiramationCard from "../confirmationCard/voteCard";
 
 const DemoMessagesModal = ({ onClose }: IModalProps) => {
   const [isBottom, setIsBottom] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState(false);
-  const { setCurrentTask } =
-    useContext(DemoTaskContext);
+  const [showModal1, setShowModal1] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const { setCurrentTask } = useContext(DemoTaskContext);
   const {
     mockData: {
       userValues: { voted },
@@ -35,14 +36,9 @@ const DemoMessagesModal = ({ onClose }: IModalProps) => {
     onClose();
   });
 
-  const handleThinkButtonClick = () => {
-    setCurrentTask(CurrentTask.EVACUATE);
-    setShowModal(true);
-  };
-
   const handleTakeActionButtonClick = () => {
     setCurrentTask(CurrentTask.EVACUATE);
-    setShowModal(true);
+    voted ? setShowModal2(true) : setShowModal1(true);
   };
 
   return (
@@ -64,11 +60,8 @@ const DemoMessagesModal = ({ onClose }: IModalProps) => {
           <DemoChatBlock setIsBottom={setIsBottom} />
           {!isBottom && <Divider />}
           <BottomSection>
-            {isBottom && !voted && (
+            {isBottom && (
               <>
-                <RoundButton vote onClick={handleThinkButtonClick}>
-                  Think about it
-                </RoundButton>
                 <RoundButton
                   vote
                   className="filled"
@@ -81,8 +74,11 @@ const DemoMessagesModal = ({ onClose }: IModalProps) => {
           </BottomSection>
         </ChatSectionWrapper>
       </DMessagesModalWrapper>
-      <Modal show={showModal}>
-        <VoteAfterInvestigationCard onClose={() => setShowModal(false)} />
+      <Modal show={showModal1}>
+        <VoteAfterInvestigationCard onClose={() => setShowModal1(false)} />
+      </Modal>
+      <Modal show={showModal2}>
+        <VoteConfiramationCard onClose={() => setShowModal2(false)} />
       </Modal>
     </>
   );

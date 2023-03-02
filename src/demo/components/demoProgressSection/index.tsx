@@ -43,8 +43,10 @@ const DemoProgressSection = () => {
   const communityVotes = completedTasks.includes(CurrentTask.INVESTIGATE)
     ? 40
     : voted
-    ? 15
+    ? Math.round(power)
     : 0;
+
+  const votedPower = Math.round(power + 40);
 
   const handleStopClick = () => {
     setShowModal(true);
@@ -84,7 +86,7 @@ const DemoProgressSection = () => {
 
               <Data className="votes">
                 {projectState === ProjectState.TERMINATED_BY_VOTING
-                  ? 55
+                  ? votedPower
                   : communityVotes}
                 %
               </Data>
