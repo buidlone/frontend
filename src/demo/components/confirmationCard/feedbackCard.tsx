@@ -36,7 +36,7 @@ const FeedbackCard = ({ onClose }: IModalProps) => {
           Are we having fun yet? Please leave a note about your experience
         </BottomText>
         <RoundButton feedback className="filled" onClick={handleClick}>
-          Leave Feedback
+          Interested?
         </RoundButton>
       </FeedBackBottomWrapper>
     </ConfirmationModalWrapper>

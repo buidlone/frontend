@@ -10,7 +10,7 @@ export const ChatScrollContainer = styled(ScrollContainer)`
 `;
 
 export const ChatWindow = styled.div`
-  padding-top: 18rem;
+  padding-top: 3rem;
   width: 100%;
   padding-left: 1.224rem;
   display: flex;
